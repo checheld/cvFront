@@ -1,0 +1,7 @@
+.link {
+    display: flex; 
+    text-decoration: none;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    width: 185px;
+}

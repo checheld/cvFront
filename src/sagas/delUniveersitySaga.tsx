@@ -1,19 +1,13 @@
-import { put, call, takeEvery } from 'redux-saga/effects'
+import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IUniversity } from '../interfaces/index'
-import { delUniversityRequest } from '../actionCreators/universityActionCreator';
 import { universitiesActions } from '../actionsTypes/universitiesActionTypes';
 
 const axiosDelUniversity = (id: string) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-  return axios.delete<string>(
-    `http://localhost:3001/universities/${id}`, 
-      {
-          headers
-      }
-);}
+  return axios.delete(
+    `http://localhost:3001/universities/${id}`
+  )
+}
 
 export default function* deltUniversityFetch(id: string) {
   try{
@@ -24,3 +18,4 @@ export default function* deltUniversityFetch(id: string) {
     console.log(e)
   }
 } 
+

@@ -3,15 +3,16 @@ export interface IUniversity {
     name: string,
 }
 
-export const UserMapper = (obj: any) : IUniversity => {
+export const UserMapper = ({id, name}: IUniversity)  => {
     let newUser : IUniversity ={
-        id: obj.id,
-        name: obj.name
+        id,
+        name
     }
     return newUser;
 }
 
 export interface action{
     type: string,
-    payload?: any
+    payload?: any,
+    response?: number
 }

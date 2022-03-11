@@ -3,7 +3,8 @@ import {
     getUniversitiesRequestAction,
     delUniversityRequestAction,
     delUniversityResultAction,
-    universitiesActions
+    universitiesActions,
+    addUniversityRequestAction,
 } from '../actionsTypes/universitiesActionTypes';
 import { IUniversity } from "../interfaces/index";
 
@@ -30,5 +31,18 @@ export const delUniversityRequest = (payload: string): delUniversityRequestActio
 export const delUniversityResult = (): delUniversityResultAction => {
     return{
         type: universitiesActions.DEL_UNIVERSITY_RESULT
+    }
+}
+
+export const addUniversityRequest = (payload: string): addUniversityRequestAction => {
+    return{
+        type: universitiesActions.ADD_UNIVERSITY_REQUEST,
+        payload: payload
+    }
+}
+
+export const addUniversityResult = (): delUniversityResultAction => {
+    return{
+        type: universitiesActions.ADD_UNIVERSITY_RESULT
     }
 }

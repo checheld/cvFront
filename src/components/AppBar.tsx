@@ -20,15 +20,15 @@ import WorkExp from '../img/WorkExp'
 const drawerWidth = 240; // 11%
 
 const mainLinks = [
-  { name: 'CVs', link: '/CVs', code: '1', icon: (x: string, y: string) => { return (<CVs isActive={x === y}/>) }},
-  { name: 'Users', link: '/Users', code: '2', icon: (x: string, y: string) => { return (<Users isActive={x === y}/>) } },
-  { name: 'Projects', link: '/Projects', code: '3', icon: (x: string, y: string) => { return (<Projects isActive={x === y}/>) } },
+  { name: 'CVs', link: '/CVs', code: '1', icon: (x: string, y: string) => <CVs isActive={x === y}/> },
+  { name: 'Users', link: '/Users', code: '2', icon: (x: string, y: string) => <Users isActive={x === y}/>},
+  { name: 'Projects', link: '/Projects', code: '3', icon: (x: string, y: string) => <Projects isActive={x === y}/> },
 ]
 
 const otherLinks = [
-  { name: 'Education', link: '/Education', code: '4', icon: (x: string, y: string) => { return (<Education isActive={x === y}/>) } },
-  { name: 'Technologies', link: '/Technologies', code: '5', icon: (x: string, y: string) => { return (<Technologies isActive={x === y}/>) } },
-  { name: 'Work Experience', link: '/WorkExperience', code: '6', icon: (x: string, y: string) => { return (<WorkExp isActive={x === y}/>) } },
+  { name: 'Education', link: '/Education', code: '4', icon: (x: string, y: string) => <Education isActive={x === y}/> },
+  { name: 'Technologies', link: '/Technologies', code: '5', icon: (x: string, y: string) => <Technologies isActive={x === y}/> },
+  { name: 'Work Experience', link: '/WorkExperience', code: '6', icon: (x: string, y: string) => <WorkExp isActive={x === y}/> },
 ]
 
 export default function PermanentDrawerLeft() {

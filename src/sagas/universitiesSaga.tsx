@@ -8,6 +8,7 @@ const axiosGetUniversities = () => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
+ 
   return axios.get<IUniversity[]>(
     "http://localhost:3001/universities", 
       {
@@ -20,7 +21,6 @@ export default function* getUniversitiesFetch() {
     const getUniversitiesResponse: AxiosResponse<IUniversity[]>  = yield call(axiosGetUniversities);
     if(getUniversitiesResponse.status === 200) {
       const response = getUniversitiesResponse.data;
-      console.log(response)
       yield put(getUniversitiesResult(response));
     }
   }

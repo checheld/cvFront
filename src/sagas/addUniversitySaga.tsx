@@ -17,8 +17,8 @@ const axiosAddUniversity = (data: string) => {
 
 export default function* addUniversityFetch(data: string) {
   try{
-        const getUniversitiesResponse: AxiosResponse<any> = yield axiosAddUniversity(data);
-        yield put({type: universitiesActions.ADD_UNIVERSITY_RESULT, response: getUniversitiesResponse.data.id});
+        const addUniversitiesResponse: AxiosResponse<any> = yield axiosAddUniversity(data);
+        yield put({type: universitiesActions.ADD_UNIVERSITY_RESULT, response: addUniversitiesResponse.data.id});
     // yield takeLatest(universitiesActions.GET_UNIVERSITIES_RESULT, axiosAddUniversity);
   }
   catch(e) {

@@ -5,6 +5,8 @@ import {
     delUniversityResultAction,
     universitiesActions,
     addUniversityRequestAction,
+    editUniversityRequestAction,
+    editUniversityResultAction,
 } from '../actionsTypes/universitiesActionTypes';
 import { IUniversity } from "../interfaces/index";
 
@@ -44,5 +46,18 @@ export const addUniversityRequest = (payload: string): addUniversityRequestActio
 export const addUniversityResult = (): delUniversityResultAction => {
     return{
         type: universitiesActions.ADD_UNIVERSITY_RESULT
+    }
+}
+
+export const editUniversityRequest = (payload: IUniversity): editUniversityRequestAction => {
+    return{
+        type: universitiesActions.EDIT_UNIVERSITY_REQUEST,
+        payload: payload
+    }
+}
+
+export const editUniversityResult = (): editUniversityResultAction => {
+    return{
+        type: universitiesActions.EDIT_UNIVERSITY_RESULT,
     }
 }

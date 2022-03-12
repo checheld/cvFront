@@ -14,7 +14,6 @@ interface Iprops {
 }
 
 const ModalInput:React.FC<Iprops> = ({placeholder, item, setItem, index}) => {
-  console.log(item)
   
   function MyFormHelperText() {
     const { focused } = useFormControl() || {};
@@ -34,7 +33,7 @@ const ModalInput:React.FC<Iprops> = ({placeholder, item, setItem, index}) => {
         <OutlinedInput placeholder={placeholder}
                        id="input"
                        tabIndex={index}
-                      value={item}
+                       value={item}
                        sx={{ width: '700px', mb: '0px' }} 
                        onChange={
                           setItem

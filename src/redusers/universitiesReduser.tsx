@@ -12,7 +12,7 @@ interface universitiesReduser {
   result: {
     add: any,
     delete: null | string,
-    edit: null | string,
+    edit: any,
   }
 }
 
@@ -77,6 +77,23 @@ export const universitiesReducer = (state = initialState, action: action):univer
         },
         result: {
           ...state.result, add: action.response
+        }
+      }
+
+    case universitiesActions.EDIT_UNIVERSITY_REQUEST:
+      return {...state,
+          isLoading: {
+        ...state.isLoading, edit: true
+      }}; 
+
+    case universitiesActions.EDIT_UNIVERSITY_RESULT:
+      return {
+        ...state, 
+        isLoading: {
+          ...state.isLoading, edit: false
+        },
+        result: {
+          ...state.result, edit: action.response
         }
       }
 

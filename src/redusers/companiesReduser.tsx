@@ -1,8 +1,8 @@
-import { universitiesActions } from "../actionsTypes/universitiesActionTypes"
-import { IUniversity, action, UserMapper } from "../interfaces/index"
+import { companiesActions } from "../actionsTypes/companiesActionTypes"
+import { ICompany, action, UserMapper } from "../interfaces/index"
 
-interface universitiesReduser {
-  universities: IUniversity[],
+interface companiesReduser {
+  companies: ICompany[],
   isLoading: {
     add: boolean,
     delete: boolean,
@@ -16,8 +16,8 @@ interface universitiesReduser {
   }
 }
 
-export const initialState: universitiesReduser = {
-  universities: [],
+export const initialState: companiesReduser = {
+  companies: [],
   isLoading: {
     get: false,
     add: false,
@@ -31,30 +31,30 @@ export const initialState: universitiesReduser = {
   }
 }
 
-export const universitiesReducer = (state = initialState, action: action):universitiesReduser => {
+export const companiesReducer = (state = initialState, action: action):companiesReduser => {
 
   switch (action.type) {
-    case universitiesActions.GET_UNIVERSITIES_REQUEST:
+    case companiesActions.GET_COMPANIES_REQUEST:
       return {
         ...state,
         isLoading: {...state.isLoading, get: true},
       };
 
-    case universitiesActions.GET_UNIVERSITIES_RESULT:
-      let universities: IUniversity[] = action.payload.map((x: IUniversity) => UserMapper(x))
+    case companiesActions.GET_COMPANIES_RESULT:
+      let companies: ICompany[] = action.payload.map((x: ICompany) => UserMapper(x))
       return {
         ...state,
         isLoading: {...state.isLoading, get: false},
-        universities: universities.sort((a, b) => Number(a.name) - Number(b.name))
+        companies: companies.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
-    case universitiesActions.DEL_UNIVERSITY_REQUEST:
+    case companiesActions.DEL_COMPANY_REQUEST:
       return {...state, isLoading: {...state.isLoading, delete: true}, result: {
         ...state.result, delete: null
       }
     };
 
-    case universitiesActions.DEL_UNIVERSITY_RESULT:
+    case companiesActions.DEL_COMPANY_RESULT:
       return {
         ...state, 
         isLoading: {...state.isLoading, delete: false},
@@ -63,13 +63,13 @@ export const universitiesReducer = (state = initialState, action: action):univer
         }
       };
 
-    case universitiesActions.ADD_UNIVERSITY_REQUEST:
+    case companiesActions.ADD_COMPANY_REQUEST:
       return {...state,
          isLoading: {
         ...state.isLoading, get: true
       }};   
 
-    case universitiesActions.ADD_UNIVERSITY_RESULT:
+    case companiesActions.ADD_COMPANY_RESULT:
       return {
         ...state, 
         isLoading: {
@@ -80,13 +80,13 @@ export const universitiesReducer = (state = initialState, action: action):univer
         }
       }
 
-    case universitiesActions.EDIT_UNIVERSITY_REQUEST:
+    case companiesActions.EDIT_COMPANY_REQUEST:
       return {...state,
           isLoading: {
         ...state.isLoading, edit: true
       }}; 
 
-    case universitiesActions.EDIT_UNIVERSITY_RESULT:
+    case companiesActions.EDIT_COMPANY_RESULT:
       return {
         ...state, 
         isLoading: {

@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
-import { IUniversity } from '../interfaces/index'
-import { universitiesActions } from '../actionsTypes/universitiesActionTypes';
+import { IUniversity } from '../../interfaces/index'
+import { universitiesActions } from '../../actionsTypes/universitiesActionTypes';
 
 const axiosDelUniversity = (id: string) => {
   return axios.delete(

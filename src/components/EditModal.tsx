@@ -1,14 +1,14 @@
 import { Box, Modal, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { universitiesActions } from '../actionsTypes/universitiesActionTypes';
+import React, { useEffect } from 'react';
 import CustomButton from '../components/CustomButton';
 import ModalInput from '../components/ModalInput';
 import { useAppDispatch } from '../redusers/useTypedSelector';
 
 interface IEditModal {
     open: boolean,
-    handleClose?: () => void,
-    university: {name: string, id: string}
+    handleClose: () => void,
+    item: {name: string, id: string},
+    action: string
 }
 
 const style = {
@@ -22,13 +22,27 @@ const style = {
     p: 4,
 };
 
-const EditModal: React.FC<IEditModal> = ({ open, handleClose, university}) => {
-  const name = university.name;
-  const [changedUniversity, setchangedUniversity] = React.useState( name );  
+const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action}) => {
+  const {id, name} = item;
+  const [changedItem, setchangedItem] = React.useState(name);  
   const dispatch = useAppDispatch();
-  const updateUniversity = () => {
-    dispatch( {type: universitiesActions.EDIT_UNIVERSITY_REQUEST, payload: university});
-}
+  const updateItem = () => {
+    dispatch( {type: action, payload: changedItem, id});
+    handleClose()
+  }
+
+  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+        target: { value },
+      } = ev;
+      setchangedItem(value);
+    };
+
+  useEffect(() => {
+    setchangedItem(name)
+  }, [name])
+
+  const isDisabled = changedItem === name ? true : false;
 
     return (
         <Modal
@@ -40,14 +54,14 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, university}) => {
         <Box sx={style}>
           <Box sx={{ m: '50px' }}>
             <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
-              Edit University
+              Edit Item
             </Typography>
             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-              University
+              Item
             </Typography>
-            <ModalInput placeholder="University" item={changedUniversity} setItem={setchangedUniversity}/>
+            <ModalInput placeholder="Item" item={changedItem} setItem={handleChange}/>
             <Box>
-              <CustomButton variant="contained" children='Save University' disabled={false} onClick={updateUniversity}/>
+              <CustomButton variant="contained" children='Save Item' disabled={isDisabled} onClick={updateItem}/>
             </Box>
           </Box>
         </Box>

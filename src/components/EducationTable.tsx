@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import EditButton from './EditButton';
 import Delete from '../img/Delete';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-
 import {universitiesActions} from '../actionsTypes/universitiesActionTypes';
 import { useAppDispatch  } from '../redusers/useTypedSelector';
 import { IUniversity } from '../interfaces';
-import { Box } from '@mui/material';
 import { useTypedSelector } from '../redusers/useTypedSelector';
 import EditModal from './EditModal';
+import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 interface IBasicTable {
-  searchParam: any;
+  searchParam: string;
 }
 
 const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
@@ -41,7 +31,7 @@ const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
   const handleClose = () => setOpen(false);
   const [university, setUniversity] = useState({name: '', id: ''})
 
-  const modalOpen = (university: any) => {
+  const modalOpen = (university : IUniversity) => {
     setOpen(true);
     setUniversity(university);
   };
@@ -49,7 +39,7 @@ const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
   return (
     <Box>
 
-      <EditModal open={open} handleClose={handleClose} university={university} />
+      <EditModal open={open} handleClose={handleClose} item={university} action={universitiesActions.EDIT_UNIVERSITY_REQUEST}/>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
@@ -61,9 +51,8 @@ const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {universities.map((university: any) => (
+            {universities.map((university) => (
                 <TableRow
-                  id={university.id}
                   key={university.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
@@ -71,12 +60,12 @@ const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
                   <TableCell component="th" scope="row">
                     {university.name}
                   </TableCell>
-                  <TableCell align="right" id={university.id} key ={university.id}>
-                    <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} id={university.id} key ={university.id}>
-                      <Button variant='text' id={university.id} key ={university.id} onClick={()=>modalOpen(university)}>
+                  <TableCell align="right" key ={university.id}>
+                    <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key ={university.id}>
+                      <Button variant='text' key ={university.id} onClick={()=>modalOpen(university)}>
                         <EditButton />
                       </Button>
-                    <Button variant='text' id={university.id} onClick={delUniversity}>
+                    <Button variant='text' onClick={delUniversity} id={university.id} >
                       <Delete />
                     </Button>
                   </Stack>

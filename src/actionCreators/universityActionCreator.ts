@@ -7,6 +7,7 @@ import {
     addUniversityRequestAction,
     editUniversityRequestAction,
     editUniversityResultAction,
+    addUniversityResultAction,
 } from '../actionsTypes/universitiesActionTypes';
 import { IUniversity } from "../interfaces/index";
 
@@ -36,23 +37,24 @@ export const delUniversityResult = (): delUniversityResultAction => {
     }
 }
 
-export const addUniversityRequest = (payload: string): addUniversityRequestAction => {
+export const addUniversityRequest = (payload: Array<IUniversity>): addUniversityRequestAction => {
     return{
         type: universitiesActions.ADD_UNIVERSITY_REQUEST,
         payload: payload
     }
 }
 
-export const addUniversityResult = (): delUniversityResultAction => {
+export const addUniversityResult = (): addUniversityResultAction => {
     return{
         type: universitiesActions.ADD_UNIVERSITY_RESULT
     }
 }
 
-export const editUniversityRequest = (payload: IUniversity): editUniversityRequestAction => {
+export const editUniversityRequest = (payload: string, id: number): editUniversityRequestAction => {
     return{
         type: universitiesActions.EDIT_UNIVERSITY_REQUEST,
-        payload: payload
+        payload: payload,
+        id: id
     }
 }
 

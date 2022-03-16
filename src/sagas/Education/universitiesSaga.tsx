@@ -1,8 +1,7 @@
-import { put, call, takeLatest } from 'redux-saga/effects'
-import {universitiesActions} from '../actionsTypes/universitiesActionTypes'
+import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
-import { IUniversity } from '../interfaces/index'
-import { getUniversitiesRequest, getUniversitiesResult } from '../actionCreators/universityActionCreator';
+import { getUniversitiesResult } from '../../actionCreators/universityActionCreator';
+import { IUniversity } from '../../interfaces/index'
 
 const axiosGetUniversities = () => {
   const headers = {

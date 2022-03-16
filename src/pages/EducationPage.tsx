@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
 import EducationTable from '../components/EducationTable';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
-import Box from '@mui/material/Box';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import Modal from '@mui/material/Modal';
 import ModalInput from '../components/ModalInput';
 import DelInput from '../img/DelInput'
 import { universitiesActions } from '../actionsTypes/universitiesActionTypes';
 import { useAppDispatch, useTypedSelector } from '../redusers/useTypedSelector';
+import { Box, Modal, Typography } from '@mui/material';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -54,10 +51,11 @@ const EducationPage: React.FC = () => {
     
     const dispatch = useAppDispatch();
     const addUniversity = () => {
-        arrayUniversity.map((n) => {
-            dispatch( {type: universitiesActions.ADD_UNIVERSITY_REQUEST, payload: n});
-        });
+        const objArr= arrayUniversity.map(e => ({'Name': e}));
+        console.log(objArr)
+        dispatch( {type: universitiesActions.ADD_UNIVERSITY_REQUEST, payload: objArr});
         setArrayUniversity(['']);
+        handleClose();
     }
     const handleAddUnivercity = () =>
         setArrayUniversity([...arrayUniversity, university])
@@ -100,7 +98,7 @@ const EducationPage: React.FC = () => {
             </Modal>
             <Typography sx={{fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb:'30px'}}>Education ({universities.length})</Typography>
             <Box sx={{display: 'flex'}}>              
-                    <Input setParam={setSearchParam} />
+                    <Input setParam={setSearchParam} placeholder={"Search university"}/>
                 <Box sx={{marginLeft:'auto'}}>
                     <CustomButton variant="contained" onClick={(handleOpen)} children = '+ Add University' />
                 </Box>

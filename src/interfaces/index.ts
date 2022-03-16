@@ -3,6 +3,11 @@ export interface IUniversity {
     name: string,
 }
 
+export interface ICompany {
+    id: string,
+    name: string,
+}
+
 export const UserMapper = ({id, name}: IUniversity)  => {
     let newUser : IUniversity ={
         id,

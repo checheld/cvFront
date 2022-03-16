@@ -49,7 +49,7 @@ export default function PermanentDrawerLeft() {
     />
   );
 
-  const CustomLink = (name: string, link: string, code: string, icon: any) => {
+  const CustomLink = (name: string, link: string, code: string, icon: (x: string, y: string) => JSX.Element) => {
     return (
       <ListItem button
                 selected={selectedIndex === code}

@@ -1,8 +1,5 @@
 import { IUniversity } from "../interfaces/index";
  
- 
-
-
 export enum universitiesActions {
     GET_UNIVERSITIES_REQUEST = 'GET_UNIVERSITIES_REQUEST',
     GET_UNIVERSITIES_RESULT = 'GET_UNIVERSITIES_RESULT',
@@ -34,7 +31,7 @@ export interface delUniversityResultAction {
 
 export interface addUniversityRequestAction {
     type: string,
-    payload: string
+    payload: Array<IUniversity>
 }
 
 export interface addUniversityResultAction {
@@ -43,7 +40,8 @@ export interface addUniversityResultAction {
 
 export interface editUniversityRequestAction {
     type: string,
-    payload: IUniversity
+    payload: string,
+    id: number
 }
 
 export interface editUniversityResultAction {

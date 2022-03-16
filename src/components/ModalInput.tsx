@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
 import FormHelperText from '@mui/material/FormHelperText';
 
 
 interface Iprops {
     placeholder: string,
     item?: string,
-    setItem?: any,
+    setItem?: ChangeEventHandler<HTMLInputElement>,
     index?: number,
 }
 

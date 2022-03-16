@@ -6,10 +6,11 @@ import Search from '../img/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 
 interface ISearchAttributes {
-  setParam: any;
+  setParam: (value: string) => void,
+  placeholder: string
 }
 
-const UseFormControl:React.FC<ISearchAttributes> = ({ setParam }) => {
+const UseFormControl:React.FC<ISearchAttributes> = ({ setParam, placeholder }) => {
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -21,7 +22,7 @@ const UseFormControl:React.FC<ISearchAttributes> = ({ setParam }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl sx={{ width: '25ch' }}>
-        <OutlinedInput placeholder="Search university" id="input-with-icon-adornment" onChange={handleChange}
+        <OutlinedInput placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               <Search />

@@ -10,6 +10,13 @@ import getCompaniesFetch from './WorkExp/companiesSaga';
 import delCompanyFetch from './WorkExp/delCompanySaga';
 import addCompanyFetch from './WorkExp/addCompanySaga';
 import editCompanyFetch from './WorkExp/editCompanySaga'
+
+import {getTechnologiesRequestAction, technologiesActions, delTechnologyRequestAction, addTechnologyRequestAction, editTechnologyRequestAction} from '../actionsTypes/technologiesActionTypes';
+import getTechnologiesFetch from './Technologies/technologiesSaga';
+import delTechnologyFetch from './Technologies/delTechnologySaga';
+import addTechnologyFetch from './Technologies/addTechnologySaga';
+import editTechnologyFetch from './Technologies/editTechnologySaga'
+
 // university
 export function* getUniversities({type}:getUniversitiesRequestAction){
   yield call(getUniversitiesFetch);
@@ -44,6 +51,22 @@ export function* editCompany({type, payload, id}:editCompanyRequestAction){
   yield call(editCompanyFetch, payload, id);
 }
 
+// technology
+export function* getTechnologies({type}:getTechnologiesRequestAction){
+  yield call(getTechnologiesFetch);
+}
+
+export function* delTechnology({type, payload}:delTechnologyRequestAction){
+  yield call(delTechnologyFetch, payload);
+}
+
+export function* addTechnology({type, payload}:addTechnologyRequestAction){
+  yield call(addTechnologyFetch, payload);
+}
+
+export function* editTechnology({type, payload, id}:editTechnologyRequestAction){
+  yield call(editTechnologyFetch, payload, id);
+}
 
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
@@ -55,6 +78,11 @@ export function* watcherSaga() {
   yield takeEvery(companiesActions.DEL_COMPANY_REQUEST, delCompany);
   yield takeEvery(companiesActions.ADD_COMPANY_REQUEST, addCompany);
   yield takeEvery(companiesActions.EDIT_COMPANY_REQUEST, editCompany);
+
+  yield takeEvery(technologiesActions.GET_TECHNOLOGIES_REQUEST, getTechnologies);
+  yield takeEvery(technologiesActions.DEL_TECHNOLOGY_REQUEST, delTechnology);
+  yield takeEvery(technologiesActions.ADD_TECHNOLOGY_REQUEST, addTechnology);
+  yield takeEvery(technologiesActions.EDIT_TECHNOLOGY_REQUEST, editTechnology);
 }
 export default function* rootSaga(){
   yield watcherSaga();

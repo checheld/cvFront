@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WorkExpTable from '../components/WorkExpTable';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
@@ -29,6 +29,23 @@ const WorkExperiencePage: React.FC = () => {
     const [company, setCompany] = React.useState('');
     const [ searchParam, setSearchParam ] = React.useState<string>('');
     const companies = useTypedSelector((state) => state.companies.companies);
+
+    useEffect(() => {
+        const listener = (event: { code: string; preventDefault: () => void; }) => {
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault();
+                if (searchParam === '') {
+                    dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
+                } else {
+                    dispatch({ type: companiesActions.SEARCH_COMPANIES_REQUEST, payload: searchParam });
+                }
+            }
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+            document.removeEventListener("keydown", listener);
+        };
+    }, [searchParam]);
 
     const handleChangeCompany =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -8,7 +8,9 @@ export enum companiesActions {
     ADD_COMPANY_REQUEST = 'ADD_COMPANY_REQUEST',
     ADD_COMPANY_RESULT = 'ADD_COMPANY_RESULT',
     EDIT_COMPANY_REQUEST = 'EDIT_COMPANY_REQUEST',
-    EDIT_COMPANY_RESULT = "EDIT_COMPANY_RESULT"
+    EDIT_COMPANY_RESULT = "EDIT_COMPANY_RESULT",
+    SEARCH_COMPANIES_REQUEST = 'SEARCH_COMPANIES_REQUEST',
+    SEARCH_COMPANIES_RESULT = "SEARCH_COMPANIES_RESULT"
 }
 
 export interface getCompaniesResultAction {
@@ -46,4 +48,14 @@ export interface editCompanyRequestAction {
 
 export interface editCompanyResultAction {
     type: string,
+}
+
+export interface searchCompaniesRequestAction {
+    type: string,
+    payload: string
+}
+
+export interface searchCompaniesResultAction {
+    type: string,
+    payload: ICompany[]
 }

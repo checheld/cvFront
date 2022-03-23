@@ -7,6 +7,8 @@ import {
     addTechnologyRequestAction,
     addTechnologyResultAction,
     editTechnologyRequestAction,
+    searchTechnologiesRequestAction,
+    searchTechnologiesResultAction,
     editTechnologyResultAction
 } from '../actionsTypes/technologiesActionTypes';
 import { ITechnology } from "../interfaces/index";
@@ -49,7 +51,7 @@ export const addTechnologyResult = (): addTechnologyResultAction => {
     }
 }
 
-export const editTechnologyRequest = (payload: string, id: number): editTechnologyRequestAction => {
+export const editTechnologyRequest = (payload: {name: string, type: string}, id: number): editTechnologyRequestAction => {
     return{
         type: technologiesActions.EDIT_TECHNOLOGY_REQUEST,
         payload: payload,
@@ -60,5 +62,19 @@ export const editTechnologyRequest = (payload: string, id: number): editTechnolo
 export const editTechnologyResult = (): editTechnologyResultAction => {
     return{
         type: technologiesActions.EDIT_TECHNOLOGY_RESULT,
+    }
+}
+
+export const searchTechnologiesRequest = (payload: string): searchTechnologiesRequestAction => {
+    return{
+        type: technologiesActions.SEARCH_TECHNOLOGIES_REQUEST,
+        payload: payload
+    }
+}
+
+export const searchTechnologiesResult = (searchTechnologies:ITechnology[]) : searchTechnologiesResultAction => {
+    return{
+        type: technologiesActions.SEARCH_TECHNOLOGIES_RESULT,
+        payload: searchTechnologies
     }
 }

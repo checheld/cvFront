@@ -8,7 +8,6 @@ const axiosEditUniversity = (payload: string, id: number) => {
     'Content-Type': 'application/json;charset=utf-8',
   }
 
-  console.log(payload)
   return axios.put(
     `http://localhost:3001/universities/${id}`,
     JSON.stringify({Name: payload}),

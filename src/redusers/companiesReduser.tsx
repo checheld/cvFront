@@ -8,11 +8,13 @@ interface companiesReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    search: boolean
   }
   result: {
     add: null | undefined | number,
     delete: null | string,
     edit: null | undefined | number,
+    search: null | undefined | number,
   }
 }
 
@@ -23,11 +25,13 @@ export const initialState: companiesReduser = {
     add: false,
     delete: false,
     edit: false,
+    search: false,
   },
   result: {
     add: null,
     delete: null,
     edit: null,
+    search: null,
   }
 }
 
@@ -82,13 +86,14 @@ export const companiesReducer = (state = initialState, action: action):companies
 
     case companiesActions.EDIT_COMPANY_REQUEST:
       return {...state,
-          isLoading: {
-        ...state.isLoading, edit: true
-      }}; 
+        isLoading: {
+          ...state.isLoading, edit: true
+        }
+      };
 
     case companiesActions.EDIT_COMPANY_RESULT:
       return {
-        ...state, 
+        ...state,
         isLoading: {
           ...state.isLoading, edit: false
         },
@@ -96,6 +101,20 @@ export const companiesReducer = (state = initialState, action: action):companies
           ...state.result, edit: action.response
         }
       }
+
+    case companiesActions.SEARCH_COMPANIES_REQUEST:
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, search: true },
+      };
+
+    case companiesActions.SEARCH_COMPANIES_RESULT:
+      let uni: ICompany[] = action.response.map((x: ICompany) => UserMapper(x))
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, search: false },
+        companies: uni.sort((a, b) => Number(a.name) - Number(b.name))
+      };
 
     default:
       return state

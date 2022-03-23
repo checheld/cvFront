@@ -8,7 +8,9 @@ export enum universitiesActions {
     ADD_UNIVERSITY_REQUEST = 'ADD_UNIVERSITY_REQUEST',
     ADD_UNIVERSITY_RESULT = 'ADD_UNIVERSITY_RESULT',
     EDIT_UNIVERSITY_REQUEST = 'EDIT_UNIVERSITY_REQUEST',
-    EDIT_UNIVERSITY_RESULT = "EDIT_UNIVERSITY_RESULT"
+    EDIT_UNIVERSITY_RESULT = "EDIT_UNIVERSITY_RESULT",
+    SEARCH_UNIVERSITIES_REQUEST = 'SEARCH_UNIVERSITIES_REQUEST',
+    SEARCH_UNIVERSITIES_RESULT = "SEARCH_UNIVERSITIES_RESULT"
 }
 
 export interface getUniversitiesResultAction {
@@ -46,4 +48,14 @@ export interface editUniversityRequestAction {
 
 export interface editUniversityResultAction {
     type: string,
+}
+
+export interface searchUniversitiesRequestAction {
+    type: string,
+    payload: string
+}
+
+export interface searchUniversitiesResultAction {
+    type: string,
+    payload: IUniversity[]
 }

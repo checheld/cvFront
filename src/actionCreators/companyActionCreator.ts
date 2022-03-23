@@ -7,6 +7,8 @@ import {
     addCompanyRequestAction,
     editCompanyRequestAction,
     editCompanyResultAction,
+    searchCompaniesRequestAction,
+    searchCompaniesResultAction,
     companiesActions
 } from '../actionsTypes/companiesActionTypes';
 import { ICompany } from "../interfaces/index";
@@ -61,5 +63,19 @@ export const editCompanyRequest = (payload: string, id: number): editCompanyRequ
 export const editCompanyResult = (): editCompanyResultAction => {
     return{
         type: companiesActions.EDIT_COMPANY_RESULT,
+    }
+}
+
+export const searchCompaniesRequest = (payload: string): searchCompaniesRequestAction => {
+    return{
+        type: companiesActions.SEARCH_COMPANIES_REQUEST,
+        payload: payload
+    }
+}
+
+export const searchCompaniesResult = (searchCompanies:ICompany[]) : searchCompaniesResultAction => {
+    return{
+        type: companiesActions.SEARCH_COMPANIES_RESULT,
+        payload: searchCompanies
     }
 }

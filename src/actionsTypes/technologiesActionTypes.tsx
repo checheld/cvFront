@@ -8,7 +8,9 @@ export enum technologiesActions {
     ADD_TECHNOLOGY_REQUEST = 'ADD_TECHNOLOGY_REQUEST',
     ADD_TECHNOLOGY_RESULT = 'ADD_TECHNOLOGY_RESULT',
     EDIT_TECHNOLOGY_REQUEST = 'EDIT_TECHNOLOGY_REQUEST',
-    EDIT_TECHNOLOGY_RESULT = "EDIT_TECHNOLOGY_RESULT"
+    EDIT_TECHNOLOGY_RESULT = "EDIT_TECHNOLOGY_RESULT",
+    SEARCH_TECHNOLOGIES_REQUEST = 'SEARCH_TECHNOLOGIES_REQUEST',
+    SEARCH_TECHNOLOGIES_RESULT = "SEARCH_TECHNOLOGIES_RESULT"
 }
 
 export interface getTechnologiesResultAction {
@@ -40,10 +42,20 @@ export interface addTechnologyResultAction {
 
 export interface editTechnologyRequestAction {
     type: string,
-    payload: string,
+    payload: {name: string, type: string},
     id: number
 }
 
 export interface editTechnologyResultAction {
     type: string,
+}
+
+export interface searchTechnologiesRequestAction {
+    type: string,
+    payload: string
+}
+
+export interface searchTechnologiesResultAction {
+    type: string,
+    payload: ITechnology[]
 }

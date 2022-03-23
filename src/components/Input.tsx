@@ -16,12 +16,13 @@ const UseFormControl:React.FC<ISearchAttributes> = ({ setParam, placeholder }) =
     const {
       target: { value },
     } = ev;
-    setParam(value);
+    const inputValue = value;
+    setParam(inputValue);
   };
 
   return (
     <Box component="form" noValidate autoComplete="off">
-      <FormControl sx={{ width: '25ch' }}>
+      <FormControl>
         <OutlinedInput placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">

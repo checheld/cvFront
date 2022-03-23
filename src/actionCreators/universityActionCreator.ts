@@ -8,6 +8,8 @@ import {
     editUniversityRequestAction,
     editUniversityResultAction,
     addUniversityResultAction,
+    searchUniversitiesRequestAction,
+    searchUniversitiesResultAction
 } from '../actionsTypes/universitiesActionTypes';
 import { IUniversity } from "../interfaces/index";
 
@@ -61,5 +63,19 @@ export const editUniversityRequest = (payload: string, id: number): editUniversi
 export const editUniversityResult = (): editUniversityResultAction => {
     return{
         type: universitiesActions.EDIT_UNIVERSITY_RESULT,
+    }
+}
+
+export const searchUniversitiesRequest = (payload: string): searchUniversitiesRequestAction => {
+    return{
+        type: universitiesActions.SEARCH_UNIVERSITIES_REQUEST,
+        payload: payload
+    }
+}
+
+export const searchUniversitiesResult = (searchUniversities:IUniversity[]) : searchUniversitiesResultAction => {
+    return{
+        type: universitiesActions.SEARCH_UNIVERSITIES_RESULT,
+        payload: searchUniversities
     }
 }

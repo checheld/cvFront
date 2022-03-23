@@ -35,5 +35,5 @@ export const TechnologiesMapper = ({id, name, type}: ITechnology)  => {
 export interface action{
     type: string,
     payload?: any,
-    response?: number
+    response?: any
 }

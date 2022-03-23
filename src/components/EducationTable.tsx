@@ -8,20 +8,19 @@ import { useTypedSelector } from '../redusers/useTypedSelector';
 import EditModal from './EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-interface IBasicTable {
-  searchParam: string;
-}
 
-const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
+const BasicTable: React.FC = () => {
   const dispatch = useAppDispatch();
   let universities = useTypedSelector((state) => state.universities.universities);
   const result = useTypedSelector((state) => state.universities.result);
-  const loading = useTypedSelector((state) => state.universities.isLoading.get)
+  const loading = useTypedSelector((state) => state.universities.isLoading.get);
+  const search = useTypedSelector((state) => state.universities.isLoading.search)
+
   useEffect(() => {
     dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
   }, [result, dispatch]);
-
-  universities = universities.filter((item: IUniversity) => item.name.includes(searchParam))
+   
+  // universities = universities.filter((item: IUniversity) => item.name.includes(searchParam))
 
   const delUniversity = (event: React.MouseEvent<HTMLButtonElement>) => {
       dispatch( {type: universitiesActions.DEL_UNIVERSITY_REQUEST, payload: event.currentTarget.id});
@@ -31,7 +30,7 @@ const BasicTable: React.FC<IBasicTable> = ({ searchParam }) => {
   const handleClose = () => setOpen(false);
   const [university, setUniversity] = useState({name: '', id: ''})
 
-  const modalOpen = (university : IUniversity) => {
+  const modalOpen = (university : IUniversity) => { 
     setOpen(true);
     setUniversity(university);
   };

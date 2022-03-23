@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EducationTable from '../components/EducationTable';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
@@ -30,6 +30,23 @@ const EducationPage: React.FC = () => {
     const [ searchParam, setSearchParam ] = React.useState<string>('');
     const universities = useTypedSelector((state) => state.universities.universities);
 
+    useEffect(() => {
+        const listener = (event: { code: string; preventDefault: () => void; }) => {
+          if (event.code === "Enter" || event.code === "NumpadEnter") {
+            event.preventDefault();
+            if (searchParam === '') {
+                dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
+            } else {
+                dispatch( {type: universitiesActions.SEARCH_UNIVERSITIES_REQUEST, payload: searchParam});
+            }
+          }
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+          document.removeEventListener("keydown", listener);
+        };
+      }, [searchParam]);
+      
     const handleChangeUniverscity =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const editedArr = [...arrayUniversity];
@@ -52,7 +69,6 @@ const EducationPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const addUniversity = () => {
         const objArr= arrayUniversity.map(e => ({'Name': e}));
-        console.log(objArr)
         dispatch( {type: universitiesActions.ADD_UNIVERSITY_REQUEST, payload: objArr});
         setArrayUniversity(['']);
         handleClose();
@@ -60,6 +76,7 @@ const EducationPage: React.FC = () => {
     const handleAddUnivercity = () =>
         setArrayUniversity([...arrayUniversity, university])
     ;
+    
     return (
         <Box sx={{ pl: '250px', pr: '35px'}}>
 
@@ -103,7 +120,7 @@ const EducationPage: React.FC = () => {
                     <CustomButton variant="contained" onClick={(handleOpen)} children = '+ Add University' />
                 </Box>
             </Box>
-            <EducationTable searchParam={searchParam}/>
+            <EducationTable />
         </Box>
     )
 }

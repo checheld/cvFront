@@ -8,11 +8,13 @@ interface technologiesReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    search: boolean,
   }
   result: {
     add: null | undefined | number,
     delete: null | string,
     edit: null | undefined | number,
+    search: null | undefined | number,
   }
 }
 
@@ -23,11 +25,13 @@ export const initialState: technologiesReduser = {
     add: false,
     delete: false,
     edit: false,
+    search: false,
   },
   result: {
     add: null,
     delete: null,
     edit: null,
+    search: null,
   }
 }
 
@@ -88,7 +92,7 @@ export const technologiesReducer = (state = initialState, action: action):techno
 
     case technologiesActions.EDIT_TECHNOLOGY_RESULT:
       return {
-        ...state, 
+        ...state,
         isLoading: {
           ...state.isLoading, edit: false
         },
@@ -96,6 +100,20 @@ export const technologiesReducer = (state = initialState, action: action):techno
           ...state.result, edit: action.response
         }
       }
+
+    case technologiesActions.SEARCH_TECHNOLOGIES_REQUEST:
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, search: true },
+      };
+
+    case technologiesActions.SEARCH_TECHNOLOGIES_RESULT:
+      let uni: ITechnology[] = action.response.map((x: ITechnology) => TechnologiesMapper(x))
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, search: false },
+        technologies: uni.sort((a, b) => Number(a.name) - Number(b.name))
+      };
 
     default:
       return state

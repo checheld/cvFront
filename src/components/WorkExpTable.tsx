@@ -21,7 +21,7 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
     dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
   }, [result, dispatch]);
 
-  companies = companies.filter((item: ICompany) => item.name.includes(searchParam))
+  // companies = companies.filter((item: ICompany) => item.name.includes(searchParam))
 
   const delCompany = (event: React.MouseEvent<HTMLButtonElement>) => {
       dispatch( {type: companiesActions.DEL_COMPANY_REQUEST, payload: event.currentTarget.id});

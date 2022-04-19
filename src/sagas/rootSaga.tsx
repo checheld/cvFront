@@ -20,6 +20,21 @@ import addTechnologyFetch from './Technologies/addTechnologySaga';
 import editTechnologyFetch from './Technologies/editTechnologySaga'
 import searchTechnologiesFetch from './Technologies/searchTechnologiesSaga';
 
+import {getProjectsRequestAction, searchProjectsRequestAction, projectsActions, delProjectRequestAction, addProjectRequestAction, editProjectRequestAction, getProjectRequestAction} from '../actionsTypes/projectsActionTypes';
+import getProjectsFetch from './Projects/projectsSaga';
+import delProjectFetch from './Projects/delProjectSaga';
+import addProjectFetch from './Projects/addProjectSaga';
+import editProjectFetch from './Projects/editProjectSaga'
+import searchProjectsFetch from './Projects/searchProjectsSaga';
+import getProjectFetch from './Projects/getProjectSaga';
+
+import {getUsersRequestAction, searchUsersRequestAction, usersActions, delUserRequestAction, addUserRequestAction, editUserRequestAction, getUserRequestAction} from '../actionsTypes/usersActionTypes';
+import getUsersFetch from './Users/usersSaga';
+import delUserFetch from './Users/delUserSaga';
+import addUserFetch from './Users/addUserSaga';
+import editUserFetch from './Users/editUserSaga'
+import searchUsersFetch from './Users/searchUserSaga';
+import getUserFetch from './Users/getUserSaga';
 
 // university
 export function* getUniversities({type}:getUniversitiesRequestAction){
@@ -84,6 +99,56 @@ export function* searchTechnologies({type, payload}:searchTechnologiesRequestAct
   yield call(searchTechnologiesFetch, payload);
 }
 
+// project
+export function* getProjects({type}:getProjectsRequestAction){
+  yield call(getProjectsFetch);
+}
+
+export function* getProject({type, id}:getProjectRequestAction){
+  yield call(getProjectFetch, id);
+}
+
+export function* delProject({type, payload}:delProjectRequestAction){
+  yield call(delProjectFetch, payload);
+}
+
+export function* addProject({type, payload}:addProjectRequestAction){
+  yield call(addProjectFetch, payload);
+}
+
+export function* editProject({type, payload, id}:editProjectRequestAction){
+  yield call(editProjectFetch, payload, id);
+}
+
+export function* searchProjects({type, payload}:searchProjectsRequestAction){
+  yield call(searchProjectsFetch, payload);
+}
+
+// user
+export function* getUsers({type}:getUsersRequestAction){
+  yield call(getUsersFetch);
+}
+
+export function* getUser({type, id}:getUserRequestAction){
+  yield call(getUserFetch, id);
+}
+
+export function* delUser({type, payload}:delUserRequestAction){
+  yield call(delUserFetch, payload);
+}
+
+export function* addUser({type, payload}:addUserRequestAction){
+  yield call(addUserFetch, payload);
+}
+
+export function* editUser({type, payload, id}:editUserRequestAction){
+  yield call(editUserFetch, payload, id);
+}
+
+export function* searchUsers({type, payload}:searchUsersRequestAction){
+  yield call(searchUsersFetch, payload);
+}
+
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
   yield takeEvery(universitiesActions.DEL_UNIVERSITY_REQUEST, delUniversity);
@@ -102,6 +167,20 @@ export function* watcherSaga() {
   yield takeEvery(technologiesActions.ADD_TECHNOLOGY_REQUEST, addTechnology);
   yield takeEvery(technologiesActions.EDIT_TECHNOLOGY_REQUEST, editTechnology);
   yield takeEvery(technologiesActions.SEARCH_TECHNOLOGIES_REQUEST, searchTechnologies);
+
+  yield takeEvery(projectsActions.GET_PROJECTS_REQUEST, getProjects);
+  yield takeEvery(projectsActions.GET_PROJECT_REQUEST, getProject);
+  yield takeEvery(projectsActions.DEL_PROJECT_REQUEST, delProject);
+  yield takeEvery(projectsActions.ADD_PROJECT_REQUEST, addProject);
+  yield takeEvery(projectsActions.EDIT_PROJECT_REQUEST, editProject);
+  yield takeEvery(projectsActions.SEARCH_PROJECTS_REQUEST, searchProjects);
+
+  yield takeEvery(usersActions.GET_USERS_REQUEST, getUsers);
+  yield takeEvery(usersActions.GET_USER_REQUEST, getUser);
+  yield takeEvery(usersActions.DEL_USER_REQUEST, delUser);
+  yield takeEvery(usersActions.ADD_USER_REQUEST, addUser);
+  yield takeEvery(usersActions.EDIT_USER_REQUEST, editUser);
+  yield takeEvery(usersActions.SEARCH_USERS_REQUEST, searchUsers);
 }
 export default function* rootSaga(){
   yield watcherSaga();

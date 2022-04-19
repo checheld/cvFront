@@ -16,7 +16,8 @@ import Projects from './pages/ProjectsPage';
 import Education from './pages/EducationPage';
 import Technologies from './pages/TechnologiesPage';
 import WorkExperience from './pages/WorkExperiencePage';
-
+import ProjectIdPage from "./pages/ProjectIdPage";
+import UserIdPage from "./pages/UserIdPage";
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -29,6 +30,8 @@ const App: FC = () => {
           <Route path="/Education" element={<Education />}></Route>
           <Route path="/Technologies" element={<Technologies />}></Route>
           <Route path="/WorkExperience" element={<WorkExperience />}></Route>
+          <Route path="/projects/:id" element={<ProjectIdPage />}></Route>
+          <Route path="/users/:id" element={<UserIdPage />}></Route>
         </Routes>
       </Router>
     </ThemeProvider>

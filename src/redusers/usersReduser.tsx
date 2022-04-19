@@ -1,8 +1,9 @@
-import { universitiesActions } from "../actionsTypes/universitiesActionTypes"
-import { IUniversity, action, UniversitiesMapper } from "../interfaces/index"
+import { usersActions } from "../actionsTypes/usersActionTypes"
+import { IUser, action, UsersMapper } from "../interfaces/index"
 
-interface universitiesReduser {
-  universities: IUniversity[],
+interface usersReduser {
+  users: IUser[],
+  user?: IUser,
   isLoading: {
     add: boolean,
     delete: boolean,
@@ -18,8 +19,8 @@ interface universitiesReduser {
   }
 }
 
-export const initialState: universitiesReduser = {
-  universities: [],
+export const initialState: usersReduser = {
+  users: [],
   isLoading: {
     get: false,
     add: false,
@@ -35,31 +36,44 @@ export const initialState: universitiesReduser = {
   }
 }
 
-export const universitiesReducer = (state = initialState, action: action): universitiesReduser => {
+export const usersReducer = (state = initialState, action: action): usersReduser => {
 
   switch (action.type) {
-    case universitiesActions.GET_UNIVERSITIES_REQUEST:
+    case usersActions.GET_USERS_REQUEST:
       return {
         ...state,
         isLoading: { ...state.isLoading, get: true },
       };
 
-    case universitiesActions.GET_UNIVERSITIES_RESULT:
-      let universities: IUniversity[] = action.payload.map((x: IUniversity) => UniversitiesMapper(x))
+    case usersActions.GET_USERS_RESULT:
+      let users: IUser[] = action.payload.map((x: IUser) => UsersMapper(x))
       return {
         ...state,
         isLoading: { ...state.isLoading, get: false },
-        universities: universities.sort((a, b) => Number(a.name) - Number(b.name))
+        users: users.sort((a, b) => Number(a.firstName) - Number(b.firstName))
       };
 
-    case universitiesActions.DEL_UNIVERSITY_REQUEST:
+    case usersActions.GET_USER_REQUEST:
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, get: true },
+      };
+
+    case usersActions.GET_USER_RESULT:
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, get: false },
+        user: action.payload
+      };
+
+    case usersActions.DEL_USER_REQUEST:
       return {
         ...state, isLoading: { ...state.isLoading, delete: true }, result: {
           ...state.result, delete: null
         }
       };
 
-    case universitiesActions.DEL_UNIVERSITY_RESULT:
+    case usersActions.DEL_USER_RESULT:
       return {
         ...state,
         isLoading: { ...state.isLoading, delete: false },
@@ -68,7 +82,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       };
 
-    case universitiesActions.ADD_UNIVERSITY_REQUEST:
+    case usersActions.ADD_USER_REQUEST:
       return {
         ...state,
         isLoading: {
@@ -76,7 +90,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       };
 
-    case universitiesActions.ADD_UNIVERSITY_RESULT:
+    case usersActions.ADD_USER_RESULT:
       return {
         ...state,
         isLoading: {
@@ -87,7 +101,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       }
 
-    case universitiesActions.EDIT_UNIVERSITY_REQUEST:
+    case usersActions.EDIT_USER_REQUEST:
       return {
         ...state,
         isLoading: {
@@ -95,7 +109,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       };
 
-    case universitiesActions.EDIT_UNIVERSITY_RESULT:
+    case usersActions.EDIT_USER_RESULT:
       return {
         ...state,
         isLoading: {
@@ -106,18 +120,18 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       }
 
-    case universitiesActions.SEARCH_UNIVERSITIES_REQUEST:
+    case usersActions.SEARCH_USERS_REQUEST:
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
       };
 
-    case universitiesActions.SEARCH_UNIVERSITIES_RESULT:
-      let uni: IUniversity[] = action.response.map((x: IUniversity) => UniversitiesMapper(x))
+    case usersActions.SEARCH_USERS_RESULT:
+      let foundUsers: IUser[] = action.response.map((x: IUser) => UsersMapper(x))
       return {
         ...state,
         isLoading: { ...state.isLoading, search: false },
-        universities: uni.sort((a, b) => Number(a.name) - Number(b.name))
+        users: foundUsers.sort((a, b) => Number(a.firstName) - Number(b.firstName))
       };
 
     default:

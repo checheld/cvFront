@@ -1,14 +1,15 @@
-import { companiesActions } from "../actionsTypes/companiesActionTypes"
-import { ICompany, action, UniversitiesMapper } from "../interfaces/index"
+import { projectsActions } from "../actionsTypes/projectsActionTypes"
+import { IProject, action, ProjectsMapper } from "../interfaces/index"
 
-interface companiesReduser {
-  companies: ICompany[],
+interface projectsReduser {
+  projects: IProject[],
+  project?: IProject,
   isLoading: {
     add: boolean,
     delete: boolean,
     edit: boolean,
     get: boolean,
-    search: boolean
+    search: boolean,
   }
   result: {
     add: null | undefined | number,
@@ -18,9 +19,9 @@ interface companiesReduser {
   }
 }
 
-export const initialState: companiesReduser = {
-  companies: [],
-  isLoading: {
+export const initialState: projectsReduser = {
+    projects: [],
+    isLoading: {
     get: false,
     add: false,
     delete: false,
@@ -35,30 +36,41 @@ export const initialState: companiesReduser = {
   }
 }
 
-export const companiesReducer = (state = initialState, action: action):companiesReduser => {
+export const projectsReducer = (state = initialState, action: action):projectsReduser => {
 
   switch (action.type) {
-    case companiesActions.GET_COMPANIES_REQUEST:
+    case projectsActions.GET_PROJECTS_REQUEST:
       return {
         ...state,
         isLoading: {...state.isLoading, get: true},
       };
 
-    case companiesActions.GET_COMPANIES_RESULT:
-      let companies: ICompany[] = action.payload.map((x: ICompany) => UniversitiesMapper(x))
+    case projectsActions.GET_PROJECTS_RESULT:
+      let projects: IProject[] = action.payload.map((x: IProject) => ProjectsMapper(x))
       return {
         ...state,
         isLoading: {...state.isLoading, get: false},
-        companies: companies.sort((a, b) => Number(a.name) - Number(b.name))
+        projects: projects.sort((a, b) => Number(a.name) - Number(b.name))
+      };
+      case projectsActions.GET_PROJECT_REQUEST:
+      return {
+        ...state,
+        isLoading: {...state.isLoading, get: true},
       };
 
-    case companiesActions.DEL_COMPANY_REQUEST:
+    case projectsActions.GET_PROJECT_RESULT:
+      return {
+        ...state,
+        isLoading: {...state.isLoading, get: false},
+        project: action.payload
+      };
+    case projectsActions.DEL_PROJECT_REQUEST:
       return {...state, isLoading: {...state.isLoading, delete: true}, result: {
         ...state.result, delete: null
       }
     };
 
-    case companiesActions.DEL_COMPANY_RESULT:
+    case projectsActions.DEL_PROJECT_RESULT:
       return {
         ...state, 
         isLoading: {...state.isLoading, delete: false},
@@ -67,13 +79,13 @@ export const companiesReducer = (state = initialState, action: action):companies
         }
       };
 
-    case companiesActions.ADD_COMPANY_REQUEST:
+    case projectsActions.ADD_PROJECT_REQUEST:
       return {...state,
          isLoading: {
         ...state.isLoading, get: true
       }};   
 
-    case companiesActions.ADD_COMPANY_RESULT:
+    case projectsActions.ADD_PROJECT_RESULT:
       return {
         ...state, 
         isLoading: {
@@ -84,14 +96,13 @@ export const companiesReducer = (state = initialState, action: action):companies
         }
       }
 
-    case companiesActions.EDIT_COMPANY_REQUEST:
+    case projectsActions.EDIT_PROJECT_REQUEST:
       return {...state,
-        isLoading: {
-          ...state.isLoading, edit: true
-        }
-      };
+          isLoading: {
+        ...state.isLoading, edit: true
+      }}; 
 
-    case companiesActions.EDIT_COMPANY_RESULT:
+    case projectsActions.EDIT_PROJECT_RESULT:
       return {
         ...state,
         isLoading: {
@@ -102,18 +113,18 @@ export const companiesReducer = (state = initialState, action: action):companies
         }
       }
 
-    case companiesActions.SEARCH_COMPANIES_REQUEST:
+    case projectsActions.SEARCH_PROJECTS_REQUEST:
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
       };
 
-    case companiesActions.SEARCH_COMPANIES_RESULT:
-      let uni: ICompany[] = action.response.map((x: ICompany) => UniversitiesMapper(x))
+    case projectsActions.SEARCH_PROJECTS_RESULT:
+      let proj: IProject[] = action.response.map((x: IProject) => ProjectsMapper(x))
       return {
         ...state,
         isLoading: { ...state.isLoading, search: false },
-        companies: uni.sort((a, b) => Number(a.name) - Number(b.name))
+        projects: proj.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
     default:

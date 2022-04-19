@@ -26,6 +26,7 @@ const style = {
 
 const TechModal: React.FC<ITechModal> = ({open, handleClose, editableTech}) => {
 
+    const dispatch = useAppDispatch();
     const [technology, setTechnology] = React.useState('');
     const [type, setType] = React.useState('');
 
@@ -35,8 +36,7 @@ const TechModal: React.FC<ITechModal> = ({open, handleClose, editableTech}) => {
     } else {
         isDisabled = ((technology !== editableTech.name) || (type !== editableTech.type)) ? true : false;
     }
-
-    const dispatch = useAppDispatch();
+    
     const addTechnology = () => {
         const objTech = {'Name': technology, 'Type': type};
         dispatch( {type: technologiesActions.ADD_TECHNOLOGY_REQUEST, payload: objTech});

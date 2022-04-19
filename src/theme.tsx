@@ -209,7 +209,7 @@ export const theme = createTheme( defaultTheme, {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          width: '300px',
+          // width: '300px',
           height: '45px',
           marginBottom: '20px',
           backgroundColor: '#FFFFFF',

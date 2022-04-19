@@ -24,7 +24,7 @@ const EducationPage: React.FC = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    const dispatch = useAppDispatch();
     const [arrayUniversity, setArrayUniversity] = useState([""])
     const [university, setUniversity] = React.useState('');
     const [ searchParam, setSearchParam ] = React.useState<string>('');
@@ -66,7 +66,6 @@ const EducationPage: React.FC = () => {
         });
     }, [arrayUniversity]);
     
-    const dispatch = useAppDispatch();
     const addUniversity = () => {
         const objArr= arrayUniversity.map(e => ({'Name': e}));
         dispatch( {type: universitiesActions.ADD_UNIVERSITY_REQUEST, payload: objArr});

@@ -18,7 +18,7 @@ const axiosSearchCompanies = (payload: string) => {
 export default function* searchCompaniesFetch(payload: string) {
   try {
     const searchCompaniesResponse: AxiosResponse<ICompany[]> = yield call(axiosSearchCompanies, payload);
-    console.log(searchCompaniesResponse)
+    
     yield put({ type: companiesActions.SEARCH_COMPANIES_RESULT, response: searchCompaniesResponse.data });
   }
   catch (e) {

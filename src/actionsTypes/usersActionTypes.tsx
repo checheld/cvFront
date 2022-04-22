@@ -45,7 +45,7 @@ export interface delUserResultAction {
 
 export interface addUserRequestAction {
     type: string,
-    payload: Array<IUser>
+    payload: IUser
 }
 
 export interface addUserResultAction {

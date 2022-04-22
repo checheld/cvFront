@@ -8,7 +8,6 @@ import ProjectsTechSelect from '../components/ProjectsTechSelect';
 import { useAppDispatch, useTypedSelector } from '../redusers/useTypedSelector';
 import ProjectModal from '../components/ProjectModal';
 import { projectsActions } from '../actionsTypes/projectsActionTypes';
-import { IProject } from '../interfaces';
 
 const ProjectsPage: React.FC = () => {
 
@@ -20,17 +19,6 @@ const ProjectsPage: React.FC = () => {
     const [searchName, setSearchName] = React.useState<string>('');
     const [searchType, setSearchType] = React.useState<string>('');
     const [searchTech, setSearchTech] = React.useState<string>('');
-
-    // if (searchType !== '') {
-    //     projects = projects.filter((item: IProject) => item.type.includes(searchType));
-    // }
-    // if (searchTech !== '') {
-    //     projects.filter((item: IProject) =>
-    //         projects.map((pr) => 
-    //             pr.technologyList.map((tech) => tech.name === 'bluma')
-    //         )
-    //     )
-    // }
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {

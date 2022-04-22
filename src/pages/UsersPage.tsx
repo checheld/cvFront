@@ -7,6 +7,9 @@ import { usersActions } from '../actionsTypes/usersActionTypes';
 import Input from '../components/Input';
 import { useNavigate } from 'react-router-dom';
 import UserModal from '../components/UserModal';
+import { universitiesActions } from '../actionsTypes/universitiesActionTypes';
+import { technologiesActions } from '../actionsTypes/technologiesActionTypes';
+import { companiesActions } from '../actionsTypes/companiesActionTypes';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -29,6 +32,9 @@ const UsersPage: React.FC = () => {
 
     useEffect(() => {
         dispatch({ type: usersActions.GET_USERS_REQUEST });
+        dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
+        dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
+        dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
     }, [result, dispatch]);
 
     useEffect(() => {
@@ -55,7 +61,7 @@ const UsersPage: React.FC = () => {
             <Box sx={{ display: 'flex' }}>
                 <Input setParam={setSearchParam} placeholder={"Search user"} />
                 <Box sx={{ marginLeft: 'auto' }}>
-                    <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add University' />
+                    <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add User' />
                 </Box>
             </Box>
             <Box sx={{

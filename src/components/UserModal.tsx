@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import CustomButton from './CustomButton';
 import { useAppDispatch, useTypedSelector } from '../redusers/useTypedSelector';
 import { Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { ICompany, ITechnology, IUniversity } from '../interfaces';
+import { ICompany, IEducation, ITechnology, IUniversity } from '../interfaces';
 import ChipSelect from './ChipSelect';
 import DelInput from '../img/DelInput';
+import { usersActions } from '../actionsTypes/usersActionTypes';
 
 interface IUserModal {
     open: boolean,
@@ -31,43 +32,36 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [description, setDescription] = React.useState('');
-
-    const [university, setUniversity] = React.useState('');
-    const [speciality, setSpeciality] = React.useState('');
-    const [startDateEducation, setStartDateEducation] = React.useState('');
-    const [endDateEducation, setEndDateEducation] = React.useState('');
-    const [education, setEducation] = React.useState({university: university, speciality: speciality, startDate: startDateEducation, endDate: endDateEducation});
-    const [arrayEducation, setArrayEducation] = React.useState([]);
-
-    const [company, setCompany] = React.useState('');
-    const [position, setPosition] = React.useState('');
-    const [startDateWorkExperience, setStartDateWorkExperience] = React.useState('');
-    const [endDateWorkExperience, setEndDateWorkExperience] = React.useState('');
-    const [descriptionWorkExperience, setDescriptionWorkExperience] = React.useState('');
-    const [workExperience, setWorkExperience] = React.useState({company: company, position: position, startDate: startDateWorkExperience, endDate: endDateWorkExperience, description: descriptionWorkExperience });
-    const [arrayWorkExperience, setArrayWorkExperience] = React.useState([]);
-
+    const [education, setEducation] = React.useState({universityId: '', speciality: '', startDate: '', endDate: ''});
+    const [arrayEducation, setArrayEducation] = React.useState<any[]>([education]); 
+    const [workExperience, setWorkExperience] = React.useState({companyId: '', position: '', startDate: '', endDate: '', description: '' });
+    const [arrayWorkExperience, setArrayWorkExperience] = React.useState([workExperience]);
     const [tech, setTech] = React.useState([]);
     
-    // let isDisabled;
-    // if (editableUser === undefined) {
-    //     isDisabled = ((projectName !== '') && (type !== '') && (country !== '') && (link !== '') && (tech !== []) && (description !== '')) ? true : false;
-    // } else {
-    //     isDisabled = ((projectName !== editableProject.name) || (type !== editableProject.type) || (country !== editableProject.country) || (link !== editableProject.link) || (tech !== editableProject.technologyList) || (description !== editableProject.description)) ? true : false;
+    let isDisabled;
+    if (editableUser === undefined) {
+        isDisabled = ((firstName !== '') && (lastName !== '') && (description !== '') ) ? true : false;
+    } 
+    // else {
+    //     isDisabled = ((projectName !== editableUser.name) || (type !== editableUser.type) || (country !== editableUser.country) || (link !== editableUser.link) || (tech !== editableUser.technologyList) || (description !== editableUser.description)) ? true : false;
     // }
 
-    // const dispatch = useAppDispatch();
-    // const addProject = () => {
-    //     const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech };
-    //     dispatch({ type: projectsActions.ADD_PROJECT_REQUEST, payload: objProject });
-    //     setProjectName('');
-    //     setType('');
-    //     setCountry('');
-    //     setLink('');
-    //     setTech([]);
-    //     setDescription('');
-    //     handleClose();
-    // }
+    const dispatch = useAppDispatch();
+    const addUser = () => {
+        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech };
+        dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
+        setFirstName('');
+        setLastName('');
+        setDescription('');
+        setEducation({universityId: '', speciality: '', startDate: '', endDate: ''});
+        setArrayEducation([]);
+        setWorkExperience({companyId: '', position: '', startDate: '', endDate: '', description: '' });
+        setArrayWorkExperience([]);
+        setTech([]);
+        
+        handleClose();
+    }
+    
     // const editProject = () => {
     //     if (editableProject !== undefined) {
     //         const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech };
@@ -111,38 +105,43 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         } = ev;
         setDescription(value);
     };
-    const handleChangeUniversity = (event: SelectChangeEvent) => {
-        setUniversity(event.target.value);
+    const handleChangeUniversity = (index: number) => (event: SelectChangeEvent) => {
+        setEducation({...education, [event.target.name]: event.target.value})
+        const editedArr = [...arrayEducation];
+        editedArr[index as number] = {...education, [event.target.name]: event.target.value};
+        setArrayEducation(editedArr);
     };
-    const handleChangeSpeciality = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        const {
-            target: { value },
-        } = ev;
-        setSpeciality(value);
+    const handleChangeEducation = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEducation({...education, [event.target.name]: event.target.value})
+        const editedArr = [...arrayEducation];
+        editedArr[index as number] ={...education, [event.target.name]: event.target.value};
+        setArrayEducation(editedArr);
     };
-    const handleChangeStartDateEducation = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        const {
-            target: { value },
-        } = ev;
-        setStartDateEducation(value);
-    };
-    const handleChangeEndDateEducation = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        const {
-            target: { value },
-        } = ev;
-        setEndDateEducation(value);
-    };
-
     const removeEducation = (index: number): void => {
         setArrayEducation([...arrayEducation.slice(0, index), ...arrayEducation.slice(index + 1)]);
     };
-    // const handleAddEducation = () =>
-    //     setArrayEducation([...arrayEducation, education])
-    // ;
+    const handleAddEducation = () =>
+        setArrayEducation([...arrayEducation, education])
+    ;
 
-    const handleChangeCompany = (event: SelectChangeEvent) => {
-        setCompany(event.target.value);
+    const handleChangeCompany = (index: number) => (event: SelectChangeEvent) => {
+        setWorkExperience({...workExperience, [event.target.name]: event.target.value})
+        const editedArr = [...arrayWorkExperience];
+        editedArr[index as number] = {...workExperience, [event.target.name]: event.target.value};
+        setArrayWorkExperience(editedArr);
     };
+    const handleChangeWorkExperience = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setWorkExperience({...workExperience, [event.target.name]: event.target.value})
+        const editedArr = [...arrayWorkExperience];
+        editedArr[index as number] ={...workExperience, [event.target.name]: event.target.value};
+        setArrayWorkExperience(editedArr);
+    };
+    const removeWorkExperience = (index: number): void => {
+        setArrayWorkExperience([...arrayWorkExperience.slice(0, index), ...arrayWorkExperience.slice(index + 1)]);
+    };
+    const handleAddWorkExperience = () =>
+        setArrayWorkExperience([...arrayWorkExperience, workExperience])
+    ;
 
     return (
         <Modal
@@ -202,21 +201,22 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                             <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
                                 EDUCATION
                             </Typography>
-                            {/* {arrayEducation.length && arrayEducation.map((education, index) => (
+                            {arrayEducation.length && arrayEducation.map((education, index) => (
                                 <Box sx={{m:0, p:0}} key={index}>
                                      {index > 0 && (
                                         <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
                                             <DelInput index={index} removeItem={removeEducation} />
                                         </Box>
-                                    )} */}
+                                    )} 
                                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                         University
                                     </Typography>
                                     <FormControl>
                                         <Select
-                                            value={university}
-                                            onChange={handleChangeUniversity}
                                             defaultValue={""}
+                                            //value={education.universityId}
+                                            name='universityId'
+                                            onChange={handleChangeUniversity(index)}
                                             sx={{ width: '700px', height: '50px', mb: '20px' }}
                                             displayEmpty
                                         >
@@ -224,7 +224,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                 <em>Select university</em>
                                             </MenuItem>
                                             {
-                                                universities.map((uni: IUniversity) => <MenuItem value={uni.name}>{uni.name}</MenuItem>)
+                                                universities.map((uni: IUniversity) => <MenuItem value={uni.id}>{uni.name}</MenuItem>)
                                             }
                                         </Select>
                                     </FormControl>
@@ -234,10 +234,11 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                 Speciality
                                             </Typography>
                                             <OutlinedInput placeholder='Speciality'
-                                                value={speciality}
+                                                value={education.speciality}
+                                                name='speciality'
                                                 id="input"
                                                 sx={{ width: '410px', mb: '0px', height: '50px' }}
-                                                onChange={handleChangeSpeciality}
+                                                onChange={handleChangeEducation(index)}
                                             />
                                         </Box>
                                         <Box sx={{ mr: '20px' }}>
@@ -254,8 +255,9 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     InputLabelProps={{
                                                     shrink: true,
                                                     }}
-                                                    value={startDateEducation}
-                                                    onChange={handleChangeStartDateEducation}
+                                                    name='startDate'
+                                                    value={education.startDate}
+                                                    onChange={handleChangeEducation(index)}
                                                 />
                                                 <TextField
                                                     id="date"
@@ -266,18 +268,19 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     InputLabelProps={{
                                                     shrink: true,
                                                     }}
-                                                    value={endDateEducation}
-                                                    onChange={handleChangeEndDateEducation}
+                                                    name='endDate'
+                                                    value={education.endDate}
+                                                    onChange={handleChangeEducation(index)}
                                                 />
                                             </Box>
                                         </Box>
                                     </Box>
-                                {/* </Box>
-                            ))} */}
+                                </Box>
+                            ))} 
                             <Box sx={{ mb: '35px' }}>
                                 <CustomButton variant="outlined"
                                     children='+ Add Education'
-                                    // onClick={handleAddEducation}
+                                    onClick={handleAddEducation}
                                 />
                             </Box>
                         </Box>
@@ -286,82 +289,99 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                             <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
                                 WORK EXPERIENCE
                             </Typography>
-                            <Box sx={{display: 'flex'}}>
-                                <Box sx={{mr: '20px'}}>
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                        Company name
-                                    </Typography>
-                                    <FormControl>
-                                        <Select
-                                            value={company}
-                                            onChange={handleChangeCompany}
-                                            defaultValue={""}
-                                            sx={{ width: '195px', height: '50px', mb: '20px' }}
-                                            displayEmpty
-                                        >
-                                            <MenuItem value="">
-                                                <em>Select company</em>
-                                            </MenuItem>
-                                            {
-                                                companies.map((comp: ICompany) => <MenuItem value={comp.name}>{comp.name}</MenuItem>)
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Box>
-                                <Box sx={{ mr: '20px' }}>
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                        Position
-                                    </Typography>
-                                    <OutlinedInput placeholder='Position'
-                                        value={position}
-                                        id="input"
-                                        sx={{ width: '195px', mb: '0px', height: '50px' }}
-                                        // onChange={handleChangePosition}
-                                    />
-                                </Box>
-                                <Box sx={{ mr: '20px' }}>
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                        Start date - End date
-                                    </Typography>
-                                    <Box sx={{display:'flex'}}>
-                                        <TextField
-                                            id="date"
-                                            label="Start date"
-                                            type="date"
-                                            defaultValue="2017-05-24"
-                                            sx={{ width: '130px', mr: '10px' }}
-                                            InputLabelProps={{
-                                            shrink: true,
-                                            }}
-                                        />
-                                        <TextField
-                                            id="date"
-                                            label="End date"
-                                            type="date"
-                                            defaultValue="2017-05-24"
-                                            sx={{ width: '130px' }}
-                                            InputLabelProps={{
-                                            shrink: true,
-                                            }}
+                            {arrayWorkExperience.length && arrayWorkExperience.map((workExperience, index) => (
+                                 <Box sx={{m:0, p:0}} key={index}>
+                                    {index > 0 && (
+                                        <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
+                                            <DelInput index={index} removeItem={removeWorkExperience} />
+                                        </Box>
+                                    )} 
+                                    <Box sx={{display: 'flex'}}>
+                                        <Box sx={{mr: '20px'}}>
+                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                                Company name
+                                            </Typography>
+                                            <FormControl>
+                                                <Select
+                                                    onChange={handleChangeCompany(index)}
+                                                    defaultValue={""}
+                                                    name='companyId'
+                                                    sx={{ width: '195px', height: '50px', mb: '20px' }}
+                                                    displayEmpty
+                                                >
+                                                    <MenuItem value="">
+                                                        <em>Select company</em>
+                                                    </MenuItem>
+                                                    {
+                                                        companies.map((comp: ICompany) => <MenuItem value={comp.id}>{comp.name}</MenuItem>)
+                                                    }
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+                                        <Box sx={{ mr: '20px' }}>
+                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                                Position
+                                            </Typography>
+                                            <OutlinedInput placeholder='Position'
+                                                value={workExperience.position}
+                                                name='position'
+                                                id="input"
+                                                sx={{ width: '195px', mb: '0px', height: '50px' }}
+                                                onChange={handleChangeWorkExperience(index)}
+                                            />
+                                        </Box>
+                                        <Box sx={{ mr: '20px' }}>
+                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                                Start date - End date
+                                            </Typography>
+                                            <Box sx={{display:'flex'}}>
+                                                <TextField
+                                                    id="date"
+                                                    label="Start date"
+                                                    type="date"
+                                                    defaultValue="2017-05-24"
+                                                    sx={{ width: '130px', mr: '10px' }}
+                                                    InputLabelProps={{
+                                                    shrink: true,
+                                                    }}
+                                                    name='startDate'
+                                                    value={workExperience.startDate}
+                                                    onChange={handleChangeWorkExperience(index)}
+                                                />
+                                                <TextField
+                                                    id="date"
+                                                    label="End date"
+                                                    type="date"
+                                                    defaultValue="2017-05-24"
+                                                    sx={{ width: '130px' }}
+                                                    InputLabelProps={{
+                                                    shrink: true,
+                                                    }}
+                                                    name='endDate'
+                                                    value={workExperience.endDate}
+                                                    onChange={handleChangeWorkExperience(index)}
+                                                />
+                                            </Box>
+                                        </Box>
+                                    </Box> 
+                                    <Box sx={{ mr: '20px', mb: '25px' }}>
+                                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                            Description
+                                        </Typography>
+                                        <OutlinedInput placeholder='Description'
+                                            id="input"
+                                            sx={{ width: '700px', mb: '0px', height: '100px' }}
+                                            name='description'
+                                            value={workExperience.description}
+                                            onChange={handleChangeWorkExperience(index)}
                                         />
                                     </Box>
                                 </Box>
-                            </Box> 
-                            <Box sx={{ mr: '20px', mb: '25px' }}>
-                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                    Description
-                                </Typography>
-                                <OutlinedInput placeholder='Description'
-                                    value={description}
-                                    id="input"
-                                    sx={{ width: '700px', mb: '0px', height: '100px' }}
-                                    // onChange={handleChangeDescription}
-                                />
-                            </Box>
+                            ))}
                             <Box sx={{ mb: '35px' }}>
                                 <CustomButton variant="outlined"
-                                    children='+ Add Company'
-                                    // onClick={handleAddCompany}
+                                    children='+ Add Work Experience'
+                                    onClick={handleAddWorkExperience}
                                 />
                             </Box>
                         </Box>
@@ -377,16 +397,16 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                     {(editableUser === undefined) ? (
                         <Box  sx={{mt: '15px'}}>
                             <CustomButton variant="contained"
-                                // onClick={addUser}
-                                children='Add Technology'
-                                // disabled={!isDisabled}
+                                onClick={addUser}
+                                children='Add User'
+                                disabled={!isDisabled}
                             />
                         </Box>
                     ) : (
                             <Box  sx={{mt: '15px'}}>
                                 <CustomButton variant="contained"
                                     // onClick={editUser}
-                                    children='Save Technology'
+                                    children='Save User'
                                     // disabled={!isDisabled}
                                 />
                             </Box>

@@ -52,7 +52,7 @@ export const delUserResult = (): delUserResultAction => {
     }
 }
 
-export const addUserRequest = (payload: Array<IUser>): addUserRequestAction => {
+export const addUserRequest = (payload: IUser): addUserRequestAction => {
     return{
         type: usersActions.ADD_USER_REQUEST,
         payload: payload

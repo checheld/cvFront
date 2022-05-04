@@ -1,5 +1,5 @@
 import React from "react";
-import PermanentDrawerLeft from "./components/AppBar";
+import PermanentDrawerLeft from "./components/AppBar/AppBar";
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
 import { FC } from 'react';
@@ -10,14 +10,14 @@ import {
   Navigate
 } from "react-router-dom";
 import './App.css';
-import CVsPage from './pages/CVsPage';
-import Users from './pages/UsersPage';
-import Projects from './pages/ProjectsPage';
-import Education from './pages/EducationPage';
-import Technologies from './pages/TechnologiesPage';
-import WorkExperience from './pages/WorkExperiencePage';
-import ProjectIdPage from "./pages/ProjectIdPage";
-import UserIdPage from "./pages/UserIdPage";
+import CVsPage from './components/Pages/CVs/CVsPage';
+import Users from './components/Pages/Users/UsersPage';
+import Projects from './components/Pages/Projects/ProjectsPage';
+import Education from './components/Pages/Educations/EducationPage';
+import Technologies from './components/Pages/Technologies/TechnologiesPage';
+import WorkExperience from './components/Pages/WorkExperience/WorkExperiencePage';
+import ProjectIdPage from "./components/Pages/ProjectId/ProjectIdPage";
+import UserIdPage from "./components/Pages/UserId/UserIdPage";
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>

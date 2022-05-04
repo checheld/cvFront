@@ -222,7 +222,6 @@ export const theme = createTheme( defaultTheme, {
             border: 'none',
             },
           },
-         
         },
       }
     },

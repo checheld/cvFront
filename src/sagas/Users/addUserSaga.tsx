@@ -7,7 +7,7 @@ const axiosAddUser = (data: IUser) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
-  return axios.post<any>(
+  return axios.post<IUser>(
     `http://localhost:3001/user/add`, 
     JSON.stringify(data),
       {
@@ -17,7 +17,7 @@ const axiosAddUser = (data: IUser) => {
 
 export default function* addUserFetch(data: IUser) {
   try {
-        const addUsersResponse: AxiosResponse<any> = yield axiosAddUser(data);
+        const addUsersResponse: AxiosResponse<IUser> = yield axiosAddUser(data);
         yield put({type: usersActions.ADD_USER_RESULT, response: addUsersResponse.data});
       }
   catch(e) {

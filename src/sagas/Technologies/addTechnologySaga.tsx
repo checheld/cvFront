@@ -7,7 +7,7 @@ const axiosAddTechnology = (data: Array<ITechnology>) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
-  return axios.post<any>(
+  return axios.post<Array<ITechnology>>(
     `http://localhost:3001/technologies/add`, 
     JSON.stringify(data),
       {
@@ -17,7 +17,7 @@ const axiosAddTechnology = (data: Array<ITechnology>) => {
 
 export default function* addTechnologyFetch(data: Array<ITechnology>) {
   try {
-        const addTechnologiesResponse: AxiosResponse<any> = yield axiosAddTechnology(data);
+        const addTechnologiesResponse: AxiosResponse<Array<ITechnology>> = yield axiosAddTechnology(data);
         yield put({type: technologiesActions.ADD_TECHNOLOGY_RESULT, response: addTechnologiesResponse.data});
       }
   catch(e) {

@@ -36,6 +36,14 @@ import editUserFetch from './Users/editUserSaga'
 import searchUsersFetch from './Users/searchUserSaga';
 import getUserFetch from './Users/getUserSaga';
 
+import {getCVsRequestAction, searchCVsRequestAction, CVsActions, delCVRequestAction, addCVRequestAction, editCVRequestAction, getCVRequestAction} from '../actionsTypes/CVsActionTypes';
+import getCVsFetch from './CVs/getCVsSaga';
+import delCVFetch from './CVs/delCVSaga';
+import addCVFetch from './CVs/addCVSaga';
+import editCVFetch from './CVs/editCVSaga'
+import searchCVsFetch from './CVs/searchCVsSaga';
+import getCVFetch from './CVs/getCVSaga';
+
 // university
 export function* getUniversities({type}:getUniversitiesRequestAction){
   yield call(getUniversitiesFetch);
@@ -149,6 +157,31 @@ export function* searchUsers({type, payload}:searchUsersRequestAction){
   yield call(searchUsersFetch, payload);
 }
 
+// CV
+export function* getCVs({type}:getCVsRequestAction){
+  yield call(getCVsFetch);
+}
+
+export function* getCV({type, id}:getCVRequestAction){
+  yield call(getCVFetch, id);
+}
+
+export function* delCV({type, payload}:delCVRequestAction){
+  yield call(delCVFetch, payload);
+}
+
+export function* addCV({type, payload}:addCVRequestAction){
+  yield call(addCVFetch, payload);
+}
+
+export function* editCV({type, payload, id}:editCVRequestAction){
+  yield call(editCVFetch, payload, id);
+}
+
+export function* searchCVs({type, payload}:searchCVsRequestAction){
+  yield call(searchCVsFetch, payload);
+}
+
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
   yield takeEvery(universitiesActions.DEL_UNIVERSITY_REQUEST, delUniversity);
@@ -181,6 +214,13 @@ export function* watcherSaga() {
   yield takeEvery(usersActions.ADD_USER_REQUEST, addUser);
   yield takeEvery(usersActions.EDIT_USER_REQUEST, editUser);
   yield takeEvery(usersActions.SEARCH_USERS_REQUEST, searchUsers);
+
+  yield takeEvery(CVsActions.GET_CVS_REQUEST, getCVs);
+  yield takeEvery(CVsActions.GET_CV_REQUEST, getCV);
+  yield takeEvery(CVsActions.DEL_CV_REQUEST, delCV);
+  yield takeEvery(CVsActions.ADD_CV_REQUEST, addCV);
+  yield takeEvery(CVsActions.EDIT_CV_REQUEST, editCV);
+  yield takeEvery(CVsActions.SEARCH_CVS_REQUEST, searchCVs);
 }
 export default function* rootSaga(){
   yield watcherSaga();

@@ -7,7 +7,7 @@ const axiosAddProject = (data: Array<IProject>) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
-  return axios.post<any>(
+  return axios.post<Array<IProject>>(
     `http://localhost:3001/projects/add`, 
     JSON.stringify(data),
       {
@@ -17,7 +17,7 @@ const axiosAddProject = (data: Array<IProject>) => {
 
 export default function* addProjectFetch(data: Array<IProject>) {
   try {
-        const addProjectsResponse: AxiosResponse<any> = yield axiosAddProject(data);
+        const addProjectsResponse: AxiosResponse<Array<IProject>> = yield axiosAddProject(data);
         yield put({type: projectsActions.ADD_PROJECT_RESULT, response: addProjectsResponse.data});
       }
   catch(e) {

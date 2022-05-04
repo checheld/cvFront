@@ -7,7 +7,7 @@ const axiosAddUniversity = (data: Array<IUniversity>) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
-  return axios.post<any>(
+  return axios.post<Array<IUniversity>>(
     `http://localhost:3001/universities/add`, 
     JSON.stringify(data),
       {
@@ -17,7 +17,7 @@ const axiosAddUniversity = (data: Array<IUniversity>) => {
 
 export default function* addUniversityFetch(data: Array<IUniversity>) {
   try {
-        const addUniversitiesResponse: AxiosResponse<any> = yield axiosAddUniversity(data);
+        const addUniversitiesResponse: AxiosResponse<Array<IUniversity>> = yield axiosAddUniversity(data);
         yield put({type: universitiesActions.ADD_UNIVERSITY_RESULT, response: addUniversitiesResponse.data});
       }
   catch(e) {

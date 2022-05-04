@@ -36,13 +36,13 @@ export interface IUser {
 }
 
 export interface IEducation {
-    id: string,
+    id?: string,
     universityId: string,
-    university: IUniversity,
+    university?: IUniversity,
     speciality: string,
     startDate: string,
     endDate: string,
-    userId: string,
+    userId?: string,
 }
 
 export interface IWorkExperience {
@@ -54,6 +54,22 @@ export interface IWorkExperience {
     endDate: string,
     description: string, 
     userId: string,
+}
+
+export interface IProjectCV {
+    id?: string,
+    projectId: string,
+    project?: IProject, 
+    position: string,
+    startDate: string,
+    endDate: string,
+    description: string
+}
+export interface ICV {
+    id: string,
+    cvName: string,
+    userId: string,
+    projectCVList: IProjectCV[]
 }
 
 export const UniversitiesMapper = ({id, name}: IUniversity)  => {
@@ -126,6 +142,28 @@ export const WorkExperienceMapper = ({id, companyId, company, position, startDat
     return newWorkExperience;
 }
 
+export const CVsMapper = ({id, cvName, userId, projectCVList}: ICV)  => {
+    let newCV : ICV = {
+        id,
+        cvName,
+        userId,
+        projectCVList
+    }
+    return newCV;
+}
+
+export const ProjectCVMapper = ({id, projectId, project, position, startDate, endDate, description}: IProjectCV)  => {
+    let newProjectCV : IProjectCV = {
+        id,
+        projectId,
+        project, 
+        position,
+        startDate,
+        endDate,
+        description
+    }
+    return newProjectCV;
+}
 export interface action{
     type: string,
     payload?: any,

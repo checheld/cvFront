@@ -1,20 +1,24 @@
 import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { ICompany, IEducation, ITechnology, IUniversity, IUser } from '../../../../interfaces';
+import { Backdrop, Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { ICompany, IEducation, IPhotoParams, ITechnology, IUniversity, IUser } from '../../../../interfaces';
 import ChipSelect from '../../../Items/ChipSelect'; 
 import DelInput from '../../../../img/DelInput';
 import { usersActions } from '../../../../actionsTypes/usersActionTypes';
+import { userPhotosActions } from '../../../../actionsTypes/userPhotosActionTypes';
+import Photo from '../Items/Photo';
+import PhotoModal from './PhotoModal';
+import PhotoModalTemp from './PhotoModalTemp';
 
 interface IUserModal {
     open: boolean,
     handleClose: () => void,
-    editableUser?: IUser
+    editableUser?: IUser,
 }
 const style = {
     position: 'absolute' as 'absolute',
-    top: '90%',
+    top: '100%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     zIndex: 10, 
@@ -25,6 +29,14 @@ const style = {
 };
 
 const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) => {
+
+    const initialParams: IPhotoParams = {
+        scale: 1,
+        position: {
+            x: 0.5,
+            y: 0.5,
+        },
+    };
 
     let universities = useTypedSelector((state) => state.universities.universities);
     let companies = useTypedSelector((state) => state.companies.companies);
@@ -37,7 +49,21 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const [workExperience, setWorkExperience] = React.useState({companyId: '', position: '', startDate: '', endDate: '', description: '' });
     const [arrayWorkExperience, setArrayWorkExperience] = React.useState([workExperience]);
     const [tech, setTech] = React.useState<ITechnology[]>([]);
+    const [openPhoto, setOpenPhoto] = React.useState(false);
+    const handleOpenPhoto = () => setOpenPhoto(true);
+    const handleClosePhoto = () => setOpenPhoto(false);
+    const [params, setParams] = React.useState(initialParams);
+    const [photo, setPhoto] = React.useState<File | null>(null);
     
+
+    // React.useEffect(() => {
+    //   setPhoto({ ...photo, params });
+    // }, [params]);
+    // React.useEffect(() => {
+    //   props.user.photo.params
+    //     ? setParams(props.user.photo.params)
+    //     : setParams(initialParams);
+    // }, [props.user.photo.params]);
     let isDisabled;
     if (editableUser === undefined) {
         isDisabled = ((firstName !== '') && (lastName !== '') && (description !== '') ) ? true : false;
@@ -49,22 +75,26 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     const dispatch = useAppDispatch();
     const addUser = () => {
-        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech };
+        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'userPhoto': photo };
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
         setLastName('');
-        setDescription('');
-        setEducation({universityId: '', speciality: '', startDate: '', endDate: ''});
+        setDescription('');: ''})
+        setEducation({universityId: '', speciality: '', startDate: '', endDate;
         setArrayEducation([]);
         setWorkExperience({companyId: '', position: '', startDate: '', endDate: '', description: '' });
         setArrayWorkExperience([]);
         setTech([]);
+        setPhoto(null);
         handleClose();
     }
     
     const editUser = () => {
+        if(photo !== null) {
+            dispatch({ type: userPhotosActions.ADD_USERPHOTO_REQUEST, payload: photo });
+        }
         if (editableUser !== undefined) {
-            const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech };
+            const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'userPhoto': photo };
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
             setLastName('');
@@ -74,6 +104,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             setWorkExperience({companyId: '', position: '', startDate: '', endDate: '', description: '' });
             setArrayWorkExperience([]);
             setTech([]);
+            setPhoto(null);
             handleClose();
         }
     }
@@ -85,6 +116,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             setArrayEducation(editableUser.educationList);
             setArrayWorkExperience(editableUser.workExperienceList);
             setTech(editableUser.technologyList);
+            setPhoto(editableUser.userPhoto);
             handleClose();
         }
     }, [editableUser]);
@@ -126,7 +158,6 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         setArrayEducation([...arrayEducation, education])
         }
     ;
-
     const handleChangeCompany = (index: number) => (event: SelectChangeEvent) => {
         setWorkExperience({...workExperience, [event.target.name]: event.target.value})
         const editedArr = [...arrayWorkExperience];
@@ -155,7 +186,21 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             style={{ overflow: 'scroll' }}
         >
             <Box sx={style}>
-                <Box sx={{ m: '50px' }}>
+                <PhotoModal 
+                    handleClosePhoto={handleClosePhoto}
+                    openPhoto={openPhoto}
+                    photo={photo}
+                    setPhoto={setPhoto}
+                />
+                {/* <PhotoModalTemp
+                    handleClosePhoto={handleClosePhoto}
+                    openPhoto={openPhoto}
+                    photo={photo}
+                    setPhoto={setPhoto}
+                    params={params}
+                    setParams={setParams}
+                /> */}
+                <Box sx={{ m: '30px' }}>
                     {(editableUser === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add Users
@@ -166,27 +211,40 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                         </Typography>
                     )}
                     <Box>
-                        <Box sx={{ mr: '20px', mb: '25px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                First name
-                            </Typography>
-                            <OutlinedInput placeholder='First name'
-                                value={firstName}
-                                id="input"
-                                sx={{ width: '700px', mb: '0px', height: '50px' }}
-                                onChange={handleChangeFirstName}
-                            />
-                        </Box>
-                        <Box sx={{ mr: '20px', mb: '25px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Last name
-                            </Typography>
-                            <OutlinedInput placeholder='Last name'
-                                value={lastName}
-                                id="input"
-                                sx={{ width: '700px', mb: '0px', height: '50px' }}
-                                onChange={handleChangeLastName}
-                            />
+                        <Box sx={{ m: 0, p: 0, display: 'flex' }}>
+                            <Box sx={{ mr: '35px', ml: 0, mt: 0, mb: 0, p: 0 }}>
+                                <Box sx={{ ml: '15px', mb: '20px' }}>
+                                    <Photo params={initialParams} photo={photo}/>
+                                </Box>
+                                    <CustomButton variant="outlined"
+                                        children= {`+ ${editableUser ? "Edit " : "Add "}photo`}
+                                    onClick={handleOpenPhoto}
+                                    />
+                            </Box>
+                            <Box sx={{ m: 0, p: 0 }}>
+                                <Box sx={{ mr: '20px', mb: '25px' }}>
+                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                        First name
+                                    </Typography>
+                                    <OutlinedInput placeholder='First name'
+                                        value={firstName}
+                                        id="input"
+                                        sx={{ width: '503px', mb: '0px', height: '50px' }}
+                                        onChange={handleChangeFirstName}
+                                    />
+                                </Box>
+                                <Box sx={{ mr: '20px', mb: '25px' }}>
+                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                        Last name
+                                    </Typography>
+                                    <OutlinedInput placeholder='Last name'
+                                        value={lastName}
+                                        id="input"
+                                        sx={{ width: '503px', mb: '0px', height: '50px' }}
+                                        onChange={handleChangeLastName}
+                                    />
+                                </Box>
+                            </Box>
                         </Box>
                         <Box sx={{ mr: '20px', mb: '40px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>

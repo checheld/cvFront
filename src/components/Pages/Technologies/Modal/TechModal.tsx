@@ -68,7 +68,7 @@ const TechModal: React.FC<ITechModal> = ({open, handleClose, editableTech}) => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Box sx={{ m: '50px' }}>
+                <Box sx={{ m: '30px' }}>
                     {(editableTech === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add Technology

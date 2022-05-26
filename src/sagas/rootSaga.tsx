@@ -43,6 +43,8 @@ import addCVFetch from './CVs/addCVSaga';
 import editCVFetch from './CVs/editCVSaga'
 import searchCVsFetch from './CVs/searchCVsSaga';
 import getCVFetch from './CVs/getCVSaga';
+import { addUserPhotoRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
+import addUserPhotoFetch from './Users/addUserPhotoSaga';
 
 // university
 export function* getUniversities({type}:getUniversitiesRequestAction){
@@ -182,6 +184,9 @@ export function* searchCVs({type, payload}:searchCVsRequestAction){
   yield call(searchCVsFetch, payload);
 }
 
+export function* addUserPhoto({type, payload}:addUserPhotoRequestAction){
+  yield call(addUserPhotoFetch, payload);
+}
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
   yield takeEvery(universitiesActions.DEL_UNIVERSITY_REQUEST, delUniversity);
@@ -221,6 +226,8 @@ export function* watcherSaga() {
   yield takeEvery(CVsActions.ADD_CV_REQUEST, addCV);
   yield takeEvery(CVsActions.EDIT_CV_REQUEST, editCV);
   yield takeEvery(CVsActions.SEARCH_CVS_REQUEST, searchCVs);
+
+  yield takeEvery(userPhotosActions.ADD_USERPHOTO_REQUEST, addUserPhoto)
 }
 export default function* rootSaga(){
   yield watcherSaga();

@@ -110,7 +110,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Box sx={{ m: '50px' }}>
+                <Box sx={{ m: '30px' }}>
                     {(editableProject === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add Project

@@ -32,7 +32,9 @@ export interface IUser {
     description: string, 
     educationList: IEducation[],
     workExperienceList: IWorkExperience[],
-    technologyList: ITechnology[]
+    technologyList: ITechnology[],
+    userPhoto: File | null,
+    url: string | null
 }
 
 export interface IEducation {
@@ -71,6 +73,20 @@ export interface ICV {
     userId: string,
     projectCVList: IProjectCV[]
 }
+export interface IPhoto {
+    id?: number;
+    url?: string;
+    name?: string;
+    size?: number;
+    publicId?: string;
+}
+export interface IPhotoParams {
+    scale: number;
+    position: {
+      x: number;
+      y: number;
+    };
+  }
 
 export const UniversitiesMapper = ({id, name}: IUniversity)  => {
     let newUser : IUniversity ={
@@ -102,7 +118,7 @@ export const ProjectsMapper = ({id, name, description, type, country, link, tech
     return newProject;
 }
 
-export const UsersMapper = ({id, firstName, lastName, description, educationList, workExperienceList, technologyList}: IUser)  => {
+export const UsersMapper = ({id, firstName, lastName, description, educationList, workExperienceList, technologyList, userPhoto, url}: IUser)  => {
     let newUser : IUser = {
         id, 
         firstName, 
@@ -110,7 +126,9 @@ export const UsersMapper = ({id, firstName, lastName, description, educationList
         description, 
         educationList, 
         workExperienceList, 
-        technologyList
+        technologyList,
+        userPhoto,
+        url
     }
     return newUser;
 }

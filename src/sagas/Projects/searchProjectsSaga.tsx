@@ -8,7 +8,7 @@ const axiosSearchProjects = (payload: {name: string, type: string, technologyNam
     'Content-Type': 'application/json;charset=utf-8',
   }
   return axios.post(
-    `http://localhost:3001/users/search`,
+    `http://localhost:3001/projects/search`,
     JSON.stringify(payload),
     {
       headers

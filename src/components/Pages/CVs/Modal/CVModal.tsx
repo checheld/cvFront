@@ -112,7 +112,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
             style={{ overflow: 'scroll' }}
         >
             <Box sx={style}>
-                <Box sx={{ m: '50px' }}>
+                <Box sx={{ m: '30px' }}>
                     {(editableCV === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add CV

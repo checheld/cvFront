@@ -36,7 +36,7 @@ import editUserFetch from './Users/editUserSaga'
 import searchUsersFetch from './Users/searchUserSaga';
 import getUserFetch from './Users/getUserSaga';
 
-import {getCVsRequestAction, searchCVsRequestAction, CVsActions, delCVRequestAction, addCVRequestAction, editCVRequestAction, getCVRequestAction} from '../actionsTypes/CVsActionTypes';
+import {getCVsRequestAction, searchCVsRequestAction, CVsActions, delCVRequestAction, addCVRequestAction, editCVRequestAction, getCVRequestAction, downloadCVRequestAction} from '../actionsTypes/CVsActionTypes';
 import getCVsFetch from './CVs/getCVsSaga';
 import delCVFetch from './CVs/delCVSaga';
 import addCVFetch from './CVs/addCVSaga';
@@ -45,6 +45,7 @@ import searchCVsFetch from './CVs/searchCVsSaga';
 import getCVFetch from './CVs/getCVSaga';
 import { addUserPhotoRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
 import addUserPhotoFetch from './Users/addUserPhotoSaga';
+import downloadCVFetch from './CVs/downloadCVSaga';
 
 // university
 export function* getUniversities({type}:getUniversitiesRequestAction){
@@ -187,6 +188,11 @@ export function* searchCVs({type, payload}:searchCVsRequestAction){
 export function* addUserPhoto({type, payload}:addUserPhotoRequestAction){
   yield call(addUserPhotoFetch, payload);
 }
+
+export function* downloadCV({type, payload}:downloadCVRequestAction){
+  yield call(downloadCVFetch, payload);
+}
+
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
   yield takeEvery(universitiesActions.DEL_UNIVERSITY_REQUEST, delUniversity);
@@ -227,7 +233,8 @@ export function* watcherSaga() {
   yield takeEvery(CVsActions.EDIT_CV_REQUEST, editCV);
   yield takeEvery(CVsActions.SEARCH_CVS_REQUEST, searchCVs);
 
-  yield takeEvery(userPhotosActions.ADD_USERPHOTO_REQUEST, addUserPhoto)
+  yield takeEvery(userPhotosActions.ADD_USERPHOTO_REQUEST, addUserPhoto);
+  yield takeEvery(CVsActions.DOWNLOAD_CV_REQUEST, downloadCV);
 }
 export default function* rootSaga(){
   yield watcherSaga();

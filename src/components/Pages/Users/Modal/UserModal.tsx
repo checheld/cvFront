@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
 import { Backdrop, Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { ICompany, IEducation, IPhotoParams, ITechnology, IUniversity, IUser } from '../../../../interfaces';
+import { ICompany, IEducation, IPhotoParams, ITechnology, IUniversity, IUser, IWorkExperience } from '../../../../interfaces';
 import ChipSelect from '../../../Items/ChipSelect'; 
 import DelInput from '../../../../img/DelInput';
 import { usersActions } from '../../../../actionsTypes/usersActionTypes';
@@ -40,21 +40,25 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     let universities = useTypedSelector((state) => state.universities.universities);
     let companies = useTypedSelector((state) => state.companies.companies);
-
+    let url = useTypedSelector((state) => state.userPhotos.result.add);
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [education, setEducation] = React.useState({universityId: '', speciality: '', startDate: '', endDate: ''});
     const [arrayEducation, setArrayEducation] = React.useState<IEducation[]>([education]); 
-    const [workExperience, setWorkExperience] = React.useState({companyId: '', position: '', startDate: '', endDate: '', description: '' });
-    const [arrayWorkExperience, setArrayWorkExperience] = React.useState([workExperience]);
+    const [workExperience, setWorkExperience] = React.useState({companyId: '', position: '', startDate: '', endDate: '', description: ''});
+    const [arrayWorkExperience, setArrayWorkExperience] = React.useState<IWorkExperience[]>([workExperience]);
     const [tech, setTech] = React.useState<ITechnology[]>([]);
     const [openPhoto, setOpenPhoto] = React.useState(false);
     const handleOpenPhoto = () => setOpenPhoto(true);
-    const handleClosePhoto = () => setOpenPhoto(false);
+    const handleClosePhoto = () => {
+        if(photo !== null) {
+            dispatch({ type: userPhotosActions.ADD_USERPHOTO_REQUEST, payload: photo });
+        }
+        setOpenPhoto(false)
+    };
     const [params, setParams] = React.useState(initialParams);
-    const [photo, setPhoto] = React.useState<File | null>(null);
-    
+    const [photo, setPhoto] = React.useState<string | null>(url);
 
     // React.useEffect(() => {
     //   setPhoto({ ...photo, params });
@@ -75,14 +79,14 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     const dispatch = useAppDispatch();
     const addUser = () => {
-        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'userPhoto': photo };
+        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'photoUrl': url };
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
         setLastName('');
-        setDescription('');: ''})
-        setEducation({universityId: '', speciality: '', startDate: '', endDate;
+        setDescription('');
+        setEducation({universityId: '', speciality: '', startDate: '', endDate: ''});
         setArrayEducation([]);
-        setWorkExperience({companyId: '', position: '', startDate: '', endDate: '', description: '' });
+        setWorkExperience({companyId: '', position: '', startDate: '', endDate: '', description: ''});
         setArrayWorkExperience([]);
         setTech([]);
         setPhoto(null);
@@ -90,11 +94,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     }
     
     const editUser = () => {
-        if(photo !== null) {
-            dispatch({ type: userPhotosActions.ADD_USERPHOTO_REQUEST, payload: photo });
-        }
         if (editableUser !== undefined) {
-            const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'userPhoto': photo };
+            const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'photoUrl': url };
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
             setLastName('');
@@ -116,7 +117,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             setArrayEducation(editableUser.educationList);
             setArrayWorkExperience(editableUser.workExperienceList);
             setTech(editableUser.technologyList);
-            setPhoto(editableUser.userPhoto);
+            setPhoto(editableUser.photoUrl);
             handleClose();
         }
     }, [editableUser]);
@@ -140,15 +141,15 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         setDescription(value);
     };
     const handleChangeUniversity = (index: number) => (event: SelectChangeEvent) => {
-        setEducation({...education, [event.target.name]: event.target.value})
+        const currentEducation = arrayEducation[index];
         const editedArr = [...arrayEducation];
-        editedArr[index as number] = {...education, [event.target.name]: event.target.value};
+        editedArr[index as number] = {...currentEducation, [event.target.name]: event.target.value};
         setArrayEducation(editedArr);
     };
     const handleChangeEducation = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEducation({...education, [event.target.name]: event.target.value})
+        const currentEducation = arrayEducation[index];
         const editedArr = [...arrayEducation];
-        editedArr[index as number] ={...education, [event.target.name]: event.target.value};
+        editedArr[index as number] ={...currentEducation, [event.target.name]: event.target.value};
         setArrayEducation(editedArr);
     };
     const removeEducation = (index: number): void => {
@@ -159,15 +160,15 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         }
     ;
     const handleChangeCompany = (index: number) => (event: SelectChangeEvent) => {
-        setWorkExperience({...workExperience, [event.target.name]: event.target.value})
+        const currentWorkExp = arrayWorkExperience[index];
         const editedArr = [...arrayWorkExperience];
-        editedArr[index as number] = {...workExperience, [event.target.name]: event.target.value};
+        editedArr[index as number] = {...currentWorkExp, [event.target.name]: event.target.value};
         setArrayWorkExperience(editedArr);
     };
     const handleChangeWorkExperience = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setWorkExperience({...workExperience, [event.target.name]: event.target.value})
+        const currentWorkExp = arrayWorkExperience[index];
         const editedArr = [...arrayWorkExperience];
-        editedArr[index as number] ={...workExperience, [event.target.name]: event.target.value};
+        editedArr[index as number] ={...currentWorkExp, [event.target.name]: event.target.value};
         setArrayWorkExperience(editedArr);
     };
     const removeWorkExperience = (index: number): void => {
@@ -191,6 +192,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                     openPhoto={openPhoto}
                     photo={photo}
                     setPhoto={setPhoto}
+                    params={params}
+                    setParams={setParams}
                 />
                 {/* <PhotoModalTemp
                     handleClosePhoto={handleClosePhoto}
@@ -313,6 +316,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     label="Start date"
                                                     type="date"
                                                     defaultValue="2022-05-26"
+                                                    InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
                                                     sx={{ width: '130px', mr: '10px' }}
                                                     InputLabelProps={{
                                                     shrink: true,
@@ -326,6 +330,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     label="End date"
                                                     type="date"
                                                     defaultValue="2022-05-26"
+                                                    InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
                                                     sx={{ width: '130px' }}
                                                     InputLabelProps={{
                                                     shrink: true,
@@ -403,6 +408,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     label="Start date"
                                                     type="date"
                                                     defaultValue="2017-05-24"
+                                                    InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
                                                     sx={{ width: '130px', mr: '10px' }}
                                                     InputLabelProps={{
                                                     shrink: true,
@@ -416,6 +422,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     label="End date"
                                                     type="date"
                                                     defaultValue="2017-05-24"
+                                                    InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
                                                     sx={{ width: '130px' }}
                                                     InputLabelProps={{
                                                     shrink: true,

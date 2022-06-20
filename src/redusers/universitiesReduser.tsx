@@ -64,7 +64,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         ...state,
         isLoading: { ...state.isLoading, delete: false },
         result: {
-          ...state.result, delete: action.payload.id
+          ...state.result
         }
       };
 

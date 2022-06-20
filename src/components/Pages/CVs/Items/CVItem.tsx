@@ -6,6 +6,8 @@ import CVModal from '../Modal/CVModal';
 import Delete from '../../../../img/Delete';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
+import Edit from '../../../../img/Edit';
+import Download from '../../../../img/Download';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -40,6 +42,10 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
         dispatch( {type: CVsActions.DEL_CV_REQUEST, payload: event.currentTarget.id});
     }
 
+    const downloadCV = (event: React.MouseEvent<HTMLButtonElement>) => {
+        dispatch( {type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id});
+    }
+
     return (
         <Box sx={{ p: '0px', m: '0px'}}>
             <CVModal open={open} handleClose={handleClose}  editableCV={CV} /> 
@@ -56,9 +62,9 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                     </Box>
                 </Box>
                 <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key ={CV.id}>
-                {/* <Button variant='text' key={CV.id}>
-                    edit
-                </Button> */}
+                <Button variant='text' onClick={downloadCV} id={CV.id} sx={{minWidth: '30px'}}>
+                    <Download />
+                </Button>
                 <Button variant='text' onClick={delCV} id={CV.id} sx={{minWidth: '30px'}}>
                     <Delete />
                 </Button>

@@ -1,21 +1,16 @@
 import { Backdrop, Box, Button, CircularProgress, Modal, Slider } from "@mui/material";
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import AddIcon from "@mui/icons-material/Add";
 import AvatarEditor from "react-avatar-editor";
-import CloseIcon from "@mui/icons-material/Close";
-import { IPhoto, IPhotoParams } from "../../../../interfaces";
-import { useTypedSelector } from "../../../../redusers/useTypedSelector";
-import { Suspense, useEffect, useState } from "react";
+import { IPhotoParams } from "../../../../interfaces";
 import Dropzone from "react-dropzone";
 
 interface IPhotoUser {
-    handleClosePhoto: () => void;
-    openPhoto: any;
-    photo: File | null;
-    setPhoto: any;
-    // params: IPhotoParams;
-    // setParams: (arg0: IPhotoParams) => void
+    handleClosePhoto?: () => void;
+    openPhoto?: any;
+    photo: string | null;
+    setPhoto?: any;
+    params: IPhotoParams;
+    setParams: (arg0: IPhotoParams) => void
 }
 
 const style = {
@@ -35,7 +30,15 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
     openPhoto,
     photo,
     setPhoto,
+    params,
+    setParams
 }) => {
+
+    const [scale, setScale] = React.useState(params.scale);
+    const [position, setPosition] = React.useState(params.position);
+    const handleChangeScale = (event: Event, newScale: number | number[]) => {
+        setScale(newScale as number);
+    };
 
     return (
         <Modal
@@ -52,6 +55,9 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
                     onDrop={(dropped) => setPhoto(dropped[0])}
                     noClick
                     noKeyboard
+                    //@ts-ignore
+                    disableHiDPIScaling
+                    style={{ transform: `scale(2.5)` }}
                     //sx={{ width: '250px', height: '250px' }}
                 >
                     {({ getRootProps, getInputProps }) => (
@@ -63,6 +69,16 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
                 </Dropzone>
                 {photo && (
                     <>
+                        <Slider
+                            sx={{ padding: `35px 0 40px 0` }}
+                            value={scale}
+                            onChange={handleChangeScale}
+                            step={0.2}
+                            min={1}
+                            max={3}
+                            aria-label="Default"
+                            valueLabelDisplay="auto"
+                        />
                         <Button variant="contained" onClick={handleClosePhoto}>
                             Save photo
                         </Button>

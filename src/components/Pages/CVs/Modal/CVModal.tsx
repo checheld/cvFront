@@ -43,15 +43,15 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
         setUser(event.target.value);
     };
     const handleChangeProject = (index: number) => (event: SelectChangeEvent) => {
-        setProjectCV({...projectCV, [event.target.name]: event.target.value})
+        const currentProjectCV = arrayProjectCV[index];
         const editedArr = [...arrayProjectCV];
-        editedArr[index as number] = {...projectCV, [event.target.name]: event.target.value};
+        editedArr[index as number] = {...currentProjectCV, [event.target.name]: event.target.value};
         setArrayProjectCV(editedArr);
     };
     const handleChangeProjectCV = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProjectCV({...projectCV, [event.target.name]: event.target.value})
+        const currentProjectCV = arrayProjectCV[index];
         const editedArr = [...arrayProjectCV];
-        editedArr[index as number] ={...projectCV, [event.target.name]: event.target.value};
+        editedArr[index as number] ={...currentProjectCV, [event.target.name]: event.target.value};
         setArrayProjectCV(editedArr);
     };
     const removeProjectCV = (index: number): void => {
@@ -87,7 +87,6 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
             
             let findUser = users.find(item => item.id === editableCV.userId);
             //let findUserId = findUser!.id;
-            console.log(findUser)
             setUser(editableCV.userId);
 
             setArrayProjectCV(editableCV.projectCVList);
@@ -127,7 +126,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 CV name
                             </Typography>
-                            <OutlinedInput placeholder='First name'
+                            <OutlinedInput placeholder='CV name'
                                 value={CVName}
                                 id="input"
                                 sx={{ width: '700px', mb: '0px', height: '50px' }}
@@ -208,6 +207,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                                 label="Start date"
                                                 type="date"
                                                 defaultValue="2022-05-26"
+                                                InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
                                                 sx={{ width: '130px', mr: '10px', fontSize: '14px !important'}}
                                                 InputLabelProps={{
                                                     shrink: true,
@@ -221,6 +221,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                                 label="End date"
                                                 type="date"
                                                 defaultValue="2022-05-26"
+                                                InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
                                                 sx={{ width: '130px' }}
                                                 InputLabelProps={{
                                                     shrink: true,

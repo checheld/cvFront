@@ -7,8 +7,9 @@ import { technologiesActions } from '../../../actionsTypes/technologiesActionTyp
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { usersActions } from '../../../actionsTypes/usersActionTypes';
 import UserModal from '../Users/Modal/UserModal';
-import { IEducation, IProject, ITechnology, IUser, IWorkExperience } from '../../../interfaces';
+import { IEducation, IPhotoParams, IProject, ITechnology, IUser, IWorkExperience } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
+import Photo from '../Users/Items/Photo';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -16,6 +17,15 @@ const Item = styled(Paper)(({ theme }) => ({
     borderRadius: '10px',
     padding: '25px'
 }));
+
+const initialParams: IPhotoParams = {
+    scale: 0.8,
+    position: {
+        x: 0.5,
+        y: 0.5,
+    },
+};
+
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const UserIdPage: React.FC = () => {
@@ -66,8 +76,11 @@ const UserIdPage: React.FC = () => {
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
+                                <Box sx={{ ml: '15px', mb: '20px', mt: '20px' }}>
+                                    <Photo params={initialParams} photo={currentUser.photoUrl}/>
+                                </Box>
                                 <Box>
-                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px' }}>
+                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '55px', ml: '40px', mb: '15px' }}>
                                         {currentUser.firstName} {currentUser.lastName}
                                     </Typography>
                                     <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px' }}>
@@ -112,7 +125,7 @@ const UserIdPage: React.FC = () => {
                                         currentUser.workExperienceList.map((workExperience: IWorkExperience) => (
                                             <Box sx={{ mt: '35px', mb: '35px', ml: '40px', mr: '100px' }}>
                                                 <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '30px' }}>
-                                                    {workExperience.startDate} - {workExperience.endDate} | {workExperience.company.name}
+                                                    {workExperience.startDate} - {workExperience.endDate} | {workExperience.company!.name}
                                                 </Typography>
                                                 <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px' }}>
                                                     {workExperience.position}

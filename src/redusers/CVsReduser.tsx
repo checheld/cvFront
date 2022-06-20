@@ -4,6 +4,7 @@ import { ICV, action, CVsMapper } from "../interfaces/index"
 interface CVsReduser {
   CVs: ICV[],
   CV?: ICV,
+  pdf?: File,
   isLoading: {
     add: boolean,
     delete: boolean,
@@ -78,9 +79,24 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
         ...state,
         isLoading: { ...state.isLoading, delete: false },
         result: {
-          ...state.result, delete: action.payload.id
+          ...state.result
         }
       };
+
+      case CVsActions.DOWNLOAD_CV_REQUEST:
+        return {
+          ...state
+        };
+  
+      case CVsActions.DOWNLOAD_CV_RESULT:
+        return {
+          ...state,
+          isLoading: { ...state.isLoading },
+          // pdf: action.payload
+        };
+
+
+
 
     case CVsActions.ADD_CV_REQUEST:
       return {

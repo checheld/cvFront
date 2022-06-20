@@ -63,7 +63,7 @@ export const companiesReducer = (state = initialState, action: action):companies
         ...state, 
         isLoading: {...state.isLoading, delete: false},
         result: {
-          ...state.result, delete: action.payload.id
+          ...state.result
         }
       };
 

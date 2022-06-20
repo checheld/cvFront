@@ -4,7 +4,7 @@ import { IPhotoParams } from "../../../../interfaces/index";
 import AvatarEditor from "react-avatar-editor";
 
 const Photo: React.FC<{
-  photo?: File | undefined | null;
+  photo?: string | null;
   params: IPhotoParams;
   check?: boolean;
 }> = ({ photo, params, check }) => {
@@ -15,13 +15,13 @@ const Photo: React.FC<{
           image={photo}
           width={130}
           height={130}
-          border={0}
+          border={1}
           color={[255, 255, 255, 1]}
-          scale={params.scale}
+          // scale={params.scale}
           position={params.position}
-          borderRadius={49}
-          //@ts-ignore
-          disableHiDPIScaling
+          borderRadius={70}
+          // //@ts-ignore
+          // disableHiDPIScaling
           style={{ cursor: `auto` }}
         />
       ) : (

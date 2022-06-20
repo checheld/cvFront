@@ -11,7 +11,7 @@ interface userPhotosReduser {
     search: boolean
   }
   result: {
-    add: null | undefined | File,
+    add: null | string,
     delete: null | string,
     edit: null | undefined | number,
     search: null | undefined | number,

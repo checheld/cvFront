@@ -5,6 +5,8 @@ import {
     getCVRequestAction,
     delCVRequestAction,
     delCVResultAction,
+    downloadCVRequestAction,
+    downloadCVResultAction,
     CVsActions,
     addCVRequestAction,
     editCVRequestAction,
@@ -13,7 +15,7 @@ import {
     searchCVsRequestAction,
     searchCVsResultAction
 } from '../actionsTypes/CVsActionTypes';
-import { IProject, IProjectCV, IUser, ICV } from "../interfaces/index";
+import { IProjectCV, ICV } from "../interfaces/index";
 
 
 export const getCVsRequest = () : getCVsRequestAction => {
@@ -50,6 +52,19 @@ export const delCVRequest = (payload: string): delCVRequestAction => {
 export const delCVResult = (): delCVResultAction => {
     return{
         type: CVsActions.DEL_CV_RESULT
+    }
+}
+
+export const downloadCVRequest = (payload: number): downloadCVRequestAction => {
+    return{
+        type: CVsActions.DOWNLOAD_CV_REQUEST,
+        payload: payload
+    }
+}
+
+export const downloadCVResult = (): downloadCVResultAction => {
+    return{
+        type: CVsActions.DOWNLOAD_CV_RESULT
     }
 }
 

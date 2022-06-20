@@ -1,17 +1,15 @@
 import { Backdrop, Box, Button, CircularProgress, Modal, Slider } from "@mui/material";
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 import AvatarEditor from "react-avatar-editor";
 import CloseIcon from "@mui/icons-material/Close";
-import { IPhoto, IPhotoParams } from "../../../../interfaces";
-import { useTypedSelector } from "../../../../redusers/useTypedSelector";
-import { Suspense, useEffect } from "react";
+import { IPhotoParams } from "../../../../interfaces";
+import { Suspense } from "react";
 
 interface IPhotoUser {
     handleClosePhoto: () => void;
     openPhoto: any;
-    photo: File | null;
+    photo: string | null;
     setPhoto: any;
     params: IPhotoParams;
     setParams: (arg0: IPhotoParams) => void
@@ -43,9 +41,7 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
     const handleChangeScale = (event: Event, newScale: number | number[]) => {
         setScale(newScale as number);
     };
-    const [modalPhoto, setModalPhoto] = React.useState<IPhoto>();
-    const [photoURL, setPhotoURL] = React.useState<any>();
-    console.log(photoURL)
+
     return (
         <Modal
             open={openPhoto}
@@ -78,11 +74,11 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
                             marginBottom: `0`,
                         }}
                     >
-                        {photoURL ? (
+                        {photo ? (
                             <>
                                 <Suspense fallback={<CircularProgress size={100} />}>
                                     <AvatarEditor
-                                        image={photoURL}
+                                        image={photo}
                                         width={100}
                                         height={100}
                                         border={0}
@@ -95,18 +91,9 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
                                         disableHiDPIScaling
                                         style={{ transform: `scale(2.5)` }}
                                     />
-                                    <CloseIcon
-                                        style={{
-                                            width: `30px`,
-                                            position: `absolute`,
-                                            top: 10,
-                                            right: 10,
-                                        }}
-                                        onClick={setPhoto}
-                                    />
                                 </Suspense>
                             </>
-                        // ) : !photoURL.url ? (
+                        // ) : !photo ? (
                         //     <CircularProgress size={100} />
                         ) : (
                             <AddIcon
@@ -118,12 +105,12 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
                             type="file"
                             accept="image/*"
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setPhotoURL(e.target.files!);
+                                setPhoto(e.target.files!);
                             }}
                         />
                     </label>
                 </div>
-                {photoURL && (
+                {photo && (
                     <>
                         <Slider
                             sx={{ padding: `35px 0 40px 0` }}
@@ -135,7 +122,7 @@ const PhotoModalTemp: React.FC<IPhotoUser> = ({
                             aria-label="Default"
                             valueLabelDisplay="auto"
                         />
-                        <Button variant="contained" onClick={setPhoto}>
+                        <Button variant="contained" onClick={handleClosePhoto}>
                             Save photo
                         </Button>
                     </>

@@ -63,7 +63,7 @@ export const technologiesReducer = (state = initialState, action: action):techno
         ...state, 
         isLoading: {...state.isLoading, delete: false},
         result: {
-          ...state.result, delete: action.payload.id
+          ...state.result
         }
       };
 

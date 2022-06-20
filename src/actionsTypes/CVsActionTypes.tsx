@@ -7,6 +7,8 @@ export enum CVsActions {
     GET_CV_RESULT = 'GET_CV_RESULT',
     DEL_CV_REQUEST = 'DEL_CV_REQUEST',
     DEL_CV_RESULT = 'DEL_CV_RESULT',
+    DOWNLOAD_CV_REQUEST = 'DOWNLOAD_CV_REQUEST',
+    DOWNLOAD_CV_RESULT = 'DOWNLOAD_CV_RESULT',
     ADD_CV_REQUEST = 'ADD_CV_REQUEST',
     ADD_CV_RESULT = 'ADD_CV_RESULT',
     EDIT_CV_REQUEST = 'EDIT_CV_REQUEST',
@@ -41,6 +43,15 @@ export interface delCVRequestAction {
 
 export interface delCVResultAction {
     type: string
+}
+
+export interface downloadCVRequestAction {
+    type: string,
+    payload: number
+}
+
+export interface downloadCVResultAction {
+    type: string,
 }
 
 export interface addCVRequestAction {

@@ -1,4 +1,4 @@
-import { IProject, ITechnology } from "../interfaces/index";
+import { IProject, IProjectPhoto, ITechnology } from "../interfaces/index";
  
 export enum projectsActions {
     GET_PROJECTS_REQUEST = 'GET_PROJECTS_REQUEST',
@@ -51,7 +51,7 @@ export interface addProjectResultAction {
 
 export interface editProjectRequestAction {
     type: string,
-    payload: {name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[]},
+    payload: {name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[]},
     id: number
 }
 

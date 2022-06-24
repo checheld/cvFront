@@ -1,11 +1,11 @@
-import { Box, Button, Chip, CircularProgress, createTheme, Divider, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Chip, CircularProgress, createTheme, Divider, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import ProjectModal from '../Projects/Modal/ProjectModal';
-import { IProject, ITechnology } from '../../../interfaces';
+import { IProject, IProjectPhoto, ITechnology } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -120,6 +120,28 @@ const ProjectIdPage: React.FC = () => {
                   {
                     currentProject.technologyList.map((tech: ITechnology) => (
                       <Chip label={tech.name} sx={{ mr: '10px' }} />
+                    ))
+                  }
+                </Box>
+              </Item>
+              <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
+                <Box sx={{ display: "flex", width: '280px' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mb: '35px', mr: '40px', ml: 'auto' }}>
+                    PHOTOS
+                  </Typography>
+                  <Divider orientation="vertical" sx={{ height: '100%' }} />
+                </Box>
+                <Box sx={{ mt: '35px', ml: '40px', mb: '35px', display: 'flex' }}>
+                  {
+                    currentProject.photoList.map((photo: IProjectPhoto) => (
+                      <Card sx={{ maxWidth: 345, mr: '10px' }}>
+                        <CardMedia
+                          component="img"
+                          alt="photo"
+                          height="140"
+                          image={photo.url}
+                        />
+                      </Card>
                     ))
                   }
                 </Box>

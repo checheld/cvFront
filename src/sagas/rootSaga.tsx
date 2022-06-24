@@ -43,9 +43,14 @@ import addCVFetch from './CVs/addCVSaga';
 import editCVFetch from './CVs/editCVSaga'
 import searchCVsFetch from './CVs/searchCVsSaga';
 import getCVFetch from './CVs/getCVSaga';
+import downloadCVFetch from './CVs/downloadCVSaga';
+
 import { addUserPhotoRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
 import addUserPhotoFetch from './Users/addUserPhotoSaga';
-import downloadCVFetch from './CVs/downloadCVSaga';
+
+import { addProjectPhotoRequestAction, delProjectPhotoRequestAction, projectPhotosActions } from '../actionsTypes/projectPhotosActionTypes';
+import addProjectPhotoFetch from './Projects/addProjectPhotoSaga';
+import delProjectPhotoFetch from './Projects/delProjectPhotoSaga';
 
 // university
 export function* getUniversities({type}:getUniversitiesRequestAction){
@@ -135,6 +140,14 @@ export function* searchProjects({type, payload}:searchProjectsRequestAction){
   yield call(searchProjectsFetch, payload);
 }
 
+export function* addProjectPhoto({type, payload}:addProjectPhotoRequestAction){
+  yield call(addProjectPhotoFetch, payload);
+}
+
+export function* delProjectPhoto({type, payload}:delProjectPhotoRequestAction){
+  yield call(delProjectPhotoFetch, payload);
+}
+
 // user
 export function* getUsers({type}:getUsersRequestAction){
   yield call(getUsersFetch);
@@ -160,6 +173,10 @@ export function* searchUsers({type, payload}:searchUsersRequestAction){
   yield call(searchUsersFetch, payload);
 }
 
+export function* addUserPhoto({type, payload}:addUserPhotoRequestAction){
+  yield call(addUserPhotoFetch, payload);
+}
+
 // CV
 export function* getCVs({type}:getCVsRequestAction){
   yield call(getCVsFetch);
@@ -183,10 +200,6 @@ export function* editCV({type, payload, id}:editCVRequestAction){
 
 export function* searchCVs({type, payload}:searchCVsRequestAction){
   yield call(searchCVsFetch, payload);
-}
-
-export function* addUserPhoto({type, payload}:addUserPhotoRequestAction){
-  yield call(addUserPhotoFetch, payload);
 }
 
 export function* downloadCV({type, payload}:downloadCVRequestAction){
@@ -233,6 +246,8 @@ export function* watcherSaga() {
   yield takeEvery(CVsActions.EDIT_CV_REQUEST, editCV);
   yield takeEvery(CVsActions.SEARCH_CVS_REQUEST, searchCVs);
 
+  yield takeEvery(projectPhotosActions.ADD_PROJECTPHOTO_REQUEST, addProjectPhoto);
+  yield takeEvery(projectPhotosActions.DEL_PROJECTPHOTO_REQUEST, delProjectPhoto);
   yield takeEvery(userPhotosActions.ADD_USERPHOTO_REQUEST, addUserPhoto);
   yield takeEvery(CVsActions.DOWNLOAD_CV_REQUEST, downloadCV);
 }

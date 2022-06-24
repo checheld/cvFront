@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
-import { useAppDispatch } from '../../../../redusers/useTypedSelector';
+import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
 import { Box, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, Typography } from '@mui/material';
 import ChipSelect from '../../../Items/ChipSelect';
 import { projectsActions } from '../../../../actionsTypes/projectsActionTypes';
-import { IProject, ITechnology } from '../../../../interfaces';
+import { IProject, IProjectPhoto, ITechnology } from '../../../../interfaces';
+import PhotoInput from '../../ProjectId/Photo/Photo.Input';
+import Photos from '../../ProjectId/Photo/Photos';
+import { projectPhotosActions } from '../../../../actionsTypes/projectPhotosActionTypes';
 
 interface IProjectModal {
     open: boolean,
@@ -30,6 +33,16 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     const [link, setLink] = React.useState('');
     const [tech, setTech] = React.useState<Array<ITechnology>>([]);
     const [description, setDescription] = React.useState('');
+
+    let url = useTypedSelector((state) => state.projectPhotos.result.add);
+    useEffect(() => {
+        if (url !== undefined && url !== null) {
+            let urlObj: IProjectPhoto = {'url': url}
+            setPhoto(oldArray => [...oldArray, urlObj])
+        }
+    }, [url]);   
+    const [photo, setPhoto] = React.useState<Array<IProjectPhoto>>([]);
+
     const items = ['CRM', 'Web service', 'Web site'];
     let isDisabled;
     if (editableProject === undefined) {
@@ -40,25 +53,27 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
 
     const dispatch = useAppDispatch();
     const addProject = () => {
-        const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech };
+        const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
         dispatch({ type: projectsActions.ADD_PROJECT_REQUEST, payload: objProject });
         setProjectName('');
         setType('');
         setCountry('');
         setLink('');
         setTech([]);
+        setPhoto([]);
         setDescription('');
         handleClose();
     }
     const editProject = () => {
         if (editableProject !== undefined) {
-            const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech };
+            const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
             dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, payload: objProject });
             setProjectName('');
             setType('');
             setCountry('');
             setLink('');
             setTech([]);
+            setPhoto([]);
             setDescription('');
             handleClose();
         }
@@ -70,6 +85,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
             setCountry(editableProject.country);
             setLink(editableProject.link);
             setTech(editableProject.technologyList);
+            setPhoto(editableProject.photoList);
             setDescription(editableProject.description);
             handleClose();
         }
@@ -102,6 +118,18 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         } = ev;
         setDescription(value);
     };
+
+    const removePhotoFromState = (index: number): void => {
+        photo && setPhoto([...photo.slice(0, index), ...photo.slice(index + 1)]);
+
+        dispatch({
+            type: projectPhotosActions.DEL_PROJECTPHOTO_REQUEST,
+            payload: photo[index].id
+          });
+      };
+
+
+
     return (
         <Modal
             open={open}
@@ -192,6 +220,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             sx={{ width: '700px', mb: '35px', height: '100px' }}
                             onChange={handleChangeDescription}
                         />
+                    </Box>
+                    <Box>
+                        <PhotoInput />
+                        <Photos photos={photo} removePhoto={removePhotoFromState} />
                     </Box>
                     {(editableProject === undefined) ? (
                         <Box>

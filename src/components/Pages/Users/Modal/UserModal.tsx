@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Backdrop, Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { ICompany, IEducation, IPhotoParams, ITechnology, IUniversity, IUser, IWorkExperience } from '../../../../interfaces';
 import ChipSelect from '../../../Items/ChipSelect'; 
 import DelInput from '../../../../img/DelInput';
@@ -256,6 +256,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                             <OutlinedInput placeholder='Description'
                                 value={description}
                                 id="input"
+                                inputProps={{ maxLength: 360 }}
                                 sx={{ width: '700px', mb: '0px', height: '100px' }}
                                 onChange={handleChangeDescription}
                             />
@@ -440,6 +441,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                         </Typography>
                                         <OutlinedInput placeholder='Description'
                                             id="input"
+                                            inputProps={{ maxLength: 210 }}
                                             sx={{ width: '700px', mb: '0px', height: '100px' }}
                                             name='description'
                                             value={workExperience.description}

@@ -13,7 +13,7 @@ import {
     getProjectRequestAction,
     getProjectResultAction
 } from '../actionsTypes/projectsActionTypes';
-import { IProject, ITechnology } from "../interfaces/index";
+import { IProject, IProjectPhoto, ITechnology } from "../interfaces/index";
 
 
 export const getProjectsRequest = () : getProjectsRequestAction => {
@@ -65,7 +65,7 @@ export const addProjectResult = (): addProjectResultAction => {
     }
 }
 
-export const editProjectRequest = (payload: {name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[] }, id: number): editProjectRequestAction => {
+export const editProjectRequest = (payload: {name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number): editProjectRequestAction => {
     return{
         type: projectsActions.EDIT_PROJECT_REQUEST,
         payload: payload,

@@ -22,7 +22,15 @@ export interface IProject {
     type: string, 
     country: string, 
     link: string, 
-    technologyList: ITechnology[]
+    technologyList: ITechnology[],
+    photoList: IProjectPhoto[]
+}
+
+export interface IProjectPhoto {
+    id?: string,
+    projectId?: string,
+    project?: IProject,
+    url: string
 }
 
 export interface IUser {
@@ -104,7 +112,7 @@ export const TechnologiesMapper = ({id, name, type}: ITechnology)  => {
     return newTechnology;
 }
 
-export const ProjectsMapper = ({id, name, description, type, country, link, technologyList}: IProject)  => {
+export const ProjectsMapper = ({id, name, description, type, country, link, technologyList, photoList}: IProject)  => {
     let newProject : IProject = {
         id,
         name,
@@ -112,7 +120,8 @@ export const ProjectsMapper = ({id, name, description, type, country, link, tech
         type,
         country, 
         link, 
-        technologyList
+        technologyList,
+        photoList
     }
     return newProject;
 }

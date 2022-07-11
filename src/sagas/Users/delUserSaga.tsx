@@ -3,19 +3,18 @@ import axios, { AxiosResponse } from 'axios'
 import { IUser } from '../../interfaces/index'
 import { usersActions } from '../../actionsTypes/usersActionTypes';
 
-const axiosDelUser = (id: string) => { 
-  return axios.delete(
+const axiosDelUser = (id: string) =>
+  axios.delete(
     `http://localhost:3001/users/${id}`
   )
-}
 
 export default function* delUserFetch(id: string) {
-  try{
+  try {
     const delUserResponse: AxiosResponse<IUser> = yield call(axiosDelUser, id);
-    yield put({type: usersActions.DEL_USER_RESULT});
+    yield put({ type: usersActions.DEL_USER_RESULT });
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
-} 
+}
 

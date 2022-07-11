@@ -10,12 +10,12 @@ const axiosDelCompany = (id: string) => {
 }
 
 export default function* deltCompanyFetch(id: string) {
-  try{
+  try {
     const delCompanyResponse: AxiosResponse<ICompany> = yield call(axiosDelCompany, id);
-    yield put({type: companiesActions.DEL_COMPANY_RESULT});
+    yield put({ type: companiesActions.DEL_COMPANY_RESULT });
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
-} 
+}
 

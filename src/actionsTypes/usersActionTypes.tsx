@@ -1,5 +1,5 @@
 import { IEducation, ITechnology, IUser, IWorkExperience } from "../interfaces/index";
- 
+
 export enum usersActions {
     GET_USERS_REQUEST = 'GET_USERS_REQUEST',
     GET_USERS_RESULT = 'GET_USERS_RESULT',
@@ -54,7 +54,7 @@ export interface addUserResultAction {
 
 export interface editUserRequestAction {
     type: string,
-    payload: { id: string, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[]},
+    payload: { id: string, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: string },
     id: number
 }
 

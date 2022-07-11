@@ -8,6 +8,7 @@ interface universitiesReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    getAll: boolean,
     search: boolean
   }
   result: {
@@ -22,6 +23,7 @@ export const initialState: universitiesReduser = {
   universities: [],
   isLoading: {
     get: false,
+    getAll: true,
     add: false,
     delete: false,
     edit: false,
@@ -41,14 +43,13 @@ export const universitiesReducer = (state = initialState, action: action): unive
     case universitiesActions.GET_UNIVERSITIES_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, get: true },
       };
 
     case universitiesActions.GET_UNIVERSITIES_RESULT:
       let universities: IUniversity[] = action.payload.map((x: IUniversity) => UniversitiesMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, get: false },
+        isLoading: { ...state.isLoading, getAll: false },
         universities: universities.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
@@ -109,14 +110,14 @@ export const universitiesReducer = (state = initialState, action: action): unive
     case universitiesActions.SEARCH_UNIVERSITIES_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: true },
+        isLoading: { ...state.isLoading, search: false },
       };
 
     case universitiesActions.SEARCH_UNIVERSITIES_RESULT:
       let uni: IUniversity[] = action.response.map((x: IUniversity) => UniversitiesMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: false },
+        isLoading: { ...state.isLoading, search: true },
         universities: uni.sort((a, b) => Number(a.name) - Number(b.name))
       };
 

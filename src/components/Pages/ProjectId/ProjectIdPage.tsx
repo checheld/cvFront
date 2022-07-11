@@ -55,7 +55,7 @@ const ProjectIdPage: React.FC = () => {
           <ThemeProvider theme={lightTheme}>
             <Stack spacing={2}>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                <Box sx={{ display: "flex", width: '280px' }}>
+                <Box sx={{ display: "flex", minWidth: '280px' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                     PROJECT NAME
                   </Typography>
@@ -71,7 +71,7 @@ const ProjectIdPage: React.FC = () => {
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                <Box sx={{ display: "flex", width: '280px' }}>
+                <Box sx={{ display: "flex", minWidth: '280px' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                     COUNTRY
                   </Typography>
@@ -84,7 +84,7 @@ const ProjectIdPage: React.FC = () => {
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                <Box sx={{ display: "flex", width: '280px' }}>
+                <Box sx={{ display: "flex", minWidth: '280px' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                     TYPE
                   </Typography>
@@ -97,7 +97,7 @@ const ProjectIdPage: React.FC = () => {
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                <Box sx={{ display: "flex", width: '280px' }}>
+                <Box sx={{ display: "flex", minWidth: '280px' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                     LINK
                   </Typography>
@@ -110,7 +110,7 @@ const ProjectIdPage: React.FC = () => {
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                <Box sx={{ display: "flex", width: '280px' }}>
+                <Box sx={{ display: "flex", minWidth: '280px' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                     TECHNOLOGIES
                   </Typography>
@@ -125,7 +125,7 @@ const ProjectIdPage: React.FC = () => {
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                <Box sx={{ display: "flex", width: '280px' }}>
+                <Box sx={{ display: "flex", minWidth: '280px' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mb: '35px', mr: '40px', ml: 'auto' }}>
                     PHOTOS
                   </Typography>

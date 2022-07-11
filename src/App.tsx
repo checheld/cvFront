@@ -4,10 +4,9 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
 import { FC } from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Routes,
   Route,
-  Navigate
 } from "react-router-dom";
 import './App.css';
 import CVsPage from './components/Pages/CVs/CVsPage';
@@ -18,22 +17,23 @@ import Technologies from './components/Pages/Technologies/TechnologiesPage';
 import WorkExperience from './components/Pages/WorkExperience/WorkExperiencePage';
 import ProjectIdPage from "./components/Pages/ProjectId/ProjectIdPage";
 import UserIdPage from "./components/Pages/UserId/UserIdPage";
+
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <BrowserRouter>
         <PermanentDrawerLeft />
         <Routes>
-          <Route path="/CVs" element={<CVsPage />}></Route>
-          <Route path="/Users" element={<Users />}></Route>
-          <Route path="/Projects" element={<Projects />}></Route>
-          <Route path="/Education" element={<Education />}></Route>
-          <Route path="/Technologies" element={<Technologies />}></Route>
-          <Route path="/WorkExperience" element={<WorkExperience />}></Route>
-          <Route path="/projects/:id" element={<ProjectIdPage />}></Route>
-          <Route path="/users/:id" element={<UserIdPage />}></Route>
+          <Route path="/CVs" element={<CVsPage />} />
+          <Route path="/Users" element={<Users />} />
+          <Route path="/Projects" element={<Projects />} />
+          <Route path="/Education" element={<Education />} />
+          <Route path="/Technologies" element={<Technologies />} />
+          <Route path="/WorkExperience" element={<WorkExperience />} />
+          <Route path="/projects/:id" element={<ProjectIdPage />} />
+          <Route path="/users/:id" element={<UserIdPage />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </ThemeProvider>
   )
 }

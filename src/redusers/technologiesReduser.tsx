@@ -8,6 +8,7 @@ interface technologiesReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    getAll: boolean,
     search: boolean,
   }
   result: {
@@ -22,6 +23,7 @@ export const initialState: technologiesReduser = {
   technologies: [],
   isLoading: {
     get: false,
+    getAll: true,
     add: false,
     delete: false,
     edit: false,
@@ -40,15 +42,14 @@ export const technologiesReducer = (state = initialState, action: action):techno
   switch (action.type) {
     case technologiesActions.GET_TECHNOLOGIES_REQUEST:
       return {
-        ...state,
-        isLoading: {...state.isLoading, get: true},
+        ...state
       };
 
     case technologiesActions.GET_TECHNOLOGIES_RESULT:
       let technologies: ITechnology[] = action.payload.map((x: ITechnology) => TechnologiesMapper(x))
       return {
         ...state,
-        isLoading: {...state.isLoading, get: false},
+        isLoading: {...state.isLoading, getAll: false},
         technologies: technologies.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
@@ -104,14 +105,14 @@ export const technologiesReducer = (state = initialState, action: action):techno
     case technologiesActions.SEARCH_TECHNOLOGIES_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: true },
+        isLoading: { ...state.isLoading, search: false },
       };
 
     case technologiesActions.SEARCH_TECHNOLOGIES_RESULT:
       let uni: ITechnology[] = action.response.map((x: ITechnology) => TechnologiesMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: false },
+        isLoading: { ...state.isLoading, search: true },
         technologies: uni.sort((a, b) => Number(a.name) - Number(b.name))
       };
 

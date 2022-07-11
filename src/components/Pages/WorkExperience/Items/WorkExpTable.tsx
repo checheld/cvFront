@@ -7,6 +7,7 @@ import { ICompany } from '../../../../interfaces';
 import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 import EditModal from '../../../Items/EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import DeleteModal from '../../../Items/DeleteModal';
 
 interface IBasicTable {
   searchParam: string;
@@ -16,14 +17,10 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
   const dispatch = useAppDispatch();
   let companies = useTypedSelector((state) => state.companies.companies);
   const result = useTypedSelector((state) => state.companies.result);
-  const loading = useTypedSelector((state) => state.companies.isLoading.get)
+
   useEffect(() => {
     dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
   }, [result, dispatch]);
-
-  const delCompany = (event: React.MouseEvent<HTMLButtonElement>) => {
-      dispatch( {type: companiesActions.DEL_COMPANY_REQUEST, payload: event.currentTarget.id});
-  }
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -34,9 +31,18 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
     setCompany(company);
   };
 
+  const [openDelModal, setOpenDelModal] = React.useState(false);
+  const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setdelId(event.currentTarget.id);
+      setOpenDelModal(true);
+  }
+  const handleCloseDelModal = () => setOpenDelModal(false);
+  const [delId, setdelId] = React.useState("");
+
   return (
     <Box>
       <EditModal open={open} handleClose={handleClose} item={company} action={companiesActions.EDIT_COMPANY_REQUEST} />
+      <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"company"}/>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
           <TableHead>
@@ -61,7 +67,7 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
                     <Button variant='text' key={company.id} onClick={() => modalOpen(company)}>
                       <EditButton />
                     </Button>
-                    <Button variant='text' onClick={delCompany} id={company.id}>
+                    <Button variant='text' onClick={handleOpenDelModal} id={company.id}>
                       <Delete />
                     </Button>
                   </Stack>

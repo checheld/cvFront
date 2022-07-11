@@ -1,15 +1,19 @@
 import { Box, Button, Chip, CircularProgress, createTheme, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { usersActions } from '../../../actionsTypes/usersActionTypes';
 import UserModal from '../Users/Modal/UserModal';
-import { IEducation, IPhotoParams, IProject, ITechnology, IUser, IWorkExperience } from '../../../interfaces';
+import { ICV, IEducation, IPhotoParams, IProject, ITechnology, IUser, IWorkExperience } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
 import Photo from '../Users/Items/Photo';
+import CVItem from '../CVs/Items/CVItem';
+import { CVsActions } from '../../../actionsTypes/CVsActionTypes';
+import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
+import DeleteModal from '../../Items/DeleteModal';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -18,26 +22,18 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: '25px'
 }));
 
-const initialParams: IPhotoParams = {
-    scale: 0.8,
-    position: {
-        x: 0.5,
-        y: 0.5,
-    },
-};
-
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const UserIdPage: React.FC = () => {
 
     const location = useLocation();
     const dispatch = useDispatch();
-    const router = useNavigate();
     const currentPath = location.pathname;
     const userId = Number(
         currentPath.substring(currentPath.lastIndexOf('/') + 1)
     );
-    const edit = useTypedSelector((state) => state.users.isLoading.edit)
+    const edit = useTypedSelector((state) => state.users.isLoading.edit);
+    const AllCVs = useTypedSelector((state) => state.CVs.CVs);
 
     useEffect(() => {
         const getUser = (async () => {
@@ -45,6 +41,8 @@ const UserIdPage: React.FC = () => {
             await dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
             await dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
             await dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
+            await dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
+            await dispatch({ type: CVsActions.GET_CVS_REQUEST });
         })
         getUser()
     }, [dispatch, userId, edit]);
@@ -53,10 +51,10 @@ const UserIdPage: React.FC = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const delUser = () => {
-        dispatch({ type: usersActions.DEL_USER_REQUEST, payload: userId });
-        router(`/users`)
-    }
+
+    const [openDelModal, setOpenDelModal] = useState(false);
+    const handleOpenDelModal = () => setOpenDelModal(true);
+    const handleCloseDelModal = () => setOpenDelModal(false);
 
     return (
         <Box sx={{ pl: '250px', pr: '35px', pt: '35px' }}>
@@ -66,30 +64,35 @@ const UserIdPage: React.FC = () => {
                 </>
             ) : (
                 <>
-                    <UserModal open={open} handleClose={handleClose} editableUser={currentUser}/>
+                    <UserModal open={open} handleClose={handleClose} editableUser={currentUser} />
+                    <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={userId} type={"user"} />
                     <ThemeProvider theme={lightTheme}>
                         <Stack spacing={2}>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                                <Box sx={{ display: "flex", width: '280px' }}>
+                                <Box sx={{ display: "flex", minWidth: '280px' }}>
                                     <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                                         PROFILE
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
                                 <Box sx={{ ml: '15px', mb: '20px', mt: '20px' }}>
-                                    <Photo params={initialParams} photo={currentUser.photoUrl}/>
+                                    {(currentUser.photoParams !== null) ? (
+                                        <Photo params={{ scale: currentUser.photoParams.scale, position: { x: currentUser.photoParams.positionX, y: currentUser.photoParams.positionY } }} photo={currentUser.photoUrl} />
+                                    ) : (
+                                        <Photo />
+                                    )}
                                 </Box>
                                 <Box>
-                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '55px', ml: '40px', mb: '15px' }}>
+                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px' }}>
                                         {currentUser.firstName} {currentUser.lastName}
                                     </Typography>
-                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px' }}>
+                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px' }}>
                                         {currentUser.description}
                                     </Typography>
                                 </Box>
                             </Item>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                                <Box sx={{ display: "flex", width: '280px' }}>
+                                <Box sx={{ display: "flex", minWidth: '280px' }}>
                                     <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                                         EDUCATION
                                     </Typography>
@@ -114,17 +117,17 @@ const UserIdPage: React.FC = () => {
                                 </Box>
                             </Item>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                                <Box sx={{ display: "flex", width: '280px' }}>
+                                <Box sx={{ display: "flex", minWidth: '280px' }}>
                                     <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                                         WORK EXPERIENCE
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
-                                <Box sx={{ display: 'flex' }}>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                     {
                                         currentUser.workExperienceList.map((workExperience: IWorkExperience) => (
-                                            <Box sx={{ mt: '35px', mb: '35px', ml: '40px', mr: '100px' }}>
-                                                <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '30px' }}>
+                                            <Box sx={{ mt: '35px', mb: '35px', ml: '40px', mr: '50px', width: '300px' }}>
+                                                <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px' }}>
                                                     {workExperience.startDate} - {workExperience.endDate} | {workExperience.company!.name}
                                                 </Typography>
                                                 <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px' }}>
@@ -139,7 +142,7 @@ const UserIdPage: React.FC = () => {
                                 </Box>
                             </Item>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                                <Box sx={{ display: "flex", width: '280px' }}>
+                                <Box sx={{ display: "flex", minWidth: '280px' }}>
                                     <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                                         TECHNOLOGIES
                                     </Typography>
@@ -147,7 +150,7 @@ const UserIdPage: React.FC = () => {
                                 </Box>
                                 <Box sx={{ mt: '35px', ml: '40px', mb: '35px' }}>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                        <Box sx={{width: '300px', minHeight: '100px'}}>
+                                        <Box sx={{ width: '300px', minHeight: '100px' }}>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '15px' }}>
                                                 Front-end
                                             </Typography>
@@ -159,7 +162,7 @@ const UserIdPage: React.FC = () => {
                                                 }
                                             </Box>
                                         </Box>
-                                        <Box  sx={{width: '300px', minHeight: '100px'}}>
+                                        <Box sx={{ width: '300px', minHeight: '100px' }}>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '15px' }}>
                                                 Databases
                                             </Typography>
@@ -173,7 +176,7 @@ const UserIdPage: React.FC = () => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                        <Box sx={{width: '300px', minHeight: '100px'}}>
+                                        <Box sx={{ width: '300px', minHeight: '100px' }}>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '15px' }}>
                                                 Back-end
                                             </Typography>
@@ -185,7 +188,7 @@ const UserIdPage: React.FC = () => {
                                                 }
                                             </Box>
                                         </Box>
-                                        <Box sx={{width: '300px', minHeight: '100px'}}>
+                                        <Box sx={{ width: '300px', minHeight: '100px' }}>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '15px' }}>
                                                 Hosting
                                             </Typography>
@@ -198,7 +201,7 @@ const UserIdPage: React.FC = () => {
                                             </Box>
                                         </Box>
                                     </Box>
-                                    <Box sx={{width: '300px', minHeight: '100px'}}>
+                                    <Box sx={{ width: '300px', minHeight: '100px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '15px' }}>
                                             Other
                                         </Typography>
@@ -213,19 +216,19 @@ const UserIdPage: React.FC = () => {
                                 </Box>
                             </Item>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                                <Box sx={{ display: "flex", width: '280px' }}>
+                                <Box sx={{ display: "flex", minWidth: '280px' }}>
                                     <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                                         SOFT SKILLS
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
-                                <Box  sx={{ mt: '35px', ml: '40px', mb: '35px' }}>
+                                <Box sx={{ mt: '35px', ml: '40px', mb: '35px' }}>
                                     <List>
                                         {
                                             currentUser.technologyList.filter((tech) => tech.type === 'soft skills').map((tech: ITechnology) => (
                                                 <ListItem>
                                                     <ListItemIcon></ListItemIcon>
-                                                    <ListItemText  primary={tech.name} />
+                                                    <ListItemText primary={tech.name} />
                                                 </ListItem>
                                             ))
                                         }
@@ -233,23 +236,23 @@ const UserIdPage: React.FC = () => {
                                 </Box>
                             </Item>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
-                                <Box sx={{ display: "flex", width: '280px' }}>
+                                <Box sx={{ display: "flex", minWidth: '280px' }}>
                                     <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
                                         CV
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
-                                <Box>
-                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px' }}>
-                                        ADD!!
-                                    </Typography>
+                                <Box sx={{ display: 'flex', m: "30px" }}>
+                                    {AllCVs.filter((CV) => CV.userId === currentUser!.id).map((CV: ICV) => (
+                                        <CVItem CV={CV} />
+                                    ))}
                                 </Box>
                             </Item>
                         </Stack>
                     </ThemeProvider>
                     <Box sx={{ ml: '307px', mt: '35px' }}>
                         <Button variant="contained" onClick={handleOpen} sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', mr: '10px' }} >Edit</Button>
-                        <Button variant="contained" onClick={delUser} sx={{ backgroundColor: '#F1F3F5', color: '#BAC1CC' }} >Delete</Button>
+                        <Button variant="contained" onClick={handleOpenDelModal} sx={{ backgroundColor: '#F1F3F5', color: '#BAC1CC' }} >Delete</Button>
                     </Box>
                 </>
             )}

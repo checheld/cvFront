@@ -3,27 +3,21 @@ import axios, { AxiosResponse } from 'axios'
 import { getCVsResult } from '../../actionCreators/CVActionCreator';
 import { ICV } from '../../interfaces/index'
 
-const axiosGetCVs = () => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
- 
-  return axios.get<ICV[]>(
-    "http://localhost:3001/CVs", 
-      {
-          headers
-      }
-);}
+const axiosGetCVs = () =>
+  axios.get<ICV[]>(
+    "http://localhost:3001/CVs",
+  )
+
 
 export default function* getCVsFetch() {
-  try{
-    const getCVsResponse: AxiosResponse<ICV[]>  = yield call(axiosGetCVs);
-    if(getCVsResponse.status === 200) {
+  try {
+    const getCVsResponse: AxiosResponse<ICV[]> = yield call(axiosGetCVs);
+    if (getCVsResponse.status === 200) {
       const response = getCVsResponse.data;
       yield put(getCVsResult(response));
     }
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
 }

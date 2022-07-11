@@ -33,6 +33,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     const [link, setLink] = React.useState('');
     const [tech, setTech] = React.useState<Array<ITechnology>>([]);
     const [description, setDescription] = React.useState('');
+    const [photo, setPhoto] = React.useState<Array<IProjectPhoto>>([]);
 
     let url = useTypedSelector((state) => state.projectPhotos.result.add);
     useEffect(() => {
@@ -41,14 +42,13 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
             setPhoto(oldArray => [...oldArray, urlObj])
         }
     }, [url]);   
-    const [photo, setPhoto] = React.useState<Array<IProjectPhoto>>([]);
-
+    
     const items = ['CRM', 'Web service', 'Web site'];
     let isDisabled;
     if (editableProject === undefined) {
         isDisabled = ((projectName !== '') && (type !== '') && (country !== '') && (link !== '') && (tech !== []) && (description !== '')) ? true : false;
     } else {
-        isDisabled = ((projectName !== editableProject.name) || (type !== editableProject.type) || (country !== editableProject.country) || (link !== editableProject.link) || (tech !== editableProject.technologyList) || (description !== editableProject.description)) ? true : false;
+        isDisabled = ((projectName !== editableProject.name) || (type !== editableProject.type) || (country !== editableProject.country) || (link !== editableProject.link) || (tech !== editableProject.technologyList) || (description !== editableProject.description || photo !== editableProject.photoList)) ? true : false;
     }
 
     const dispatch = useAppDispatch();

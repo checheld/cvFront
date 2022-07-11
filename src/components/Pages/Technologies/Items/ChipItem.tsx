@@ -4,6 +4,7 @@ import { ITechnology } from '../../../../interfaces';
 import { technologiesActions } from '../../../../actionsTypes/technologiesActionTypes';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import AddModal from '../Modal/TechModal';
+import DeleteModal from '../../../Items/DeleteModal';
 
 interface IChip{
     techCollection: ITechnology[],  
@@ -15,17 +16,24 @@ const ChipItem: React.FC<IChip> = ({ techCollection}) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useAppDispatch();
-    const handleDelete = (id: string) => {
-        dispatch( {type: technologiesActions.DEL_TECHNOLOGY_REQUEST, payload: id});
-    };
+    
     const handleClick = (tech: ITechnology) => {
         setEditableTech(tech);
         handleOpen();
     };
 
+    const [openDelModal, setOpenDelModal] = React.useState(false);
+    const handleOpenDelModal = (id: string) => {
+        setdelId(id);
+        setOpenDelModal(true);
+    }
+    const handleCloseDelModal = () => setOpenDelModal(false);
+    const [delId, setdelId] = React.useState("");
+  
     return (
         <>
             <AddModal open={open} handleClose={handleClose} editableTech={editableTech}/>
+            <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"technology"}/>
             <Stack sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -33,7 +41,7 @@ const ChipItem: React.FC<IChip> = ({ techCollection}) => {
             }}>
                 {techCollection.map((tech) => (
                     <Chip label={tech.name}
-                        onDelete={() => handleDelete(tech.id)}
+                        onDelete={() => handleOpenDelModal(tech.id)}
                         onClick={() => handleClick(tech)}
                         id={tech.id}
                         style={{

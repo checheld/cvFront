@@ -10,6 +10,10 @@ import UserModal from './Modal/UserModal';
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
+import { IPhotoParams } from '../../../interfaces';
+import Photo from './Items/Photo';
+import NoResult from '../../Items/Search/NoResult';
+import PreviewPageUser from '../../Items/PreviewPages/PreviewPageUser';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -17,6 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
     borderRadius: '10px',
     padding: '30px',
 }));
+
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const UsersPage: React.FC = () => {
@@ -24,11 +29,13 @@ const UsersPage: React.FC = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [ searchParam, setSearchParam ] = React.useState<string>('');
+    const [searchParam, setSearchParam] = React.useState<string>('');
     const dispatch = useAppDispatch();
     const router = useNavigate();
     const users = useTypedSelector((state) => state.users.users);
     const result = useTypedSelector((state) => state.users.result);
+    const load = useTypedSelector((state) => state.users.isLoading.getAll);
+    const search = useTypedSelector((state) => state.users.isLoading.search);
 
     useEffect(() => {
         dispatch({ type: usersActions.GET_USERS_REQUEST });
@@ -55,37 +62,54 @@ const UsersPage: React.FC = () => {
     }, [searchParam]);
 
     return (
-    <Box sx={{ pl: '250px', pr: '35px'}}>
-        <UserModal open={open} handleClose={handleClose} />
-        <Typography sx={{fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb:'30px'}}>Users ({users.length})</Typography>
-            <Box sx={{ display: 'flex' }}>
-                <Input setParam={setSearchParam} placeholder={"Search user"} />
-                <Box sx={{ marginLeft: 'auto' }}>
-                    <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add User' />
+        <>
+            {!load ? (
+                <Box sx={{ pl: '250px', pr: '35px' }}>
+                    <UserModal open={open} handleClose={handleClose} />
+                    <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Users ({users.length})</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                        <Input setParam={setSearchParam} placeholder={"Search user"} />
+                        <Box sx={{ marginLeft: 'auto' }}>
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add User' />
+                        </Box>
+                    </Box>
+                    {users.length === 0 ? (
+                        <NoResult />
+                    ) : (
+                        <Box sx={{
+                            p: 2,
+                            bgcolor: '#FBFBFB',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gridTemplateColumns: { md: '1fr 1fr' },
+                            gap: 2,
+                            padding: '0px'
+                        }}>
+                            <ThemeProvider theme={lightTheme}>
+                                {users.map((user) => (
+                                    <Item elevation={4}
+                                        sx={{ width: '335px', mr: '6px' }}
+                                        onClick={() => router(`/users/${user.id}`)}>
+                                        <Box sx={{ m: 0, p: 0, justifyContent: 'center', display: 'flex', mb: '20px' }}>
+                                            {(user.photoParams !== null) ? (
+                                                <Photo params={{ scale: user.photoParams.scale, position: { x: user.photoParams.positionX, y: user.photoParams.positionY } }} photo={user.photoUrl} />
+                                            ) : (
+                                                <Photo />
+                                            )}
+                                        </Box>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '18px', lineHeight: '24.5px', color: '#535E6C', mb: '25px', justifyContent: 'center', display: 'flex' }}>{user.firstName} {user.lastName}</Typography>
+                                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '25px' }}>{user.description}</Typography>
+                                        <Button variant="contained" onClick={handleOpen} sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', textTransform: 'capitalize' }}>More</Button>
+                                    </Item>
+                                ))}
+                            </ThemeProvider>
+                        </Box>
+                    )}
                 </Box>
-            </Box>
-            <Box sx={{
-                p: 2,
-                bgcolor: '#FBFBFB',
-                display: 'flex', 
-                flexWrap: 'wrap',
-                gridTemplateColumns: { md: '1fr 1fr' },
-                gap: 2,
-                padding: '0px'
-            }}>
-                <ThemeProvider theme={lightTheme}>
-                    {users.map((user) => (
-                        <Item elevation={4}
-                            sx={{ width: '335px', mr: '6px' }}
-                            onClick={() => router(`/users/${user.id}`)}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '18px', lineHeight: '24.5px', color: '#535E6C', mb: '25px' }}>{user.firstName} {user.lastName}</Typography>
-                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '25px' }}>{user.description}</Typography>
-                            <Button variant="contained" onClick={handleOpen} sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', textTransform: 'capitalize' }}>More</Button>
-                        </Item>
-                    ))}
-                </ThemeProvider>
-            </Box>
-        </Box>
+            ) : (
+                <PreviewPageUser />
+            )}
+        </>
     )
 }
 export default UsersPage

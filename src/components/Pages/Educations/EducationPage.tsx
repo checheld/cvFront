@@ -7,6 +7,8 @@ import DelInput from '../../../img/DelInput'
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
 import { Box, Modal, Typography } from '@mui/material';
+import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
+import NoResult from '../../Items/Search/NoResult';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -29,6 +31,12 @@ const EducationPage: React.FC = () => {
     const [university, setUniversity] = React.useState('');
     const [ searchParam, setSearchParam ] = React.useState<string>('');
     const universities = useTypedSelector((state) => state.universities.universities);
+    const load = useTypedSelector((state) => state.universities.isLoading.getAll);
+    const result = useTypedSelector((state) => state.projects.result);
+
+    useEffect(() => {
+        dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
+    }, [result, dispatch]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
@@ -77,49 +85,59 @@ const EducationPage: React.FC = () => {
     ;
     
     return (
-        <Box sx={{ pl: '250px', pr: '35px'}}>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Box sx={{ m: '50px' }}>
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
-                            Add University
-                        </Typography>
-                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                            University
-                        </Typography>
-                        {arrayUniversity.length && arrayUniversity.map((university, index) => (
-                            <Box key={index}>
-                                {index > 0 && (
-                                    <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
-                                        <DelInput index={index} removeItem={removeUniversity} />
+        <>
+            {!load ? (
+                <Box sx={{ pl: '250px', pr: '35px' }}>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Box sx={{ m: '50px' }}>
+                                <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                                    Add University
+                                </Typography>
+                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                    University
+                                </Typography>
+                                {arrayUniversity.length && arrayUniversity.map((university, index) => (
+                                    <Box key={index}>
+                                        {index > 0 && (
+                                            <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
+                                                <DelInput index={index} removeItem={removeUniversity} />
+                                            </Box>
+                                        )}
+                                        <ModalInput placeholder="University" item={university} setItem={handleChangeUniverscity(index)} index={index} />
                                     </Box>
-                                )}
-                                <ModalInput placeholder="University" item={university} setItem={handleChangeUniverscity(index)} index={index} />
+                                ))}
+                                <Box sx={{ mb: '35px' }}>
+                                    <CustomButton variant="outlined" children='+ Add University' onClick={handleAddUnivercity} />
+                                </Box>
+                                <Box>
+                                    <CustomButton variant="contained" onClick={addUniversity} children='Save University' disabled={isDisabled} />
+                                </Box>
                             </Box>
-                        ))}
-                        <Box sx={{ mb: '35px' }}>
-                            <CustomButton variant="outlined" children='+ Add University' onClick={handleAddUnivercity} />
                         </Box>
-                        <Box>
-                            <CustomButton variant="contained" onClick={addUniversity} children='Save University' disabled={isDisabled} />
+                    </Modal>
+                    <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Education ({universities.length})</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                        <Input setParam={setSearchParam} placeholder={"Search university"} />
+                        <Box sx={{ marginLeft: 'auto' }}>
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add University' />
                         </Box>
                     </Box>
+                    { universities.length === 0 ? (
+                        <NoResult />
+                    ) : (
+                        <EducationTable />
+                    )}
                 </Box>
-            </Modal>
-            <Typography sx={{fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb:'30px'}}>Education ({universities.length})</Typography>
-            <Box sx={{display: 'flex'}}>              
-                    <Input setParam={setSearchParam} placeholder={"Search university"}/>
-                <Box sx={{marginLeft:'auto'}}>
-                    <CustomButton variant="contained" onClick={(handleOpen)} children = '+ Add University' />
-                </Box>
-            </Box>
-            <EducationTable />
-        </Box>
+            ) : (
+                <PreviewPageTable />
+            )}
+        </>
     )
 }
 export default EducationPage

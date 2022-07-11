@@ -1,26 +1,26 @@
 import { call, takeEvery } from 'redux-saga/effects'
 import getUniversitiesFetch from './Education/universitiesSaga';
 import deltUniversityFetch from './Education/delUniveersitySaga';
-import {searchUniversitiesRequestAction, getUniversitiesRequestAction, universitiesActions, delUniversityRequestAction, addUniversityRequestAction, editUniversityRequestAction} from '../actionsTypes/universitiesActionTypes';
+import { searchUniversitiesRequestAction, getUniversitiesRequestAction, universitiesActions, delUniversityRequestAction, addUniversityRequestAction, editUniversityRequestAction } from '../actionsTypes/universitiesActionTypes';
 import addUniversityFetch from './Education/addUniversitySaga';
 import editUniversityFetch from './Education/editUniversitySaga';
 import searchUniversitiesFetch from './Education/searchUniversitiesSaga';
 
-import {getCompaniesRequestAction, searchCompaniesRequestAction, companiesActions, delCompanyRequestAction, addCompanyRequestAction, editCompanyRequestAction} from '../actionsTypes/companiesActionTypes';
+import { getCompaniesRequestAction, searchCompaniesRequestAction, companiesActions, delCompanyRequestAction, addCompanyRequestAction, editCompanyRequestAction } from '../actionsTypes/companiesActionTypes';
 import getCompaniesFetch from './WorkExp/companiesSaga';
 import delCompanyFetch from './WorkExp/delCompanySaga';
 import addCompanyFetch from './WorkExp/addCompanySaga';
 import editCompanyFetch from './WorkExp/editCompanySaga'
 import searchCompaniesFetch from './WorkExp/searchCompaniesSaga';
 
-import {getTechnologiesRequestAction, searchTechnologiesRequestAction, technologiesActions, delTechnologyRequestAction, addTechnologyRequestAction, editTechnologyRequestAction} from '../actionsTypes/technologiesActionTypes';
+import { getTechnologiesRequestAction, searchTechnologiesRequestAction, technologiesActions, delTechnologyRequestAction, addTechnologyRequestAction, editTechnologyRequestAction } from '../actionsTypes/technologiesActionTypes';
 import getTechnologiesFetch from './Technologies/technologiesSaga';
 import delTechnologyFetch from './Technologies/delTechnologySaga';
 import addTechnologyFetch from './Technologies/addTechnologySaga';
 import editTechnologyFetch from './Technologies/editTechnologySaga'
 import searchTechnologiesFetch from './Technologies/searchTechnologiesSaga';
 
-import {getProjectsRequestAction, searchProjectsRequestAction, projectsActions, delProjectRequestAction, addProjectRequestAction, editProjectRequestAction, getProjectRequestAction} from '../actionsTypes/projectsActionTypes';
+import { getProjectsRequestAction, searchProjectsRequestAction, projectsActions, delProjectRequestAction, addProjectRequestAction, editProjectRequestAction, getProjectRequestAction } from '../actionsTypes/projectsActionTypes';
 import getProjectsFetch from './Projects/projectsSaga';
 import delProjectFetch from './Projects/delProjectSaga';
 import addProjectFetch from './Projects/addProjectSaga';
@@ -28,7 +28,7 @@ import editProjectFetch from './Projects/editProjectSaga'
 import searchProjectsFetch from './Projects/searchProjectsSaga';
 import getProjectFetch from './Projects/getProjectSaga';
 
-import {getUsersRequestAction, searchUsersRequestAction, usersActions, delUserRequestAction, addUserRequestAction, editUserRequestAction, getUserRequestAction} from '../actionsTypes/usersActionTypes';
+import { getUsersRequestAction, searchUsersRequestAction, usersActions, delUserRequestAction, addUserRequestAction, editUserRequestAction, getUserRequestAction } from '../actionsTypes/usersActionTypes';
 import getUsersFetch from './Users/usersSaga';
 import delUserFetch from './Users/delUserSaga';
 import addUserFetch from './Users/addUserSaga';
@@ -36,7 +36,7 @@ import editUserFetch from './Users/editUserSaga'
 import searchUsersFetch from './Users/searchUserSaga';
 import getUserFetch from './Users/getUserSaga';
 
-import {getCVsRequestAction, searchCVsRequestAction, CVsActions, delCVRequestAction, addCVRequestAction, editCVRequestAction, getCVRequestAction, downloadCVRequestAction} from '../actionsTypes/CVsActionTypes';
+import { getCVsRequestAction, searchCVsRequestAction, CVsActions, delCVRequestAction, addCVRequestAction, editCVRequestAction, getCVRequestAction, downloadCVRequestAction } from '../actionsTypes/CVsActionTypes';
 import getCVsFetch from './CVs/getCVsSaga';
 import delCVFetch from './CVs/delCVSaga';
 import addCVFetch from './CVs/addCVSaga';
@@ -45,164 +45,174 @@ import searchCVsFetch from './CVs/searchCVsSaga';
 import getCVFetch from './CVs/getCVSaga';
 import downloadCVFetch from './CVs/downloadCVSaga';
 
-import { addUserPhotoRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
-import addUserPhotoFetch from './Users/addUserPhotoSaga';
+import { addUserPhotoRequestAction, addPhotoParamsRequestAction, editPhotoParamsRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
+import addUserPhotoFetch from './Users/UserPhotos/addUserPhotoSaga';
+import addPhotoParamsFetch from './Users/UserPhotos/addPhotoParamsSaga';
+import editPhotoParamsFetch from './Users/UserPhotos/editPhotoParamsSaga';
 
 import { addProjectPhotoRequestAction, delProjectPhotoRequestAction, projectPhotosActions } from '../actionsTypes/projectPhotosActionTypes';
 import addProjectPhotoFetch from './Projects/addProjectPhotoSaga';
 import delProjectPhotoFetch from './Projects/delProjectPhotoSaga';
 
 // university
-export function* getUniversities({type}:getUniversitiesRequestAction){
+export function* getUniversities({ type }: getUniversitiesRequestAction) {
   yield call(getUniversitiesFetch);
 }
 
-export function* delUniversity({type, payload}:delUniversityRequestAction){
+export function* delUniversity({ type, payload }: delUniversityRequestAction) {
   yield call(deltUniversityFetch, payload);
 }
 
-export function* addUniversity({type, payload}:addUniversityRequestAction){
+export function* addUniversity({ type, payload }: addUniversityRequestAction) {
   yield call(addUniversityFetch, payload);
 }
 
-export function* editUniversity({type, payload, id}:editUniversityRequestAction){
+export function* editUniversity({ type, payload, id }: editUniversityRequestAction) {
   yield call(editUniversityFetch, payload, id);
 }
 
-export function* searchUniversities({type, payload}:searchUniversitiesRequestAction){
+export function* searchUniversities({ type, payload }: searchUniversitiesRequestAction) {
   yield call(searchUniversitiesFetch, payload);
 }
 
 // company
-export function* getCompanies({type}:getCompaniesRequestAction){
+export function* getCompanies({ type }: getCompaniesRequestAction) {
   yield call(getCompaniesFetch);
 }
 
-export function* delCompany({type, payload}:delCompanyRequestAction){
+export function* delCompany({ type, payload }: delCompanyRequestAction) {
   yield call(delCompanyFetch, payload);
 }
 
-export function* addCompany({type, payload}:addCompanyRequestAction){
+export function* addCompany({ type, payload }: addCompanyRequestAction) {
   yield call(addCompanyFetch, payload);
 }
 
-export function* editCompany({type, payload, id}:editCompanyRequestAction){
+export function* editCompany({ type, payload, id }: editCompanyRequestAction) {
   yield call(editCompanyFetch, payload, id);
 }
 
-export function* searchCompanies({type, payload}:searchCompaniesRequestAction){
+export function* searchCompanies({ type, payload }: searchCompaniesRequestAction) {
   yield call(searchCompaniesFetch, payload);
 }
 
 // technology
-export function* getTechnologies({type}:getTechnologiesRequestAction){
+export function* getTechnologies({ type }: getTechnologiesRequestAction) {
   yield call(getTechnologiesFetch);
 }
 
-export function* delTechnology({type, payload}:delTechnologyRequestAction){
+export function* delTechnology({ type, payload }: delTechnologyRequestAction) {
   yield call(delTechnologyFetch, payload);
 }
 
-export function* addTechnology({type, payload}:addTechnologyRequestAction){
+export function* addTechnology({ type, payload }: addTechnologyRequestAction) {
   yield call(addTechnologyFetch, payload);
 }
 
-export function* editTechnology({type, payload, id}:editTechnologyRequestAction){
+export function* editTechnology({ type, payload, id }: editTechnologyRequestAction) {
   yield call(editTechnologyFetch, payload, id);
 }
 
-export function* searchTechnologies({type, payload}:searchTechnologiesRequestAction){
+export function* searchTechnologies({ type, payload }: searchTechnologiesRequestAction) {
   yield call(searchTechnologiesFetch, payload);
 }
 
 // project
-export function* getProjects({type}:getProjectsRequestAction){
+export function* getProjects({ type }: getProjectsRequestAction) {
   yield call(getProjectsFetch);
 }
 
-export function* getProject({type, id}:getProjectRequestAction){
+export function* getProject({ type, id }: getProjectRequestAction) {
   yield call(getProjectFetch, id);
 }
 
-export function* delProject({type, payload}:delProjectRequestAction){
+export function* delProject({ type, payload }: delProjectRequestAction) {
   yield call(delProjectFetch, payload);
 }
 
-export function* addProject({type, payload}:addProjectRequestAction){
+export function* addProject({ type, payload }: addProjectRequestAction) {
   yield call(addProjectFetch, payload);
 }
 
-export function* editProject({type, payload, id}:editProjectRequestAction){
+export function* editProject({ type, payload, id }: editProjectRequestAction) {
   yield call(editProjectFetch, payload, id);
 }
 
-export function* searchProjects({type, payload}:searchProjectsRequestAction){
+export function* searchProjects({ type, payload }: searchProjectsRequestAction) {
   yield call(searchProjectsFetch, payload);
 }
 
-export function* addProjectPhoto({type, payload}:addProjectPhotoRequestAction){
+export function* addProjectPhoto({ type, payload }: addProjectPhotoRequestAction) {
   yield call(addProjectPhotoFetch, payload);
 }
 
-export function* delProjectPhoto({type, payload}:delProjectPhotoRequestAction){
+export function* delProjectPhoto({ type, payload }: delProjectPhotoRequestAction) {
   yield call(delProjectPhotoFetch, payload);
 }
 
 // user
-export function* getUsers({type}:getUsersRequestAction){
+export function* getUsers({ type }: getUsersRequestAction) {
   yield call(getUsersFetch);
 }
 
-export function* getUser({type, id}:getUserRequestAction){
+export function* getUser({ type, id }: getUserRequestAction) {
   yield call(getUserFetch, id);
 }
 
-export function* delUser({type, payload}:delUserRequestAction){
+export function* delUser({ type, payload }: delUserRequestAction) {
   yield call(delUserFetch, payload);
 }
 
-export function* addUser({type, payload}:addUserRequestAction){
+export function* addUser({ type, payload }: addUserRequestAction) {
   yield call(addUserFetch, payload);
 }
 
-export function* editUser({type, payload, id}:editUserRequestAction){
+export function* editUser({ type, payload, id }: editUserRequestAction) {
   yield call(editUserFetch, payload, id);
 }
 
-export function* searchUsers({type, payload}:searchUsersRequestAction){
+export function* searchUsers({ type, payload }: searchUsersRequestAction) {
   yield call(searchUsersFetch, payload);
 }
 
-export function* addUserPhoto({type, payload}:addUserPhotoRequestAction){
+export function* addUserPhoto({ type, payload }: addUserPhotoRequestAction) {
   yield call(addUserPhotoFetch, payload);
 }
 
+export function* addPhotoParams({ type, payload }: addPhotoParamsRequestAction) {
+  yield call(addPhotoParamsFetch, payload);
+}
+
+export function* editPhotoParams({ type, payload, id }: editPhotoParamsRequestAction) {
+  yield call(editPhotoParamsFetch, payload, id);
+}
+
 // CV
-export function* getCVs({type}:getCVsRequestAction){
+export function* getCVs({ type }: getCVsRequestAction) {
   yield call(getCVsFetch);
 }
 
-export function* getCV({type, id}:getCVRequestAction){
+export function* getCV({ type, id }: getCVRequestAction) {
   yield call(getCVFetch, id);
 }
 
-export function* delCV({type, payload}:delCVRequestAction){
+export function* delCV({ type, payload }: delCVRequestAction) {
   yield call(delCVFetch, payload);
 }
 
-export function* addCV({type, payload}:addCVRequestAction){
+export function* addCV({ type, payload }: addCVRequestAction) {
   yield call(addCVFetch, payload);
 }
 
-export function* editCV({type, payload, id}:editCVRequestAction){
+export function* editCV({ type, payload, id }: editCVRequestAction) {
   yield call(editCVFetch, payload, id);
 }
 
-export function* searchCVs({type, payload}:searchCVsRequestAction){
+export function* searchCVs({ type, payload }: searchCVsRequestAction) {
   yield call(searchCVsFetch, payload);
 }
 
-export function* downloadCV({type, payload}:downloadCVRequestAction){
+export function* downloadCV({ type, payload }: downloadCVRequestAction) {
   yield call(downloadCVFetch, payload);
 }
 
@@ -249,8 +259,11 @@ export function* watcherSaga() {
   yield takeEvery(projectPhotosActions.ADD_PROJECTPHOTO_REQUEST, addProjectPhoto);
   yield takeEvery(projectPhotosActions.DEL_PROJECTPHOTO_REQUEST, delProjectPhoto);
   yield takeEvery(userPhotosActions.ADD_USERPHOTO_REQUEST, addUserPhoto);
+  yield takeEvery(userPhotosActions.ADD_PHOTOPARAMS_REQUEST, addPhotoParams);
+  yield takeEvery(userPhotosActions.EDIT_PHOTOPARAMS_REQUEST, editPhotoParams);
+
   yield takeEvery(CVsActions.DOWNLOAD_CV_REQUEST, downloadCV);
 }
-export default function* rootSaga(){
+export default function* rootSaga() {
   yield watcherSaga();
 }

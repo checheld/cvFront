@@ -9,6 +9,7 @@ interface usersReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    getAll: boolean,
     search: boolean
   }
   result: {
@@ -23,6 +24,7 @@ export const initialState: usersReduser = {
   users: [],
   isLoading: {
     get: false,
+    getAll: true,
     add: false,
     delete: false,
     edit: false,
@@ -42,14 +44,13 @@ export const usersReducer = (state = initialState, action: action): usersReduser
     case usersActions.GET_USERS_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, get: true },
       };
 
     case usersActions.GET_USERS_RESULT:
       let users: IUser[] = action.payload.map((x: IUser) => UsersMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, get: false },
+        isLoading: { ...state.isLoading, getAll: false },
         users: users.sort((a, b) => Number(a.firstName) - Number(b.firstName))
       };
 
@@ -123,14 +124,14 @@ export const usersReducer = (state = initialState, action: action): usersReduser
     case usersActions.SEARCH_USERS_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: true },
+        isLoading: { ...state.isLoading, search: false },
       };
 
     case usersActions.SEARCH_USERS_RESULT:
       let foundUsers: IUser[] = action.response.map((x: IUser) => UsersMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: false },
+        isLoading: { ...state.isLoading, search: true },
         users: foundUsers.sort((a, b) => Number(a.firstName) - Number(b.firstName))
       };
 

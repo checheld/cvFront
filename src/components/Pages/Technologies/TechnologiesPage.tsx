@@ -7,6 +7,8 @@ import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSele
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import ChipItem from './Items/ChipItem'
 import TechModal from './Modal/TechModal';
+import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
+import NoResult from '../../Items/Search/NoResult';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -27,7 +29,9 @@ const TechnologiesPage: React.FC = () => {
     const dispatch = useAppDispatch();
     let technologies = useTypedSelector((state) => state.technologies.technologies);
     const result = useTypedSelector((state) => state.technologies.result);
-
+    const load = useTypedSelector((state) => state.technologies.isLoading.getAll);
+    const search = useTypedSelector((state) => state.technologies.isLoading.search);
+    
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
           if (event.code === "Enter" || event.code === "NumpadEnter") {
@@ -58,67 +62,77 @@ const TechnologiesPage: React.FC = () => {
     let allLength = frontEndTech.length + backEndTech.length + databasesTech.length + hostingTech.length + otherTech.length + softSkillsTech.length;
 
     return (
-        <Box sx={{ pl: '250px', pr: '35px' }}>
-            <TechModal open={open} handleClose={handleClose}/>
-            <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies ({allLength})</Typography>
-            <Box sx={{ display: 'flex' }}>
-                <Input setParam={setSearchParam} placeholder={"Search technology"} />
-                <Box sx={{ marginLeft: 'auto' }}>
-                    <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' />
+        <>
+            {!load ? (
+                <Box sx={{ pl: '250px', pr: '35px' }}>
+                    <TechModal open={open} handleClose={handleClose} />
+                    <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies ({allLength})</Typography>
+                    <Box sx={{ display: 'flex' }}>
+                        <Input setParam={setSearchParam} placeholder={"Search technology"} />
+                        <Box sx={{ marginLeft: 'auto' }}>
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' />
+                        </Box>
+                    </Box>
+                    { technologies.length === 0 ? (
+                        <NoResult />
+                    ) : (
+                        <Box>
+                            <ThemeProvider theme={lightTheme}>
+                                <Box
+                                    sx={{
+                                        p: 2,
+                                        bgcolor: '#FBFBFB',
+                                        display: 'flex',
+                                        gridTemplateColumns: { md: '1fr 1fr' },
+                                        gap: 2,
+                                        padding: '0px'
+                                    }}
+                                >
+                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Front-end</Typography>
+                                        <ChipItem techCollection={frontEndTech} />
+                                    </Item>
+                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Back-end</Typography>
+                                        <ChipItem techCollection={backEndTech} />
+                                    </Item>
+                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Databases</Typography>
+                                        <ChipItem techCollection={databasesTech} />
+                                    </Item>
+                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Hosting</Typography>
+                                        <ChipItem techCollection={hostingTech} />
+                                    </Item>
+                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Other</Typography>
+                                        <ChipItem techCollection={otherTech} />
+                                    </Item>
+                                </Box>
+                                <Divider variant="inset" sx={{ mt: '35px', ml: '0px', mr: '15px', mb: '35px' }} />
+                                <Box
+                                    sx={{
+                                        p: 2,
+                                        bgcolor: '#FBFBFB',
+                                        display: 'flex',
+                                        gridTemplateColumns: { md: '1fr 1fr' },
+                                        gap: 2,
+                                        padding: '0px'
+                                    }}
+                                >
+                                    <Item elevation={4} sx={{ width: '600px' }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Soft skills</Typography>
+                                        <ChipItem techCollection={softSkillsTech} />
+                                    </Item>
+                                </Box>
+                            </ThemeProvider>
+                        </Box>
+                    )}
                 </Box>
-            </Box>
-            <Box>
-                <ThemeProvider theme={lightTheme}>
-                    <Box
-                        sx={{
-                            p: 2,
-                            bgcolor: '#FBFBFB',
-                            display: 'flex',
-                            gridTemplateColumns: { md: '1fr 1fr' },
-                            gap: 2,
-                            padding: '0px'
-                        }}
-                    >
-                        <Item elevation={4} sx={{ width: '395px' }}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Front-end</Typography>
-                            <ChipItem techCollection={frontEndTech}/>
-                        </Item>
-                        <Item elevation={4} sx={{width: '395px'}}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Back-end</Typography>
-                            <ChipItem techCollection={backEndTech}/>
-                        </Item>
-                        <Item elevation={4} sx={{width: '395px'}}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Databases</Typography>
-                            <ChipItem techCollection={databasesTech}/>
-                        </Item>
-                        <Item elevation={4} sx={{width: '395px'}}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Hosting</Typography>
-                            <ChipItem techCollection={hostingTech}/>
-                        </Item>
-                        <Item elevation={4} sx={{width: '395px'}}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Other</Typography>
-                            <ChipItem techCollection={otherTech}/>
-                        </Item>
-                    </Box>
-                    <Divider variant="inset" sx={{mt: '35px', ml: '0px', mr: '15px', mb: '35px'}}/>
-                    <Box
-                        sx={{
-                            p: 2,
-                            bgcolor: '#FBFBFB',
-                            display: 'flex',
-                            gridTemplateColumns: { md: '1fr 1fr' },
-                            gap: 2,
-                            padding: '0px'
-                        }}
-                    >
-                        <Item elevation={4} sx={{width: '600px'}}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Soft skills</Typography>
-                            <ChipItem techCollection={softSkillsTech}/>
-                        </Item>
-                    </Box>
-                </ThemeProvider>
-            </Box>
-        </Box>
+            ) : (
+                <PreviewPageTable />
+            )}
+        </>
     )
 }
 export default TechnologiesPage

@@ -11,9 +11,6 @@ const PhotoInput: React.FC = () => {
 
   const uploadImage = (photos: FileList) => {
     Array.from(photos).forEach((payload: File, index: number) => {
-      // let formData = new FormData();
-      // formData.append("file", photos[index]);
-
       dispatch({
         type: projectPhotosActions.ADD_PROJECTPHOTO_REQUEST,
         payload,

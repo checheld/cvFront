@@ -9,98 +9,107 @@ interface projectsReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    getAll: boolean,
     search: boolean,
   }
   result: {
-    add: null | undefined | number,
-    delete: null | string,
-    edit: null | undefined | number,
-    search: null | undefined | number,
+    add?: string,
+    delete?: string,
+    edit?: string,
+    search?: string,
   }
 }
 
 export const initialState: projectsReduser = {
-    projects: [],
-    isLoading: {
+  projects: [],
+  isLoading: {
     get: false,
+    getAll: true,
     add: false,
     delete: false,
     edit: false,
     search: false,
   },
-  result: {
-    add: null,
-    delete: null,
-    edit: null,
-    search: null,
-  }
+  result: {}
 }
 
-export const projectsReducer = (state = initialState, action: action):projectsReduser => {
+export const projectsReducer = (state = initialState, action: action): projectsReduser => {
 
   switch (action.type) {
     case projectsActions.GET_PROJECTS_REQUEST:
       return {
         ...state,
-        isLoading: {...state.isLoading, get: true},
       };
 
     case projectsActions.GET_PROJECTS_RESULT:
       let projects: IProject[] = action.payload.map((x: IProject) => ProjectsMapper(x))
       return {
         ...state,
-        isLoading: {...state.isLoading, get: false},
+        isLoading: { ...state.isLoading, getAll: false },
         projects: projects.sort((a, b) => Number(a.name) - Number(b.name))
       };
-      case projectsActions.GET_PROJECT_REQUEST:
+    case projectsActions.GET_PROJECT_REQUEST:
       return {
         ...state,
-        isLoading: {...state.isLoading, get: true},
+        isLoading: { ...state.isLoading, get: true },
       };
 
     case projectsActions.GET_PROJECT_RESULT:
       return {
         ...state,
-        isLoading: {...state.isLoading, get: false},
+        isLoading: { ...state.isLoading, get: false },
         project: action.payload
       };
     case projectsActions.DEL_PROJECT_REQUEST:
-      return {...state, isLoading: {...state.isLoading, delete: true}, result: {
-        ...state.result, delete: null
-      }
-    };
+      return {
+        ...state, isLoading: { ...state.isLoading, delete: true },
+        result: {
+          ...state.result, delete: ""
+        }
+      };
 
     case projectsActions.DEL_PROJECT_RESULT:
       return {
-        ...state, 
-        isLoading: {...state.isLoading, delete: false},
+        ...state,
+        isLoading: { ...state.isLoading, delete: false },
         result: {
-          ...state.result
+          ...state.result,
+          delete: action.statusText
         }
       };
 
     case projectsActions.ADD_PROJECT_REQUEST:
-      return {...state,
-         isLoading: {
-        ...state.isLoading, get: true
-      }};   
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading, get: true
+        },
+        result: {
+          ...state.result, add: ""
+        }
+      };
 
     case projectsActions.ADD_PROJECT_RESULT:
       return {
-        ...state, 
+        ...state,
         isLoading: {
           ...state.isLoading, add: false
         },
         result: {
-          ...state.result, add: action.response
+          ...state.result, add: action.statusText
         }
       }
 
     case projectsActions.EDIT_PROJECT_REQUEST:
-      return {...state,
-          isLoading: {
-        ...state.isLoading, edit: true
-      }}; 
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading, edit: true
+        },
+        result: {
+          ...state.result, edit: ""
+        }
+      };
 
     case projectsActions.EDIT_PROJECT_RESULT:
       return {
@@ -109,21 +118,21 @@ export const projectsReducer = (state = initialState, action: action):projectsRe
           ...state.isLoading, edit: false
         },
         result: {
-          ...state.result, edit: action.response
+          ...state.result, edit: action.statusText
         }
       }
 
     case projectsActions.SEARCH_PROJECTS_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: true },
+        isLoading: { ...state.isLoading, search: false },
       };
 
     case projectsActions.SEARCH_PROJECTS_RESULT:
       let proj: IProject[] = action.response.map((x: IProject) => ProjectsMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: false },
+        isLoading: { ...state.isLoading, search: true },
         projects: proj.sort((a, b) => Number(a.name) - Number(b.name))
       };
 

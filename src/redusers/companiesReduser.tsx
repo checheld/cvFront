@@ -8,6 +8,7 @@ interface companiesReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    getAll: boolean,
     search: boolean
   }
   result: {
@@ -22,6 +23,7 @@ export const initialState: companiesReduser = {
   companies: [],
   isLoading: {
     get: false,
+    getAll: true,
     add: false,
     delete: false,
     edit: false,
@@ -41,14 +43,13 @@ export const companiesReducer = (state = initialState, action: action):companies
     case companiesActions.GET_COMPANIES_REQUEST:
       return {
         ...state,
-        isLoading: {...state.isLoading, get: true},
       };
 
     case companiesActions.GET_COMPANIES_RESULT:
       let companies: ICompany[] = action.payload.map((x: ICompany) => UniversitiesMapper(x))
       return {
         ...state,
-        isLoading: {...state.isLoading, get: false},
+        isLoading: {...state.isLoading, getAll: false},
         companies: companies.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
@@ -105,14 +106,14 @@ export const companiesReducer = (state = initialState, action: action):companies
     case companiesActions.SEARCH_COMPANIES_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: true },
+        isLoading: { ...state.isLoading, search: false },
       };
 
     case companiesActions.SEARCH_COMPANIES_RESULT:
       let uni: ICompany[] = action.response.map((x: ICompany) => UniversitiesMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: false },
+        isLoading: { ...state.isLoading, search: true },
         companies: uni.sort((a, b) => Number(a.name) - Number(b.name))
       };
 

@@ -9,20 +9,20 @@ const axiosEditCompany = (payload: string, id: number) => {
   }
   return axios.put(
     `http://localhost:3001/companies/${id}`,
-    JSON.stringify({Name: payload}),
+    JSON.stringify({ Name: payload }),
     {
-        headers
+      headers
     }
   )
 }
 
 export default function* editCompanyFetch(payload: string, id: number) {
-  try{
+  try {
     const editCompanyResponse: AxiosResponse<ICompany> = yield call(axiosEditCompany, payload, id);
-    yield put({type: companiesActions.EDIT_COMPANY_RESULT, response: Response});
+    yield put({ type: companiesActions.EDIT_COMPANY_RESULT, response: Response });
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
-} 
+}
 

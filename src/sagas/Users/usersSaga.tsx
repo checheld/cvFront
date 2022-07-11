@@ -7,23 +7,24 @@ const axiosGetUsers = () => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
- 
+
   return axios.get<IUser[]>(
-    "http://localhost:3001/users", 
-      {
-          headers
-      }
-);}
+    "http://localhost:3001/users",
+    {
+      headers
+    }
+  );
+}
 
 export default function* getUsersFetch() {
-  try{
-    const getUsersResponse: AxiosResponse<IUser[]>  = yield call(axiosGetUsers);
-    if(getUsersResponse.status === 200) {
+  try {
+    const getUsersResponse: AxiosResponse<IUser[]> = yield call(axiosGetUsers);
+    if (getUsersResponse.status === 200) {
       const response = getUsersResponse.data;
       yield put(getUsersResult(response));
     }
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
 }

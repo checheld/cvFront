@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import {universitiesReducer} from './universitiesReduser';
-import {companiesReducer} from './companiesReduser'
+import { universitiesReducer } from './universitiesReduser';
+import { companiesReducer } from './companiesReduser'
 import { technologiesReducer } from './technologiesReduser';
 import { projectsReducer } from './projectsReduser';
 import { usersReducer } from './usersReduser';

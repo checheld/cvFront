@@ -7,24 +7,17 @@ import { IUniversity } from '../../../../interfaces';
 import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 import EditModal from '../../../Items/EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import DeleteModal from '../../../Items/DeleteModal';
 
 
 const BasicTable: React.FC = () => {
   const dispatch = useAppDispatch();
   let universities = useTypedSelector((state) => state.universities.universities);
   const result = useTypedSelector((state) => state.universities.result);
-  const loading = useTypedSelector((state) => state.universities.isLoading.get);
-  const search = useTypedSelector((state) => state.universities.isLoading.search)
 
   useEffect(() => {
     dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
   }, [result, dispatch]);
-   
-  // universities = universities.filter((item: IUniversity) => item.name.includes(searchParam))
-
-  const delUniversity = (event: React.MouseEvent<HTMLButtonElement>) => {
-      dispatch( {type: universitiesActions.DEL_UNIVERSITY_REQUEST, payload: event.currentTarget.id});
-  }
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -35,11 +28,18 @@ const BasicTable: React.FC = () => {
     setUniversity(university);
   };
 
+  const [openDelModal, setOpenDelModal] = React.useState(false);
+  const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setdelId(event.currentTarget.id);
+      setOpenDelModal(true);
+  }
+  const handleCloseDelModal = () => setOpenDelModal(false);
+  const [delId, setdelId] = React.useState("");
+
   return (
     <Box>
-
       <EditModal open={open} handleClose={handleClose} item={university} action={universitiesActions.EDIT_UNIVERSITY_REQUEST}/>
-
+      <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"university"}/>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
           <TableHead>
@@ -64,7 +64,7 @@ const BasicTable: React.FC = () => {
                       <Button variant='text' key ={university.id} onClick={()=>modalOpen(university)}>
                         <EditButton />
                       </Button>
-                    <Button variant='text' onClick={delUniversity} id={university.id} >
+                    <Button variant='text' onClick={handleOpenDelModal} id={university.id} >
                       <Delete />
                     </Button>
                   </Stack>

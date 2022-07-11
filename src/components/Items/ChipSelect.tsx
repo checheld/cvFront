@@ -66,7 +66,7 @@ const ChipSelect: React.FC<IChipSelect> = ({tech, setTech}) => {
     return (
     <div>
         <FormControl sx={{ width: 300 }}>
-          <InputLabel id="demo-multiple-chip-label">Select technologies</InputLabel>
+          {tech === undefined && <InputLabel id="demo-multiple-chip-label">Select technologies</InputLabel>}
           <Select
             labelId="demo-multiple-chip-label"
             id="demo-multiple-chip"

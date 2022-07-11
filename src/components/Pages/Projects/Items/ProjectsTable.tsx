@@ -9,6 +9,7 @@ import { technologiesActions } from '../../../../actionsTypes/technologiesAction
 import ProjectModal from '../Modal/ProjectModal';
 import { useNavigate } from 'react-router-dom';
 import { IProject, ITechnology } from '../../../../interfaces';
+import DeleteModal from '../../../Items/DeleteModal';
 
 interface IProjectsTable {
   projects: IProject[]
@@ -17,35 +18,36 @@ interface IProjectsTable {
 const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
   const dispatch = useAppDispatch();
   const router = useNavigate();
-  // let projects = useTypedSelector((state) => state.projects.projects);
+
   const result = useTypedSelector((state) => state.projects.result);
-  const loading = useTypedSelector((state) => state.projects.isLoading.get);
-  const search = useTypedSelector((state) => state.projects.isLoading.search)
 
   useEffect(() => {
     dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
     dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
   }, [result, dispatch]);
-   
-  // universities = universities.filter((item: IUniversity) => item.name.includes(searchParam))
 
-  const delProject = (event: React.MouseEvent<HTMLButtonElement>) => {
-      dispatch( {type: projectsActions.DEL_PROJECT_REQUEST, payload: event.currentTarget.id});
-  }
   const [editableProject, setEditableProject] = React.useState<IProject>();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [project, setProject] = useState({name: '', id: '', type: '', technologyList: [], country: ''})
 
   const handleClick = (project: IProject) => {
     setEditableProject(project);
     handleOpen();
-};
+  };
+
+  const [openDelModal, setOpenDelModal] = React.useState(false);
+  const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setdelId(event.currentTarget.id);
+      setOpenDelModal(true);
+  }
+  const handleCloseDelModal = () => setOpenDelModal(false);
+  const [delId, setdelId] = React.useState("");
 
   return (
     <Box>
       <ProjectModal open={open} handleClose={handleClose} editableProject={editableProject}/>
+      <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project"}/>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
           <TableHead>
@@ -90,7 +92,7 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
                       <Button variant='text' onClick={() => handleClick(project)} key ={project.id} >
                         <EditButton />
                       </Button>
-                    <Button variant='text' onClick={delProject} id={project.id} >
+                    <Button variant='text' onClick={handleOpenDelModal} id={project.id} >
                       <Delete />
                     </Button>
                   </Stack>

@@ -10,6 +10,7 @@ interface CVsReduser {
     delete: boolean,
     edit: boolean,
     get: boolean,
+    getAll: boolean,
     search: boolean
   }
   result: {
@@ -24,6 +25,7 @@ export const initialState: CVsReduser = {
   CVs: [],
   isLoading: {
     get: false,
+    getAll: true,
     add: false,
     delete: false,
     edit: false,
@@ -42,22 +44,20 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
   switch (action.type) {
     case CVsActions.GET_CVS_REQUEST:
       return {
-        ...state,
-        isLoading: { ...state.isLoading, get: true },
+        ...state
       };
 
     case CVsActions.GET_CVS_RESULT:
       let CVs: ICV[] = action.payload.map((x: ICV) => CVsMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, get: false },
+        isLoading: { ...state.isLoading, getAll: false },
         CVs: CVs.sort((a, b) => Number(a.cvName) - Number(b.cvName))
       };
 
     case CVsActions.GET_CV_REQUEST:
       return {
-        ...state,
-        isLoading: { ...state.isLoading, get: true },
+        ...state
       };
 
     case CVsActions.GET_CV_RESULT:
@@ -139,14 +139,14 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
     case CVsActions.SEARCH_CVS_REQUEST:
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: true },
+        isLoading: { ...state.isLoading, search: false },
       };
 
     case CVsActions.SEARCH_CVS_RESULT:
       let foundCVs: ICV[] = action.response.map((x: ICV) => CVsMapper(x))
       return {
         ...state,
-        isLoading: { ...state.isLoading, search: false },
+        isLoading: { ...state.isLoading, search: true },
         CVs: foundCVs.sort((a, b) => Number(a.cvName) - Number(b.cvName))
       };
 

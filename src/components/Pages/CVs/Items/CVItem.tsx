@@ -8,6 +8,8 @@ import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import Edit from '../../../../img/Edit';
 import Download from '../../../../img/Download';
+import DeleteModal from '../../../Items/DeleteModal';
+import moment from 'moment';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -32,15 +34,21 @@ interface ICVsItem {
 }
 
 const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
+    const dispatch = useAppDispatch();
+
+    const time = moment(CV.createdAt).local().startOf('seconds').fromNow();
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const dispatch = useAppDispatch();
-    
-    const delCV = (event: React.MouseEvent<HTMLButtonElement>) => {
-        dispatch( {type: CVsActions.DEL_CV_REQUEST, payload: event.currentTarget.id});
+
+    const [openDelModal, setOpenDelModal] = React.useState(false);
+    const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setdelId(event.currentTarget.id);
+        setOpenDelModal(true);
     }
+    const handleCloseDelModal = () => setOpenDelModal(false);
+    const [delId, setdelId] = React.useState("");
 
     const downloadCV = (event: React.MouseEvent<HTMLButtonElement>) => {
         dispatch( {type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id});
@@ -48,7 +56,8 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
 
     return (
         <Box sx={{ p: '0px', m: '0px'}}>
-            <CVModal open={open} handleClose={handleClose}  editableCV={CV} /> 
+            <CVModal open={open} handleClose={handleClose} editableCV={CV} /> 
+            <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"CV"}/>
             <ThemeProvider theme={lightTheme}>
             <Item elevation={4}
                 sx={{ width: '335px', mr: '6px' }}
@@ -61,13 +70,16 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                         ))}
                     </Box>
                 </Box>
-                <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key ={CV.id}>
-                <Button variant='text' onClick={downloadCV} id={CV.id} sx={{minWidth: '30px'}}>
-                    <Download />
-                </Button>
-                <Button variant='text' onClick={delCV} id={CV.id} sx={{minWidth: '30px'}}>
-                    <Delete />
-                </Button>
+                <Stack direction="row" sx={{ mr: '30px', width: '100%' }} key ={CV.id}>
+                    <Button variant='text' onClick={downloadCV} id={CV.id} sx={{minWidth: '30px', mr: '15px'}}>
+                        <Download />
+                    </Button>
+                    <Button variant='text' onClick={handleOpenDelModal} id={CV.id} sx={{minWidth: '30px'}}>
+                        <Delete />
+                    </Button>
+                    <Box sx={{ml: 'auto'}}>
+                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px'}}>{time}</Typography>
+                    </Box>
                 </Stack>
             </Item>
             </ThemeProvider>

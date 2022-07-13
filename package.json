@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
-    "@types/react-avatar-editor": "^12.0.0"
+    "@types/react-avatar-editor": "^12.0.0",
+    "@types/react-dom": "^18.0.6"
   }
 }

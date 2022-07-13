@@ -8,7 +8,7 @@ const axiosEditProject = (payload: { name: string, type: string, description: st
 
   instance.put(
     `/projects/${id}`,
-    JSON.stringify(payload)
+    payload
   )
 
 

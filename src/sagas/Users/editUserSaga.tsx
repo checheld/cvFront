@@ -8,7 +8,7 @@ const axiosEditUser = (payload: { id: string, firstName: string, lastName: strin
 
   instance.put(
     `/users/${id}`,
-    JSON.stringify(payload)
+    payload
   )
 
 

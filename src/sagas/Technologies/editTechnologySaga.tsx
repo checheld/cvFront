@@ -8,7 +8,7 @@ const axiosEditTechnology = (payload: { name: string, type: string }, id: number
 
   instance.put(
     `/technologies/${id}`,
-    JSON.stringify(payload)
+    payload
   )
 
 

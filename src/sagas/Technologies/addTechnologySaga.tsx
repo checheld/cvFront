@@ -5,15 +5,10 @@ import { technologiesActions } from '../../actionsTypes/technologiesActionTypes'
 import instance from '../axiosSetting';
 
 const axiosAddTechnology = (data: Array<ITechnology>) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
+
   return instance.post<Array<ITechnology>>(
     `/technologies/add`,
-    JSON.stringify(data),
-    {
-      headers
-    }
+    data
   );
 }
 

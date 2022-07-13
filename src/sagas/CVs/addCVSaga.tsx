@@ -4,18 +4,13 @@ import { ICV } from '../../interfaces/index'
 import { CVsActions } from '../../actionsTypes/CVsActionTypes';
 import instance from '../axiosSetting';
 
-const axiosAddCV = (data: ICV) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-  return instance.post<ICV>(
+const axiosAddCV = (data: ICV) =>
+
+  instance.post<ICV>(
     `/CV/add`,
-    JSON.stringify(data),
-    {
-      headers
-    }
+    data
   );
-}
+
 
 export default function* addCVFetch(data: ICV) {
   try {

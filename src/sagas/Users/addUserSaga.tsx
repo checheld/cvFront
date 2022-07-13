@@ -4,18 +4,13 @@ import { IUser } from '../../interfaces/index'
 import { usersActions } from '../../actionsTypes/usersActionTypes';
 import instance from '../axiosSetting';
 
-const axiosAddUser = (data: IUser) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-  return instance.post<IUser>(
+const axiosAddUser = (data: IUser) =>
+
+  instance.post<IUser>(
     `/user/add`,
-    JSON.stringify(data),
-    {
-      headers
-    }
+    data
   );
-}
+
 
 export default function* addUserFetch(data: IUser) {
   try {

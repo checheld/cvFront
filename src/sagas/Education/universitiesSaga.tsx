@@ -1,5 +1,5 @@
 import { put, call } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { getUniversitiesResult } from '../../actionCreators/universityActionCreator';
 import { IUniversity } from '../../interfaces/index'
 import instance from '../axiosSetting';

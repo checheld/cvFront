@@ -7,7 +7,7 @@ import instance from '../axiosSetting';
 const axiosEditUniversity = (payload: string, id: number) =>
   instance.put(
     `/universities/${id}`,
-    JSON.stringify({ Name: payload }),
+    { Name: payload }
   )
 
 

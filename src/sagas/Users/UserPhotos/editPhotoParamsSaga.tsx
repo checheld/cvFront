@@ -1,5 +1,5 @@
 import { put, call } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { userPhotosActions } from '../../../actionsTypes/userPhotosActionTypes';
 import instance from '../../axiosSetting';
 
@@ -7,7 +7,7 @@ const axiosEditPhotoParams = (payload: any, id: string) =>
 
     instance.put(
         `/profilephoto/params/${id}`,
-        JSON.stringify(payload)
+        payload
     )
 
 export default function* editPhotoParamsFetch(payload: any, id: string) {

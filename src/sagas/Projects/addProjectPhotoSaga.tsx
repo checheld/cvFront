@@ -1,5 +1,5 @@
 import { put } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { projectPhotosActions } from '../../actionsTypes/projectPhotosActionTypes';
 import instance from '../axiosSetting';
 

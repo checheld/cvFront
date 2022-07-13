@@ -5,15 +5,10 @@ import { universitiesActions } from '../../actionsTypes/universitiesActionTypes'
 import instance from '../axiosSetting';
 
 const axiosAddUniversity = (data: Array<IUniversity>) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
+
   return instance.post<Array<IUniversity>>(
     `/universities/add`,
-    JSON.stringify(data),
-    {
-      headers
-    }
+    data
   );
 }
 

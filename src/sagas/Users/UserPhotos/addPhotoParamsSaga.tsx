@@ -3,18 +3,13 @@ import axios, { AxiosResponse } from 'axios'
 import { userPhotosActions } from '../../../actionsTypes/userPhotosActionTypes';
 import instance from '../../axiosSetting';
 
-const axiosAddPhotoParams = (data: any) => {
-    const headers = {
-        'Content-Type': 'application/json;charset=utf-8',
-    }
-    return instance.post<any>(
+const axiosAddPhotoParams = (data: any) =>
+
+    instance.post<any>(
         `/profilephoto/params/add`,
-        JSON.stringify(data),
-        {
-            headers
-        }
+        data
     );
-}
+
 
 export default function* addPhotoParamsFetch(data: any) {
     try {

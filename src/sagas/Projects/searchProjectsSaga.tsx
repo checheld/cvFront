@@ -8,7 +8,7 @@ const axiosSearchProjects = (payload: { name: string, type: string, technologyNa
 
   instance.post(
     `/projects/search`,
-    JSON.stringify(payload)
+    payload
   )
 
 

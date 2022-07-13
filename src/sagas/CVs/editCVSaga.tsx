@@ -8,7 +8,7 @@ const axiosEditCV = (payload: { id: string, CVName: string, userId: string, proj
 
   instance.put(
     `/CVs/${id}`,
-    JSON.stringify(payload)
+    payload
   )
 
 

@@ -1,7 +1,6 @@
 import { put } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { userPhotosActions } from '../../../actionsTypes/userPhotosActionTypes';
-import { IPhotoParams } from '../../../interfaces';
 import instance from '../../axiosSetting';
 
 const axiosAddUserPhoto = (payload: File) => {

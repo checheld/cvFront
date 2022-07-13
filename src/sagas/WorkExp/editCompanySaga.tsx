@@ -2,19 +2,15 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { ICompany } from '../../interfaces/index'
 import { companiesActions } from '../../actionsTypes/companiesActionTypes';
+import instance from '../axiosSetting';
 
-const axiosEditCompany = (payload: string, id: number) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-  return axios.put(
-    `http://localhost:3001/companies/${id}`,
-    JSON.stringify({ Name: payload }),
-    {
-      headers
-    }
+const axiosEditCompany = (payload: string, id: number) =>
+
+  instance.put(
+    `/companies/${id}`,
+    JSON.stringify({ Name: payload })
   )
-}
+
 
 export default function* editCompanyFetch(payload: string, id: number) {
   try {

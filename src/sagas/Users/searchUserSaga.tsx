@@ -2,18 +2,13 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IUser } from '../../interfaces/index'
 import { usersActions } from '../../actionsTypes/usersActionTypes'
+import instance from '../axiosSetting'
 
-const axiosSearchUsers = (payload: string) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-  return axios.get(
-    `http://localhost:3001/users/search/${payload}`,
-    {
-      headers
-    }
+const axiosSearchUsers = (payload: string) =>
+  instance.get(
+    `/users/search/${payload}`,
   )
-}
+
 
 export default function* searchUsersFetch(payload: string) {
   try {

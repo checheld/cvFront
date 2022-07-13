@@ -2,12 +2,13 @@ import { put } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { userPhotosActions } from '../../../actionsTypes/userPhotosActionTypes';
 import { IPhotoParams } from '../../../interfaces';
+import instance from '../../axiosSetting';
 
 const axiosAddUserPhoto = (payload: File) => {
   const data = new FormData();
   data.append('image', payload);
-  return axios.post<File>(
-    `http://localhost:3001/profilephoto/add`,
+  return instance.post<File>(
+    `/profilephoto/add`,
     data
   );
 }

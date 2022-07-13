@@ -2,12 +2,12 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { ICompany } from '../../interfaces/index'
 import { companiesActions } from '../../actionsTypes/companiesActionTypes';
+import instance from '../axiosSetting';
 
-const axiosDelCompany = (id: string) => {
-  return axios.delete(
-    `http://localhost:3001/companies/${id}`
-  )
-}
+const axiosDelCompany = (id: string) =>
+  instance.delete(
+    `/companies/${id}`)
+
 
 export default function* deltCompanyFetch(id: string) {
   try {

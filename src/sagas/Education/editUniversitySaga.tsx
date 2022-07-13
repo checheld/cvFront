@@ -2,28 +2,22 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IUniversity } from '../../interfaces/index'
 import { universitiesActions } from '../../actionsTypes/universitiesActionTypes';
+import instance from '../axiosSetting';
 
-const axiosEditUniversity = (payload: string, id: number) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-
-  return axios.put(
-    `http://localhost:3001/universities/${id}`,
-    JSON.stringify({Name: payload}),
-    {
-        headers
-    }
+const axiosEditUniversity = (payload: string, id: number) =>
+  instance.put(
+    `/universities/${id}`,
+    JSON.stringify({ Name: payload }),
   )
-}
+
 
 export default function* updateUniversityFetch(payload: string, id: number) {
-  try{
+  try {
     const updateUniversityResponse: AxiosResponse<IUniversity> = yield call(axiosEditUniversity, payload, id);
-    yield put({type: universitiesActions.EDIT_UNIVERSITY_RESULT, response: Response});
+    yield put({ type: universitiesActions.EDIT_UNIVERSITY_RESULT, response: Response });
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
-} 
+}
 

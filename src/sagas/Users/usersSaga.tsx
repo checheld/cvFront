@@ -2,19 +2,14 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { getUsersResult } from '../../actionCreators/userActionCreator';
 import { IUser } from '../../interfaces/index'
+import instance from '../axiosSetting';
 
-const axiosGetUsers = () => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
+const axiosGetUsers = () =>
 
-  return axios.get<IUser[]>(
-    "http://localhost:3001/users",
-    {
-      headers
-    }
+  instance.get<IUser[]>(
+    "/users",
   );
-}
+
 
 export default function* getUsersFetch() {
   try {

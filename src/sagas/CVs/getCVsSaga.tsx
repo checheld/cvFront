@@ -2,10 +2,11 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { getCVsResult } from '../../actionCreators/CVActionCreator';
 import { ICV } from '../../interfaces/index'
+import instance from '../axiosSetting';
 
 const axiosGetCVs = () =>
-  axios.get<ICV[]>(
-    "http://localhost:3001/CVs",
+  instance.get<ICV[]>(
+    "/CVs",
   )
 
 

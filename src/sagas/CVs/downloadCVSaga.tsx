@@ -1,11 +1,12 @@
 import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { downloadCVResult } from '../../actionCreators/CVActionCreator';
+import instance from '../axiosSetting';
 
 const axiosDownloadCV = (id: number) => {
 
-  return axios.get<any>(
-    `http://localhost:3001/Pdf/${id}`
+  return instance.get<any>(
+    `/Pdf/${id}`
   )
     .then((response) => {
       const b64Data = response.data;

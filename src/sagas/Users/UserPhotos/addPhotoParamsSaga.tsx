@@ -1,14 +1,14 @@
 import { put } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { userPhotosActions } from '../../../actionsTypes/userPhotosActionTypes';
+import instance from '../../axiosSetting';
 
 const axiosAddPhotoParams = (data: any) => {
     const headers = {
         'Content-Type': 'application/json;charset=utf-8',
     }
-    console.log(data)
-    return axios.post<any>(
-        `http://localhost:3001/profilephoto/params/add`,
+    return instance.post<any>(
+        `/profilephoto/params/add`,
         JSON.stringify(data),
         {
             headers

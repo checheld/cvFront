@@ -2,12 +2,12 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IProject } from '../../interfaces/index'
 import { projectsActions } from '../../actionsTypes/projectsActionTypes';
+import instance from '../axiosSetting';
 
-const axiosDelProject = (id: string) => {
-  return axios.delete(
-    `http://localhost:3001/projects/${id}`
+const axiosDelProject = (id: string) =>
+  instance.delete(
+    `/projects/${id}`
   )
-}
 
 export default function* deltProjectFetch(id: string) {
   try {

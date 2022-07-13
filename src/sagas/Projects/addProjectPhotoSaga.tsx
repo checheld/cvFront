@@ -1,13 +1,14 @@
 import { put } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { projectPhotosActions } from '../../actionsTypes/projectPhotosActionTypes';
+import instance from '../axiosSetting';
 
 const axiosAddProjectPhoto = (payload: File) => {
 
   const data = new FormData();
   data.append('image', payload);
-  return axios.post<File>(
-    `http://localhost:3001/projectphoto/add`,
+  instance.post<File>(
+    `/projectphoto/add`,
     data
   );
 }

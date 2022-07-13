@@ -2,10 +2,11 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IUser } from '../../interfaces/index'
 import { usersActions } from '../../actionsTypes/usersActionTypes';
+import instance from '../axiosSetting';
 
 const axiosDelUser = (id: string) =>
-  axios.delete(
-    `http://localhost:3001/users/${id}`
+  instance.delete(
+    `/users/${id}`
   )
 
 export default function* delUserFetch(id: string) {

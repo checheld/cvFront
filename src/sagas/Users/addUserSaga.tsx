@@ -2,13 +2,14 @@ import { put } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IUser } from '../../interfaces/index'
 import { usersActions } from '../../actionsTypes/usersActionTypes';
+import instance from '../axiosSetting';
 
 const axiosAddUser = (data: IUser) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   }
-  return axios.post<IUser>(
-    `http://localhost:3001/user/add`,
+  return instance.post<IUser>(
+    `/user/add`,
     JSON.stringify(data),
     {
       headers

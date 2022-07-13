@@ -2,28 +2,23 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IProject, IProjectPhoto, ITechnology } from '../../interfaces/index'
 import { projectsActions } from '../../actionsTypes/projectsActionTypes';
+import instance from '../axiosSetting';
 
-const axiosEditProject = (payload: {name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[]}, id: number) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
+const axiosEditProject = (payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number) =>
 
-  return axios.put(
-    `http://localhost:3001/projects/${id}`,
-    JSON.stringify(payload),
-    {
-        headers
-    }
+  instance.put(
+    `/projects/${id}`,
+    JSON.stringify(payload)
   )
-}
 
-export default function* editProjectFetch(payload: {name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[]}, id: number) {
-  try{
+
+export default function* editProjectFetch(payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number) {
+  try {
     const updatProjectResponse: AxiosResponse<IProject> = yield call(axiosEditProject, payload, id);
-    yield put({type: projectsActions.EDIT_PROJECT_RESULT, response: Response});
+    yield put({ type: projectsActions.EDIT_PROJECT_RESULT, response: Response });
   }
-  catch(e) {
+  catch (e) {
     console.log(e)
   }
-} 
+}
 

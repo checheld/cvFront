@@ -2,18 +2,12 @@ import { put, call } from 'redux-saga/effects'
 import axios, { AxiosResponse } from 'axios'
 import { IUniversity } from '../../interfaces/index'
 import { universitiesActions } from '../../actionsTypes/universitiesActionTypes'
+import instance from '../axiosSetting'
 
-const axiosSearchUniversities = (payload: string) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-  }
-  return axios.get(
-    `http://localhost:3001/universities/search/${payload}`,
-    {
-      headers
-    }
+const axiosSearchUniversities = (payload: string) =>
+  instance.get(
+    `/universities/search/${payload}`
   )
-}
 
 export default function* searchUniversitiesFetch(payload: string) {
   try {

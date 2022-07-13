@@ -8,7 +8,7 @@ const axiosEditCompany = (payload: string, id: number) =>
 
   instance.put(
     `/companies/${id}`,
-    JSON.stringify({ Name: payload })
+    { Name: payload }
   )
 
 

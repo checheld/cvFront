@@ -1,5 +1,5 @@
 import { put } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { ICV } from '../../interfaces/index'
 import { CVsActions } from '../../actionsTypes/CVsActionTypes';
 import instance from '../axiosSetting';

@@ -6,7 +6,7 @@ import instance from '../axiosSetting';
 
 const axiosGetCV = (id: string) =>
   instance.get<ICV>(
-    `/CVs/${id}`)
+    `/cvs/${id}`)
 
 export default function* getCVFetch(id: string) {
   try {

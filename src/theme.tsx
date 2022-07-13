@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { red } from '@mui/material/colors';
 import shadows, { Shadows } from '@mui/material/styles/shadows';
 export const defaultTheme = createTheme({
   // typography: {
@@ -56,9 +55,9 @@ export const defaultTheme = createTheme({
   spacing: 5,
   shadows: shadows.map(() => 'none') as Shadows,
 })
-export const theme = createTheme( defaultTheme, {
+export const theme = createTheme(defaultTheme, {
   components: {
-    
+
     MuiList: {
       styleOverrides: {
         root: {
@@ -82,10 +81,10 @@ export const theme = createTheme( defaultTheme, {
           '&.Mui-selected': {
             '& .MuiListItemText-root': {
               '& .MuiTypography-root': {
-                 color:'#5893F9'
+                color: '#5893F9'
               }
             },
-            backgroundColor:'#303439',
+            backgroundColor: '#303439',
             '&:hover': {
               backgroundColor: '#303439',
             },
@@ -95,7 +94,7 @@ export const theme = createTheme( defaultTheme, {
     },
     MuiListItemIcon: {
       styleOverrides: {
-        root:{
+        root: {
           minWidth: '0px',
           alignItems: 'center'
         }
@@ -133,20 +132,20 @@ export const theme = createTheme( defaultTheme, {
         body: {
           weight: 400,
           fontSize: '14px',
-          color:'#535E6C',
+          color: '#535E6C',
           width: '100%'
         },
         head: {
           weight: 600,
           fontSize: '16px',
-          color:'#989CA8',
+          color: '#989CA8',
 
         },
         footer: {
           weight: 400,
           fontSize: '14px',
-          color:'#AFB5BF',
-        } 
+          color: '#AFB5BF',
+        }
       }
     },
 
@@ -168,23 +167,23 @@ export const theme = createTheme( defaultTheme, {
 
     MuiButton: {
       styleOverrides: {
-        root:{},
+        root: {},
 
         text: {
-          width:"30px", 
-          height:"30px", 
-          padding: 0, 
-          margin: 0, 
-          backgroundColor: '#F1F3F5', 
-          borderRadius: '5px', 
+          width: "30px",
+          height: "30px",
+          padding: 0,
+          margin: 0,
+          backgroundColor: '#F1F3F5',
+          borderRadius: '5px',
           minWidth: 'auto',
-           '&:hover': {
-             backgroundColor: '#E9EEF2'
-           },
-           '&:active': {
+          '&:hover': {
+            backgroundColor: '#E9EEF2'
+          },
+          '&:active': {
             backgroundColor: '#E2E7EC'
-           },
-           '&:disabled': {
+          },
+          '&:disabled': {
             backgroundColor: '#F1F3F5'
           }
         },
@@ -197,11 +196,11 @@ export const theme = createTheme( defaultTheme, {
             backgroundColor: '#74A7FF'
           },
           '&:active': {
-           backgroundColor: '#598CE2'
+            backgroundColor: '#598CE2'
           },
           '&:disabled': {
-           backgroundColor: '#5893F9'
-         }
+            backgroundColor: '#5893F9'
+          }
         },
       }
     },
@@ -219,14 +218,14 @@ export const theme = createTheme( defaultTheme, {
             color: '#535E6C',
             outline: '1px solid #535E6C',
             fieldset: {
-            border: 'none',
+              border: 'none',
             },
           },
         },
       }
     },
   },
- 
+
 
 });
 // export const secondaryTheme = createTheme(defaultTheme, {

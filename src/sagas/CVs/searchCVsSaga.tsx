@@ -7,7 +7,7 @@ import instance from '../axiosSetting'
 const axiosSearchCVs = (payload: string) =>
 
   instance.get(
-    `/CVs/search/${payload}`
+    `/cvs/search/${payload}`
   )
 
 

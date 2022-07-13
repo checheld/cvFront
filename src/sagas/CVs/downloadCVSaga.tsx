@@ -1,11 +1,11 @@
-import { put, call } from 'redux-saga/effects'
-import axios, { AxiosResponse } from 'axios'
+import { call } from 'redux-saga/effects'
+import { AxiosResponse } from 'axios'
 import { downloadCVResult } from '../../actionCreators/CVActionCreator';
 import instance from '../axiosSetting';
 
-const axiosDownloadCV = (id: number) => {
+const axiosDownloadCV = (id: number) =>
 
-  return instance.get<any>(
+  instance.get<any>(
     `/Pdf/${id}`
   )
     .then((response) => {
@@ -34,8 +34,7 @@ const axiosDownloadCV = (id: number) => {
       link.setAttribute('download', 'file.pdf');
       document.body.appendChild(link);
       link.click();
-    });
-}
+    })
 
 export default function* downloadCVFetch(id: number) {
   try {

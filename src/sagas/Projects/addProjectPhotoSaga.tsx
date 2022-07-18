@@ -4,10 +4,9 @@ import { projectPhotosActions } from '../../actionsTypes/projectPhotosActionType
 import instance from '../axiosSetting';
 
 const axiosAddProjectPhoto = (payload: File) => {
-
   const data = new FormData();
   data.append('image', payload);
-  instance.post<File>(
+  return instance.post<File>(
     `/projectphoto/add`,
     data
   );

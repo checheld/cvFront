@@ -237,7 +237,7 @@ const UserIdPage: React.FC = () => {
                             </Item>
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                    <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
+                                    <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mb: '35px', mr: '40px', ml: 'auto' }}>
                                         CV
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />

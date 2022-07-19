@@ -11,8 +11,8 @@ import { useTypedSelector } from '../../redusers/useTypedSelector';
 import { ITechnology } from '../../interfaces';
 
 interface IChipSelect {
-    tech: ITechnology[],
-    setTech: (tech: ITechnology[]) => void
+  tech: ITechnology[],
+  setTech: (tech: ITechnology[]) => void
 }
 
 const ITEM_HEIGHT = 48;
@@ -35,11 +35,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-const ChipSelect: React.FC<IChipSelect> = ({tech, setTech}) => {
+const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech }) => {
   const technologies = useTypedSelector((state) => state.technologies.technologies);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
-  
+
   React.useEffect(() => {
     if (tech !== undefined) {
       tech.map((t) => (
@@ -53,49 +53,53 @@ const ChipSelect: React.FC<IChipSelect> = ({tech, setTech}) => {
       target: { value },
     } = event;
     setPersonName(
-        typeof value === 'string' ? value.split(',') : value,
+      typeof value === 'string' ? value.split(',') : value,
     );
-      var result: Array<ITechnology> = [];
-      for (var i = 0; i < value.length; i++) {
-          let foundTech = technologies.find(tech => tech.name === value[i])
-          result.push(foundTech!);
-      }
-      setTech(result);
+    var result: Array<ITechnology> = [];
+    for (var i = 0; i < value.length; i++) {
+      let foundTech = technologies.find(tech => tech.name === value[i])
+      result.push(foundTech!);
+    }
+    setTech(result);
   };
 
-    return (
+  return (
     <div>
-        <FormControl sx={{ width: 300 }}>
-          {tech === undefined && <InputLabel id="demo-multiple-chip-label">Select technologies</InputLabel>}
-          <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
-            multiple
-            value={personName}
-            sx={{ width: '700px', height: '50px' }}
-            onChange={handleChange}
-            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+      <FormControl sx={{ width: 300 }}>
+        <Select
+          id="demo-multiple-chip"
+          multiple
+          displayEmpty
+          value={personName}
+          sx={{ width: '700px', height: '50px' }}
+          onChange={handleChange}
+          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          //@ts-ignore
+          renderValue={(selected) => {
+            if (!selected.length) {
+              return ('Select technologies');
+            } else {
+              return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                 {selected.map((value) => (
                   <Chip key={value} label={value} />
                 ))}
               </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {technologies.map((technology) => (
-              <MenuItem
-                key={technology.name}
-                value={technology.name}
-                style={getStyles(technology.name, personName, theme)}
-              >
-                {technology.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
+            }
+          }}
+          MenuProps={MenuProps}
+        >
+          {technologies.map((technology) => (
+            <MenuItem
+              key={technology.name}
+              value={technology.name}
+              style={getStyles(technology.name, personName, theme)}
+            >
+              {technology.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
   );
 }
 export default ChipSelect

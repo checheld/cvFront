@@ -38,11 +38,11 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     let url = useTypedSelector((state) => state.projectPhotos.result.add);
     useEffect(() => {
         if (url !== undefined && url !== null) {
-            let urlObj: IProjectPhoto = {'url': url}
+            let urlObj: IProjectPhoto = { 'url': url }
             setPhoto(oldArray => [...oldArray, urlObj])
         }
-    }, [url]);   
-    
+    }, [url]);
+
     const items = ['CRM', 'Web service', 'Web site'];
     let isDisabled;
     if (editableProject === undefined) {
@@ -67,6 +67,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     const editProject = () => {
         if (editableProject !== undefined) {
             const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+
             dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, payload: objProject });
             setProjectName('');
             setType('');
@@ -125,10 +126,8 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         dispatch({
             type: projectPhotosActions.DEL_PROJECTPHOTO_REQUEST,
             payload: photo[index].id
-          });
-      };
-
-
+        });
+    };
 
     return (
         <Modal
@@ -227,11 +226,11 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                     </Box>
                     {(editableProject === undefined) ? (
                         <Box>
-                            <CustomButton variant="contained" onClick={addProject} children='Add Technology' disabled={!isDisabled} />
+                            <CustomButton variant="contained" onClick={addProject} children='Add Project' disabled={!isDisabled} />
                         </Box>
                     ) : (
                         <Box>
-                            <CustomButton variant="contained" onClick={editProject} children='Save Technology' disabled={!isDisabled} />
+                            <CustomButton variant="contained" onClick={editProject} children='Save Project' disabled={!isDisabled} />
                         </Box>
                     )}
                 </Box>

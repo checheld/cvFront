@@ -1,5 +1,5 @@
 import { usersActions } from "../actionsTypes/usersActionTypes"
-import { IUser, action, UsersMapper } from "../interfaces/index"
+import { IUser, action } from "../interfaces/index"
 
 interface usersReduser {
   users: IUser[],
@@ -47,7 +47,7 @@ export const usersReducer = (state = initialState, action: action): usersReduser
       };
 
     case usersActions.GET_USERS_RESULT:
-      let users: IUser[] = action.payload.map((x: IUser) => UsersMapper(x))
+      let users: IUser[] = action.payload
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
@@ -128,7 +128,7 @@ export const usersReducer = (state = initialState, action: action): usersReduser
       };
 
     case usersActions.SEARCH_USERS_RESULT:
-      let foundUsers: IUser[] = action.response.map((x: IUser) => UsersMapper(x))
+      let foundUsers: IUser[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },

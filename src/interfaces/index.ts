@@ -19,7 +19,8 @@ export interface IProject {
     id: string,
     name: string,
     description: string,
-    type: string,
+    projectTypeId: string,
+    projectType?: IProjectType,
     country: string,
     link: string,
     technologyList: ITechnology[],
@@ -76,6 +77,12 @@ export interface IProjectCV {
     endDate: string,
     description: string
 }
+
+export interface IProjectType {
+    id: string,
+    name: string,
+}
+
 export interface ICV {
     id: string,
     cvName: string,
@@ -93,104 +100,104 @@ export interface IPhotoParams {
     };
 }
 
-export const UniversitiesMapper = ({ id, name }: IUniversity) => {
-    let newUser: IUniversity = {
-        id,
-        name
-    }
-    return newUser;
-}
+// export const UniversitiesMapper = ({ id, name }: IUniversity) => {
+//     let newUser: IUniversity = {
+//         id,
+//         name
+//     }
+//     return newUser;
+// }
 
-export const TechnologiesMapper = ({ id, name, type }: ITechnology) => {
-    let newTechnology: ITechnology = {
-        id,
-        name,
-        type
-    }
-    return newTechnology;
-}
+// export const TechnologiesMapper = ({ id, name, type }: ITechnology) => {
+//     let newTechnology: ITechnology = {
+//         id,
+//         name,
+//         type
+//     }
+//     return newTechnology;
+// }
 
-export const ProjectsMapper = ({ id, name, description, type, country, link, technologyList, photoList }: IProject) => {
-    let newProject: IProject = {
-        id,
-        name,
-        description,
-        type,
-        country,
-        link,
-        technologyList,
-        photoList
-    }
-    return newProject;
-}
+// export const ProjectsMapper = ({ id, name, description, type, country, link, technologyList, photoList }: IProject) => {
+//     let newProject: IProject = {
+//         id,
+//         name,
+//         description,
+//         type,
+//         country,
+//         link,
+//         technologyList,
+//         photoList
+//     }
+//     return newProject;
+// }
 
-export const UsersMapper = ({
-    id, firstName, lastName, description, educationList, workExperienceList, technologyList, photoUrl, photoParamsId, photoParams }: IUser) => {
-    let newUser: IUser = {
-        id,
-        firstName,
-        lastName,
-        description,
-        educationList,
-        workExperienceList,
-        technologyList,
-        photoUrl,
-        photoParamsId,
-        photoParams
-    }
-    return newUser;
-}
+// export const UsersMapper = ({
+//     id, firstName, lastName, description, educationList, workExperienceList, technologyList, photoUrl, photoParamsId, photoParams }: IUser) => {
+//     let newUser: IUser = {
+//         id,
+//         firstName,
+//         lastName,
+//         description,
+//         educationList,
+//         workExperienceList,
+//         technologyList,
+//         photoUrl,
+//         photoParamsId,
+//         photoParams
+//     }
+//     return newUser;
+// }
 
-export const EducationMapper = ({ id, universityId, university, speciality, startDate, endDate, userId, }: IEducation) => {
-    let newEducation: IEducation = {
-        id,
-        universityId,
-        university,
-        speciality,
-        startDate,
-        endDate,
-        userId,
-    }
-    return newEducation;
-}
+// export const EducationMapper = ({ id, universityId, university, speciality, startDate, endDate, userId, }: IEducation) => {
+//     let newEducation: IEducation = {
+//         id,
+//         universityId,
+//         university,
+//         speciality,
+//         startDate,
+//         endDate,
+//         userId,
+//     }
+//     return newEducation;
+// }
 
-export const WorkExperienceMapper = ({ id, companyId, company, position, startDate, endDate, description, userId, }: IWorkExperience) => {
-    let newWorkExperience: IWorkExperience = {
-        id,
-        companyId,
-        company,
-        position,
-        startDate,
-        endDate,
-        description,
-        userId,
-    }
-    return newWorkExperience;
-}
+// export const WorkExperienceMapper = ({ id, companyId, company, position, startDate, endDate, description, userId, }: IWorkExperience) => {
+//     let newWorkExperience: IWorkExperience = {
+//         id,
+//         companyId,
+//         company,
+//         position,
+//         startDate,
+//         endDate,
+//         description,
+//         userId,
+//     }
+//     return newWorkExperience;
+// }
 
-export const CVsMapper = ({ id, cvName, userId, createdAt, projectCVList }: ICV) => {
-    let newCV: ICV = {
-        id,
-        cvName,
-        userId,
-        createdAt,
-        projectCVList
-    }
-    return newCV;
-}
+// export const CVsMapper = ({ id, cvName, userId, createdAt, projectCVList }: ICV) => {
+//     let newCV: ICV = {
+//         id,
+//         cvName,
+//         userId,
+//         createdAt,
+//         projectCVList
+//     }
+//     return newCV;
+// }
 
-export const ProjectCVMapper = ({ id, projectId, project, position, startDate, endDate, description }: IProjectCV) => {
-    let newProjectCV: IProjectCV = {
-        id,
-        projectId,
-        project,
-        position,
-        startDate,
-        endDate,
-        description
-    }
-    return newProjectCV;
-}
+// export const ProjectCVMapper = ({ id, projectId, project, position, startDate, endDate, description }: IProjectCV) => {
+//     let newProjectCV: IProjectCV = {
+//         id,
+//         projectId,
+//         project,
+//         position,
+//         startDate,
+//         endDate,
+//         description
+//     }
+//     return newProjectCV;
+// }
 export interface action {
     type: string,
     payload?: any,

@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import EditButton from '../../../Items/EditButton';
-import Delete from '../../../../img/Delete';
 import { projectsActions } from '../../../../actionsTypes/projectsActionTypes';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import { useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, Button, Chip, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { technologiesActions } from '../../../../actionsTypes/technologiesActionTypes';
 import ProjectModal from '../Modal/ProjectModal';
-import { useNavigate } from 'react-router-dom';
-import { IProject, ITechnology } from '../../../../interfaces';
+import { IProject } from '../../../../interfaces';
 import DeleteModal from '../../../Items/DeleteModal';
+import TableItem from './TableItem';
 
 interface IProjectsTable {
   projects: IProject[]
 }
 
 const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
-  const dispatch = useAppDispatch();
-  const router = useNavigate();
 
+  const dispatch = useAppDispatch();
   const result = useTypedSelector((state) => state.projects.result);
 
   useEffect(() => {
@@ -31,16 +28,7 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleClick = (project: IProject) => {
-    setEditableProject(project);
-    handleOpen();
-  };
-
   const [openDelModal, setOpenDelModal] = React.useState(false);
-  const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setdelId(event.currentTarget.id);
-    setOpenDelModal(true);
-  }
   const handleCloseDelModal = () => setOpenDelModal(false);
   const [delId, setdelId] = React.useState("");
 
@@ -62,42 +50,7 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
           </TableHead>
           <TableBody>
             {projects.map((project: IProject) => (
-              <TableRow
-                key={project.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell variant='footer' align="left">{project.id}</TableCell>
-                <TableCell component="th"
-                  scope="row"
-                  onClick={() => router(`/projects/${project.id}`)}
-                  sx={{ color: '#5893F9', width: '30%' }}
-                >
-                  {project.name}
-                </TableCell>
-                <TableCell component="th" scope="row" sx={{ width: '20%' }}>
-                  {project.type}
-                </TableCell>
-                <TableCell component="th" scope="row" sx={{ width: '35%' }}>
-                  {
-                    project.technologyList.map((tech: ITechnology) => (
-                      <Chip label={tech.name} sx={{ mr: '10px' }} />
-                    ))
-                  }
-                </TableCell>
-                <TableCell component="th" scope="row" sx={{ width: '35%' }}>
-                  {project.country}
-                </TableCell>
-                <TableCell align="right" key={project.id}>
-                  <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={project.id}>
-                    <Button variant='text' onClick={() => handleClick(project)} key={project.id} >
-                      <EditButton />
-                    </Button>
-                    <Button variant='text' onClick={handleOpenDelModal} id={project.id} >
-                      <Delete />
-                    </Button>
-                  </Stack>
-                </TableCell>
-              </TableRow>
+              <TableItem project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} />
             ))}
           </TableBody>
         </Table>
@@ -106,7 +59,3 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
   );
 }
 export default ProjectsTable
-
-function useHistory() {
-  throw new Error('Function not implemented.');
-}

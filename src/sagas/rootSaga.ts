@@ -54,6 +54,13 @@ import { addProjectPhotoRequestAction, delProjectPhotoRequestAction, projectPhot
 import addProjectPhotoFetch from './Projects/addProjectPhotoSaga';
 import delProjectPhotoFetch from './Projects/delProjectPhotoSaga';
 
+import getProjectTypesFetch from './ProjectTypes/projectTypesSaga';
+import deltProjectTypeFetch from './ProjectTypes/delProjectTypeSaga';
+import { searchProjectTypesRequestAction, getProjectTypesRequestAction, projectTypesActions, delProjectTypeRequestAction, addProjectTypeRequestAction, editProjectTypeRequestAction } from '../actionsTypes/projectTypesActionTypes';
+import addProjectTypeFetch from './ProjectTypes/addProjectTypeSaga';
+import editProjectTypeFetch from './ProjectTypes/editProjectTypeSaga';
+import searchProjectTypesFetch from './ProjectTypes/searchProjectTypeSaga';
+
 // university
 export function* getUniversities({ type }: getUniversitiesRequestAction) {
   yield call(getUniversitiesFetch);
@@ -216,6 +223,28 @@ export function* downloadCV({ type, payload }: downloadCVRequestAction) {
   yield call(downloadCVFetch, payload);
 }
 
+// projectType
+export function* getProjectTypes({ type }: getProjectTypesRequestAction) {
+  yield call(getProjectTypesFetch);
+}
+
+export function* delProjectType({ type, payload }: delProjectTypeRequestAction) {
+  yield call(deltProjectTypeFetch, payload);
+}
+
+export function* addProjectType({ type, payload }: addProjectTypeRequestAction) {
+  yield call(addProjectTypeFetch, payload);
+}
+
+export function* editProjectType({ type, payload, id }: editProjectTypeRequestAction) {
+  yield call(editProjectTypeFetch, payload, id);
+}
+
+export function* searchProjectTypes({ type, payload }: searchProjectTypesRequestAction) {
+  yield call(searchProjectTypesFetch, payload);
+}
+
+
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
   yield takeEvery(universitiesActions.DEL_UNIVERSITY_REQUEST, delUniversity);
@@ -263,6 +292,13 @@ export function* watcherSaga() {
   yield takeEvery(userPhotosActions.EDIT_PHOTOPARAMS_REQUEST, editPhotoParams);
 
   yield takeEvery(CVsActions.DOWNLOAD_CV_REQUEST, downloadCV);
+
+  yield takeEvery(projectTypesActions.GET_PROJECTTYPES_REQUEST, getProjectTypes);
+  yield takeEvery(projectTypesActions.DEL_PROJECTTYPE_REQUEST, delProjectType);
+  yield takeEvery(projectTypesActions.ADD_PROJECTTYPE_REQUEST, addProjectType);
+  yield takeEvery(projectTypesActions.EDIT_PROJECTTYPE_REQUEST, editProjectType);
+  yield takeEvery(projectTypesActions.SEARCH_PROJECTTYPES_REQUEST, searchProjectTypes);
+
 }
 export default function* rootSaga() {
   yield watcherSaga();

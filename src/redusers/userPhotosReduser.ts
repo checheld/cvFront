@@ -95,53 +95,6 @@ export const userPhotosReduser = (state = initialState, action: action): userPho
           ...state.result, addParams: action.response
         }
       }
-    // case userPhotosActions.GET_USERPHOTO_REQUEST:
-    //   return {
-    //     ...state,
-    //     isLoading: { ...state.isLoading, get: true },
-    //   };
-
-    // case userPhotosActions.GET_USERPHOTO_RESULT:
-    //   return {
-    //     ...state,
-    //     isLoading: { ...state.isLoading, get: false },
-    //     userPhoto: action.payload
-    //   };
-
-    // case userPhotosActions.DEL_USERPHOTO_REQUEST:
-    //   return {
-    //     ...state, isLoading: { ...state.isLoading, delete: true }, result: {
-    //       ...state.result, delete: null
-    //     }
-    //   };
-
-    // case userPhotosActions.DEL_USERPHOTO_RESULT:
-    //   return {
-    //     ...state,
-    //     isLoading: { ...state.isLoading, delete: false },
-    //     result: {
-    //       ...state.result
-    //     }
-    //   };
-
-    // case userPhotosActions.EDIT_USERPHOTO_REQUEST:
-    //   return {
-    //     ...state,
-    //     isLoading: {
-    //       ...state.isLoading, edit: true
-    //     }
-    //   };
-
-    // case userPhotosActions.EDIT_USERPHOTO_RESULT:
-    //   return {
-    //     ...state,
-    //     isLoading: {
-    //       ...state.isLoading, edit: false
-    //     },
-    //     result: {
-    //       ...state.result, edit: action.response
-    //     }
-    //   }
 
     default:
       return state

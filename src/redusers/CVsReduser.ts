@@ -1,8 +1,10 @@
-import { universitiesActions } from "../actionsTypes/universitiesActionTypes"
-import { IUniversity, action, UniversitiesMapper } from "../interfaces/index"
+import { CVsActions } from "../actionsTypes/CVsActionTypes"
+import { ICV, action } from "../interfaces/index"
 
-interface universitiesReduser {
-  universities: IUniversity[],
+interface CVsReduser {
+  CVs: ICV[],
+  CV?: ICV,
+  pdf?: File,
   isLoading: {
     add: boolean,
     delete: boolean,
@@ -19,8 +21,8 @@ interface universitiesReduser {
   }
 }
 
-export const initialState: universitiesReduser = {
-  universities: [],
+export const initialState: CVsReduser = {
+  CVs: [],
   isLoading: {
     get: false,
     getAll: true,
@@ -37,30 +39,42 @@ export const initialState: universitiesReduser = {
   }
 }
 
-export const universitiesReducer = (state = initialState, action: action): universitiesReduser => {
+export const CVsReducer = (state = initialState, action: action): CVsReduser => {
 
   switch (action.type) {
-    case universitiesActions.GET_UNIVERSITIES_REQUEST:
+    case CVsActions.GET_CVS_REQUEST:
       return {
-        ...state,
+        ...state
       };
 
-    case universitiesActions.GET_UNIVERSITIES_RESULT:
-      let universities: IUniversity[] = action.payload.map((x: IUniversity) => UniversitiesMapper(x))
+    case CVsActions.GET_CVS_RESULT:
+      let CVs: ICV[] = action.payload
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        universities: universities.sort((a, b) => Number(a.name) - Number(b.name))
+        CVs: CVs.sort((a, b) => Number(a.cvName) - Number(b.cvName))
       };
 
-    case universitiesActions.DEL_UNIVERSITY_REQUEST:
+    case CVsActions.GET_CV_REQUEST:
+      return {
+        ...state
+      };
+
+    case CVsActions.GET_CV_RESULT:
+      return {
+        ...state,
+        isLoading: { ...state.isLoading, get: false },
+        CV: action.payload
+      };
+
+    case CVsActions.DEL_CV_REQUEST:
       return {
         ...state, isLoading: { ...state.isLoading, delete: true }, result: {
           ...state.result, delete: null
         }
       };
 
-    case universitiesActions.DEL_UNIVERSITY_RESULT:
+    case CVsActions.DEL_CV_RESULT:
       return {
         ...state,
         isLoading: { ...state.isLoading, delete: false },
@@ -69,7 +83,22 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       };
 
-    case universitiesActions.ADD_UNIVERSITY_REQUEST:
+    case CVsActions.DOWNLOAD_CV_REQUEST:
+      return {
+        ...state
+      };
+
+    case CVsActions.DOWNLOAD_CV_RESULT:
+      return {
+        ...state,
+        isLoading: { ...state.isLoading },
+        // pdf: action.payload
+      };
+
+
+
+
+    case CVsActions.ADD_CV_REQUEST:
       return {
         ...state,
         isLoading: {
@@ -77,7 +106,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       };
 
-    case universitiesActions.ADD_UNIVERSITY_RESULT:
+    case CVsActions.ADD_CV_RESULT:
       return {
         ...state,
         isLoading: {
@@ -88,7 +117,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       }
 
-    case universitiesActions.EDIT_UNIVERSITY_REQUEST:
+    case CVsActions.EDIT_CV_REQUEST:
       return {
         ...state,
         isLoading: {
@@ -96,7 +125,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       };
 
-    case universitiesActions.EDIT_UNIVERSITY_RESULT:
+    case CVsActions.EDIT_CV_RESULT:
       return {
         ...state,
         isLoading: {
@@ -107,18 +136,18 @@ export const universitiesReducer = (state = initialState, action: action): unive
         }
       }
 
-    case universitiesActions.SEARCH_UNIVERSITIES_REQUEST:
+    case CVsActions.SEARCH_CVS_REQUEST:
       return {
         ...state,
         isLoading: { ...state.isLoading, search: false },
       };
 
-    case universitiesActions.SEARCH_UNIVERSITIES_RESULT:
-      let uni: IUniversity[] = action.response.map((x: IUniversity) => UniversitiesMapper(x))
+    case CVsActions.SEARCH_CVS_RESULT:
+      let foundCVs: ICV[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
-        universities: uni.sort((a, b) => Number(a.name) - Number(b.name))
+        CVs: foundCVs.sort((a, b) => Number(a.cvName) - Number(b.cvName))
       };
 
     default:

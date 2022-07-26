@@ -9,6 +9,7 @@ import { projectsActions } from '../../actionsTypes/projectsActionTypes';
 import { universitiesActions } from '../../actionsTypes/universitiesActionTypes';
 import { technologiesActions } from '../../actionsTypes/technologiesActionTypes';
 import { companiesActions } from '../../actionsTypes/companiesActionTypes';
+import { projectTypesActions } from '../../actionsTypes/projectTypesActionTypes';
 
 interface IProjectModal {
     open: boolean,
@@ -35,29 +36,33 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
     const router = useNavigate();
 
     const deleteItem = () => {
-        if(type === "CV") {
-            dispatch( {type: CVsActions.DEL_CV_REQUEST, payload: id});
+        if (type === "CV") {
+            dispatch({ type: CVsActions.DEL_CV_REQUEST, payload: id });
             handleClose();
         }
-        else if(type === "user") {
+        else if (type === "user") {
             dispatch({ type: usersActions.DEL_USER_REQUEST, payload: id });
             router(`/users`)
             handleClose();
         }
-        else if(type === "project") {
-            dispatch( {type: projectsActions.DEL_PROJECT_REQUEST, payload: id});
+        else if (type === "project") {
+            dispatch({ type: projectsActions.DEL_PROJECT_REQUEST, payload: id });
             handleClose();
         }
-        else if(type === "university") {
-            dispatch( {type: universitiesActions.DEL_UNIVERSITY_REQUEST, payload: id});
+        else if (type === "university") {
+            dispatch({ type: universitiesActions.DEL_UNIVERSITY_REQUEST, payload: id });
             handleClose();
         }
-        else if(type === "technology") {
-            dispatch( {type: technologiesActions.DEL_TECHNOLOGY_REQUEST, payload: id});
+        else if (type === "technology") {
+            dispatch({ type: technologiesActions.DEL_TECHNOLOGY_REQUEST, payload: id });
             handleClose();
         }
-        else if(type === "company") {
-            dispatch( {type: companiesActions.DEL_COMPANY_REQUEST, payload: id});
+        else if (type === "company") {
+            dispatch({ type: companiesActions.DEL_COMPANY_REQUEST, payload: id });
+            handleClose();
+        }
+        else if (type === "projectType") {
+            dispatch({ type: projectTypesActions.DEL_PROJECTTYPE_REQUEST, payload: id });
             handleClose();
         }
     }
@@ -71,15 +76,15 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
         >
             <Box sx={style}>
                 <Box sx={{ m: '30px' }}>
-                        <Typography sx={{ fontSize: '20px', color: '#535E6C', fontWeight: 700, mb: '20px' }}>
-                            Delete {type}?
-                        </Typography>
-                        <Typography sx={{ fontSize: '14px', color: '#AFB5BF', fontWeight: 400, mb: '30px' }}>
-                            When you delete this {type}, you cannot be undone.
-                        </Typography>
-                        <Box>
-                            <CustomButton variant="contained" onClick={deleteItem} children='Delete' />
-                        </Box>
+                    <Typography sx={{ fontSize: '20px', color: '#535E6C', fontWeight: 700, mb: '20px' }}>
+                        Delete {type}?
+                    </Typography>
+                    <Typography sx={{ fontSize: '14px', color: '#AFB5BF', fontWeight: 400, mb: '30px' }}>
+                        When you delete this {type}, you cannot be undone.
+                    </Typography>
+                    <Box>
+                        <CustomButton variant="contained" onClick={deleteItem} children='Delete' />
+                    </Box>
                 </Box>
             </Box>
         </Modal>

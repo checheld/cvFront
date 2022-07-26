@@ -1,5 +1,5 @@
 import { projectsActions } from "../actionsTypes/projectsActionTypes"
-import { IProject, action, ProjectsMapper } from "../interfaces/index"
+import { IProject, action } from "../interfaces/index"
 
 interface projectsReduser {
   projects: IProject[],
@@ -42,7 +42,7 @@ export const projectsReducer = (state = initialState, action: action): projectsR
       };
 
     case projectsActions.GET_PROJECTS_RESULT:
-      let projects: IProject[] = action.payload.map((x: IProject) => ProjectsMapper(x))
+      let projects: IProject[] = action.payload
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
@@ -129,7 +129,7 @@ export const projectsReducer = (state = initialState, action: action): projectsR
       };
 
     case projectsActions.SEARCH_PROJECTS_RESULT:
-      let proj: IProject[] = action.response.map((x: IProject) => ProjectsMapper(x))
+      let proj: IProject[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },

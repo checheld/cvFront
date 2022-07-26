@@ -10,6 +10,8 @@ import ProjectModal from './Modal/ProjectModal';
 import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
+import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
+import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
 
 const ProjectsPage: React.FC = () => {
 
@@ -23,6 +25,11 @@ const ProjectsPage: React.FC = () => {
     const [searchTech, setSearchTech] = React.useState('');
     const load = useTypedSelector((state) => state.projects.isLoading.getAll);
     const result = useTypedSelector((state) => state.projects.result);
+
+    useEffect(() => {
+        dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
+        dispatch({ type: projectTypesActions.GET_PROJECTTYPES_REQUEST });
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });

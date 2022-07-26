@@ -7,6 +7,7 @@ import { usersReducer } from './usersReduser';
 import { CVsReducer } from './CVsReduser';
 import { userPhotosReduser } from './userPhotosReduser';
 import { projectPhotosReduser } from './projectPhotosReduser';
+import { projectTypesReducer } from './projectTypesReduser';
 
 const rootReducer = combineReducers({
     universities: universitiesReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     users: usersReducer,
     CVs: CVsReducer,
     userPhotos: userPhotosReduser,
-    projectPhotos: projectPhotosReduser
+    projectPhotos: projectPhotosReduser,
+    projectTypes: projectTypesReducer
 })
 export default rootReducer;
 export type RootState = ReturnType<typeof rootReducer>;

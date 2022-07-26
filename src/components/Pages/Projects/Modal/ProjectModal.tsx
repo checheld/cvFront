@@ -35,6 +35,8 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     const [description, setDescription] = React.useState('');
     const [photo, setPhoto] = React.useState<Array<IProjectPhoto>>([]);
 
+    let projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
+
     let url = useTypedSelector((state) => state.projectPhotos.result.add);
     useEffect(() => {
         if (url !== undefined && url !== null) {
@@ -43,17 +45,16 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         }
     }, [url]);
 
-    const items = ['CRM', 'Web service', 'Web site'];
     let isDisabled;
     if (editableProject === undefined) {
         isDisabled = ((projectName !== '') && (type !== '') && (country !== '') && (link !== '') && (tech !== []) && (description !== '')) ? true : false;
     } else {
-        isDisabled = ((projectName !== editableProject.name) || (type !== editableProject.type) || (country !== editableProject.country) || (link !== editableProject.link) || (tech !== editableProject.technologyList) || (description !== editableProject.description || photo !== editableProject.photoList)) ? true : false;
+        isDisabled = ((projectName !== editableProject.name) || (type !== editableProject.projectTypeId) || (country !== editableProject.country) || (link !== editableProject.link) || (tech !== editableProject.technologyList) || (description !== editableProject.description || photo !== editableProject.photoList)) ? true : false;
     }
 
     const dispatch = useAppDispatch();
     const addProject = () => {
-        const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+        const objProject = { 'Name': projectName, 'description': description, 'ProjectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
         dispatch({ type: projectsActions.ADD_PROJECT_REQUEST, payload: objProject });
         setProjectName('');
         setType('');
@@ -66,7 +67,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     }
     const editProject = () => {
         if (editableProject !== undefined) {
-            const objProject = { 'Name': projectName, 'description': description, 'Type': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+            const objProject = { 'Name': projectName, 'description': description, 'ProjectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
 
             dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, payload: objProject });
             setProjectName('');
@@ -82,7 +83,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     useEffect(() => {
         if (editableProject !== undefined) {
             setProjectName(editableProject.name);
-            setType(editableProject.type);
+            setType(editableProject.projectTypeId);
             setCountry(editableProject.country);
             setLink(editableProject.link);
             setTech(editableProject.technologyList);
@@ -175,7 +176,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                                         <em>Select type</em>
                                     </MenuItem>
                                     {
-                                        items.map((x) => <MenuItem value={x}>{x}</MenuItem>)
+                                        projectTypes.map((x) => <MenuItem value={x.id}>{x.name}</MenuItem>)
                                     }
                                 </Select>
                             </FormControl>

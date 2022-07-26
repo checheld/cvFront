@@ -1,5 +1,5 @@
 import { technologiesActions } from "../actionsTypes/technologiesActionTypes"
-import { ITechnology, action, TechnologiesMapper } from "../interfaces/index"
+import { ITechnology, action } from "../interfaces/index"
 
 interface technologiesReduser {
   technologies: ITechnology[],
@@ -37,7 +37,7 @@ export const initialState: technologiesReduser = {
   }
 }
 
-export const technologiesReducer = (state = initialState, action: action):technologiesReduser => {
+export const technologiesReducer = (state = initialState, action: action): technologiesReduser => {
 
   switch (action.type) {
     case technologiesActions.GET_TECHNOLOGIES_REQUEST:
@@ -46,37 +46,40 @@ export const technologiesReducer = (state = initialState, action: action):techno
       };
 
     case technologiesActions.GET_TECHNOLOGIES_RESULT:
-      let technologies: ITechnology[] = action.payload.map((x: ITechnology) => TechnologiesMapper(x))
+      let technologies: ITechnology[] = action.payload
       return {
         ...state,
-        isLoading: {...state.isLoading, getAll: false},
+        isLoading: { ...state.isLoading, getAll: false },
         technologies: technologies.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
     case technologiesActions.DEL_TECHNOLOGY_REQUEST:
-      return {...state, isLoading: {...state.isLoading, delete: true}, result: {
-        ...state.result, delete: null
-      }
-    };
+      return {
+        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+          ...state.result, delete: null
+        }
+      };
 
     case technologiesActions.DEL_TECHNOLOGY_RESULT:
       return {
-        ...state, 
-        isLoading: {...state.isLoading, delete: false},
+        ...state,
+        isLoading: { ...state.isLoading, delete: false },
         result: {
           ...state.result
         }
       };
 
     case technologiesActions.ADD_TECHNOLOGY_REQUEST:
-      return {...state,
-         isLoading: {
-        ...state.isLoading, get: true
-      }};   
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading, get: true
+        }
+      };
 
     case technologiesActions.ADD_TECHNOLOGY_RESULT:
       return {
-        ...state, 
+        ...state,
         isLoading: {
           ...state.isLoading, add: false
         },
@@ -86,10 +89,12 @@ export const technologiesReducer = (state = initialState, action: action):techno
       }
 
     case technologiesActions.EDIT_TECHNOLOGY_REQUEST:
-      return {...state,
-          isLoading: {
-        ...state.isLoading, edit: true
-      }}; 
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading, edit: true
+        }
+      };
 
     case technologiesActions.EDIT_TECHNOLOGY_RESULT:
       return {
@@ -109,7 +114,7 @@ export const technologiesReducer = (state = initialState, action: action):techno
       };
 
     case technologiesActions.SEARCH_TECHNOLOGIES_RESULT:
-      let uni: ITechnology[] = action.response.map((x: ITechnology) => TechnologiesMapper(x))
+      let uni: ITechnology[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },

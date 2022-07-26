@@ -51,7 +51,7 @@ const ProjectIdPage: React.FC = () => {
         </>
       ) : (
         <>
-          <ProjectModal open={open} handleClose={handleClose} editableProject={currentProject}/>
+          <ProjectModal open={open} handleClose={handleClose} editableProject={currentProject} />
           <ThemeProvider theme={lightTheme}>
             <Stack spacing={2}>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
@@ -92,7 +92,7 @@ const ProjectIdPage: React.FC = () => {
                 </Box>
                 <Box>
                   <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px' }}>
-                    {currentProject.type}
+                    {currentProject.projectType!.name}
                   </Typography>
                 </Box>
               </Item>

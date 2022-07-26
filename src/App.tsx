@@ -17,6 +17,7 @@ import Technologies from './components/Pages/Technologies/TechnologiesPage';
 import WorkExperience from './components/Pages/WorkExperience/WorkExperiencePage';
 import ProjectIdPage from "./components/Pages/ProjectId/ProjectIdPage";
 import UserIdPage from "./components/Pages/UserId/UserIdPage";
+import ProjectTypesPage from "./components/Pages/ProjectTypes/ProjectTypesPage";
 
 const App: FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: FC = () => {
           <Route path="/Education" element={<Education />} />
           <Route path="/Technologies" element={<Technologies />} />
           <Route path="/WorkExperience" element={<WorkExperience />} />
+          <Route path="/ProjectType" element={<ProjectTypesPage />} />
           <Route path="/projects/:id" element={<ProjectIdPage />} />
           <Route path="/users/:id" element={<UserIdPage />} />
         </Routes>

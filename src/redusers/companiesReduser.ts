@@ -1,5 +1,5 @@
 import { companiesActions } from "../actionsTypes/companiesActionTypes"
-import { ICompany, action, UniversitiesMapper } from "../interfaces/index"
+import { ICompany, action } from "../interfaces/index"
 
 interface companiesReduser {
   companies: ICompany[],
@@ -37,7 +37,7 @@ export const initialState: companiesReduser = {
   }
 }
 
-export const companiesReducer = (state = initialState, action: action):companiesReduser => {
+export const companiesReducer = (state = initialState, action: action): companiesReduser => {
 
   switch (action.type) {
     case companiesActions.GET_COMPANIES_REQUEST:
@@ -46,37 +46,40 @@ export const companiesReducer = (state = initialState, action: action):companies
       };
 
     case companiesActions.GET_COMPANIES_RESULT:
-      let companies: ICompany[] = action.payload.map((x: ICompany) => UniversitiesMapper(x))
+      let companies: ICompany[] = action.payload
       return {
         ...state,
-        isLoading: {...state.isLoading, getAll: false},
+        isLoading: { ...state.isLoading, getAll: false },
         companies: companies.sort((a, b) => Number(a.name) - Number(b.name))
       };
 
     case companiesActions.DEL_COMPANY_REQUEST:
-      return {...state, isLoading: {...state.isLoading, delete: true}, result: {
-        ...state.result, delete: null
-      }
-    };
+      return {
+        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+          ...state.result, delete: null
+        }
+      };
 
     case companiesActions.DEL_COMPANY_RESULT:
       return {
-        ...state, 
-        isLoading: {...state.isLoading, delete: false},
+        ...state,
+        isLoading: { ...state.isLoading, delete: false },
         result: {
           ...state.result
         }
       };
 
     case companiesActions.ADD_COMPANY_REQUEST:
-      return {...state,
-         isLoading: {
-        ...state.isLoading, get: true
-      }};   
+      return {
+        ...state,
+        isLoading: {
+          ...state.isLoading, get: true
+        }
+      };
 
     case companiesActions.ADD_COMPANY_RESULT:
       return {
-        ...state, 
+        ...state,
         isLoading: {
           ...state.isLoading, add: false
         },
@@ -86,7 +89,8 @@ export const companiesReducer = (state = initialState, action: action):companies
       }
 
     case companiesActions.EDIT_COMPANY_REQUEST:
-      return {...state,
+      return {
+        ...state,
         isLoading: {
           ...state.isLoading, edit: true
         }
@@ -110,7 +114,7 @@ export const companiesReducer = (state = initialState, action: action):companies
       };
 
     case companiesActions.SEARCH_COMPANIES_RESULT:
-      let uni: ICompany[] = action.response.map((x: ICompany) => UniversitiesMapper(x))
+      let uni: ICompany[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },

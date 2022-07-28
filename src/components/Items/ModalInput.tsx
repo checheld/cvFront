@@ -6,38 +6,45 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 
 interface Iprops {
-    placeholder: string,
-    item?: string,
-    setItem?: ChangeEventHandler<HTMLInputElement>,
-    index?: number,
+  placeholder: string,
+  item?: string,
+  setItem?: ChangeEventHandler<HTMLInputElement>,
+  index?: number,
+  check?: boolean,
+  width?: number,
+  height?: number,
+  selectName?: string
 }
 
-const ModalInput:React.FC<Iprops> = ({placeholder, item, setItem, index}) => {
-  
+const ModalInput: React.FC<Iprops> = ({ placeholder, item, setItem, index, check, width, height, selectName }) => {
+
   function MyFormHelperText() {
     const { focused } = useFormControl() || {};
-  
-    const helperText = React.useMemo(() => {
-      if (item === '') {
-        return 'Enter university, please';
+
+    const helperText: string = React.useMemo(() => {
+      if (!item && check && index === 0) {
+        return 'Empty field';
       }
       return '';
     }, [focused]);
-  
-    return <FormHelperText sx={{color:'red'}}>{helperText}</FormHelperText>;
+
+    return <FormHelperText sx={{ color: 'red' }}>{helperText}</FormHelperText>;
   }
+
   return (
-    <Box component="form" noValidate autoComplete="off"sx={{mb:'25px', height: '50px' }}>
-      <FormControl sx={{mb:'0px' }}>
+    <Box component="form" noValidate autoComplete="off" sx={{ mb: '25px', height: '50px' }}>
+      <FormControl sx={{ mb: '0px' }}>
         <OutlinedInput placeholder={placeholder}
-                       id="input"
-                       tabIndex={index}
-                       value={item}
-                       sx={{ width: '700px', mb: '0px' }} 
-                       onChange={
-                          setItem
-                        }
-                       />
+          name={selectName}
+          id="input"
+          tabIndex={index}
+          value={item}
+          error={!item && check && index === 0}
+          sx={{ width: { width }, height: { height }, mb: '0px' }}
+          onChange={
+            setItem
+          }
+        />
         <MyFormHelperText />
       </FormControl>
     </Box>

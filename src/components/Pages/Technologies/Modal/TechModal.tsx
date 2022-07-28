@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import { Box, Modal, Typography } from '@mui/material';
 import ModalSelect from '../../../Items/ModalSelect';
 import { technologiesActions } from '../../../../actionsTypes/technologiesActionTypes';
-import SingleModalInput from '../../../Items/SingleModalInput';
 import { ITechnology } from '../../../../interfaces';
+import DelInput from '../../../../img/DelInput';
+import ModalInput from '../../../Items/ModalInput';
 
 interface ITechModal {
     open: boolean,
@@ -24,41 +25,61 @@ const style = {
     p: 4,
 };
 
-const TechModal: React.FC<ITechModal> = ({open, handleClose, editableTech}) => {
+const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) => {
 
     const dispatch = useAppDispatch();
     const [technology, setTechnology] = React.useState('');
-    const [type, setType] = React.useState('');
+    const [arrayTechnologies, setArrayTechnologies] = React.useState([{ name: '', type: '' }]);
 
-    let isDisabled;
-    if (editableTech === undefined) {
-        isDisabled = ((technology !== '') && (type !== '')) ? true : false;
-    } else {
-        isDisabled = ((technology !== editableTech.name) || (type !== editableTech.type)) ? true : false;
-    }
-    
+    const [type, setType] = React.useState('');
+    const handleChangeTechnologies =
+        (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            const editedArr = [...arrayTechnologies];
+            editedArr[index as number].name = event.target.value;
+            setArrayTechnologies(editedArr);
+        };
+
+    const handleChangeType =
+        (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            const editedArr = [...arrayTechnologies];
+            editedArr[index as number].type = event.target.value;
+            setArrayTechnologies(editedArr);
+        };
+
+    const removeTechnology = (index: number): void => {
+        setArrayTechnologies([...arrayTechnologies.slice(0, index), ...arrayTechnologies.slice(index + 1)]);
+    };
+
+    const handleAddTechnology = () => setArrayTechnologies([...arrayTechnologies, { name: technology, type: type }]);
+
     const addTechnology = () => {
-        const objTech = {'Name': technology, 'Type': type};
-        dispatch( {type: technologiesActions.ADD_TECHNOLOGY_REQUEST, payload: objTech});
+        const clearArrayTechnologies = arrayTechnologies.filter(el => el.name !== "" && el.type !== "")
+        dispatch({ type: technologiesActions.ADD_TECHNOLOGY_REQUEST, payload: clearArrayTechnologies });
+        setArrayTechnologies([{ name: '', type: '' }]);
         setTechnology('');
         setType('');
         handleClose();
     }
     const editTechnology = () => {
-        if(editableTech !== undefined) {
-        const objTech = {'Name': technology, 'Type': type};
-        dispatch( {type: technologiesActions.EDIT_TECHNOLOGY_REQUEST, id: editableTech.id, payload: objTech});
-        setTechnology('');
-        setType('');
-        handleClose();
+        if (editableTech !== undefined) {
+            dispatch({ type: technologiesActions.EDIT_TECHNOLOGY_REQUEST, id: editableTech.id, payload: arrayTechnologies[0] });
+            setArrayTechnologies([{ name: '', type: '' }]);
+            handleClose();
         }
     }
     useEffect(() => {
-        if(editableTech !== undefined) {
-            setTechnology(editableTech.name);
-            setType(editableTech.type);
+        if (editableTech !== undefined) {
+            setArrayTechnologies([{ name: editableTech.name, type: editableTech.type }])
         }
     }, [editableTech]);
+
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsError(false);
+        (arrayTechnologies[0].name === '' || arrayTechnologies[0].type === '') && setIsError(true)
+    }, [arrayTechnologies]);
 
     return (
         <Modal
@@ -78,21 +99,47 @@ const TechModal: React.FC<ITechModal> = ({open, handleClose, editableTech}) => {
                             Edit Technology
                         </Typography>
                     )}
-                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                        Technology name
-                    </Typography>
-                    <SingleModalInput placeholder="Technology" setItem={setTechnology} item={technology} />
-                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                        Type
-                    </Typography>
-                    <ModalSelect type={type} setType={setType} />
-                    {(editableTech === undefined) ? (
-                        <Box>
-                            <CustomButton variant="contained" onClick={addTechnology} children='Add Technology' disabled={!isDisabled} />
+                    {arrayTechnologies.length && arrayTechnologies.map((tech, index) => (
+                        <Box key={index}>
+                            {index > 0 && (
+                                <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
+                                    <DelInput index={index} removeItem={removeTechnology} />
+                                </Box>
+                            )}
+                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                Technology name
+                            </Typography>
+                            <ModalInput placeholder="Technology" item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={700} />
+                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                Type
+                            </Typography>
+                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} />
                         </Box>
+                    ))}
+                    {(editableTech === undefined) ? (
+                        <>
+                            <Box sx={{ mb: '35px', mt: '35px' }}>
+                                <CustomButton variant="outlined" children='+ Add Technology' onClick={handleAddTechnology} />
+                            </Box>
+                            <Box>
+                                <CustomButton variant="contained"
+                                    children='Add Technology'
+                                    onClick={() => {
+                                        if (isError) setCheck(true);
+                                        else (addTechnology())
+                                    }}
+                                />
+                            </Box>
+                        </>
                     ) : (
-                        <Box>
-                            <CustomButton variant="contained" onClick={editTechnology} children='Save Technology' disabled={!isDisabled} />
+                        <Box sx={{ mb: '35px', mt: '35px' }}>
+                            <CustomButton variant="contained"
+                                children='Save Technology'
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (editTechnology())
+                                }}
+                            />
                         </Box>
                     )}
                 </Box>

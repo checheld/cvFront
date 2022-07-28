@@ -41,6 +41,8 @@ const ProjectsPage: React.FC = () => {
                 event.preventDefault();
                 if (searchName === '' && searchType === '' && searchTech === '') {
                     dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
+                } else if (searchType === '' && (searchTech !== '' || searchName !== '')) {
+                    dispatch({ type: projectsActions.SEARCH_PROJECTS_REQUEST, payload: { name: searchName, technologyName: searchTech } });
                 } else {
                     dispatch({ type: projectsActions.SEARCH_PROJECTS_REQUEST, payload: { name: searchName, type: searchType, technologyName: searchTech } });
                 }

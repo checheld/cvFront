@@ -5,6 +5,8 @@ import { Box, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeE
 import { ICV, IProject, IProjectCV, IUser } from '../../../../interfaces';
 import DelInput from '../../../../img/DelInput';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
+import ModalInput from '../../../Items/ModalInput';
+import ModalFormControl from '../../../Items/ModalFormControl';
 
 interface ICVModal {
     open: boolean,
@@ -27,11 +29,11 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     const dispatch = useAppDispatch();
     let users = useTypedSelector((state) => state.users.users);
     let projects = useTypedSelector((state) => state.projects.projects);
-    
+
     const [CVName, setCVName] = React.useState('');
     const [userId, setUser] = React.useState('');
     const [projectCV, setProjectCV] = React.useState<IProjectCV>({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
-    const [arrayProjectCV, setArrayProjectCV] = React.useState<IProjectCV[]>([projectCV]); 
+    const [arrayProjectCV, setArrayProjectCV] = React.useState<IProjectCV[]>([projectCV]);
 
     const handleChangeCVName = (ev: React.ChangeEvent<HTMLInputElement>) => {
         const {
@@ -45,13 +47,13 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     const handleChangeProject = (index: number) => (event: SelectChangeEvent) => {
         const currentProjectCV = arrayProjectCV[index];
         const editedArr = [...arrayProjectCV];
-        editedArr[index as number] = {...currentProjectCV, [event.target.name]: event.target.value};
+        editedArr[index as number] = { ...currentProjectCV, [event.target.name]: event.target.value };
         setArrayProjectCV(editedArr);
     };
     const handleChangeProjectCV = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const currentProjectCV = arrayProjectCV[index];
         const editedArr = [...arrayProjectCV];
-        editedArr[index as number] ={...currentProjectCV, [event.target.name]: event.target.value};
+        editedArr[index as number] = { ...currentProjectCV, [event.target.name]: event.target.value };
         setArrayProjectCV(editedArr);
     };
     const removeProjectCV = (index: number): void => {
@@ -62,21 +64,23 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     };
 
     const addCV = () => {
-        const objCV = { 'CVName': CVName, 'userId': userId, 'projectCVList': arrayProjectCV };
+        const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== "" && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
+        const objCV = { 'CVName': CVName, 'userId': userId, 'projectCVList': clearArrayProjectCV };
         dispatch({ type: CVsActions.ADD_CV_REQUEST, payload: objCV });
         setCVName('');
         setUser('');
-        setProjectCV({projectId: '', position: '', description: '', startDate: '', endDate: ''});
+        setProjectCV({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
         setArrayProjectCV([]);
         handleClose();
     }
     const editCV = () => {
         if (editableCV !== undefined) {
-            const objCV = { 'CVName': CVName, 'userId': userId, 'projectCVList': arrayProjectCV };
+            const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== "" && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
+            const objCV = { 'CVName': CVName, 'userId': userId, 'projectCVList': clearArrayProjectCV };
             dispatch({ type: CVsActions.EDIT_CV_REQUEST, id: editableCV.id, payload: objCV });
             setCVName('');
             setUser('');
-            setProjectCV({projectId: '', position: '', description: '', startDate: '', endDate: ''});
+            setProjectCV({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
             setArrayProjectCV([]);
             handleClose();
         }
@@ -84,7 +88,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     useEffect(() => {
         if (editableCV !== undefined) {
             setCVName(editableCV.cvName);
-            
+
             let findUser = users.find(item => item.id === editableCV.userId);
             //let findUserId = findUser!.id;
             setUser(editableCV.userId);
@@ -94,13 +98,16 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
         }
     }, [editableCV]);
 
-    let isDisabled;
-    if (editableCV === undefined) {
-        isDisabled = ((CVName !== '') && (userId !== '') ) ? true : false;
-    } 
-    else {
-        isDisabled = true;
-    }
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsError(false);
+        (CVName === '' || userId === '' || arrayProjectCV[0].projectId === ''
+            || arrayProjectCV[0].position === '' || arrayProjectCV[0].startDate === ''
+            || arrayProjectCV[0].endDate === '' || arrayProjectCV[0].description === ''
+        ) && setIsError(true)
+    }, [CVName, userId, arrayProjectCV]);
 
     return (
         <Modal
@@ -126,34 +133,27 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 CV name
                             </Typography>
-                            <OutlinedInput placeholder='CV name'
-                                value={CVName}
-                                id="input"
-                                sx={{ width: '700px', mb: '0px', height: '50px' }}
-                                onChange={handleChangeCVName}
+                            <ModalInput placeholder='CV name'
+                                item={CVName}
+                                check={check}
+                                index={0}
+                                width={700}
+                                height={50}
+                                setItem={handleChangeCVName}
                             />
                         </Box>
                         <Box sx={{ mr: '20px', mb: '15px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 User
                             </Typography>
-                            <FormControl>
-                                <Select
-                                    defaultValue={""}
-                                    name='userId'
-                                    value={userId}
-                                    onChange={handleChangeUser}
-                                    sx={{ width: '700px', height: '50px' }}
-                                    displayEmpty
-                                >
-                                    <MenuItem value="">
-                                        <em>Select user</em>
-                                    </MenuItem>
-                                    {
-                                        users.map((user: IUser) => <MenuItem value={user.id}>{user.firstName} {user.lastName}</MenuItem>)
-                                    }
-                                </Select>
-                            </FormControl>
+                            <ModalFormControl elements={users}
+                                selectName={'userId'}
+                                placeholder={'user'}
+                                type={userId}
+                                setType={handleChangeUser}
+                                check={check} index={0}
+                                width={700} height={50}
+                            />
                         </Box>
                         {arrayProjectCV.length && arrayProjectCV.map((projectCV, index) => (
                             <Box sx={{ m: 0, p: 0 }} key={index}>
@@ -167,34 +167,27 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                             Project
                                         </Typography>
-                                        <FormControl>
-                                            <Select
-                                                defaultValue={""}
-                                                value={projectCV.projectId}
-                                                name='projectId'
-                                                onChange={handleChangeProject(index)}
-                                                sx={{ width: '195px', height: '50px', mb: '20px' }}
-                                                displayEmpty
-                                            >
-                                                <MenuItem value="">
-                                                    <em>Select project</em>
-                                                </MenuItem>
-                                                {
-                                                    projects.map((pr: IProject) => <MenuItem value={pr.id}>{pr.name}</MenuItem>)
-                                                }
-                                            </Select>
-                                        </FormControl>
+                                        <ModalFormControl elements={projects}
+                                            selectName={'projectId'}
+                                            placeholder={'project'}
+                                            type={projectCV.projectId}
+                                            setType={handleChangeProject(index)}
+                                            check={check} index={index}
+                                            width={195} height={50}
+                                        />
                                     </Box>
                                     <Box sx={{ mr: '20px' }}>
                                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                             Position
                                         </Typography>
-                                        <OutlinedInput placeholder='Position'
-                                            value={projectCV.position}
-                                            name='position'
-                                            id="input"
-                                            sx={{ width: '195px', mb: '0px', height: '50px' }}
-                                            onChange={handleChangeProjectCV(index)}
+                                        <ModalInput placeholder='Position'
+                                            selectName={'position'}
+                                            item={projectCV.position}
+                                            check={check}
+                                            index={index}
+                                            width={195}
+                                            height={50}
+                                            setItem={handleChangeProjectCV(index)}
                                         />
                                     </Box>
                                     <Box sx={{ mr: '20px' }}>
@@ -202,13 +195,15 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                             Start date - End date
                                         </Typography>
                                         <Box sx={{ display: 'flex' }}>
+                                            {/* <DateField item={projectCV.startDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"Start date"} name={'startDate'} /> */}
                                             <TextField
+                                                error={projectCV.startDate === '' && check && index === 0}
                                                 id="date"
                                                 label="Start date"
                                                 type="date"
                                                 defaultValue="2022-05-26"
-                                                InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
-                                                sx={{ width: '130px', mr: '10px', fontSize: '14px !important'}}
+                                                InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
+                                                sx={{ width: '130px', mr: '10px', fontSize: '14px !important' }}
                                                 InputLabelProps={{
                                                     shrink: true,
                                                 }}
@@ -217,11 +212,12 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                                 onChange={handleChangeProjectCV(index)}
                                             />
                                             <TextField
+                                                error={projectCV.endDate === '' && check && index === 0}
                                                 id="date"
                                                 label="End date"
                                                 type="date"
                                                 defaultValue="2022-05-26"
-                                                InputProps={{inputProps: { min: "1950-01-01", max: "2022-05-04"} }}
+                                                InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
                                                 sx={{ width: '130px' }}
                                                 InputLabelProps={{
                                                     shrink: true,
@@ -233,16 +229,18 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         </Box>
                                     </Box>
                                 </Box>
-                                <Box sx={{ mr: '20px', mb: '25px' }}>
+                                <Box sx={{ mr: '20px', mb: '75px' }}>
                                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                         Description
                                     </Typography>
-                                    <OutlinedInput placeholder='Description'
-                                        id="input"
-                                        sx={{ width: '700px', mb: '0px', height: '100px' }}
-                                        name='description'
-                                        value={projectCV.description}
-                                        onChange={handleChangeProjectCV(index)}
+                                    <ModalInput placeholder='Description'
+                                        selectName={'description'}
+                                        item={projectCV.description}
+                                        check={check}
+                                        index={index}
+                                        width={700}
+                                        height={100}
+                                        setItem={handleChangeProjectCV(index)}
                                     />
                                 </Box>
                             </Box>
@@ -257,17 +255,21 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                     {(editableCV === undefined) ? (
                         <Box sx={{ mt: '15px' }}>
                             <CustomButton variant="contained"
-                                onClick={addCV}
                                 children='Add User'
-                                disabled={!isDisabled}
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (addCV())
+                                }}
                             />
                         </Box>
                     ) : (
                         <Box sx={{ mt: '15px' }}>
                             <CustomButton variant="contained"
-                                onClick={editCV}
                                 children='Save User'
-                                disabled={!isDisabled}
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (editCV())
+                                }}
                             />
                         </Box>
                     )}

@@ -29,7 +29,7 @@ const EducationPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const [arrayUniversity, setArrayUniversity] = useState([""])
     const [university, setUniversity] = React.useState('');
-    const [ searchParam, setSearchParam ] = React.useState<string>('');
+    const [searchParam, setSearchParam] = React.useState<string>('');
     const universities = useTypedSelector((state) => state.universities.universities);
     const load = useTypedSelector((state) => state.universities.isLoading.getAll);
     const result = useTypedSelector((state) => state.projects.result);
@@ -40,50 +40,48 @@ const EducationPage: React.FC = () => {
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
-          if (event.code === "Enter" || event.code === "NumpadEnter") {
-            event.preventDefault();
-            if (searchParam === '') {
-                dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
-            } else {
-                dispatch( {type: universitiesActions.SEARCH_UNIVERSITIES_REQUEST, payload: searchParam});
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault();
+                if (searchParam === '') {
+                    dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
+                } else {
+                    dispatch({ type: universitiesActions.SEARCH_UNIVERSITIES_REQUEST, payload: searchParam });
+                }
             }
-          }
         };
         document.addEventListener("keydown", listener);
         return () => {
-          document.removeEventListener("keydown", listener);
+            document.removeEventListener("keydown", listener);
         };
-      }, [searchParam]);
-      
+    }, [searchParam]);
+
     const handleChangeUniverscity =
-    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const editedArr = [...arrayUniversity];
-      editedArr[index as number] = event.target.value;
-      setArrayUniversity(editedArr);
-    }; 
-    
+        (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            const editedArr = [...arrayUniversity];
+            editedArr[index as number] = event.target.value;
+            setArrayUniversity(editedArr);
+        };
+
     const removeUniversity = (index: number): void => {
         setArrayUniversity([...arrayUniversity.slice(0, index), ...arrayUniversity.slice(index + 1)]);
     };
 
-    const [isDisabled, setIsDisabled] = React.useState(false);
-    React.useEffect(() => {
-        setIsDisabled(false)
-        arrayUniversity.map((n) => {
-            !n && setIsDisabled(true)
-        });
-    }, [arrayUniversity]);
-    
     const addUniversity = () => {
-        const objArr= arrayUniversity.map(e => ({'Name': e}));
-        dispatch( {type: universitiesActions.ADD_UNIVERSITY_REQUEST, payload: objArr});
+        const clearArrayUniversities = arrayUniversity.filter(el => el != "")
+        const objArr = clearArrayUniversities.map(e => ({ 'Name': e }));
+        dispatch({ type: universitiesActions.ADD_UNIVERSITY_REQUEST, payload: objArr });
         setArrayUniversity(['']);
         handleClose();
     }
-    const handleAddUnivercity = () =>
-        setArrayUniversity([...arrayUniversity, university])
-    ;
-    
+    const handleAddUnivercity = () => setArrayUniversity([...arrayUniversity, university]);
+
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    React.useEffect(() => {
+        setIsError(false);
+        !arrayUniversity[0] && setIsError(true);
+    }, [arrayUniversity]);
+
     return (
         <>
             {!load ? (
@@ -109,14 +107,20 @@ const EducationPage: React.FC = () => {
                                                 <DelInput index={index} removeItem={removeUniversity} />
                                             </Box>
                                         )}
-                                        <ModalInput placeholder="University" item={university} setItem={handleChangeUniverscity(index)} index={index} />
+                                        <ModalInput placeholder="University" item={university} setItem={handleChangeUniverscity(index)} index={index} check={check} width={700} />
                                     </Box>
                                 ))}
                                 <Box sx={{ mb: '35px' }}>
                                     <CustomButton variant="outlined" children='+ Add University' onClick={handleAddUnivercity} />
                                 </Box>
                                 <Box>
-                                    <CustomButton variant="contained" onClick={addUniversity} children='Save University' disabled={isDisabled} />
+                                    <CustomButton variant="contained"
+                                        children='Save University'
+                                        onClick={() => {
+                                            if (isError) setCheck(true);
+                                            else (addUniversity())
+                                        }}
+                                    />
                                 </Box>
                             </Box>
                         </Box>
@@ -128,7 +132,7 @@ const EducationPage: React.FC = () => {
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add University' />
                         </Box>
                     </Box>
-                    { universities.length === 0 ? (
+                    {universities.length === 0 ? (
                         <NoResult />
                     ) : (
                         <EducationTable />

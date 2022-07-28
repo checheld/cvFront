@@ -4,15 +4,17 @@ import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import FormControl, { useFormControl } from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { useTypedSelector } from '../../redusers/useTypedSelector';
 import { ITechnology } from '../../interfaces';
+import { FormHelperText } from '@mui/material';
 
 interface IChipSelect {
   tech: ITechnology[],
-  setTech: (tech: ITechnology[]) => void
+  setTech: (tech: ITechnology[]) => void,
+  check?: boolean
 }
 
 const ITEM_HEIGHT = 48;
@@ -35,10 +37,23 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech }) => {
+const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check }) => {
   const technologies = useTypedSelector((state) => state.technologies.technologies);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
+
+  function MyFormHelperText() {
+    const { focused } = useFormControl() || {};
+
+    const helperText: string = React.useMemo(() => {
+      if (check && !tech[0]) {
+        return 'Empty field';
+      }
+      return '';
+    }, [focused]);
+
+    return <FormHelperText sx={{ color: 'red' }}>{helperText}</FormHelperText>;
+  }
 
   React.useEffect(() => {
     if (tech !== undefined) {
@@ -64,42 +79,45 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech }) => {
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: 300 }}>
-        <Select
-          id="demo-multiple-chip"
-          multiple
-          displayEmpty
-          value={personName}
-          sx={{ width: '700px', height: '50px' }}
-          onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          //@ts-ignore
-          renderValue={(selected) => {
-            if (!selected.length) {
-              return ('Select technologies');
-            } else {
-              return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            }
-          }}
-          MenuProps={MenuProps}
-        >
-          {technologies.map((technology) => (
-            <MenuItem
-              key={technology.name}
-              value={technology.name}
-              style={getStyles(technology.name, personName, theme)}
-            >
-              {technology.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl sx={{ width: 300, mb: 1.3 }}>
+      <Select
+        multiple
+        displayEmpty
+        value={personName}
+        sx={{ width: '700px', height: '50px', mb: 0 }}
+        onChange={handleChange}
+        // input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+        error={check && !tech[0]}
+        //@ts-ignore
+        renderValue={(selected) => {
+          if (!selected.length) {
+            return (
+              <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
+                Select technologies
+              </span>
+            );
+          } else {
+            return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          }
+        }}
+        MenuProps={MenuProps}
+      >
+        {technologies.map((technology) => (
+          <MenuItem
+            key={technology.name}
+            value={technology.name}
+            style={getStyles(technology.name, personName, theme)}
+          >
+            {technology.name}
+          </MenuItem>
+        ))}
+      </Select>
+      <MyFormHelperText />
+    </FormControl>
   );
 }
 export default ChipSelect

@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, Divider, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { ICompany, IEducation, IPhotoParams, ITechnology, IUniversity, IUser, IWorkExperience } from '../../../../interfaces';
+import { Box, Divider, Modal, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { IEducation, IPhotoParams, ITechnology, IUser, IWorkExperience } from '../../../../interfaces';
 import ChipSelect from '../../../Items/ChipSelect';
 import DelInput from '../../../../img/DelInput';
 import { usersActions } from '../../../../actionsTypes/usersActionTypes';
 import { userPhotosActions } from '../../../../actionsTypes/userPhotosActionTypes';
 import Photo from '../Items/Photo';
 import PhotoModalTemp from './PhotoModalTemp';
+import ModalInput from '../../../Items/ModalInput';
+import ModalFormControl from '../../../Items/ModalFormControl';
 
 interface IUserModal {
     open: boolean,
@@ -26,7 +28,6 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
 const initialParams: IPhotoParams = {
     scale: 1,
     position: {
@@ -34,7 +35,6 @@ const initialParams: IPhotoParams = {
         y: 0.5,
     },
 };
-
 const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) => {
 
     let universities = useTypedSelector((state) => state.universities.universities);
@@ -89,18 +89,23 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         } else { setParams(initialParams) }
     }, [photoParams]);
 
-    let isDisabled;
-    if (editableUser === undefined) {
-        isDisabled = ((firstName !== '') && (lastName !== '') && (description !== '')) ? true : false;
-    }
-    else {
-        isDisabled = true;
-        // isDisabled = ((firstName !== editableUser.firstName) || (lastName !== editableUser.lastName) || (description !== editableUser.description)) ? true : false;
-    }
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsError(false);
+        (firstName === '' || lastName === '' || description === '' || tech === [] || arrayEducation[0].universityId === ''
+            || arrayEducation[0].speciality === '' || arrayEducation[0].startDate === '' || arrayEducation[0].endDate === ''
+            || arrayWorkExperience[0].companyId === '' || arrayWorkExperience[0].position === '' || arrayWorkExperience[0].description === ''
+            || arrayWorkExperience[0].startDate === '' || arrayWorkExperience[0].endDate === ''
+        ) && setIsError(true)
+    }, [firstName, lastName, description, tech, arrayEducation, arrayWorkExperience]);
 
     const dispatch = useAppDispatch();
     const addUser = () => {
-        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'photoUrl': url, 'photoParamsId': params.id };
+        const clearArrayEducation = arrayEducation.filter(el => el.universityId !== "" && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
+        const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== "" && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': url, 'photoParamsId': params.id };
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
         setLastName('');
@@ -114,10 +119,12 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         setParams(initialParams);
         handleClose();
     };
-    // console.log(editableUser)
+
     const editUser = () => {
         if (editableUser !== undefined) {
-            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': arrayEducation, 'workExperienceList': arrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': params.id };
+            const clearArrayEducation = arrayEducation.filter(el => el.universityId !== "" && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
+            const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== "" && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': params.id };
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
             setLastName('');
@@ -254,22 +261,26 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                         First name
                                     </Typography>
-                                    <OutlinedInput placeholder='First name'
-                                        value={firstName}
-                                        id="input"
-                                        sx={{ width: '503px', mb: '0px', height: '50px' }}
-                                        onChange={handleChangeFirstName}
+                                    <ModalInput placeholder='First name'
+                                        item={firstName}
+                                        check={check}
+                                        index={0}
+                                        width={503}
+                                        height={50}
+                                        setItem={handleChangeFirstName}
                                     />
                                 </Box>
                                 <Box sx={{ mr: '20px', mb: '25px' }}>
                                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                         Last name
                                     </Typography>
-                                    <OutlinedInput placeholder='Last name'
-                                        value={lastName}
-                                        id="input"
-                                        sx={{ width: '503px', mb: '0px', height: '50px' }}
-                                        onChange={handleChangeLastName}
+                                    <ModalInput placeholder='Last name'
+                                        item={lastName}
+                                        check={check}
+                                        index={0}
+                                        width={503}
+                                        height={50}
+                                        setItem={handleChangeLastName}
                                     />
                                 </Box>
                             </Box>
@@ -278,12 +289,13 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Description
                             </Typography>
-                            <OutlinedInput placeholder='Description'
-                                value={description}
-                                id="input"
-                                inputProps={{ maxLength: 360 }}
-                                sx={{ width: '700px', mb: '0px', height: '100px' }}
-                                onChange={handleChangeDescription}
+                            <ModalInput placeholder='Description'
+                                item={description}
+                                check={check}
+                                index={0}
+                                width={700}
+                                height={100}
+                                setItem={handleChangeDescription}
                             />
                         </Box>
                         <Divider variant="inset" sx={{ border: '1px solid #E3E3EA', mb: '40px', width: '700px', ml: 0 }} />
@@ -302,34 +314,27 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                         University
                                     </Typography>
-                                    <FormControl>
-                                        <Select
-                                            defaultValue={""}
-                                            value={education.universityId}
-                                            name='universityId'
-                                            onChange={handleChangeUniversity(index)}
-                                            sx={{ width: '700px', height: '50px', mb: '20px' }}
-                                            displayEmpty
-                                        >
-                                            <MenuItem value="">
-                                                <em>Select university</em>
-                                            </MenuItem>
-                                            {
-                                                universities.map((uni: IUniversity) => <MenuItem value={uni.id}>{uni.name}</MenuItem>)
-                                            }
-                                        </Select>
-                                    </FormControl>
+                                    <ModalFormControl elements={universities}
+                                        selectName={'universityId'}
+                                        placeholder={'university'}
+                                        type={education.universityId}
+                                        setType={handleChangeUniversity(index)}
+                                        check={check} index={index}
+                                        width={700} height={50}
+                                    />
                                     <Box sx={{ display: 'flex', mb: '25px' }}>
                                         <Box sx={{ mr: '20px' }}>
                                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                                 Speciality
                                             </Typography>
-                                            <OutlinedInput placeholder='Speciality'
-                                                value={education.speciality}
-                                                name='speciality'
-                                                id="input"
-                                                sx={{ width: '410px', mb: '0px', height: '50px' }}
-                                                onChange={handleChangeEducation(index)}
+                                            <ModalInput placeholder='Speciality'
+                                                selectName={'speciality'}
+                                                item={education.speciality}
+                                                check={check}
+                                                index={index}
+                                                width={410}
+                                                height={50}
+                                                setItem={handleChangeEducation(index)}
                                             />
                                         </Box>
                                         <Box sx={{ mr: '20px' }}>
@@ -338,6 +343,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                             </Typography>
                                             <Box sx={{ display: 'flex' }}>
                                                 <TextField
+                                                    error={education.startDate === '' && check && index === 0}
                                                     id="date"
                                                     label="Start date"
                                                     type="date"
@@ -352,6 +358,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     onChange={handleChangeEducation(index)}
                                                 />
                                                 <TextField
+                                                    error={education.endDate === '' && check && index === 0}
                                                     id="date"
                                                     label="End date"
                                                     type="date"
@@ -394,34 +401,27 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                                 Company name
                                             </Typography>
-                                            <FormControl>
-                                                <Select
-                                                    onChange={handleChangeCompany(index)}
-                                                    defaultValue={""}
-                                                    value={workExperience.companyId}
-                                                    name='companyId'
-                                                    sx={{ width: '195px', height: '50px', mb: '20px' }}
-                                                    displayEmpty
-                                                >
-                                                    <MenuItem value="">
-                                                        <em>Select company</em>
-                                                    </MenuItem>
-                                                    {
-                                                        companies.map((comp: ICompany) => <MenuItem value={comp.id}>{comp.name}</MenuItem>)
-                                                    }
-                                                </Select>
-                                            </FormControl>
+                                            <ModalFormControl elements={companies}
+                                                selectName={'companyId'}
+                                                placeholder={'company'}
+                                                type={workExperience.companyId}
+                                                setType={handleChangeCompany(index)}
+                                                check={check} index={index}
+                                                width={195} height={50}
+                                            />
                                         </Box>
                                         <Box sx={{ mr: '20px' }}>
                                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                                 Position
                                             </Typography>
-                                            <OutlinedInput placeholder='Position'
-                                                value={workExperience.position}
-                                                name='position'
-                                                id="input"
-                                                sx={{ width: '195px', mb: '0px', height: '50px' }}
-                                                onChange={handleChangeWorkExperience(index)}
+                                            <ModalInput placeholder='Position'
+                                                selectName={'position'}
+                                                item={workExperience.position}
+                                                check={check}
+                                                index={index}
+                                                width={195}
+                                                height={50}
+                                                setItem={handleChangeWorkExperience(index)}
                                             />
                                         </Box>
                                         <Box sx={{ mr: '20px' }}>
@@ -430,6 +430,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                             </Typography>
                                             <Box sx={{ display: 'flex' }}>
                                                 <TextField
+                                                    error={workExperience.startDate === '' && check && index === 0}
                                                     id="date"
                                                     label="Start date"
                                                     type="date"
@@ -444,6 +445,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     onChange={handleChangeWorkExperience(index)}
                                                 />
                                                 <TextField
+                                                    error={workExperience.endDate === '' && check && index === 0}
                                                     id="date"
                                                     label="End date"
                                                     type="date"
@@ -460,17 +462,18 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                             </Box>
                                         </Box>
                                     </Box>
-                                    <Box sx={{ mr: '20px', mb: '25px' }}>
+                                    <Box sx={{ mr: '20px', mb: '75px' }}>
                                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                             Description
                                         </Typography>
-                                        <OutlinedInput placeholder='Description'
-                                            id="input"
-                                            inputProps={{ maxLength: 210 }}
-                                            sx={{ width: '700px', mb: '0px', height: '100px' }}
-                                            name='description'
-                                            value={workExperience.description}
-                                            onChange={handleChangeWorkExperience(index)}
+                                        <ModalInput placeholder='Description'
+                                            selectName={'description'}
+                                            check={check}
+                                            index={index}
+                                            width={700}
+                                            height={100}
+                                            item={workExperience.description}
+                                            setItem={handleChangeWorkExperience(index)}
                                         />
                                     </Box>
                                 </Box>
@@ -490,21 +493,25 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                         Skills
                     </Typography>
-                    <ChipSelect tech={tech} setTech={setTech} />
+                    <ChipSelect tech={tech} setTech={setTech} check={check} />
                     {(editableUser === undefined) ? (
                         <Box sx={{ mt: '15px' }}>
                             <CustomButton variant="contained"
-                                onClick={addUser}
                                 children='Add User'
-                                disabled={!isDisabled}
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (addUser())
+                                }}
                             />
                         </Box>
                     ) : (
                         <Box sx={{ mt: '15px' }}>
                             <CustomButton variant="contained"
-                                onClick={editUser}
                                 children='Save User'
-                                disabled={!isDisabled}
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (editUser())
+                                }}
                             />
                         </Box>
                     )}

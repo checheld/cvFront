@@ -29,7 +29,7 @@ const WorkExperiencePage: React.FC = () => {
     const dispatch = useAppDispatch();
     const [arrayCompanies, setarrayCompanies] = useState([""])
     const [company, setCompany] = React.useState('');
-    const [ searchParam, setSearchParam ] = React.useState<string>('');
+    const [searchParam, setSearchParam] = React.useState<string>('');
     const companies = useTypedSelector((state) => state.companies.companies);
     const load = useTypedSelector((state) => state.companies.isLoading.getAll);
     const result = useTypedSelector((state) => state.companies.result);
@@ -56,33 +56,32 @@ const WorkExperiencePage: React.FC = () => {
     }, [searchParam]);
 
     const handleChangeCompany =
-    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const editedArr = [...arrayCompanies];
-      editedArr[index as number] = event.target.value;
-      setarrayCompanies(editedArr);
-    }; 
-    
+        (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+            const editedArr = [...arrayCompanies];
+            editedArr[index as number] = event.target.value;
+            setarrayCompanies(editedArr);
+        };
+
     const removeCompany = (index: number): void => {
         setarrayCompanies([...arrayCompanies.slice(0, index), ...arrayCompanies.slice(index + 1)]);
     };
 
-    const [isDisabled, setIsDisabled] = React.useState(false);
-    React.useEffect(() => {
-        setIsDisabled(false)
-        arrayCompanies.map((n) => {
-            !n && setIsDisabled(true)
-        });
-    }, [arrayCompanies]);
-    
     const addCompany = () => {
-        const objArr= arrayCompanies.map(e => ({'Name': e}));
-        dispatch( {type: companiesActions.ADD_COMPANY_REQUEST, payload: objArr});
+        const clearArrayCompanies = arrayCompanies.filter(el => el != "")
+        const objArr = clearArrayCompanies.map(e => ({ 'Name': e }));
+        dispatch({ type: companiesActions.ADD_COMPANY_REQUEST, payload: objArr });
         setarrayCompanies(['']);
         handleClose();
     }
-    const handleAddCompany = () =>
-        setarrayCompanies([...arrayCompanies, company])
-    ;
+    const handleAddCompany = () => setarrayCompanies([...arrayCompanies, company]);
+
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    React.useEffect(() => {
+        setIsError(false);
+        !arrayCompanies[0] && setIsError(true);
+    }, [arrayCompanies]);
+
     return (
         <>
             {!load ? (
@@ -108,14 +107,20 @@ const WorkExperiencePage: React.FC = () => {
                                                 <DelInput index={index} removeItem={removeCompany} />
                                             </Box>
                                         )}
-                                        <ModalInput placeholder="Company" item={company} setItem={handleChangeCompany(index)} index={index} />
+                                        <ModalInput placeholder="Company" item={company} setItem={handleChangeCompany(index)} index={index} check={check} width={700} />
                                     </Box>
                                 ))}
                                 <Box sx={{ mb: '35px' }}>
                                     <CustomButton variant="outlined" children='+ Add Company' onClick={handleAddCompany} />
                                 </Box>
                                 <Box>
-                                    <CustomButton variant="contained" onClick={addCompany} children='Save Company' disabled={isDisabled} />
+                                    <CustomButton variant="contained"
+                                        children='Save Company'
+                                        onClick={() => {
+                                            if (isError) setCheck(true);
+                                            else (addCompany())
+                                        }}
+                                    />
                                 </Box>
                             </Box>
                         </Box>
@@ -127,7 +132,7 @@ const WorkExperiencePage: React.FC = () => {
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Company' />
                         </Box>
                     </Box>
-                    { companies.length === 0 ? (
+                    {companies.length === 0 ? (
                         <NoResult />
                     ) : (
                         <WorkExpTable searchParam={searchParam} />

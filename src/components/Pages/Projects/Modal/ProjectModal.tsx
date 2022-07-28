@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, FormControl, FormHelperText, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, Typography, useFormControl } from '@mui/material';
 import ChipSelect from '../../../Items/ChipSelect';
 import { projectsActions } from '../../../../actionsTypes/projectsActionTypes';
 import { IProject, IProjectPhoto, ITechnology } from '../../../../interfaces';
 import PhotoInput from '../../ProjectId/Photo/Photo.Input';
 import Photos from '../../ProjectId/Photo/Photos';
 import { projectPhotosActions } from '../../../../actionsTypes/projectPhotosActionTypes';
+import ModalInput from '../../../Items/ModalInput';
 
 interface IProjectModal {
     open: boolean,
@@ -45,11 +46,17 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         }
     }, [url]);
 
-    let isDisabled;
-    if (editableProject === undefined) {
-        isDisabled = ((projectName !== '') && (type !== '') && (country !== '') && (link !== '') && (tech !== []) && (description !== '')) ? true : false;
-    } else {
-        isDisabled = ((projectName !== editableProject.name) || (type !== editableProject.projectTypeId) || (country !== editableProject.country) || (link !== editableProject.link) || (tech !== editableProject.technologyList) || (description !== editableProject.description || photo !== editableProject.photoList)) ? true : false;
+    function MyFormHelperText() {
+        const { focused } = useFormControl() || {};
+
+        const helperText: string = React.useMemo(() => {
+            if (!type && check) {
+                return 'Empty field';
+            }
+            return '';
+        }, [focused]);
+
+        return <FormHelperText sx={{ color: 'red' }}>{helperText}</FormHelperText>;
     }
 
     const dispatch = useAppDispatch();
@@ -130,6 +137,16 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         });
     };
 
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsError(false);
+        (projectName === '' || description === '' || type === ''
+            || country === '' || link === '' || tech === []
+        ) && setIsError(true)
+    }, [projectName, description, type, country, link, tech]);
+
     return (
         <Modal
             open={open}
@@ -153,14 +170,15 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Project name
                             </Typography>
-                            <OutlinedInput placeholder='Project name'
-                                value={projectName}
-                                id="input"
-                                sx={{ width: '450px', mb: '0px', height: '45px' }}
-                                onChange={handleChangeName}
+                            <ModalInput placeholder='Project name'
+                                item={projectName}
+                                check={check}
+                                width={450}
+                                index={0}
+                                setItem={handleChangeName}
                             />
                         </Box>
-                        <Box>
+                        <Box sx={{ mb: '20px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
@@ -169,16 +187,20 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                                     value={type}
                                     onChange={handleChangeType}
                                     defaultValue={""}
-                                    sx={{ width: '230px', height: '45px', mb: '20px' }}
+                                    error={!type && check}
+                                    sx={{ width: '230px', height: '45px', mb: 0 }}
                                     displayEmpty
                                 >
                                     <MenuItem value="">
-                                        <em>Select type</em>
+                                        <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
+                                            Select type
+                                        </span>
                                     </MenuItem>
                                     {
                                         projectTypes.map((x) => <MenuItem value={x.id}>{x.name}</MenuItem>)
                                     }
                                 </Select>
+                                <MyFormHelperText />
                             </FormControl>
                         </Box>
                     </Box>
@@ -187,38 +209,42 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Country
                             </Typography>
-                            <OutlinedInput placeholder='Country'
-                                value={country}
-                                id="input"
-                                sx={{ width: '250px', mb: '0px', height: '45px' }}
-                                onChange={handleChangeCountry}
+                            <ModalInput placeholder='Country'
+                                item={country}
+                                check={check}
+                                width={250}
+                                index={0}
+                                setItem={handleChangeCountry}
                             />
                         </Box>
                         <Box>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Link
                             </Typography>
-                            <OutlinedInput placeholder='Link'
-                                value={link}
-                                id="input"
-                                sx={{ width: '430px', mb: '0px', height: '45px' }}
-                                onChange={handleChangeLink}
+                            <ModalInput placeholder='Link'
+                                item={link}
+                                check={check}
+                                width={430}
+                                index={0}
+                                setItem={handleChangeLink}
                             />
                         </Box>
                     </Box>
-                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px', mt: '25px' }}>
+                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                         Technologies
                     </Typography>
-                    <ChipSelect tech={tech} setTech={setTech} />
-                    <Box sx={{ mr: '20px' }}>
+                    <ChipSelect tech={tech} setTech={setTech} check={check} />
+                    <Box sx={{ mr: '20px', mb: '80px' }}>
                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                             Description
                         </Typography>
-                        <OutlinedInput placeholder='Description'
-                            value={description}
-                            id="input"
-                            sx={{ width: '700px', mb: '35px', height: '100px' }}
-                            onChange={handleChangeDescription}
+                        <ModalInput placeholder='Description'
+                            item={description}
+                            check={check}
+                            width={700}
+                            height={100}
+                            index={0}
+                            setItem={handleChangeDescription}
                         />
                     </Box>
                     <Box>
@@ -227,11 +253,23 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                     </Box>
                     {(editableProject === undefined) ? (
                         <Box>
-                            <CustomButton variant="contained" onClick={addProject} children='Add Project' disabled={!isDisabled} />
+                            <CustomButton variant="contained"
+                                children='Add Project'
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (addProject())
+                                }}
+                            />
                         </Box>
                     ) : (
                         <Box>
-                            <CustomButton variant="contained" onClick={editProject} children='Save Project' disabled={!isDisabled} />
+                            <CustomButton variant="contained"
+                                children='Save Project'
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (editProject())
+                                }}
+                            />
                         </Box>
                     )}
                 </Box>

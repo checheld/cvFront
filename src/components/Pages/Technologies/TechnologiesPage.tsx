@@ -31,23 +31,23 @@ const TechnologiesPage: React.FC = () => {
     const result = useTypedSelector((state) => state.technologies.result);
     const load = useTypedSelector((state) => state.technologies.isLoading.getAll);
     const search = useTypedSelector((state) => state.technologies.isLoading.search);
-    
+
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
-          if (event.code === "Enter" || event.code === "NumpadEnter") {
-            event.preventDefault();
-            if (searchParam === '') {
-                dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
-            } else {
-                dispatch( {type: technologiesActions.SEARCH_TECHNOLOGIES_REQUEST, payload: searchParam});
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault();
+                if (searchParam === '') {
+                    dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
+                } else {
+                    dispatch({ type: technologiesActions.SEARCH_TECHNOLOGIES_REQUEST, payload: searchParam });
+                }
             }
-          }
         };
         document.addEventListener("keydown", listener);
         return () => {
-          document.removeEventListener("keydown", listener);
+            document.removeEventListener("keydown", listener);
         };
-      }, [searchParam]);
+    }, [searchParam]);
 
     useEffect(() => {
         dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
@@ -73,7 +73,7 @@ const TechnologiesPage: React.FC = () => {
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' />
                         </Box>
                     </Box>
-                    { technologies.length === 0 ? (
+                    {technologies.length === 0 ? (
                         <NoResult />
                     ) : (
                         <Box>

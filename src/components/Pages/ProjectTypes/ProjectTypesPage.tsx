@@ -66,23 +66,21 @@ const EducationPage: React.FC = () => {
         setArrayProjectType([...arrayProjectType.slice(0, index), ...arrayProjectType.slice(index + 1)]);
     };
 
-    const [isDisabled, setIsDisabled] = React.useState(false);
-    React.useEffect(() => {
-        setIsDisabled(false)
-        arrayProjectType.map((n) => {
-            !n && setIsDisabled(true)
-        });
-    }, [arrayProjectType]);
-
     const addProjectType = () => {
-        const objArr = arrayProjectType.map(e => ({ 'Name': e }));
+        const clearArrayProjectTypes = arrayProjectType.filter(el => el != "")
+        const objArr = clearArrayProjectTypes.map(e => ({ 'Name': e }));
         dispatch({ type: projectTypesActions.ADD_PROJECTTYPE_REQUEST, payload: objArr });
         setArrayProjectType(['']);
         handleClose();
     }
-    const handleAddProjectType = () =>
-        setArrayProjectType([...arrayProjectType, projectType])
-        ;
+    const handleAddProjectType = () => setArrayProjectType([...arrayProjectType, projectType]);
+
+    const [check, setCheck] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    React.useEffect(() => {
+        setIsError(false);
+        !arrayProjectType[0] && setIsError(true);
+    }, [arrayProjectType]);
 
     return (
         <>
@@ -109,14 +107,20 @@ const EducationPage: React.FC = () => {
                                                 <DelInput index={index} removeItem={removeProjectType} />
                                             </Box>
                                         )}
-                                        <ModalInput placeholder="Project type name" item={projectType} setItem={handleChangeProjectTypes(index)} index={index} />
+                                        <ModalInput placeholder="Project type name" item={projectType} setItem={handleChangeProjectTypes(index)} index={index} check={check} width={700} />
                                     </Box>
                                 ))}
                                 <Box sx={{ mb: '35px' }}>
                                     <CustomButton variant="outlined" children='+ Add Project type' onClick={handleAddProjectType} />
                                 </Box>
                                 <Box>
-                                    <CustomButton variant="contained" onClick={addProjectType} children='Save Project type' disabled={isDisabled} />
+                                    <CustomButton variant="contained"
+                                        children='Save Project type'
+                                        onClick={() => {
+                                            if (isError) setCheck(true);
+                                            else (addProjectType())
+                                        }}
+                                    />
                                 </Box>
                             </Box>
                         </Box>

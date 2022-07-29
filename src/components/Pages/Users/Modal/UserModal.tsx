@@ -11,6 +11,7 @@ import Photo from '../Items/Photo';
 import PhotoModalTemp from './PhotoModalTemp';
 import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
+import DateField from '../../../Items/DateField';
 
 interface IUserModal {
     open: boolean,
@@ -342,36 +343,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                 Start date - End date
                                             </Typography>
                                             <Box sx={{ display: 'flex' }}>
-                                                <TextField
-                                                    error={education.startDate === '' && check && index === 0}
-                                                    id="date"
-                                                    label="Start date"
-                                                    type="date"
-                                                    defaultValue="2022-05-26"
-                                                    InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
-                                                    sx={{ width: '130px', mr: '10px' }}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    name='startDate'
-                                                    value={education.startDate}
-                                                    onChange={handleChangeEducation(index)}
-                                                />
-                                                <TextField
-                                                    error={education.endDate === '' && check && index === 0}
-                                                    id="date"
-                                                    label="End date"
-                                                    type="date"
-                                                    defaultValue="2022-05-26"
-                                                    InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
-                                                    sx={{ width: '130px' }}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    name='endDate'
-                                                    value={education.endDate}
-                                                    onChange={handleChangeEducation(index)}
-                                                />
+                                                <DateField item={education.startDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
+                                                <DateField item={education.endDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"End date"} name={'endDate'} />
                                             </Box>
                                         </Box>
                                     </Box>
@@ -429,36 +402,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                 Start date - End date
                                             </Typography>
                                             <Box sx={{ display: 'flex' }}>
-                                                <TextField
-                                                    error={workExperience.startDate === '' && check && index === 0}
-                                                    id="date"
-                                                    label="Start date"
-                                                    type="date"
-                                                    defaultValue="2017-05-24"
-                                                    InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
-                                                    sx={{ width: '130px', mr: '10px' }}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    name='startDate'
-                                                    value={workExperience.startDate}
-                                                    onChange={handleChangeWorkExperience(index)}
-                                                />
-                                                <TextField
-                                                    error={workExperience.endDate === '' && check && index === 0}
-                                                    id="date"
-                                                    label="End date"
-                                                    type="date"
-                                                    defaultValue="2017-05-24"
-                                                    InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
-                                                    sx={{ width: '130px' }}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }}
-                                                    name='endDate'
-                                                    value={workExperience.endDate}
-                                                    onChange={handleChangeWorkExperience(index)}
-                                                />
+                                                <DateField item={workExperience.startDate} setItem={handleChangeWorkExperience(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
+                                                <DateField item={workExperience.endDate} setItem={handleChangeWorkExperience(index)} check={check} index={index} label={"End date"} name={'endDate'} />
                                             </Box>
                                         </Box>
                                     </Box>

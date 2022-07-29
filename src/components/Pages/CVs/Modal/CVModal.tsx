@@ -7,6 +7,7 @@ import DelInput from '../../../../img/DelInput';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
+import DateField from '../../../Items/DateField';
 
 interface ICVModal {
     open: boolean,
@@ -195,37 +196,8 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                             Start date - End date
                                         </Typography>
                                         <Box sx={{ display: 'flex' }}>
-                                            {/* <DateField item={projectCV.startDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"Start date"} name={'startDate'} /> */}
-                                            <TextField
-                                                error={projectCV.startDate === '' && check && index === 0}
-                                                id="date"
-                                                label="Start date"
-                                                type="date"
-                                                defaultValue="2022-05-26"
-                                                InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
-                                                sx={{ width: '130px', mr: '10px', fontSize: '14px !important' }}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                name='startDate'
-                                                value={projectCV.startDate}
-                                                onChange={handleChangeProjectCV(index)}
-                                            />
-                                            <TextField
-                                                error={projectCV.endDate === '' && check && index === 0}
-                                                id="date"
-                                                label="End date"
-                                                type="date"
-                                                defaultValue="2022-05-26"
-                                                InputProps={{ inputProps: { min: "1950-01-01", max: "2022-05-04" } }}
-                                                sx={{ width: '130px' }}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                name='endDate'
-                                                value={projectCV.endDate}
-                                                onChange={handleChangeProjectCV(index)}
-                                            />
+                                            <DateField item={projectCV.startDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
+                                            <DateField item={projectCV.endDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"End date"} name={'endDate'} />
                                         </Box>
                                     </Box>
                                 </Box>

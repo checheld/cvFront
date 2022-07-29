@@ -25,7 +25,7 @@ const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name 
             return '';
         }, [focused]);
 
-        return <FormHelperText style={{ color: 'red' }}>{helperText}</FormHelperText>;
+        return <FormHelperText style={{ color: 'red', marginLeft: '12px' }}>{helperText}</FormHelperText>;
     }
 
     return (

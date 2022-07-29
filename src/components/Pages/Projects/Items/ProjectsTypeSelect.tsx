@@ -27,7 +27,9 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
           sx={{ width: '160px', height: '45px', mb: '20px' }}
         >
           <MenuItem value="">
-            <em>Type</em>
+            <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
+              Type
+            </span>
           </MenuItem>
           {
             progectTypes.map((x) => <MenuItem value={x.id}>{x.name}</MenuItem>)

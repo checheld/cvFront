@@ -6,10 +6,10 @@ import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 
 interface IProjectsTechSelect {
     setParam: (value: string) => void,
-  }  
+}
 
 const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
-    
+
     let technologies = useTypedSelector((state) => state.technologies.technologies);
     const handleChange = (event: SelectChangeEvent) => {
         setParam(event.target.value);
@@ -26,7 +26,9 @@ const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
                     sx={{ width: '190px', height: '45px', mb: '20px' }}
                 >
                     <MenuItem value="">
-                        <em>Technology</em>
+                        <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
+                            Technologies
+                        </span>
                     </MenuItem>
                     {
                         technologies.map((tech) => <MenuItem value={tech.name}>{tech.name}</MenuItem>)

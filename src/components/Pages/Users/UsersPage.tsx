@@ -66,7 +66,10 @@ const UsersPage: React.FC = () => {
             {!load ? (
                 <Box sx={{ pl: '250px', pr: '35px' }}>
                     <UserModal open={open} handleClose={handleClose} />
-                    <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Users ({users.length})</Typography>
+                    <Box sx={{ m: 0, display: 'flex' }}>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Users </Typography>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({users.length})</Typography>
+                    </Box>
                     <Box sx={{ display: 'flex' }}>
                         <Input setParam={setSearchParam} placeholder={"Search user"} />
                         <Box sx={{ marginLeft: 'auto' }}>

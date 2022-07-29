@@ -1,13 +1,13 @@
 import { Box, Button, Chip, CircularProgress, createTheme, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { usersActions } from '../../../actionsTypes/usersActionTypes';
 import UserModal from '../Users/Modal/UserModal';
-import { ICV, IEducation, IPhotoParams, IProject, ITechnology, IUser, IWorkExperience } from '../../../interfaces';
+import { ICV, IEducation, ITechnology, IUser, IWorkExperience } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
 import Photo from '../Users/Items/Photo';
 import CVItem from '../CVs/Items/CVItem';

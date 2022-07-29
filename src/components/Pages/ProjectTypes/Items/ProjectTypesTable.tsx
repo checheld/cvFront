@@ -38,7 +38,7 @@ const BasicTable: React.FC = () => {
     return (
         <Box>
             <EditModal open={open} handleClose={handleClose} item={projectType} action={projectTypesActions.EDIT_PROJECTTYPE_REQUEST} />
-            <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"projectType"} />
+            <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project type"} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
                     <TableHead>

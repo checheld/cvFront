@@ -66,7 +66,10 @@ const TechnologiesPage: React.FC = () => {
             {!load ? (
                 <Box sx={{ pl: '250px', pr: '35px' }}>
                     <TechModal open={open} handleClose={handleClose} />
-                    <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies ({allLength})</Typography>
+                    <Box sx={{ m: 0, display: 'flex' }}>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies </Typography>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}> ({allLength})</Typography>
+                    </Box>
                     <Box sx={{ display: 'flex' }}>
                         <Input setParam={setSearchParam} placeholder={"Search technology"} />
                         <Box sx={{ marginLeft: 'auto' }}>

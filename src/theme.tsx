@@ -1,40 +1,10 @@
 import { createTheme } from '@mui/material';
 import shadows, { Shadows } from '@mui/material/styles/shadows';
 export const defaultTheme = createTheme({
-  // typography: {
-  //   fontFamily: 'Nunito',
-  // },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-          @font-face {
-              font-family: 'Nunito';
-              src: url(./fonts/static/Nunito-ExtraBold.woff2);
-                  url(./fonts/static/Nunito-ExtraBold.woff);
-              font-display: swap;
-              font-style: normal;
-              font-weight: 800; 
-          }
-          @font-face {
-              font-family: 'Nunito';
-              src: url(./fonts/static/Nunito-Regular.woff2);
-                  url(./fonts/static/Nunito-Regular.woff);
-              font-display: swap;
-              font-style: normal;
-              font-weight: 400;
-            }
-            
-            @font-face {
-              font-family: 'Nunito';
-              src: url(./fonts/static/Nunito-SemiBold.woff2);
-              url(./fonts/static/Nunito-SemiBold.woff);
-              font-display: swap;
-              font-style: normal;
-              font-weight: 600;
-            }
-      `,
-    },
+  typography: {
+    fontFamily: `"Nunito", sans-serif`,
   },
+
   palette: {
     primary: {
       main: '#5893F9',
@@ -214,6 +184,7 @@ export const theme = createTheme(defaultTheme, {
           backgroundColor: '#FFFFFF',
           weight: 400,
           fontSize: '14px',
+          borderRadius: '5px',
           '&.Mui-focused': {
             color: '#535E6C',
             outline: '1px solid #535E6C',

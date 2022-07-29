@@ -125,7 +125,10 @@ const EducationPage: React.FC = () => {
                             </Box>
                         </Box>
                     </Modal>
-                    <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Education ({universities.length})</Typography>
+                    <Box sx={{ m: 0, display: 'flex' }}>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Education </Typography>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({universities.length})</Typography>
+                    </Box>
                     <Box sx={{ display: 'flex' }}>
                         <Input setParam={setSearchParam} placeholder={"Search university"} />
                         <Box sx={{ marginLeft: 'auto' }}>

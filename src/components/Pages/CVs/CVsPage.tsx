@@ -20,15 +20,15 @@ const CVsPage: React.FC = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useAppDispatch();
-    const [ searchParam, setSearchParam ] = React.useState<string>('');
+    const [searchParam, setSearchParam] = React.useState<string>('');
     const CVs = useTypedSelector((state) => state.CVs.CVs);
     const result = useTypedSelector((state) => state.CVs.result);
     const load = useTypedSelector((state) => state.CVs.isLoading.getAll);
     const search = useTypedSelector((state) => state.CVs.isLoading.search);
     useEffect(() => {
-      dispatch({ type: CVsActions.GET_CVS_REQUEST });
-      dispatch({ type: usersActions.GET_USERS_REQUEST });
-      dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
+        dispatch({ type: CVsActions.GET_CVS_REQUEST });
+        dispatch({ type: usersActions.GET_USERS_REQUEST });
+        dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
     }, [result, dispatch]);
 
     useEffect(() => {
@@ -50,38 +50,41 @@ const CVsPage: React.FC = () => {
 
     return (
         <>
-        {!load ? (
-            <Box sx={{ pl: '250px', pr: '35px' }}>
-                <CVModal open={open} handleClose={handleClose} />
-                <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>CVs ({CVs.length})</Typography>
-                <Box sx={{ display: 'flex' }}>
-                    <Input setParam={setSearchParam} placeholder={"Search CV"} />
-                    <Box sx={{ marginLeft: 'auto' }}>
-                        <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add CV' />
+            {!load ? (
+                <Box sx={{ pl: '250px', pr: '35px' }}>
+                    <CVModal open={open} handleClose={handleClose} />
+                    <Box sx={{ m: 0, display: 'flex' }}>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>CVs </Typography>
+                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({CVs.length})</Typography>
                     </Box>
-                </Box>
-                { CVs.length === 0 ? (
-                    <NoResult />
-                ) : (
-                    <Box sx={{
-                        p: 2,
-                        bgcolor: '#FBFBFB',
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gridTemplateColumns: { md: '1fr 1fr' },
-                        gap: 2,
-                        padding: '0px'
-                    }}>
+                    <Box sx={{ display: 'flex' }}>
+                        <Input setParam={setSearchParam} placeholder={"Search CV"} />
+                        <Box sx={{ marginLeft: 'auto' }}>
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add CV' />
+                        </Box>
+                    </Box>
+                    {CVs.length === 0 ? (
+                        <NoResult />
+                    ) : (
+                        <Box sx={{
+                            p: 2,
+                            bgcolor: '#FBFBFB',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gridTemplateColumns: { md: '1fr 1fr' },
+                            gap: 2,
+                            padding: '0px'
+                        }}>
 
-                        {CVs.map((CV) => (
-                            <CVItem CV={CV} />
-                        ))}
-                    </Box>
-                )}
-            </Box>
-        ) : (
-            <PreviewPageCv />
-        )}
+                            {CVs.map((CV) => (
+                                <CVItem CV={CV} />
+                            ))}
+                        </Box>
+                    )}
+                </Box>
+            ) : (
+                <PreviewPageCv />
+            )}
         </>
     )
 }

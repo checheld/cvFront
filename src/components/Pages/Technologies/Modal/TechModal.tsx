@@ -113,7 +113,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
-                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} />
+                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} width={700} />
                         </Box>
                     ))}
                     {(editableTech === undefined) ? (

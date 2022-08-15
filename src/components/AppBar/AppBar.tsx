@@ -8,7 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import '../Components.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CVs from '../../img/CVs';
 import Users from '../../img/Users';
 import Projects from '../../img/Projects';
@@ -17,7 +17,6 @@ import Technologies from '../../img/Technologies';
 import WorkExp from '../../img/WorkExp'
 import ProjectType from '../../img/ProjectType';
 
-
 const drawerWidth = 240; // 11%
 
 const mainLinks = [
@@ -25,7 +24,6 @@ const mainLinks = [
   { name: 'Users', link: '/Users', code: '2', icon: (x: string, y: string) => <Users isActive={x === y} /> },
   { name: 'Projects', link: '/Projects', code: '3', icon: (x: string, y: string) => <Projects isActive={x === y} /> },
 ]
-
 const otherLinks = [
   { name: 'Education', link: '/Education', code: '4', icon: (x: string, y: string) => <Education isActive={x === y} /> },
   { name: 'Technologies', link: '/Technologies', code: '5', icon: (x: string, y: string) => <Technologies isActive={x === y} /> },
@@ -35,6 +33,16 @@ const otherLinks = [
 
 export default function PermanentDrawerLeft() {
   const [selectedIndex, setSelectedIndex] = React.useState<string>('1');
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const allLinks = mainLinks.concat(otherLinks);
+  const currentPathLink = String(
+    currentPath.substring(currentPath.lastIndexOf('/'))
+  );
+
+  // React.useEffect(() => {
+  //   allLinks.map((x) => x.link === (`/ + ${currentPathLink}`) ? setSelectedIndex(x.code) : setSelectedIndex('2'))
+  // }, [selectedIndex]);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -42,7 +50,7 @@ export default function PermanentDrawerLeft() {
   ) => {
     setSelectedIndex(code);
   };
-
+  console.log(selectedIndex)
   const VerticalDivider = () => (
     <Divider
       orientation="vertical"

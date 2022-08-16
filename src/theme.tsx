@@ -137,7 +137,9 @@ export const theme = createTheme(defaultTheme, {
 
     MuiButton: {
       styleOverrides: {
-        root: {},
+        root: {
+          fontSize: "16px"
+        },
 
         text: {
           width: "30px",
@@ -172,13 +174,18 @@ export const theme = createTheme(defaultTheme, {
             backgroundColor: '#5893F9'
           }
         },
+        outlined: {
+          fontWeight: "600",
+          padding: '10px 25px 10px 25px',
+        }
       }
     },
 
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          // width: '300px',
+          //color: '#D0D4DA',
+          borderColor: '#E3E3EA',
           height: '45px',
           marginBottom: '20px',
           backgroundColor: '#FFFFFF',

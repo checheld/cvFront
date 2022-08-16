@@ -109,7 +109,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Technology name
                             </Typography>
-                            <ModalInput placeholder="Technology" item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={700} />
+                            <ModalInput placeholder="Technology name" item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={700} />
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
@@ -123,7 +123,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             </Box>
                             <Box>
                                 <CustomButton variant="contained"
-                                    children='Add Technology'
+                                    children='Save Technology'
                                     onClick={() => {
                                         if (isError) setCheck(true);
                                         else (addTechnology())

@@ -10,9 +10,12 @@ interface ISearchAttributes {
   placeholder: string
 }
 
-const UseFormControl:React.FC<ISearchAttributes> = ({ setParam, placeholder }) => {
+const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder }) => {
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    // if (ev.currentTarget.value.includes(" ")) {
+    //   ev.currentTarget.value = ev.currentTarget.value.replace(/\s/g, "");
+    // }
     const {
       target: { value },
     } = ev;
@@ -23,12 +26,12 @@ const UseFormControl:React.FC<ISearchAttributes> = ({ setParam, placeholder }) =
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl>
-        <OutlinedInput sx={{width:'300px'}} placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
+        <OutlinedInput sx={{ width: '300px' }} placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               <Search />
             </InputAdornment>}
-            />
+        />
       </FormControl>
     </Box>
   );

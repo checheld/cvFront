@@ -26,6 +26,7 @@ const App: FC = () => {
         <PermanentDrawerLeft />
         <Routes>
           <Route path="/CVs" element={<CVsPage />} />
+          <Route path="/" element={<CVsPage />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/Projects" element={<Projects />} />
           <Route path="/Education" element={<Education />} />

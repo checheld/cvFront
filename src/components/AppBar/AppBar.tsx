@@ -8,7 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import '../Components.css';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CVs from '../../img/CVs';
 import Users from '../../img/Users';
 import Projects from '../../img/Projects';
@@ -40,9 +40,9 @@ export default function PermanentDrawerLeft() {
     currentPath.substring(currentPath.lastIndexOf('/'))
   );
 
-  // React.useEffect(() => {
-  //   allLinks.map((x) => x.link === (`/ + ${currentPathLink}`) ? setSelectedIndex(x.code) : setSelectedIndex('2'))
-  // }, [selectedIndex]);
+  React.useEffect(() => {
+    allLinks.map((x) => x.link === (currentPathLink) && setSelectedIndex(x.code))
+  }, [selectedIndex]);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -50,7 +50,7 @@ export default function PermanentDrawerLeft() {
   ) => {
     setSelectedIndex(code);
   };
-  console.log(selectedIndex)
+
   const VerticalDivider = () => (
     <Divider
       orientation="vertical"

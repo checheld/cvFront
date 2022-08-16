@@ -116,6 +116,9 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         setCountry(value);
     };
     const handleChangeLink = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (ev.currentTarget.value.includes(" ")) {
+            ev.currentTarget.value = ev.currentTarget.value.replace(/\s/g, "");
+        }
         const {
             target: { value },
         } = ev;

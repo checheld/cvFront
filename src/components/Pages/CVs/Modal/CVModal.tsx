@@ -89,11 +89,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     useEffect(() => {
         if (editableCV !== undefined) {
             setCVName(editableCV.cvName);
-
-            let findUser = users.find(item => item.id === editableCV.userId);
-            //let findUserId = findUser!.id;
             setUser(editableCV.userId);
-
             setArrayProjectCV(editableCV.projectCVList);
             handleClose();
         }

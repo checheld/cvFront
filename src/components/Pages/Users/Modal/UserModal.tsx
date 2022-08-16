@@ -165,12 +165,18 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     }, [editableUser]);
 
     const handleChangeFirstName = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (ev.currentTarget.value.includes(" ")) {
+            ev.currentTarget.value = ev.currentTarget.value.replace(/\s/g, "");
+        }
         const {
             target: { value },
         } = ev;
         setFirstName(value);
     };
     const handleChangeLastName = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (ev.currentTarget.value.includes(" ")) {
+            ev.currentTarget.value = ev.currentTarget.value.replace(/\s/g, "");
+        }
         const {
             target: { value },
         } = ev;

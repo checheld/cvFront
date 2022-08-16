@@ -26,7 +26,7 @@ const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder }) 
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl>
-        <OutlinedInput sx={{ width: '300px' }} placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
+        <OutlinedInput sx={{ width: '300px', height: '45px' }} placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               <Search />

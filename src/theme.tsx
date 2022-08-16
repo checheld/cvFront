@@ -186,7 +186,7 @@ export const theme = createTheme(defaultTheme, {
         root: {
           //color: '#D0D4DA',
           borderColor: '#E3E3EA',
-          height: '45px',
+          //height: '45px',
           marginBottom: '20px',
           backgroundColor: '#FFFFFF',
           weight: 400,
@@ -200,6 +200,9 @@ export const theme = createTheme(defaultTheme, {
             },
           },
         },
+        input: {
+          height: '17px',
+        }
       }
     },
   },

@@ -1,0 +1,3 @@
+input[type="date"]:not(:valid)::-webkit-datetime-edit {
+    color: rgb(167, 170, 172);
+}

@@ -11,7 +11,7 @@ interface Iprops {
   setItem?: ChangeEventHandler<HTMLInputElement>,
   index?: number,
   check?: boolean,
-  width?: number,
+  width?: string | number,
   height?: number,
   selectName?: string
 }

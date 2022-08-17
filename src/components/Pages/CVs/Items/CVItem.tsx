@@ -10,12 +10,13 @@ import Edit from '../../../../img/Edit';
 import Download from '../../../../img/Download';
 import DeleteModal from '../../../Items/DeleteModal';
 import moment from 'moment';
+import PdfIcon from '../../../../img/PdfIcon';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     color: theme.palette.text.secondary,
     borderRadius: '10px',
-    padding: '30px',
+    padding: '20px',
 }));
 
 const lightTheme = createTheme({
@@ -51,37 +52,39 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
     const [delId, setdelId] = React.useState("");
 
     const downloadCV = (event: React.MouseEvent<HTMLButtonElement>) => {
-        dispatch( {type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id});
+        dispatch({ type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id });
     }
 
     return (
-        <Box sx={{ p: '0px', m: '0px'}}>
-            <CVModal open={open} handleClose={handleClose} editableCV={CV} /> 
-            <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"CV"}/>
+        <Box sx={{ p: '0px', m: '0px', position: 'relative' }}>
+            <CVModal open={open} handleClose={handleClose} editableCV={CV} />
+            <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"CV"} />
             <ThemeProvider theme={lightTheme}>
-            <Item elevation={4}
-                sx={{ width: '335px', mr: '6px' }}
-                key={CV.id}>
-                <Box sx={{m: 0, p: 0}} onClick={handleOpen}>
-                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px' }}>{CV.cvName}</Typography>
-                    <Box sx={{p: 0, mb: '20px',ml: '0px',mr: '20px', mt: '0px'}}>
-                        {CV.projectCVList.map((projectCV) => (
-                            <Chip label={projectCV.project!.name} sx={{ mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '21.7px', color: '#AFB5BF' }} />
-                        ))}
+                <Item elevation={4}
+                    sx={{ width: '260px', height: '255px', mr: '6px' }}
+                    key={CV.id}>
+                    <Box sx={{ m: 0, p: 0 }} onClick={handleOpen}>
+                        <PdfIcon />
+                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '19.1px', color: '#535E6C', mb: '20px', mt: '30px' }}>{CV.cvName}</Typography>
+                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px' }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
+                        <Box sx={{ p: 0, mb: '20px', ml: '0px', mr: '20px', mt: '0px' }}>
+                            {CV.projectCVList.map((projectCV) => (
+                                <Chip label={projectCV.project!.name} sx={{ mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '21.7px', color: '#AFB5BF' }} />
+                            ))}
+                        </Box>
                     </Box>
-                </Box>
-                <Stack direction="row" sx={{ mr: '30px', width: '100%' }} key ={CV.id}>
-                    <Button variant='text' onClick={downloadCV} id={CV.id} sx={{minWidth: '30px', mr: '15px'}}>
-                        <Download />
-                    </Button>
-                    <Button variant='text' onClick={handleOpenDelModal} id={CV.id} sx={{minWidth: '30px'}}>
-                        <Delete />
-                    </Button>
-                    <Box sx={{ml: 'auto'}}>
-                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px'}}>{time}</Typography>
-                    </Box>
-                </Stack>
-            </Item>
+                    <Stack direction="row" sx={{ mr: '30px', width: '100%', position: 'absolute', bottom: 20 }} key={CV.id}>
+                        <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>
+                            <Download />
+                        </Button>
+                        <Button variant='text' onClick={handleOpenDelModal} id={CV.id} sx={{ minWidth: '30px' }}>
+                            <Delete />
+                        </Button>
+                        <Box sx={{ ml: '70px' }}>
+                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px' }}>{time}</Typography>
+                        </Box>
+                    </Stack>
+                </Item>
             </ThemeProvider>
         </Box>
     )

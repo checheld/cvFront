@@ -86,6 +86,7 @@ export interface IProjectType {
 export interface ICV {
     id: string,
     cvName: string,
+    user?: IUser,
     userId: string,
     createdAt: string,
     projectCVList: IProjectCV[]

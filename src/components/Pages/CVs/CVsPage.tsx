@@ -25,6 +25,7 @@ const CVsPage: React.FC = () => {
     const result = useTypedSelector((state) => state.CVs.result);
     const load = useTypedSelector((state) => state.CVs.isLoading.getAll);
     const search = useTypedSelector((state) => state.CVs.isLoading.search);
+    const sortedByDateCVs1 = CVs.reverse().slice(0, 4);
     useEffect(() => {
         dispatch({ type: CVsActions.GET_CVS_REQUEST });
         dispatch({ type: usersActions.GET_USERS_REQUEST });
@@ -66,20 +67,44 @@ const CVsPage: React.FC = () => {
                     {CVs.length === 0 ? (
                         <NoResult />
                     ) : (
-                        <Box sx={{
-                            p: 2,
-                            bgcolor: '#FBFBFB',
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gridTemplateColumns: { md: '1fr 1fr' },
-                            gap: 2,
-                            padding: '0px'
-                        }}>
-
-                            {CVs.map((CV) => (
-                                <CVItem CV={CV} />
-                            ))}
-                        </Box>
+                        <>
+                            <Box>
+                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '20px', mt: '10px' }}>
+                                    Recent CVs
+                                </Typography>
+                                <Box sx={{
+                                    p: 2,
+                                    bgcolor: '#FBFBFB',
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    gridTemplateColumns: { md: '1fr 1fr' },
+                                    gap: 2,
+                                    padding: '0px'
+                                }}>
+                                    {sortedByDateCVs1.map((CV) => (
+                                        <CVItem CV={CV} />
+                                    ))}
+                                </Box>
+                            </Box>
+                            <Box>
+                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '20px', mt: '35px' }}>
+                                    All CVs
+                                </Typography>
+                                <Box sx={{
+                                    p: 2,
+                                    bgcolor: '#FBFBFB',
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    gridTemplateColumns: { md: '1fr 1fr' },
+                                    gap: 2,
+                                    padding: '0px'
+                                }}>
+                                    {CVs.map((CV) => (
+                                        <CVItem CV={CV} />
+                                    ))}
+                                </Box>
+                            </Box>
+                        </>
                     )}
                 </Box>
             ) : (

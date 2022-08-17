@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import { Box, Button, Chip, createTheme, Paper, Stack, styled, ThemeProvider } from '@mui/material';
 import { ICV } from '../../../../interfaces';
@@ -55,6 +55,10 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
         dispatch({ type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id });
     }
 
+    let projectsNames: string[] = [];
+    CV.projectCVList.map((projectCV) => projectsNames.push(projectCV.project!.name))
+    const joinedProjectsNames = projectsNames.join(', ');
+
     return (
         <Box sx={{ p: '0px', m: '0px', position: 'relative' }}>
             <CVModal open={open} handleClose={handleClose} editableCV={CV} />
@@ -67,11 +71,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                         <PdfIcon />
                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '19.1px', color: '#535E6C', mb: '20px', mt: '30px' }}>{CV.cvName}</Typography>
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px' }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
-                        <Box sx={{ p: 0, mb: '20px', ml: '0px', mr: '20px', mt: '0px' }}>
-                            {CV.projectCVList.map((projectCV) => (
-                                <Chip label={projectCV.project!.name} sx={{ mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '21.7px', color: '#AFB5BF' }} />
-                            ))}
-                        </Box>
+                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#AFB5BF', mb: '20px' }}>{joinedProjectsNames}</Typography>
                     </Box>
                     <Stack direction="row" sx={{ mr: '30px', width: '100%', position: 'absolute', bottom: 20 }} key={CV.id}>
                         <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>

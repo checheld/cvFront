@@ -134,11 +134,11 @@ const ProjectIdPage: React.FC = () => {
                 <Box sx={{ mt: '35px', ml: '40px', mb: '35px', display: 'flex' }}>
                   {
                     currentProject.photoList.map((photo: IProjectPhoto) => (
-                      <Card sx={{ maxWidth: 345, mr: '10px' }}>
+                      <Card sx={{ maxWidth: 335, mr: '10px' }}>
                         <CardMedia
                           component="img"
                           alt="photo"
-                          height="140"
+                          height="180px"
                           image={photo.url}
                         />
                       </Card>

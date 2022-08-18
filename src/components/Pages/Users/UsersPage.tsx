@@ -91,7 +91,7 @@ const UsersPage: React.FC = () => {
                             <ThemeProvider theme={lightTheme}>
                                 {users.map((user) => (
                                     <Item elevation={4}
-                                        sx={{ width: '335px', mr: '6px' }}
+                                        sx={{ width: '335px', height: '372px', mr: '6px' }}
                                         onClick={() => router(`/users/${user.id}`)}>
                                         <Box sx={{ m: 0, p: 0, justifyContent: 'center', display: 'flex', mb: '20px' }}>
                                             {(user.photoParams !== null) ? (
@@ -101,7 +101,7 @@ const UsersPage: React.FC = () => {
                                             )}
                                         </Box>
                                         <Typography sx={{ fontWeight: 600, fontSize: '18px', lineHeight: '24.5px', color: '#535E6C', mb: '25px', justifyContent: 'center', display: 'flex' }}>{user.firstName} {user.lastName}</Typography>
-                                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '25px' }}>{user.description}</Typography>
+                                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', width: '335px', height: '115px', mb: '25px', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block' }}>{user.description}</Typography>
                                         <Button variant="contained" onClick={handleOpen} sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', textTransform: 'capitalize' }}>More</Button>
                                     </Item>
                                 ))}

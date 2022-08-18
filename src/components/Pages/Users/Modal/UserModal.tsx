@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, Divider, Modal, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { Box, Divider, Modal, SelectChangeEvent, Typography } from '@mui/material';
 import { IEducation, IPhotoParams, ITechnology, IUser, IWorkExperience } from '../../../../interfaces';
 import ChipSelect from '../../../Items/ChipSelect';
 import DelInput from '../../../../img/DelInput';
 import { usersActions } from '../../../../actionsTypes/usersActionTypes';
 import { userPhotosActions } from '../../../../actionsTypes/userPhotosActionTypes';
 import Photo from '../Items/Photo';
-import PhotoModalTemp from './PhotoModalTemp';
+import PhotoModal from './PhotoModal';
 import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
 import DateField from '../../../Items/DateField';
@@ -125,7 +125,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         if (editableUser !== undefined) {
             const clearArrayEducation = arrayEducation.filter(el => el.universityId !== "" && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
             const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== "" && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
-            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': params.id };
+            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': editableUser.photoParamsId };
+            console.log(objUser)
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
             setLastName('');
@@ -234,7 +235,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             style={{ overflow: 'scroll' }}
         >
             <Box sx={style}>
-                <PhotoModalTemp
+                <PhotoModal
                     handleClosePhoto={handleClosePhoto}
                     handleOpenPhotoModal={handleOpenPhotoModal}
                     openPhoto={openPhoto}

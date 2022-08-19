@@ -7,6 +7,7 @@ import { technologiesActions } from '../../../../actionsTypes/technologiesAction
 import { ITechnology } from '../../../../interfaces';
 import DelInput from '../../../../img/DelInput';
 import ModalInput from '../../../Items/ModalInput';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface ITechModal {
     open: boolean,
@@ -99,6 +100,16 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             Edit Technology
                         </Typography>
                     )}
+                    <CloseIcon
+                        style={{
+                            width: `30px`,
+                            position: `absolute`,
+                            top: 30,
+                            right: 30,
+                            color: '#535E6C'
+                        }}
+                        onClick={handleClose}
+                    />
                     {arrayTechnologies.length && arrayTechnologies.map((tech, index) => (
                         <Box key={index}>
                             {index > 0 && (

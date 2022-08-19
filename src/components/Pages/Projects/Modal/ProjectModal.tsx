@@ -9,6 +9,7 @@ import PhotoInput from '../../ProjectId/Photo/Photo.Input';
 import Photos from '../../ProjectId/Photo/Photos';
 import { projectPhotosActions } from '../../../../actionsTypes/projectPhotosActionTypes';
 import ModalInput from '../../../Items/ModalInput';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface IProjectModal {
     open: boolean,
@@ -168,6 +169,16 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             Edit Project
                         </Typography>
                     )}
+                    <CloseIcon
+                        style={{
+                            width: `30px`,
+                            position: `absolute`,
+                            top: 30,
+                            right: 30,
+                            color: '#535E6C'
+                        }}
+                        onClick={handleClose}
+                    />
                     <Box sx={{ display: 'flex' }}>
                         <Box sx={{ mr: '20px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>

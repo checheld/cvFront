@@ -10,6 +10,7 @@ import { universitiesActions } from '../../actionsTypes/universitiesActionTypes'
 import { technologiesActions } from '../../actionsTypes/technologiesActionTypes';
 import { companiesActions } from '../../actionsTypes/companiesActionTypes';
 import { projectTypesActions } from '../../actionsTypes/projectTypesActionTypes';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface IProjectModal {
     open: boolean,
@@ -47,6 +48,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
         }
         else if (type === "project") {
             dispatch({ type: projectsActions.DEL_PROJECT_REQUEST, payload: id });
+            router(`/projects`)
             handleClose();
         }
         else if (type === "university") {
@@ -82,6 +84,16 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
                     <Typography sx={{ fontSize: '14px', color: '#AFB5BF', fontWeight: 400, mb: '30px' }}>
                         When you delete this {type}, you cannot be undone.
                     </Typography>
+                    <CloseIcon
+                        style={{
+                            width: `30px`,
+                            position: `absolute`,
+                            top: 30,
+                            right: 30,
+                            color: '#535E6C'
+                        }}
+                        onClick={handleClose}
+                    />
                     <Box>
                         <CustomButton variant="contained" onClick={deleteItem} children='Delete' />
                     </Box>

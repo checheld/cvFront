@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import CustomButton from '../Items/CustomButton';
 import ModalInput from '../Items/ModalInput';
 import { useAppDispatch } from '../../redusers/useTypedSelector';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface IEditModal {
   open: boolean,
@@ -58,6 +59,16 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
           <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
             {editName}
           </Typography>
+          <CloseIcon
+            style={{
+              width: `30px`,
+              position: `absolute`,
+              top: 30,
+              right: 30,
+              color: '#535E6C'
+            }}
+            onClick={handleClose}
+          />
           <ModalInput placeholder="Item" item={changedItem} setItem={handleChange} width={700} />
           <Box>
             <CustomButton variant="contained" children={`Save ${editName}`} onClick={updateItem} />

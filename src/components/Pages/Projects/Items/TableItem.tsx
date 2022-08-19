@@ -5,7 +5,6 @@ import { Box, Button, Chip, Stack, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { IProject, ITechnology } from '../../../../interfaces';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { projectTypesActions } from '../../../../actionsTypes/projectTypesActionTypes';
 
 interface ITableItem {
     project: IProject
@@ -29,53 +28,14 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
     }
     const result = useTypedSelector((state) => state.projectTypes.result);
 
-    // const allProjectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
-    // const currentProjectType = allProjectTypes.find(projectType => projectType.id === project.projectType!.name);
-
-    // useEffect(() => {
-    //     dispatch({ type: projectTypesActions.GET_PROJECTTYPES_REQUEST });
-    // }, [result, dispatch]);
-
     useEffect(() => {
         setAmountHideTech(project.technologyList.length - showTech.length)
     }, [project]);
-    //
+
     let techTableCellRef = useRef();
-    // const [techTableCell, setTechTableCell] = useState();
+
     const [showTech, setShowTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
     const [amountHideTech, setAmountHideTech] = React.useState(0);
-
-    // const [baseTechWidth, setBaseTechWidth] = useState(0);
-
-    // useEffect(() => {
-    //     if (document.getElementById('chipId0') !== null) {
-    //         //@ts-ignore
-    //         setBaseTechWidth(document.getElementById('chipId0').offsetWidth)
-    //     }
-    // }, []);
-
-    // function start() {
-    //     setShowTech([project.technologyList[0]])
-    //     //@ts-ignore
-    //     setTechTableCell(techTableCellRef.current.offsetWidth);
-    // }
-    // window.onresize = start;
-
-    // useEffect(() => {
-    //     const chipChanging = (async () => {
-    //         for (let i = 1; i < project.technologyList.length; i++) {
-
-    //             let currentTech = document.getElementById(`chipId${i}`);
-    //             let currentTechWidth = currentTech!.offsetWidth;
-    //             if ((baseTechWidth + 10 + currentTechWidth) < techTableCell!) {
-    //                 setBaseTechWidth(baseTechWidth + 10 + currentTechWidth);
-    //                 let x = [...showTech, project.technologyList[i]];
-    //                 setShowTech(x);
-    //             }
-    //         }
-    //     })
-    //     chipChanging();
-    // }, [techTableCell, techTableCellRef]);
 
     return (
         <TableRow
@@ -119,9 +79,9 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
             </TableCell>
             <TableCell align="right" key={project.id} sx={{ mr: 'auto', width: 0 }}>
                 <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={project.id}>
-                    <Button variant='text' onClick={() => handleClick(project)} key={project.id} >
+                    {/* <Button variant='text' onClick={() => handleClick(project)} key={project.id} >
                         <EditButton />
-                    </Button>
+                    </Button> */}
                     <Button variant='text' onClick={handleOpenDelModal} id={project.id} >
                         <Delete />
                     </Button>

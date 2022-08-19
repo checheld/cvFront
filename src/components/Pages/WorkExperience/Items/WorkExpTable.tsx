@@ -59,14 +59,14 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell variant='footer' align="left">{company.id}</TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell component="th"
+                  scope="row"
+                  sx={{ color: '#5893F9' }}
+                  onClick={() => modalOpen(company)}>
                   {company.name}
                 </TableCell>
                 <TableCell align="right" key={company.id}>
                   <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={company.id}>
-                    <Button variant='text' key={company.id} onClick={() => modalOpen(company)}>
-                      <EditButton />
-                    </Button>
                     <Button variant='text' onClick={handleOpenDelModal} id={company.id}>
                       <Delete />
                     </Button>

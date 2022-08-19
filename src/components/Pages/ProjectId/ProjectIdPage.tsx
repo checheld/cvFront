@@ -7,6 +7,7 @@ import { technologiesActions } from '../../../actionsTypes/technologiesActionTyp
 import ProjectModal from '../Projects/Modal/ProjectModal';
 import { IProject, IProjectPhoto, ITechnology } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
+import DeleteModal from '../../Items/DeleteModal';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -38,10 +39,10 @@ const ProjectIdPage: React.FC = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const delProject = () => {
-    dispatch({ type: projectsActions.DEL_PROJECT_REQUEST, payload: projectId });
-    router(`/projects`)
-  }
+
+  const [openDelModal, setOpenDelModal] = React.useState(false);
+  const handleOpenDelModal = () => setOpenDelModal(true);
+  const handleCloseDelModal = () => setOpenDelModal(false);
 
   return (
     <Box sx={{ pl: '250px', pr: '35px', pt: '35px' }}>
@@ -52,6 +53,7 @@ const ProjectIdPage: React.FC = () => {
       ) : (
         <>
           <ProjectModal open={open} handleClose={handleClose} editableProject={currentProject} />
+          <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={projectId} type={"project"} />
           <ThemeProvider theme={lightTheme}>
             <Stack spacing={2}>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
@@ -150,7 +152,7 @@ const ProjectIdPage: React.FC = () => {
           </ThemeProvider>
           <Box sx={{ ml: '307px', mt: '35px' }}>
             <Button variant="contained" onClick={handleOpen} sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', mr: '10px' }} >Edit</Button>
-            <Button variant="contained" onClick={delProject} sx={{ backgroundColor: '#F1F3F5', color: '#BAC1CC' }} >Delete</Button>
+            <Button variant="contained" onClick={handleOpenDelModal} sx={{ backgroundColor: '#F1F3F5', color: '#BAC1CC' }} >Delete</Button>
           </Box>
         </>
       )}

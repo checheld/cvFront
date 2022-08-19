@@ -8,6 +8,7 @@ import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
 import DateField from '../../../Items/DateField';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface ICVModal {
     open: boolean,
@@ -125,6 +126,16 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                             Edit CV
                         </Typography>
                     )}
+                    <CloseIcon
+                        style={{
+                            width: `30px`,
+                            position: `absolute`,
+                            top: 30,
+                            right: 30,
+                            color: '#535E6C'
+                        }}
+                        onClick={handleClose}
+                    />
                     <Box>
                         <Box sx={{ mr: '20px', mb: '25px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>

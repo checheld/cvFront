@@ -56,14 +56,14 @@ const BasicTable: React.FC = () => {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell variant='footer' align="left">{university.id}</TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell component="th"
+                  scope="row"
+                  sx={{ color: '#5893F9' }}
+                  onClick={() => modalOpen(university)}>
                   {university.name}
                 </TableCell>
                 <TableCell align="right" key={university.id}>
                   <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={university.id}>
-                    <Button variant='text' key={university.id} onClick={() => modalOpen(university)}>
-                      <EditButton />
-                    </Button>
                     <Button variant='text' onClick={handleOpenDelModal} id={university.id} >
                       <Delete />
                     </Button>

@@ -9,6 +9,7 @@ import { Box, Modal, Typography } from '@mui/material';
 import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -100,6 +101,16 @@ const WorkExperiencePage: React.FC = () => {
                                 <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                     Company
                                 </Typography>
+                                <CloseIcon
+                                    style={{
+                                        width: `30px`,
+                                        position: `absolute`,
+                                        top: 30,
+                                        right: 30,
+                                        color: '#535E6C'
+                                    }}
+                                    onClick={handleClose}
+                                />
                                 {arrayCompanies.length && arrayCompanies.map((company, index) => (
                                     <Box key={index}>
                                         {index > 0 && (

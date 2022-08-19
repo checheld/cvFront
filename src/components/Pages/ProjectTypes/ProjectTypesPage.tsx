@@ -9,6 +9,7 @@ import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
 import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
 import ProjectTypesTable from './Items/ProjectTypesTable';
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -100,6 +101,16 @@ const EducationPage: React.FC = () => {
                                 <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                     Project type
                                 </Typography>
+                                <CloseIcon
+                                    style={{
+                                        width: `30px`,
+                                        position: `absolute`,
+                                        top: 30,
+                                        right: 30,
+                                        color: '#535E6C'
+                                    }}
+                                    onClick={handleClose}
+                                />
                                 {arrayProjectType.length && arrayProjectType.map((projectType, index) => (
                                     <Box key={index}>
                                         {index > 0 && (

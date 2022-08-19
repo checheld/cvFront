@@ -12,6 +12,7 @@ import PhotoModal from './PhotoModal';
 import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
 import DateField from '../../../Items/DateField';
+import CloseIcon from "@mui/icons-material/Close";
 
 interface IUserModal {
     open: boolean,
@@ -125,8 +126,10 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         if (editableUser !== undefined) {
             const clearArrayEducation = arrayEducation.filter(el => el.universityId !== "" && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
             const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== "" && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
-            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': editableUser.photoParamsId };
-            console.log(objUser)
+            const paramsId = (editableUser.photoParamsId !== null) ? editableUser.photoParamsId : params.id;
+
+            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
+            // либо params.id, либо editableUser.photoParamsId
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
             setLastName('');
@@ -253,6 +256,16 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                             Edit Users
                         </Typography>
                     )}
+                    <CloseIcon
+                        style={{
+                            width: `30px`,
+                            position: `absolute`,
+                            top: 30,
+                            right: 30,
+                            color: '#535E6C'
+                        }}
+                        onClick={handleClose}
+                    />
                     <Box>
                         <Box sx={{ m: 0, p: 0, display: 'flex' }}>
                             <Box sx={{ mr: '35px', ml: 0, mt: 0, mb: 0, p: 0 }}>

@@ -40,7 +40,7 @@ const ModalInput: React.FC<Iprops> = ({ placeholder, item, setItem, index, check
           tabIndex={index}
           value={item}
           error={!item && check && index === 0}
-          sx={{ width: { width }, height: { height }, mb: '0px' }}
+          sx={{ width: { width }, height: { height }, mb: '0px', fontFamily: '"Nunito", sans-serif' }}
           onChange={
             setItem
           }

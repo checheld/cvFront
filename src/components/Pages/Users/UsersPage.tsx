@@ -10,7 +10,6 @@ import UserModal from './Modal/UserModal';
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
-import { IPhotoParams } from '../../../interfaces';
 import Photo from './Items/Photo';
 import NoResult from '../../Items/Search/NoResult';
 import PreviewPageUser from '../../Items/PreviewPages/PreviewPageUser';
@@ -20,6 +19,8 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     borderRadius: '10px',
     padding: '30px',
+    width: '335px',
+    mr: '6px'
 }));
 
 const lightTheme = createTheme({ palette: { mode: 'light' } });
@@ -90,9 +91,7 @@ const UsersPage: React.FC = () => {
                         }}>
                             <ThemeProvider theme={lightTheme}>
                                 {users.map((user) => (
-                                    <Item elevation={4}
-                                        sx={{ width: '335px', height: '372px', mr: '6px' }}
-                                        onClick={() => router(`/users/${user.id}`)}>
+                                    <Item elevation={4} onClick={() => router(`/users/${user.id}`)}>
                                         <Box sx={{ m: 0, p: 0, justifyContent: 'center', display: 'flex', mb: '20px' }}>
                                             {(user.photoParams !== null) ? (
                                                 <Photo params={{ scale: user.photoParams.scale, position: { x: user.photoParams.positionX, y: user.photoParams.positionY } }} photo={user.photoUrl} />
@@ -100,9 +99,13 @@ const UsersPage: React.FC = () => {
                                                 <Photo />
                                             )}
                                         </Box>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '18px', lineHeight: '24.5px', color: '#535E6C', mb: '25px', justifyContent: 'center', display: 'flex' }}>{user.firstName} {user.lastName}</Typography>
-                                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', width: '335px', height: '115px', mb: '25px', overflow: 'hidden', textOverflow: 'ellipsis', display: 'inline-block' }}>{user.description}</Typography>
-                                        <Button variant="contained" onClick={handleOpen} sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', textTransform: 'capitalize' }}>More</Button>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '18px', lineHeight: '24.5px', color: '#535E6C', mb: '25px', justifyContent: 'center', display: 'flex', fontFamily: `"Nunito", sans-serif` }}>{user.firstName} {user.lastName}</Typography>
+                                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', width: '335px', height: '115px', mb: '25px', overflow: 'hidden', fontFamily: `"Nunito", sans-serif` }}>{user.description}</Typography>
+                                        <Button variant="contained"
+                                            onClick={handleOpen}
+                                            sx={{ backgroundColor: '#ECF2FC', color: '#5893F9', textTransform: 'capitalize', width: '88px', height: '45px', fontFamily: `"Nunito", sans-serif`, ':hover': { bgcolor: '#ECF2FD', } }}>
+                                            More
+                                        </Button>
                                     </Item>
                                 ))}
                             </ThemeProvider>

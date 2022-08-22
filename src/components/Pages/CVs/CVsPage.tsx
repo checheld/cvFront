@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
-import { Box, createTheme, ThemeProvider } from '@mui/material';
+import { Box, createTheme, Paper, styled, ThemeProvider } from '@mui/material';
 import CustomButton from '../../Items/CustomButton';
 import Input from '../../Items/Input';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
@@ -11,8 +11,6 @@ import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
 import CVItem from './Items/CVItem';
 import PreviewPageCv from '../../Items/PreviewPages/PreviewPageCv';
 import NoResult from '../../Items/Search/NoResult';
-
-
 
 const CVsPage: React.FC = () => {
 

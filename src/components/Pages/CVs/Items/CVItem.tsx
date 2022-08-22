@@ -17,6 +17,9 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     borderRadius: '10px',
     padding: '20px',
+    height: '255px',
+    width: '260px',
+    mr: '6px'
 }));
 
 const lightTheme = createTheme({
@@ -64,14 +67,12 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
             <CVModal open={open} handleClose={handleClose} editableCV={CV} />
             <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"CV"} />
             <ThemeProvider theme={lightTheme}>
-                <Item elevation={4}
-                    sx={{ width: '260px', height: '255px', mr: '6px' }}
-                    key={CV.id}>
+                <Item elevation={4} key={CV.id}>
                     <Box sx={{ m: 0, p: 0 }} onClick={handleOpen}>
                         <PdfIcon />
-                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '19.1px', color: '#535E6C', mb: '20px', mt: '30px' }}>{CV.cvName}</Typography>
-                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px' }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
-                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#AFB5BF', mb: '20px' }}>{joinedProjectsNames}</Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '19.1px', color: '#535E6C', mb: '20px', mt: '30px', fontFamily: `"Nunito", sans-serif` }}>{CV.cvName}</Typography>
+                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
+                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#AFB5BF', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>{joinedProjectsNames}</Typography>
                     </Box>
                     <Stack direction="row" sx={{ mr: '30px', width: '100%', position: 'absolute', bottom: 20 }} key={CV.id}>
                         <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>
@@ -81,7 +82,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                             <Delete />
                         </Button>
                         <Box sx={{ ml: '70px' }}>
-                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px' }}>{time}</Typography>
+                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px', fontFamily: `"Nunito", sans-serif` }}>{time}</Typography>
                         </Box>
                     </Stack>
                 </Item>

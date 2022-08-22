@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardMedia, Chip, CircularProgress, createTheme, Divider, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Chip, CircularProgress, createTheme, Divider, Link, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
   borderRadius: '10px',
-  padding: '25px'
+  padding: '25px',
 }));
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
@@ -58,62 +58,65 @@ const ProjectIdPage: React.FC = () => {
             <Stack spacing={2}>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     PROJECT NAME
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />
                 </Box>
                 <Box>
-                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.name}
                   </Typography>
-                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px' }}>
+                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '530px', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.description}
                   </Typography>
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     COUNTRY
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />
                 </Box>
                 <Box>
-                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px' }}>
+                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.country}
                   </Typography>
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     TYPE
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />
                 </Box>
                 <Box>
-                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px' }}>
+                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.projectType!.name}
                   </Typography>
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     LINK
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />
                 </Box>
-                <Box>
-                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px' }}>
+                <Box sx={{ mt: '35px', ml: '40px', mb: '35px' }}>
+                  <Link href={currentProject.link}
+                    target="_blank"
+                    underline="none"
+                    sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#5893F9', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.link}
-                  </Typography>
+                  </Link>
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     TECHNOLOGIES
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />
@@ -121,14 +124,14 @@ const ProjectIdPage: React.FC = () => {
                 <Box sx={{ mt: '35px', ml: '40px', mb: '35px' }}>
                   {
                     currentProject.technologyList.map((tech: ITechnology) => (
-                      <Chip label={tech.name} sx={{ mr: '10px' }} />
+                      <Chip label={tech.name} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, color: '#9EA9BA', backgroundColor: '#F0F2F5' }} />
                     ))
                   }
                 </Box>
               </Item>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mb: '35px', mr: '40px', ml: 'auto' }}>
+                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mb: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     PHOTOS
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />

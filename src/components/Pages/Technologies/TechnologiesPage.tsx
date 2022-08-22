@@ -9,6 +9,7 @@ import ChipItem from './Items/ChipItem'
 import TechModal from './Modal/TechModal';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
+import { ITechnology } from '../../../interfaces';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -22,6 +23,7 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 const TechnologiesPage: React.FC = () => {
 
     const [open, setOpen] = React.useState(false);
+    const [editableTech, setEditableTech] = React.useState<ITechnology>();
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [searchParam, setSearchParam] = React.useState<string>('');
@@ -31,6 +33,11 @@ const TechnologiesPage: React.FC = () => {
     const result = useTypedSelector((state) => state.technologies.result);
     const load = useTypedSelector((state) => state.technologies.isLoading.getAll);
     const search = useTypedSelector((state) => state.technologies.isLoading.search);
+
+    const handleEdit = (tech: ITechnology) => {
+        setEditableTech(tech);
+        handleOpen();
+    };
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
@@ -65,7 +72,7 @@ const TechnologiesPage: React.FC = () => {
         <>
             {!load ? (
                 <Box sx={{ pl: '250px', pr: '35px' }}>
-                    <TechModal open={open} handleClose={handleClose} />
+                    <TechModal open={open} handleClose={handleClose} editableTech={editableTech} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}> ({allLength})</Typography>
@@ -93,23 +100,23 @@ const TechnologiesPage: React.FC = () => {
                                 >
                                     <Item elevation={4} sx={{ width: '395px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Front-end</Typography>
-                                        <ChipItem techCollection={frontEndTech} />
+                                        <ChipItem techCollection={frontEndTech} handleEdit={handleEdit} />
                                     </Item>
                                     <Item elevation={4} sx={{ width: '395px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Back-end</Typography>
-                                        <ChipItem techCollection={backEndTech} />
+                                        <ChipItem techCollection={backEndTech} handleEdit={handleEdit} />
                                     </Item>
                                     <Item elevation={4} sx={{ width: '395px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Databases</Typography>
-                                        <ChipItem techCollection={databasesTech} />
+                                        <ChipItem techCollection={databasesTech} handleEdit={handleEdit} />
                                     </Item>
                                     <Item elevation={4} sx={{ width: '395px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Hosting</Typography>
-                                        <ChipItem techCollection={hostingTech} />
+                                        <ChipItem techCollection={hostingTech} handleEdit={handleEdit} />
                                     </Item>
                                     <Item elevation={4} sx={{ width: '395px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Other</Typography>
-                                        <ChipItem techCollection={otherTech} />
+                                        <ChipItem techCollection={otherTech} handleEdit={handleEdit} />
                                     </Item>
                                 </Box>
                                 <Divider variant="inset" sx={{ mt: '35px', ml: '0px', mr: '15px', mb: '35px' }} />
@@ -125,7 +132,7 @@ const TechnologiesPage: React.FC = () => {
                                 >
                                     <Item elevation={4} sx={{ width: '600px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Soft skills</Typography>
-                                        <ChipItem techCollection={softSkillsTech} />
+                                        <ChipItem techCollection={softSkillsTech} handleEdit={handleEdit} />
                                     </Item>
                                 </Box>
                             </ThemeProvider>

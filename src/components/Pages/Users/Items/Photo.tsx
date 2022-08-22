@@ -13,8 +13,8 @@ const Photo: React.FC<{
       {photo && params ? (
         <AvatarEditor
           image={photo}
-          width={130}
-          height={130}
+          width={113}
+          height={113}
           border={1}
           color={[255, 255, 255, 1]}
           scale={params.scale}

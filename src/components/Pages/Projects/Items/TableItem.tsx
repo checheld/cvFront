@@ -59,16 +59,16 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
                     <Box sx={{ m: 0, p: 0, overflow: 'hidden', display: 'flex', flexWrap: 'nowrap' }}>
                         {
                             showTech.map((tech: ITechnology, index) => (
-                                <Chip label={tech.name} sx={{ mr: '10px' }} id={`chipId${index}`} />
+                                <Chip label={tech.name} sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '14px', fontWeight: 600, pr: '15px', pl: '15px' }} id={`chipId${index}`} />
                             ))
                         }
-                        <Chip label={`+${amountHideTech}`} />
+                        <Chip sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '14px', fontWeight: 600 }} label={`+${amountHideTech}`} />
                     </Box>
                 ) : (
                     <Box sx={{ m: 0, p: 0, overflow: 'hidden', display: 'flex', flexWrap: 'nowrap' }}>
                         {
                             project.technologyList.map((tech: ITechnology, index) => (
-                                <Chip label={tech.name} sx={{ mr: '10px' }} id={`chipId${index}`} />
+                                <Chip label={tech.name} sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '14px', fontWeight: 600, pr: '15px', pl: '15px' }} id={`chipId${index}`} />
                             ))
                         }
                     </Box>

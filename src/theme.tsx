@@ -73,6 +73,7 @@ export const theme = createTheme(defaultTheme, {
     MuiListItemText: {
       styleOverrides: {
         root: {
+          fontFamily: `"Nunito", sans-serif`,
           display: 'flex',
           alignItems: 'center',
           height: '46px'
@@ -121,6 +122,9 @@ export const theme = createTheme(defaultTheme, {
 
     MuiTypography: {
       styleOverrides: {
+        root: {
+          fontFamily: `"Nunito", sans-serif`,
+        },
         body1: {
           fontSize: '16px',
           lineHeight: '21,82px',
@@ -207,8 +211,15 @@ export const theme = createTheme(defaultTheme, {
     },
   },
 
+  MuiPaper: {
+    styleOverrides: {
+      root: {
 
-});
+      },
+    }
+  },
+},
+);
 // export const secondaryTheme = createTheme(defaultTheme, {
 //   components: {
 //     MuiButton: {

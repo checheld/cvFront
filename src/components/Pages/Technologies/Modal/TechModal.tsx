@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 interface ITechModal {
     open: boolean,
     handleClose: () => void,
-    editableTech?: ITechnology
+    editableTech?: ITechnology,
 }
 
 const style = {
@@ -31,8 +31,8 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
     const dispatch = useAppDispatch();
     const [technology, setTechnology] = React.useState('');
     const [arrayTechnologies, setArrayTechnologies] = React.useState([{ name: '', type: '' }]);
-
     const [type, setType] = React.useState('');
+
     const handleChangeTechnologies =
         (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
             const editedArr = [...arrayTechnologies];

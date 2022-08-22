@@ -41,10 +41,10 @@ const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, he
           error={!type && check && index === 0}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
-          sx={{ width: { width }, height: { height }, mb: 0 }}
+          sx={{ width: { width }, height: { height }, mb: 0, fontFamily: '"Nunito", sans-serif' }}
         >
           <MenuItem value="">
-            <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
+            <span style={{ color: `#a7aaac`, fontSize: `14px`, fontFamily: '"Nunito", sans-serif' }}>
               Select type
             </span>
           </MenuItem>

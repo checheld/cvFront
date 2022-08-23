@@ -1,7 +1,63 @@
+/* AppBar */
 .link {
-    display: flex; 
+    display: flex;
     text-decoration: none;
     padding-top: 8.5px;
     padding-bottom: 8.5px;
     width: 185px;
 }
+
+.sectionName {
+    margin-top: 45px;
+    padding-left: 30px;
+    margin-bottom: 19px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.2)
+}
+
+/* Modal */
+.modalContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    box-shadow: none;
+    padding: 20px;
+}
+
+@media (max-width: 1024px) {
+
+    /* AppBar */
+    .link {
+        display: flex;
+        text-decoration: none;
+        padding-top: 0;
+        padding-bottom: 0;
+        width: 185px;
+    }
+
+    .sectionName {
+        margin-top: 20px;
+        padding-left: 30px;
+        margin-bottom: 0;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.2)
+    }
+
+    /* Modal */
+    .modalContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 600px;
+        padding: 0;
+    }
+}
+
+@media (max-width: 375px) {}

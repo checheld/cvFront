@@ -44,6 +44,13 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
     setchangedItem(name)
   }, [name])
 
+  const screenWidth = window.screen.width;
+  const [inputWidth, setInputWidth] = React.useState<number>();
+  React.useEffect(() => {
+    if (screenWidth <= 1024) setInputWidth(500)
+    else setInputWidth(700)
+  }, [screenWidth]);
+
   return (
     <Modal
       open={open}
@@ -51,7 +58,7 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <div className='modalContainer'>
         <Box sx={{ m: '50px' }}>
           <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
             Edit {editName}
@@ -69,12 +76,12 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
             }}
             onClick={handleClose}
           />
-          <ModalInput placeholder="Item" item={changedItem} setItem={handleChange} width={700} />
+          <ModalInput placeholder="Item" item={changedItem} setItem={handleChange} width={inputWidth} />
           <Box>
             <CustomButton variant="contained" children={`Save ${editName}`} onClick={updateItem} />
           </Box>
         </Box>
-      </Box>
+      </div>
     </Modal>
   )
 }

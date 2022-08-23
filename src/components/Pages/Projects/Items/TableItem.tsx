@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import EditButton from '../../../Items/EditButton';
 import Delete from '../../../../img/Delete';
 import { Box, Button, Chip, Stack, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { IProject, ITechnology } from '../../../../interfaces';
-import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
 
 interface ITableItem {
     project: IProject
@@ -17,16 +15,11 @@ interface ITableItem {
 const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, setEditableProject, handleOpen }) => {
 
     const router = useNavigate();
-    const dispatch = useAppDispatch();
-    const handleClick = (project: IProject) => {
-        setEditableProject(project);
-        handleOpen();
-    };
+
     const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
         setdelId(event.currentTarget.id);
         setOpenDelModal(true);
     }
-    const result = useTypedSelector((state) => state.projectTypes.result);
 
     useEffect(() => {
         setAmountHideTech(project.technologyList.length - showTech.length)
@@ -35,7 +28,14 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
     let techTableCellRef = useRef();
 
     const [showTech, setShowTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
-    const [amountHideTech, setAmountHideTech] = React.useState(0);
+    const [amountHideTech, setAmountHideTech] = useState(0);
+
+    const screenWidth = window.screen.width;
+    const [inputWidth, setInputWidth] = useState<number>();
+    useEffect(() => {
+        if (screenWidth <= 1024) setShowTech([project.technologyList[0]])
+        else setShowTech([project.technologyList[0], project.technologyList[1], project.technologyList[2]])
+    }, [screenWidth]);
 
     return (
         <TableRow
@@ -79,9 +79,6 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
             </TableCell>
             <TableCell align="right" key={project.id} sx={{ mr: 'auto', width: 0 }}>
                 <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={project.id}>
-                    {/* <Button variant='text' onClick={() => handleClick(project)} key={project.id} >
-                        <EditButton />
-                    </Button> */}
                     <Button variant='text' onClick={handleOpenDelModal} id={project.id} >
                         <Delete />
                     </Button>

@@ -74,14 +74,14 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#AFB5BF', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>{joinedProjectsNames}</Typography>
                     </Box>
-                    <Stack direction="row" sx={{ mr: '30px', width: '100%', position: 'absolute', bottom: 20 }} key={CV.id}>
+                    <Stack direction="row" sx={{ mr: '30px', width: '250px%', position: 'absolute', bottom: 20 }} key={CV.id}>
                         <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>
                             <Download />
                         </Button>
                         <Button variant='text' onClick={handleOpenDelModal} id={CV.id} sx={{ minWidth: '30px' }}>
                             <Delete />
                         </Button>
-                        <Box sx={{ ml: '70px' }}>
+                        <Box sx={{ ml: 'auto' }}>
                             <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px', fontFamily: `"Nunito", sans-serif` }}>{time}</Typography>
                         </Box>
                     </Stack>

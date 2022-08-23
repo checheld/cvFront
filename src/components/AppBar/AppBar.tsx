@@ -94,13 +94,13 @@ export default function PermanentDrawerLeft() {
       >
         <img width='80px' src={require('../../img/LeviCV.svg').default} alt="logo" style={{ marginBottom: '35px', paddingLeft: '30px', }} />
         <Divider variant="inset" />
-        <Typography variant='body2' sx={{ marginTop: '45px', paddingLeft: '30px', marginBottom: '19px' }}>MAIN</Typography>
+        <div className='sectionName'>MAIN</div>
         <List>
           {
             mainLinks.map((x, i) => CustomLink(x.name, x.link, x.code, x.icon))
           }
           <Divider variant="inset" sx={{ mt: '24.5px' }} />
-          <Typography variant='body2' sx={{ mb: '19px', mt: '45px', paddingLeft: '30px', }}>OTHER</Typography>
+          <div className='sectionName'>OTHER</div>
           {
             otherLinks.map((x, i) => CustomLink(x.name, x.link, x.code, x.icon))
           }

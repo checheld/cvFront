@@ -5,6 +5,16 @@ export const defaultTheme = createTheme({
     fontFamily: `"Nunito", sans-serif`,
   },
 
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+
   palette: {
     primary: {
       main: '#5893F9',
@@ -211,15 +221,20 @@ export const theme = createTheme(defaultTheme, {
     },
   },
 
-  MuiPaper: {
-    styleOverrides: {
-      root: {
-
-      },
-    }
-  },
-},
-);
+  // MuiModal: {
+  //   styleOverrides: {
+  //     root: {
+  //       ['@media(minWidth: 0px)']: {
+  //         backgroundColor: 'red',
+  //         top: '100%',
+  //         left: '50%',
+  //         transform: 'translate(-50%, -50%)',
+  //         zIndex: 10,
+  //       },
+  //     }
+  //   },
+  // },
+});
 // export const secondaryTheme = createTheme(defaultTheme, {
 //   components: {
 //     MuiButton: {

@@ -54,6 +54,13 @@ const ProjectsPage: React.FC = () => {
         };
     }, [searchName, searchType, searchTech]);
 
+    const screenWidth = window.screen.width;
+    const [inputWidth, setInputWidth] = useState<number>();
+    useEffect(() => {
+        if (screenWidth <= 1024) setInputWidth(175)
+        else setInputWidth(300)
+    }, [screenWidth]);
+
     return (
         <>
             {!load ? (
@@ -64,7 +71,7 @@ const ProjectsPage: React.FC = () => {
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({projects.length})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchName} placeholder={"Search project"} />
+                        <Input setParam={setSearchName} placeholder={"Search project"} width={inputWidth!} />
                         <ProjectsTypeSelect setParam={setSearchType} />
                         <ProjectsTechSelect setParam={setSearchTech} />
                         <Box sx={{ marginLeft: 'auto' }}>

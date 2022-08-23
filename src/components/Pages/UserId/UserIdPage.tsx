@@ -87,7 +87,7 @@ const UserIdPage: React.FC = () => {
                                     <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>
                                         {currentUser.firstName} {currentUser.lastName}
                                     </Typography>
-                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px', fontFamily: `"Nunito", sans-serif` }}>
+                                    <Typography sx={{ width: '950px', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px', fontFamily: `"Nunito", sans-serif` }}>
                                         {currentUser.description}
                                     </Typography>
                                 </Box>
@@ -110,7 +110,7 @@ const UserIdPage: React.FC = () => {
                                                     {education!.university!.name}
                                                 </Typography>
                                                 <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '21.7px', color: '#AFB5BF', fontFamily: `"Nunito", sans-serif` }}>
-                                                    {education.startDate} - {education.endDate}
+                                                    {education.startDate.substr(0, 4)} - {education.endDate.substr(0, 4)}
                                                 </Typography>
                                             </Box>
                                         ))
@@ -231,7 +231,7 @@ const UserIdPage: React.FC = () => {
                                                     <ListItemIcon sx={{ minWidth: '20px' }} >
                                                         <Dot />
                                                     </ListItemIcon>
-                                                    <ListItemText sx={{ fontFamily: `"Nunito", sans-serif` }} primary={tech.name} primaryTypographyProps={{ fontFamily: `"Nunito", sans-serif` }} />
+                                                    <ListItemText sx={{ fontFamily: `"Nunito", sans-serif`, color: '#AFB5BF' }} primary={tech.name} primaryTypographyProps={{ fontFamily: `"Nunito", sans-serif` }} />
                                                 </ListItem>
                                             ))
                                         }

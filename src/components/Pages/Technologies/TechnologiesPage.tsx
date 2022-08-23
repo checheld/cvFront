@@ -78,7 +78,7 @@ const TechnologiesPage: React.FC = () => {
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}> ({allLength})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search technology"} />
+                        <Input setParam={setSearchParam} placeholder={"Search technology"} width={300} />
                         <Box sx={{ marginLeft: 'auto' }}>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' />
                         </Box>
@@ -95,26 +95,27 @@ const TechnologiesPage: React.FC = () => {
                                         display: 'flex',
                                         gridTemplateColumns: { md: '1fr 1fr' },
                                         gap: 2,
-                                        padding: '0px'
+                                        padding: '0px',
+                                        flexWrap: 'wrap'
                                     }}
                                 >
-                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                    <Item elevation={4} sx={{ width: '260px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Front-end</Typography>
                                         <ChipItem techCollection={frontEndTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                    <Item elevation={4} sx={{ width: '260px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Back-end</Typography>
                                         <ChipItem techCollection={backEndTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                    <Item elevation={4} sx={{ width: '260px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Databases</Typography>
                                         <ChipItem techCollection={databasesTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                    <Item elevation={4} sx={{ width: '260px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Hosting</Typography>
                                         <ChipItem techCollection={hostingTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: '395px' }}>
+                                    <Item elevation={4} sx={{ width: '260px' }}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Other</Typography>
                                         <ChipItem techCollection={otherTech} handleEdit={handleEdit} />
                                     </Item>

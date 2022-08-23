@@ -72,7 +72,7 @@ const UsersPage: React.FC = () => {
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({users.length})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search user"} />
+                        <Input setParam={setSearchParam} placeholder={"Search user"} width={300} />
                         <Box sx={{ marginLeft: 'auto' }}>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add User' />
                         </Box>

@@ -7,10 +7,11 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 interface ISearchAttributes {
   setParam: (value: string) => void,
-  placeholder: string
+  placeholder: string,
+  width: number
 }
 
-const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder }) => {
+const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder, width }) => {
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     // if (ev.currentTarget.value.includes(" ")) {
@@ -26,7 +27,7 @@ const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder }) 
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl>
-        <OutlinedInput sx={{ width: '300px', height: '45px' }} placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
+        <OutlinedInput sx={{ width: { width }, height: '45px' }} placeholder={placeholder} id="input-with-icon-adornment" onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               <Search />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import { Box, Modal, Typography } from '@mui/material';
@@ -8,6 +8,7 @@ import { ITechnology } from '../../../../interfaces';
 import DelInput from '../../../../img/DelInput';
 import ModalInput from '../../../Items/ModalInput';
 import CloseIcon from "@mui/icons-material/Close";
+import '../../../Components.css';
 
 interface ITechModal {
     open: boolean,
@@ -29,9 +30,9 @@ const style = {
 const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) => {
 
     const dispatch = useAppDispatch();
-    const [technology, setTechnology] = React.useState('');
-    const [arrayTechnologies, setArrayTechnologies] = React.useState([{ name: '', type: '' }]);
-    const [type, setType] = React.useState('');
+    const [technology, setTechnology] = useState('');
+    const [arrayTechnologies, setArrayTechnologies] = useState([{ name: '', type: '' }]);
+    const [type, setType] = useState('');
 
     const handleChangeTechnologies =
         (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,13 +75,20 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
         }
     }, [editableTech]);
 
-    const [check, setCheck] = React.useState(false);
-    const [isError, setIsError] = React.useState(false);
+    const [check, setCheck] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsError(false);
         (arrayTechnologies[0].name === '' || arrayTechnologies[0].type === '') && setIsError(true)
     }, [arrayTechnologies]);
+
+    const screenWidth = window.screen.width;
+    const [inputWidth, setInputWidth] = useState<number>();
+    useEffect(() => {
+        if (screenWidth <= 1024) setInputWidth(500)
+        else setInputWidth(700)
+    }, [screenWidth]);
 
     return (
         <Modal
@@ -89,8 +97,8 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style}>
-                <Box sx={{ m: '30px' }}>
+            <div className='modalContainer'>
+                <Box sx={{ m: '50px' }}>
                     {(editableTech === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add Technology
@@ -120,11 +128,11 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Technology name
                             </Typography>
-                            <ModalInput placeholder="Technology name" item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={700} />
+                            <ModalInput placeholder="Technology name" item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={inputWidth} />
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
-                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} width={700} />
+                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} width={inputWidth} />
                         </Box>
                     ))}
                     {(editableTech === undefined) ? (
@@ -154,7 +162,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                         </Box>
                     )}
                 </Box>
-            </Box>
+            </div>
         </Modal>
     )
 }

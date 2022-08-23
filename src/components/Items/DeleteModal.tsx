@@ -63,7 +63,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
             dispatch({ type: companiesActions.DEL_COMPANY_REQUEST, payload: id });
             handleClose();
         }
-        else if (type === "projectType") {
+        else if (type === "project type") {
             dispatch({ type: projectTypesActions.DEL_PROJECTTYPE_REQUEST, payload: id });
             handleClose();
         }

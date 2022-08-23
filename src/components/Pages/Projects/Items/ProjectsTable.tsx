@@ -23,14 +23,14 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
     dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
   }, [result, dispatch]);
 
-  const [editableProject, setEditableProject] = React.useState<IProject>();
+  const [editableProject, setEditableProject] = useState<IProject>();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [openDelModal, setOpenDelModal] = React.useState(false);
+  const [openDelModal, setOpenDelModal] = useState(false);
   const handleCloseDelModal = () => setOpenDelModal(false);
-  const [delId, setdelId] = React.useState("");
+  const [delId, setdelId] = useState("");
 
   return (
     <Box>

@@ -57,7 +57,7 @@ const CVsPage: React.FC = () => {
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({CVs.length})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search CV"} />
+                        <Input setParam={setSearchParam} placeholder={"Search CV"} width={300} />
                         <Box sx={{ marginLeft: 'auto' }}>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add CV' />
                         </Box>

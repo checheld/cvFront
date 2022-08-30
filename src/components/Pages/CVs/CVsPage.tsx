@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { Box, createTheme, Paper, styled, ThemeProvider } from '@mui/material';
+import { Box } from '@mui/material';
 import CustomButton from '../../Items/CustomButton';
 import Input from '../../Items/Input';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
@@ -13,17 +13,18 @@ import PreviewPageCv from '../../Items/PreviewPages/PreviewPageCv';
 import NoResult from '../../Items/Search/NoResult';
 
 const CVsPage: React.FC = () => {
+    const dispatch = useAppDispatch();
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const dispatch = useAppDispatch();
-    const [searchParam, setSearchParam] = React.useState<string>('');
+
+    const [searchParam, setSearchParam] = useState<string>('');
     const CVs = useTypedSelector((state) => state.CVs.CVs);
     const result = useTypedSelector((state) => state.CVs.result);
     const load = useTypedSelector((state) => state.CVs.isLoading.getAll);
     const search = useTypedSelector((state) => state.CVs.isLoading.search);
-    const sortedByDateCVs1 = CVs.reverse().slice(0, 4);
+
     useEffect(() => {
         dispatch({ type: CVsActions.GET_CVS_REQUEST });
         dispatch({ type: usersActions.GET_USERS_REQUEST });
@@ -47,10 +48,22 @@ const CVsPage: React.FC = () => {
         };
     }, [searchParam]);
 
+    const screenWidth = window.screen.width;
+    const [winWidthPadding, setWinWidthPadding] = useState<string>();
+
+    useEffect(() => {
+        if (screenWidth < 769) {
+            setWinWidthPadding('35px')
+        }
+        else {
+            setWinWidthPadding('250px')
+        }
+    }, [screenWidth]);
+
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: '250px', pr: '35px' }}>
+                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
                     <CVModal open={open} handleClose={handleClose} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>CVs </Typography>
@@ -79,7 +92,7 @@ const CVsPage: React.FC = () => {
                                     gap: 2,
                                     padding: '0px'
                                 }}>
-                                    {sortedByDateCVs1.map((CV) => (
+                                    {CVs.slice(0, 4).map((CV) => (
                                         <CVItem CV={CV} />
                                     ))}
                                 </Box>

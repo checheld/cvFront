@@ -56,24 +56,45 @@ const ProjectsPage: React.FC = () => {
 
     const screenWidth = window.screen.width;
     const [inputWidth, setInputWidth] = useState<number>();
+    const [inputSearchWidth, setInputSearchWidth] = useState<number>();
+    const [winWidthPadding, setWinWidthPadding] = useState<string>();
+    const [winWidthType, setWinWidthType] = useState<number>();
+    const [winWidthTech, setWinWidthTech] = useState<number>();
     useEffect(() => {
-        if (screenWidth <= 1024) setInputWidth(175)
-        else setInputWidth(300)
+        if (screenWidth <= 1024 && screenWidth > 768) {
+            setWinWidthPadding('250px')
+            setInputWidth(175)
+        } else if (screenWidth < 769 && screenWidth > 425) {
+            setWinWidthPadding('35px')
+            setWinWidthType(140)
+            setWinWidthTech(140)
+        } else if (screenWidth < 426) {
+            setWinWidthPadding('35px')
+            setInputSearchWidth(200)
+            setWinWidthType(140)
+            setWinWidthTech(175)
+        } else {
+            setInputWidth(300)
+            setWinWidthPadding('250px')
+            setWinWidthType(160)
+            setWinWidthTech(190)
+            setInputSearchWidth(300)
+        }
     }, [screenWidth]);
 
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: '250px', pr: '35px' }}>
+                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
                     <ProjectModal open={open} handleClose={handleClose} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Projects </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({projects.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchName} placeholder={"Search project"} width={inputWidth!} />
-                        <ProjectsTypeSelect setParam={setSearchType} />
-                        <ProjectsTechSelect setParam={setSearchTech} />
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <Input setParam={setSearchName} placeholder={"Search project"} width={inputSearchWidth!} />
+                        <ProjectsTypeSelect setParam={setSearchType} width={winWidthType!} />
+                        <ProjectsTechSelect setParam={setSearchTech} width={winWidthTech!} />
                         <Box sx={{ marginLeft: 'auto' }}>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Project' />
                         </Box>

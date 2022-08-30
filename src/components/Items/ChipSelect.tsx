@@ -14,7 +14,8 @@ import { FormHelperText } from '@mui/material';
 interface IChipSelect {
   tech: ITechnology[],
   setTech: (tech: ITechnology[]) => void,
-  check?: boolean
+  check?: boolean,
+  width: number
 }
 
 const ITEM_HEIGHT = 48;
@@ -37,7 +38,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check }) => {
+const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check, width }) => {
   const technologies = useTypedSelector((state) => state.technologies.technologies);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
@@ -84,7 +85,7 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check }) => {
         multiple
         displayEmpty
         value={personName}
-        sx={{ width: '700px', height: '50px', mb: 0 }}
+        sx={{ width: width, height: '50px', mb: 0 }}
         onChange={handleChange}
         // input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
         error={check && !tech[0]}

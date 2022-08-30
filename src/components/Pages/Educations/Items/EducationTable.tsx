@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import EditButton from '../../../Items/EditButton';
+import React, { useState } from 'react';
 import Delete from '../../../../img/Delete';
 import { universitiesActions } from '../../../../actionsTypes/universitiesActionTypes';
-import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import { IUniversity } from '../../../../interfaces';
-import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 import EditModal from '../../../Items/EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import DeleteModal from '../../../Items/DeleteModal';
 
-
-const BasicTable: React.FC = () => {
-  const dispatch = useAppDispatch();
-  let universities = useTypedSelector((state) => state.universities.universities);
-  const result = useTypedSelector((state) => state.universities.result);
-
-  useEffect(() => {
-    dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
-  }, [result, dispatch]);
+const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -41,7 +30,7 @@ const BasicTable: React.FC = () => {
       <EditModal open={open} handleClose={handleClose} item={university} action={universitiesActions.EDIT_UNIVERSITY_REQUEST} editName={'University'} />
       <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"university"} />
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
+        <Table sx={{ border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell variant='head' sx={{ width: '20px' }}>ID</TableCell>
@@ -50,7 +39,7 @@ const BasicTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {universities.map((university) => (
+            {props.universities.map((university) => (
               <TableRow
                 key={university.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

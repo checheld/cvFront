@@ -6,9 +6,10 @@ import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 
 interface IProjectsTypeSelect {
   setParam: (value: string) => void,
+  width: number
 }
 
-const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
+const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam, width }) => {
 
   let progectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
 
@@ -18,13 +19,13 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
 
   return (
     <div>
-      <FormControl sx={{ width: '160px', ml: '15px' }}>
+      <FormControl sx={{ width: width, ml: '15px', mr: '15px' }}>
         <Select
           displayEmpty
           defaultValue={""}
           inputProps={{ 'aria-label': 'Without label' }}
           onChange={handleChange}
-          sx={{ width: '160px', height: '45px', mb: '20px' }}
+          sx={{ width: width, height: '45px', mb: '20px' }}
         >
           <MenuItem value="">
             <span style={{ color: `#a7aaac`, fontSize: `14px` }}>

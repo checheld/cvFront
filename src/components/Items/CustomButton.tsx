@@ -6,10 +6,11 @@ interface Iprops extends ButtonProps {
     variant: 'outlined' | 'contained',
     children?: React.ReactNode,
     onClick?: () => void,
-    disabled?: boolean
+    disabled?: boolean,
+    width?: string
 }
 
-const CustomButton: React.FC<Iprops> = ({ variant, children, onClick, disabled }) => {
+const CustomButton: React.FC<Iprops> = ({ variant, children, onClick, disabled, width }) => {
     return <Button
         variant={variant}
         onClick={onClick}
@@ -17,7 +18,8 @@ const CustomButton: React.FC<Iprops> = ({ variant, children, onClick, disabled }
             height: '45px',
             textTransform: 'capitalize',
             borderRadius: '5px',
-            minWidth: '163px'
+            minWidth: '163px',
+            width: width
         }}
         disabled={disabled}>
         {children}

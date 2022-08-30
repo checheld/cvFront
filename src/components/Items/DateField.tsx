@@ -51,6 +51,7 @@ const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name 
                 name={name}
                 value={item}
                 onChange={setItem}
+                onKeyDown={(e) => e.preventDefault()}
             />
             <MyFormHelperText />
         </Box>

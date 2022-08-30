@@ -44,8 +44,20 @@ const ProjectIdPage: React.FC = () => {
   const handleOpenDelModal = () => setOpenDelModal(true);
   const handleCloseDelModal = () => setOpenDelModal(false);
 
+  const screenWidth = window.screen.width;
+  const [winWidthPadding, setWinWidthPadding] = useState<string>();
+
+  useEffect(() => {
+    if (screenWidth < 769) {
+      setWinWidthPadding('35px')
+    }
+    else {
+      setWinWidthPadding('250px')
+    }
+  }, [screenWidth]);
+
   return (
-    <Box sx={{ pl: '250px', pr: '35px', pt: '35px' }}>
+    <Box sx={{ pl: winWidthPadding, pr: '35px', pt: '35px' }}>
       {currentProject === undefined ? (
         <>
           <CircularProgress></CircularProgress>
@@ -67,7 +79,7 @@ const ProjectIdPage: React.FC = () => {
                   <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.name}
                   </Typography>
-                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '530px', fontFamily: `"Nunito", sans-serif` }}>
+                  <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '50px', fontFamily: `"Nunito", sans-serif` }}>
                     {currentProject.description}
                   </Typography>
                 </Box>
@@ -136,10 +148,10 @@ const ProjectIdPage: React.FC = () => {
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />
                 </Box>
-                <Box sx={{ mt: '35px', ml: '40px', mb: '35px', display: 'flex' }}>
+                <Box sx={{ mt: '35px', ml: '40px', mb: '35px', display: 'flex', flexWrap: 'wrap' }}>
                   {
                     currentProject.photoList.map((photo: IProjectPhoto) => (
-                      <Card sx={{ maxWidth: 335, mr: '10px' }}>
+                      <Card sx={{ maxWidth: 335, mr: '10px', mb: '5px' }}>
                         <CardMedia
                           component="img"
                           alt="photo"

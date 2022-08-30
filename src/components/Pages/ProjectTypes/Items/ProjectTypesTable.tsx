@@ -40,7 +40,7 @@ const BasicTable: React.FC = () => {
             <EditModal open={open} handleClose={handleClose} item={projectType} action={projectTypesActions.EDIT_PROJECTTYPE_REQUEST} editName={'Project type'} />
             <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project type"} />
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
+                <Table sx={{ border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell variant='head' sx={{ width: '20px' }}>ID</TableCell>

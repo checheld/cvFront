@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../../Items/Input';
 import CustomButton from '../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
@@ -11,11 +11,11 @@ import AddModal from '../../Items/AddModal';
 
 const EducationPage: React.FC = () => {
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const dispatch = useAppDispatch();
-    const [searchParam, setSearchParam] = React.useState<string>('');
+    const [searchParam, setSearchParam] = useState<string>('');
     const projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
     const load = useTypedSelector((state) => state.projectTypes.isLoading.getAll);
     const result = useTypedSelector((state) => state.projectTypes.result);
@@ -42,25 +42,38 @@ const EducationPage: React.FC = () => {
     }, [searchParam]);
 
     const screenWidth = window.screen.width;
-    const [inputWidth, setInputWidth] = React.useState<number>();
-    React.useEffect(() => {
-        if (screenWidth <= 1024) setInputWidth(500)
-        else setInputWidth(700)
+    const [winWidthPadding, setWinWidthPadding] = useState<string>();
+    const [inputSearchWidth, setInputSearchWidth] = useState<number>();
+    const [widthButton, setWidthButton] = useState<string>();
+
+    useEffect(() => {
+        if (screenWidth < 769 && screenWidth > 425) {
+            setWinWidthPadding('35px')
+            setInputSearchWidth(300)
+        } else if (screenWidth < 426) {
+            setWinWidthPadding('35px')
+            setInputSearchWidth(355)
+            setWidthButton('355px')
+        } else {
+            setWidthButton('auto')
+            setInputSearchWidth(300)
+            setWinWidthPadding('250px')
+        }
     }, [screenWidth]);
 
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: '250px', pr: '35px' }}>
+                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
                     <AddModal open={open} handleClose={handleClose} action={projectTypesActions.ADD_PROJECTTYPE_REQUEST} addName={'Project type'} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Project type </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({projectTypes.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search project type"} width={300} />
-                        <Box sx={{ marginLeft: 'auto' }}>
-                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Project type' />
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <Input setParam={setSearchParam} placeholder={"Search project type"} width={inputSearchWidth!} />
+                        <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Project type' width={widthButton} />
                         </Box>
                     </Box>
                     {projectTypes.length === 0 ? (

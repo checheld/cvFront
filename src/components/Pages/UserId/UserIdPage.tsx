@@ -57,8 +57,20 @@ const UserIdPage: React.FC = () => {
     const handleOpenDelModal = () => setOpenDelModal(true);
     const handleCloseDelModal = () => setOpenDelModal(false);
 
+    const screenWidth = window.screen.width;
+    const [winWidthPadding, setWinWidthPadding] = useState<string>();
+
+    useEffect(() => {
+        if (screenWidth < 769) {
+            setWinWidthPadding('35px')
+        }
+        else {
+            setWinWidthPadding('250px')
+        }
+    }, [screenWidth]);
+
     return (
-        <Box sx={{ pl: '250px', pr: '35px', pt: '35px' }}>
+        <Box sx={{ pl: winWidthPadding, pr: '35px', pt: '35px' }}>
             {currentUser === undefined ? (
                 <>
                     <CircularProgress></CircularProgress>
@@ -87,7 +99,7 @@ const UserIdPage: React.FC = () => {
                                     <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>
                                         {currentUser.firstName} {currentUser.lastName}
                                     </Typography>
-                                    <Typography sx={{ width: '950px', fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px', fontFamily: `"Nunito", sans-serif` }}>
+                                    <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px', fontFamily: `"Nunito", sans-serif` }}>
                                         {currentUser.description}
                                     </Typography>
                                 </Box>
@@ -99,7 +111,7 @@ const UserIdPage: React.FC = () => {
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
-                                <Box sx={{ display: 'flex' }}>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                     {
                                         currentUser.educationList.map((education: IEducation) => (
                                             <Box sx={{ mt: '35px', mb: '35px', ml: '40px', mr: '100px' }}>
@@ -129,7 +141,7 @@ const UserIdPage: React.FC = () => {
                                         currentUser.workExperienceList.map((workExperience: IWorkExperience) => (
                                             <Box sx={{ mt: '35px', mb: '35px', ml: '40px', mr: '50px', width: '300px' }}>
                                                 <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
-                                                    {workExperience.startDate} - {workExperience.endDate} | {workExperience.company!.name}
+                                                    {workExperience.startDate.substr(0, 4)} - {workExperience.endDate.substr(0, 4)} | {workExperience.company!.name}
                                                 </Typography>
                                                 <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
                                                     {workExperience.position}
@@ -245,9 +257,11 @@ const UserIdPage: React.FC = () => {
                                     </Typography>
                                     <Divider orientation="vertical" sx={{ height: '100%' }} />
                                 </Box>
-                                <Box sx={{ display: 'flex', m: "30px" }}>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', mt: '30px', mb: '15px', mr: '30px', ml: '30px' }}>
                                     {AllCVs.filter((CV) => CV.userId === currentUser!.id).map((CV: ICV) => (
-                                        <CVItem CV={CV} />
+                                        <Box sx={{ mt: 0, mb: '15px', mr: 0, ml: 0 }}>
+                                            <CVItem CV={CV} />
+                                        </Box>
                                     ))}
                                 </Box>
                             </Item>
@@ -258,8 +272,9 @@ const UserIdPage: React.FC = () => {
                         <Button variant="contained" onClick={handleOpenDelModal} sx={{ backgroundColor: '#F1F3F5', color: '#BAC1CC' }} >Delete</Button>
                     </Box>
                 </>
-            )}
-        </Box>
+            )
+            }
+        </Box >
     )
 }
 export default UserIdPage

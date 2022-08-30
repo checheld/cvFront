@@ -50,9 +50,13 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
 
     const screenWidth = window.screen.width;
     const [inputWidth, setInputWidth] = useState<number>();
+
     useEffect(() => {
-        if (screenWidth <= 1024) setInputWidth(500)
-        else setInputWidth(700)
+        if (screenWidth <= 1024 && screenWidth > 425) {
+            setInputWidth(500)
+        } else if (screenWidth < 426) {
+            setInputWidth(300)
+        } else setInputWidth(700)
     }, [screenWidth]);
 
     return (
@@ -88,7 +92,7 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
                                     <DelInput index={index} removeItem={removeItem} />
                                 </Box>
                             )}
-                            <ModalInput placeholder={`${addName} name`} item={item} setItem={handleChangeItems(index)} index={index} check={check} width={inputWidth} />
+                            <ModalInput placeholder={`${addName} name`} item={item} inputLength={15} setItem={handleChangeItems(index)} index={index} check={check} width={inputWidth} />
                         </Box>
                     ))}
                     <Box sx={{ mb: '35px' }}>

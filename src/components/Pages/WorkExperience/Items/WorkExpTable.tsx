@@ -31,20 +31,20 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
     setCompany(company);
   };
 
-  const [openDelModal, setOpenDelModal] = React.useState(false);
+  const [openDelModal, setOpenDelModal] = useState(false);
   const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     setdelId(event.currentTarget.id);
     setOpenDelModal(true);
   }
   const handleCloseDelModal = () => setOpenDelModal(false);
-  const [delId, setdelId] = React.useState("");
+  const [delId, setdelId] = useState("");
 
   return (
     <Box>
       <EditModal open={open} handleClose={handleClose} item={company} action={companiesActions.EDIT_COMPANY_REQUEST} editName={'Company'} />
       <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"company"} />
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
+        <Table sx={{ border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell variant='head' sx={{ width: '20px' }}>ID</TableCell>

@@ -3,7 +3,11 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import { projectPhotosActions } from "../../../../actionsTypes/projectPhotosActionTypes";
 
-const PhotoInput: React.FC = () => {
+interface IPhotoInput {
+  width: number
+}
+
+const PhotoInput: React.FC<IPhotoInput> = ({ width }) => {
   const dispatch = useDispatch();
   const styleInput = {
     display: `none`,
@@ -25,7 +29,7 @@ const PhotoInput: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'pointer',
-        width: '700px',
+        width: width,
         height: '100%',
         border: '1px dashed #9EA9BA',
         background: '#FBFBFB',

@@ -12,7 +12,7 @@ interface universitiesReduser {
     search: boolean
   }
   result: {
-    add: null | undefined | number,
+    add: null | IUniversity,
     delete: null | string,
     edit: null | undefined | number,
     search: null | undefined | number,
@@ -73,7 +73,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: false
         }
       };
 
@@ -81,7 +81,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, add: false
+          ...state.isLoading, add: true
         },
         result: {
           ...state.result, add: action.response

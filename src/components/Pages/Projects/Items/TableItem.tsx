@@ -31,7 +31,7 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
     const [amountHideTech, setAmountHideTech] = useState(0);
 
     const screenWidth = window.screen.width;
-    const [inputWidth, setInputWidth] = useState<number>();
+
     useEffect(() => {
         if (screenWidth <= 1024) setShowTech([project.technologyList[0]])
         else setShowTech([project.technologyList[0], project.technologyList[1], project.technologyList[2]])

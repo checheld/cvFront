@@ -85,9 +85,13 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
 
     const screenWidth = window.screen.width;
     const [inputWidth, setInputWidth] = useState<number>();
+
     useEffect(() => {
-        if (screenWidth <= 1024) setInputWidth(500)
-        else setInputWidth(700)
+        if (screenWidth <= 1024 && screenWidth > 425) {
+            setInputWidth(500)
+        } else if (screenWidth < 426) {
+            setInputWidth(300)
+        } else setInputWidth(700)
     }, [screenWidth]);
 
     return (
@@ -96,6 +100,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            style={{ overflow: 'scroll' }}
         >
             <div className='modalContainer'>
                 <Box sx={{ m: '50px' }}>
@@ -128,7 +133,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Technology name
                             </Typography>
-                            <ModalInput placeholder="Technology name" item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={inputWidth} />
+                            <ModalInput placeholder="Technology name" inputLength={15} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={inputWidth} />
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>

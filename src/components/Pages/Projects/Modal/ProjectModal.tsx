@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
 import { Box, FormControl, FormHelperText, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, Typography, useFormControl } from '@mui/material';
@@ -10,32 +10,23 @@ import Photos from '../../ProjectId/Photo/Photos';
 import { projectPhotosActions } from '../../../../actionsTypes/projectPhotosActionTypes';
 import ModalInput from '../../../Items/ModalInput';
 import CloseIcon from "@mui/icons-material/Close";
+import '../../../Components.css';
 
 interface IProjectModal {
     open: boolean,
     handleClose: () => void,
     editableProject?: IProject
 }
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: '#FFFFFF',
-    borderRadius: '30px',
-    boxShadow: 24,
-    p: 4,
-};
 
 const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProject }) => {
 
-    const [projectName, setProjectName] = React.useState('');
-    const [type, setType] = React.useState('');
-    const [country, setCountry] = React.useState('');
-    const [link, setLink] = React.useState('');
-    const [tech, setTech] = React.useState<Array<ITechnology>>([]);
-    const [description, setDescription] = React.useState('');
-    const [photo, setPhoto] = React.useState<Array<IProjectPhoto>>([]);
+    const [projectName, setProjectName] = useState('');
+    const [type, setType] = useState('');
+    const [country, setCountry] = useState('');
+    const [link, setLink] = useState('');
+    const [tech, setTech] = useState<Array<ITechnology>>([]);
+    const [description, setDescription] = useState('');
+    const [photo, setPhoto] = useState<Array<IProjectPhoto>>([]);
 
     let projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
 
@@ -141,15 +132,32 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         });
     };
 
-    const [check, setCheck] = React.useState(false);
-    const [isError, setIsError] = React.useState(false);
+    const [check, setCheck] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsError(false);
         (projectName === '' || description === '' || type === ''
             || country === '' || link === '' || tech === []
         ) && setIsError(true)
     }, [projectName, description, type, country, link, tech]);
+
+    const screenWidth = window.screen.width;
+    const [inputWidthBig, setInputWidthBig] = useState<number>();
+    const [inputWidthMiddle, setInputWidthMiddle] = useState<number>();
+    const [inputWidthSmall, setInputWidthSmall] = useState<number>();
+    useEffect(() => {
+        if (screenWidth <= 1024) {
+            setInputWidthBig(505)
+            setInputWidthMiddle(300)
+            setInputWidthSmall(185)
+        }
+        else {
+            setInputWidthBig(700)
+            setInputWidthMiddle(450)
+            setInputWidthSmall(230)
+        }
+    }, [screenWidth]);
 
     return (
         <Modal
@@ -157,9 +165,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            style={{ overflow: 'scroll' }}
         >
-            <Box sx={style}>
-                <Box sx={{ m: '30px' }}>
+            <div className='modalContainerProject'>
+                <Box sx={{ m: '50px' }}>
                     {(editableProject === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add Project
@@ -187,9 +196,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             <ModalInput placeholder='Project name'
                                 item={projectName}
                                 check={check}
-                                width={450}
+                                width={inputWidthMiddle}
                                 index={0}
                                 setItem={handleChangeName}
+                                inputLength={15}
                             />
                         </Box>
                         <Box sx={{ mb: '20px' }}>
@@ -202,7 +212,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                                     onChange={handleChangeType}
                                     defaultValue={""}
                                     error={!type && check}
-                                    sx={{ width: '230px', height: '45px', mb: 0 }}
+                                    sx={{ width: inputWidthSmall, height: '50px', mb: 0 }}
                                     displayEmpty
                                 >
                                     <MenuItem value="">
@@ -226,9 +236,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             <ModalInput placeholder='Country'
                                 item={country}
                                 check={check}
-                                width={250}
+                                width={inputWidthSmall}
                                 index={0}
                                 setItem={handleChangeCountry}
+                                inputLength={15}
                             />
                         </Box>
                         <Box>
@@ -238,16 +249,17 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             <ModalInput placeholder='Link'
                                 item={link}
                                 check={check}
-                                width={430}
+                                width={inputWidthMiddle}
                                 index={0}
                                 setItem={handleChangeLink}
+                                inputLength={30}
                             />
                         </Box>
                     </Box>
                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                         Technologies
                     </Typography>
-                    <ChipSelect tech={tech} setTech={setTech} check={check} />
+                    <ChipSelect tech={tech} setTech={setTech} check={check} width={inputWidthBig!} />
                     <Box sx={{ mr: '20px', mb: '80px' }}>
                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                             Description
@@ -255,14 +267,15 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         <ModalInput placeholder='Description'
                             item={description}
                             check={check}
-                            width={700}
+                            width={inputWidthBig}
                             height={100}
                             index={0}
                             setItem={handleChangeDescription}
+                            inputLength={100}
                         />
                     </Box>
                     <Box>
-                        <PhotoInput />
+                        <PhotoInput width={inputWidthBig!} />
                         <Photos photos={photo} removePhoto={removePhotoFromState} />
                     </Box>
                     {(editableProject === undefined) ? (
@@ -287,7 +300,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         </Box>
                     )}
                 </Box>
-            </Box>
+            </div>
         </Modal>
     )
 }

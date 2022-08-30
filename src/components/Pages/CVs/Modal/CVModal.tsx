@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomButton from '../../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, FormControl, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { ICV, IProject, IProjectCV, IUser } from '../../../../interfaces';
+import { Box, Modal, SelectChangeEvent, Typography } from '@mui/material';
+import { ICV, IProjectCV } from '../../../../interfaces';
 import DelInput from '../../../../img/DelInput';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
 import DateField from '../../../Items/DateField';
 import CloseIcon from "@mui/icons-material/Close";
+import '../../../Components.css';
 
 interface ICVModal {
     open: boolean,
@@ -32,10 +33,10 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     let users = useTypedSelector((state) => state.users.users);
     let projects = useTypedSelector((state) => state.projects.projects);
 
-    const [CVName, setCVName] = React.useState('');
-    const [userId, setUser] = React.useState('');
-    const [projectCV, setProjectCV] = React.useState<IProjectCV>({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
-    const [arrayProjectCV, setArrayProjectCV] = React.useState<IProjectCV[]>([projectCV]);
+    const [CVName, setCVName] = useState('');
+    const [userId, setUser] = useState('');
+    const [projectCV, setProjectCV] = useState<IProjectCV>({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
+    const [arrayProjectCV, setArrayProjectCV] = useState<IProjectCV[]>([projectCV]);
 
     const handleChangeCVName = (ev: React.ChangeEvent<HTMLInputElement>) => {
         const {
@@ -96,16 +97,33 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
         }
     }, [editableCV]);
 
-    const [check, setCheck] = React.useState(false);
-    const [isError, setIsError] = React.useState(false);
+    const [check, setCheck] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsError(false);
         (CVName === '' || userId === '' || arrayProjectCV[0].projectId === ''
             || arrayProjectCV[0].position === '' || arrayProjectCV[0].startDate === ''
             || arrayProjectCV[0].endDate === '' || arrayProjectCV[0].description === ''
         ) && setIsError(true)
     }, [CVName, userId, arrayProjectCV]);
+
+    const screenWidth = window.screen.width;
+    const [inputWidthBig, setInputWidthBig] = useState<number>();
+    const [inputWidthSmall, setInputWidthSmall] = useState<number>();
+    const [inputWidthProject, setInputWidthProject] = useState<number>();
+    useEffect(() => {
+        if (screenWidth <= 1024) {
+            setInputWidthBig(505)
+            setInputWidthSmall(216)
+            setInputWidthProject(505)
+        }
+        else {
+            setInputWidthBig(700)
+            setInputWidthSmall(195)
+            setInputWidthProject(195)
+        }
+    }, [screenWidth]);
 
     return (
         <Modal
@@ -115,8 +133,8 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
             aria-describedby="modal-modal-description"
             style={{ overflow: 'scroll' }}
         >
-            <Box sx={style}>
-                <Box sx={{ m: '30px' }}>
+            <div className='modalContainerCV'>
+                <Box sx={{ m: '50px' }}>
                     {(editableCV === undefined) ? (
                         <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
                             Add CV
@@ -145,9 +163,10 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                 item={CVName}
                                 check={check}
                                 index={0}
-                                width={700}
+                                width={inputWidthBig}
                                 height={50}
                                 setItem={handleChangeCVName}
+                                inputLength={25}
                             />
                         </Box>
                         <Box sx={{ mr: '20px', mb: '15px' }}>
@@ -160,7 +179,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                 type={userId}
                                 setType={handleChangeUser}
                                 check={check} index={0}
-                                width={700} height={50}
+                                width={inputWidthBig} height={50}
                             />
                         </Box>
                         {arrayProjectCV.length && arrayProjectCV.map((projectCV, index) => (
@@ -170,7 +189,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         <DelInput index={index} removeItem={removeProjectCV} />
                                     </Box>
                                 )}
-                                <Box sx={{ display: 'flex', mb: '15px' }}>
+                                <div className='modalInternalContainer'>
                                     <Box sx={{ mr: '20px' }}>
                                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                             Project
@@ -181,34 +200,37 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                             type={projectCV.projectId}
                                             setType={handleChangeProject(index)}
                                             check={check} index={index}
-                                            width={195} height={50}
+                                            width={inputWidthProject} height={50}
                                         />
                                     </Box>
-                                    <Box sx={{ mr: '20px' }}>
-                                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                            Position
-                                        </Typography>
-                                        <ModalInput placeholder='Position'
-                                            selectName={'position'}
-                                            item={projectCV.position}
-                                            check={check}
-                                            index={index}
-                                            width={195}
-                                            height={50}
-                                            setItem={handleChangeProjectCV(index)}
-                                        />
-                                    </Box>
-                                    <Box sx={{ mr: '20px' }}>
-                                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                            Start date - End date
-                                        </Typography>
-                                        <Box sx={{ display: 'flex' }}>
-                                            <DateField item={projectCV.startDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
-                                            <DateField item={projectCV.endDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"End date"} name={'endDate'} />
+                                    <div style={{ display: 'flex' }} >
+                                        <Box sx={{ mr: '20px' }}>
+                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                                Position
+                                            </Typography>
+                                            <ModalInput placeholder='Position'
+                                                selectName={'position'}
+                                                item={projectCV.position}
+                                                check={check}
+                                                index={index}
+                                                width={inputWidthSmall}
+                                                height={50}
+                                                setItem={handleChangeProjectCV(index)}
+                                                inputLength={15}
+                                            />
                                         </Box>
-                                    </Box>
-                                </Box>
-                                <Box sx={{ mr: '20px', mb: '75px' }}>
+                                        <Box sx={{ mr: '20px' }}>
+                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                                Start date - End date
+                                            </Typography>
+                                            <Box sx={{ display: 'flex' }}>
+                                                <DateField item={projectCV.startDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
+                                                <DateField item={projectCV.endDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"End date"} name={'endDate'} />
+                                            </Box>
+                                        </Box>
+                                    </div>
+                                </div>
+                                <Box sx={{ mr: '20px' }}>
                                     <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                         Description
                                     </Typography>
@@ -217,9 +239,10 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         item={projectCV.description}
                                         check={check}
                                         index={index}
-                                        width={700}
+                                        width={inputWidthBig}
                                         height={100}
                                         setItem={handleChangeProjectCV(index)}
+                                        inputLength={100}
                                     />
                                 </Box>
                             </Box>
@@ -253,7 +276,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                         </Box>
                     )}
                 </Box>
-            </Box>
+            </div>
         </Modal>
     )
 }

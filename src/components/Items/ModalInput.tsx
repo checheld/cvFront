@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
@@ -13,10 +13,11 @@ interface Iprops {
   check?: boolean,
   width?: string | number,
   height?: number,
-  selectName?: string
+  selectName?: string,
+  inputLength: number
 }
 
-const ModalInput: React.FC<Iprops> = ({ placeholder, item, setItem, index, check, width, height, selectName }) => {
+const ModalInput: React.FC<Iprops> = ({ placeholder, item, setItem, index, check, width, height, selectName, inputLength }) => {
 
   function MyFormHelperText() {
     const { focused } = useFormControl() || {};
@@ -32,10 +33,11 @@ const ModalInput: React.FC<Iprops> = ({ placeholder, item, setItem, index, check
   }
 
   return (
-    <Box component="form" noValidate autoComplete="off" sx={{ mb: '25px', height: '50px' }}>
+    <Box component="form" noValidate autoComplete="off" sx={{ mb: '25px', height: height }}>
       <FormControl sx={{ mb: '0px' }}>
         <OutlinedInput placeholder={placeholder}
           name={selectName}
+          inputProps={{ maxLength: inputLength }}
           id="input"
           tabIndex={index}
           value={item}

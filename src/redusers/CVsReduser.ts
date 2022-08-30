@@ -52,7 +52,8 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        CVs: CVs.sort((a, b) => Number(a.cvName) - Number(b.cvName))
+        //CVs: CVs
+        CVs: CVs.sort((a, b) => Number(b.id) - Number(a.id))
       };
 
     case CVsActions.GET_CV_REQUEST:

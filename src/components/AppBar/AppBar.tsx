@@ -1,13 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import '../Components.css';
 import { Link, useLocation } from "react-router-dom";
 import CVs from '../../img/CVs';
 import Users from '../../img/Users';
@@ -16,8 +14,7 @@ import Education from '../../img/Education';
 import Technologies from '../../img/Technologies';
 import WorkExp from '../../img/WorkExp'
 import ProjectType from '../../img/ProjectType';
-
-const drawerWidth = 240; // 11%
+import '../Components.css';
 
 const mainLinks = [
   { name: 'CVs', link: '/CVs', code: '1', icon: (x: string, y: string) => <CVs isActive={x === y} /> },
@@ -32,6 +29,7 @@ const otherLinks = [
 ]
 
 export default function PermanentDrawerLeft() {
+
   const [selectedIndex, setSelectedIndex] = React.useState<string>('1');
   const location = useLocation();
   const currentPath = location.pathname;
@@ -79,7 +77,7 @@ export default function PermanentDrawerLeft() {
     <Box sx={{ display: 'flex' }}>
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: 240,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: '215px',

@@ -1,5 +1,5 @@
 import { Box, Modal, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomButton from '../Items/CustomButton';
 import ModalInput from '../Items/ModalInput';
 import { useAppDispatch } from '../../redusers/useTypedSelector';
@@ -13,20 +13,9 @@ interface IEditModal {
   editName: string
 }
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: '#FFFFFF',
-  borderRadius: '30px',
-  boxShadow: 24,
-  p: 4,
-};
-
 const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, editName }) => {
   const { id, name } = item;
-  const [changedItem, setchangedItem] = React.useState(name);
+  const [changedItem, setchangedItem] = useState(name);
   const dispatch = useAppDispatch();
   const updateItem = () => {
     (changedItem !== name) && dispatch({ type: action, payload: changedItem, id });
@@ -45,10 +34,14 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
   }, [name])
 
   const screenWidth = window.screen.width;
-  const [inputWidth, setInputWidth] = React.useState<number>();
-  React.useEffect(() => {
-    if (screenWidth <= 1024) setInputWidth(500)
-    else setInputWidth(700)
+  const [inputWidth, setInputWidth] = useState<number>();
+
+  useEffect(() => {
+    if (screenWidth <= 1024 && screenWidth > 425) {
+      setInputWidth(500)
+    } else if (screenWidth < 426) {
+      setInputWidth(300)
+    } else setInputWidth(700)
   }, [screenWidth]);
 
   return (
@@ -57,6 +50,7 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      style={{ overflow: 'scroll' }}
     >
       <div className='modalContainer'>
         <Box sx={{ m: '50px' }}>
@@ -76,7 +70,7 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
             }}
             onClick={handleClose}
           />
-          <ModalInput placeholder="Item" item={changedItem} setItem={handleChange} width={inputWidth} />
+          <ModalInput placeholder="Item" inputLength={15} item={changedItem} setItem={handleChange} width={inputWidth} />
           <Box>
             <CustomButton variant="contained" children={`Save ${editName}`} onClick={updateItem} />
           </Box>

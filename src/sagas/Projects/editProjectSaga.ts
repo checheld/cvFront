@@ -16,7 +16,7 @@ export default function* editProjectFetch(payload: { name: string, type: string,
   try {
     console.log(payload)
     const updatProjectResponse: AxiosResponse<IProject> = yield call(axiosEditProject, payload, id);
-    yield put({ type: projectsActions.EDIT_PROJECT_RESULT, response: Response });
+    yield put({ type: projectsActions.EDIT_PROJECT_RESULT, response: updatProjectResponse.data });
   }
   catch (e) {
     console.log(e)

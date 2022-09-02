@@ -15,7 +15,7 @@ const axiosEditCompany = (payload: string, id: number) =>
 export default function* editCompanyFetch(payload: string, id: number) {
   try {
     const editCompanyResponse: AxiosResponse<ICompany> = yield call(axiosEditCompany, payload, id);
-    yield put({ type: companiesActions.EDIT_COMPANY_RESULT, response: Response });
+    yield put({ type: companiesActions.EDIT_COMPANY_RESULT, response: editCompanyResponse.data });
   }
   catch (e) {
     console.log(e)

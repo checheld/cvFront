@@ -13,7 +13,7 @@ const axiosDelCV = (payload: string) =>
 export default function* delCVFetch(payload: string) {
   try {
     const delCVResponse: AxiosResponse<ICV> = yield call(axiosDelCV, payload);
-    yield put({ type: CVsActions.DEL_CV_RESULT });
+    yield put({ type: CVsActions.DEL_CV_RESULT, response: delCVResponse.data });
   }
   catch (e) {
     console.log(e)

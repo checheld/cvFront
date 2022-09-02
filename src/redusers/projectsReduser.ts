@@ -39,6 +39,7 @@ export const projectsReducer = (state = initialState, action: action): projectsR
     case projectsActions.GET_PROJECTS_REQUEST:
       return {
         ...state,
+        isLoading: { ...state.isLoading, getAll: true },
       };
 
     case projectsActions.GET_PROJECTS_RESULT:
@@ -60,29 +61,36 @@ export const projectsReducer = (state = initialState, action: action): projectsR
         isLoading: { ...state.isLoading, get: false },
         project: action.payload
       };
+
     case projectsActions.DEL_PROJECT_REQUEST:
       return {
-        ...state, isLoading: { ...state.isLoading, delete: true },
+        ...state, isLoading: { ...state.isLoading, delete: false },
         result: {
           ...state.result, delete: ""
         }
       };
 
     case projectsActions.DEL_PROJECT_RESULT:
+
+      let delproj: string = action.response;
+      let AllProjects = state.projects;
+      let newArray = AllProjects.filter(function (f) { return f.id !== delproj })
+
       return {
         ...state,
-        isLoading: { ...state.isLoading, delete: false },
+        isLoading: { ...state.isLoading, delete: true },
         result: {
           ...state.result,
           delete: action.statusText
-        }
+        },
+        projects: newArray
       };
 
     case projectsActions.ADD_PROJECT_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: false
         },
         result: {
           ...state.result, add: ""
@@ -90,21 +98,27 @@ export const projectsReducer = (state = initialState, action: action): projectsR
       };
 
     case projectsActions.ADD_PROJECT_RESULT:
+
+      let addedProjects: IProject = action.response
+      let AllPr = state.projects;
+      AllPr.push(addedProjects);
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, add: false
+          ...state.isLoading, add: true
         },
         result: {
-          ...state.result, add: action.statusText
-        }
+          ...state.result, add: action.response
+        },
+        projects: AllPr
       }
 
     case projectsActions.EDIT_PROJECT_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: true
+          ...state.isLoading, edit: false
         },
         result: {
           ...state.result, edit: ""
@@ -112,14 +126,21 @@ export const projectsReducer = (state = initialState, action: action): projectsR
       };
 
     case projectsActions.EDIT_PROJECT_RESULT:
+
+      let updateProj: IProject = action.response;
+      let newArrayWithUpdatedProj = state.projects.filter(function (f) { return f.id !== updateProj.id })
+      newArrayWithUpdatedProj.push(updateProj)
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: false
+          ...state.isLoading, edit: true
         },
         result: {
-          ...state.result, edit: action.statusText
-        }
+          ...state.result, edit: action.response
+        },
+        projects: newArrayWithUpdatedProj,
+        project: updateProj
       }
 
     case projectsActions.SEARCH_PROJECTS_REQUEST:

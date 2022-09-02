@@ -1,37 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { projectsActions } from '../../../../actionsTypes/projectsActionTypes';
-import { useAppDispatch } from '../../../../redusers/useTypedSelector';
-import { useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, createTheme, Paper, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { technologiesActions } from '../../../../actionsTypes/technologiesActionTypes';
+import React, { useState } from 'react';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import ProjectModal from '../Modal/ProjectModal';
 import { IProject } from '../../../../interfaces';
 import DeleteModal from '../../../Items/DeleteModal';
 import TableItem from './TableItem';
 import ProjectsCard from './ProjectsCard';
 
-interface IProjectsTable {
-  projects: IProject[]
-}
+const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
 
-const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
-
-  const dispatch = useAppDispatch();
-  const result = useTypedSelector((state) => state.projects.result);
-
-  useEffect(() => {
-    dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
-    dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
-  }, [result, dispatch]);
-
-  const [editableProject, setEditableProject] = useState<IProject>();
   const [open, setOpen] = useState(false);
+  const [editableProject, setEditableProject] = useState<IProject>();
+  const [openDelModal, setOpenDelModal] = useState(false);
+  const [delId, setdelId] = useState("");
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const [openDelModal, setOpenDelModal] = useState(false);
   const handleCloseDelModal = () => setOpenDelModal(false);
-  const [delId, setdelId] = useState("");
 
   const screenWidth = window.screen.width;
 
@@ -54,7 +38,7 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projects.map((project: IProject) => (
+                {props.projects.map((project: IProject) => (
                   <TableItem project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} />
                 ))}
               </TableBody>
@@ -71,7 +55,7 @@ const ProjectsTable: React.FC<IProjectsTable> = ({ projects }) => {
           gap: 2,
           padding: '0px'
         }}>
-          {projects.map((project: IProject) => (
+          {props.projects.map((project: IProject) => (
             <ProjectsCard project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} />
           ))}
         </Box>

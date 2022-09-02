@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Delete from '../../../../img/Delete';
 import { Box, Button, Chip, Stack, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { IProject, ITechnology } from '../../../../interfaces';
+import { IProject, IProjectType, ITechnology } from '../../../../interfaces';
+import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 
 interface ITableItem {
     project: IProject

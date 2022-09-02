@@ -12,7 +12,7 @@ interface universitiesReduser {
     search: boolean
   }
   result: {
-    add: null | IUniversity,
+    add: null | IUniversity[],
     delete: null | string,
     edit: null | undefined | number,
     search: null | undefined | number,
@@ -43,6 +43,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
     case universitiesActions.GET_UNIVERSITIES_REQUEST:
       return {
         ...state,
+        isLoading: { ...state.isLoading, getAll: true },
       };
 
     case universitiesActions.GET_UNIVERSITIES_RESULT:
@@ -55,18 +56,24 @@ export const universitiesReducer = (state = initialState, action: action): unive
 
     case universitiesActions.DEL_UNIVERSITY_REQUEST:
       return {
-        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+        ...state, isLoading: { ...state.isLoading, delete: false }, result: {
           ...state.result, delete: null
         }
       };
 
     case universitiesActions.DEL_UNIVERSITY_RESULT:
+
+      let delUni: string = action.response;
+      let AllUniversities = state.universities;
+      let newArray = AllUniversities.filter(function (f) { return f.id !== delUni })
+
       return {
         ...state,
-        isLoading: { ...state.isLoading, delete: false },
+        isLoading: { ...state.isLoading, delete: true },
         result: {
           ...state.result
-        }
+        },
+        universities: newArray
       };
 
     case universitiesActions.ADD_UNIVERSITY_REQUEST:
@@ -78,6 +85,11 @@ export const universitiesReducer = (state = initialState, action: action): unive
       };
 
     case universitiesActions.ADD_UNIVERSITY_RESULT:
+
+      let addedUniversities: IUniversity[] = action.response
+      let Allniversities = state.universities;
+      addedUniversities.map((uni) => Allniversities.push(uni));
+
       return {
         ...state,
         isLoading: {
@@ -85,26 +97,33 @@ export const universitiesReducer = (state = initialState, action: action): unive
         },
         result: {
           ...state.result, add: action.response
-        }
+        },
+        universities: Allniversities
       }
 
     case universitiesActions.EDIT_UNIVERSITY_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: true
+          ...state.isLoading, edit: false
         }
       };
 
     case universitiesActions.EDIT_UNIVERSITY_RESULT:
+
+      let updateUni: IUniversity = action.response;
+      let newArrayWithUpdatedUni = state.universities.filter(function (f) { return f.id !== updateUni.id })
+      newArrayWithUpdatedUni.push(updateUni)
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: false
+          ...state.isLoading, edit: true
         },
         result: {
           ...state.result, edit: action.response
-        }
+        },
+        universities: newArrayWithUpdatedUni
       }
 
     case universitiesActions.SEARCH_UNIVERSITIES_REQUEST:

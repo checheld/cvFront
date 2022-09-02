@@ -42,7 +42,8 @@ export const technologiesReducer = (state = initialState, action: action): techn
   switch (action.type) {
     case technologiesActions.GET_TECHNOLOGIES_REQUEST:
       return {
-        ...state
+        ...state,
+        isLoading: { ...state.isLoading, getAll: true },
       };
 
     case technologiesActions.GET_TECHNOLOGIES_RESULT:
@@ -55,56 +56,74 @@ export const technologiesReducer = (state = initialState, action: action): techn
 
     case technologiesActions.DEL_TECHNOLOGY_REQUEST:
       return {
-        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+        ...state, isLoading: { ...state.isLoading, delete: false }, result: {
           ...state.result, delete: null
         }
       };
 
     case technologiesActions.DEL_TECHNOLOGY_RESULT:
+
+      let delTech: string = action.response;
+      let AllTechnologies = state.technologies;
+      let newArray = AllTechnologies.filter(function (f) { return f.id !== delTech })
+
       return {
         ...state,
-        isLoading: { ...state.isLoading, delete: false },
+        isLoading: { ...state.isLoading, delete: true },
         result: {
           ...state.result
-        }
+        },
+        technologies: newArray
       };
 
     case technologiesActions.ADD_TECHNOLOGY_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: false
         }
       };
 
     case technologiesActions.ADD_TECHNOLOGY_RESULT:
+
+      let addedTechnologies: ITechnology[] = action.response
+      let AllTech = state.technologies;
+      addedTechnologies.map((tech) => AllTech.push(tech));
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, add: false
+          ...state.isLoading, add: true
         },
         result: {
           ...state.result, add: action.response
-        }
+        },
+        technologies: AllTech
       }
 
     case technologiesActions.EDIT_TECHNOLOGY_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: true
+          ...state.isLoading, edit: false
         }
       };
 
     case technologiesActions.EDIT_TECHNOLOGY_RESULT:
+
+      let updateT: ITechnology = action.response;
+      let newArrayWithUpdatedTech = state.technologies.filter(function (f) { return f.id !== updateT.id })
+      newArrayWithUpdatedTech.push(updateT)
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: false
+          ...state.isLoading, edit: true
         },
         result: {
           ...state.result, edit: action.response
-        }
+        },
+        technologies: newArrayWithUpdatedTech
       }
 
     case technologiesActions.SEARCH_TECHNOLOGIES_REQUEST:

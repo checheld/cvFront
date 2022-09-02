@@ -146,4 +146,16 @@
         width: 400px;
         padding: 0;
     }
+
+    .modalContainerProject {
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 400px;
+        padding: 0;
+    }
 }

@@ -16,20 +16,10 @@ interface ITechModal {
     editableTech?: ITechnology,
 }
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: '#FFFFFF',
-    borderRadius: '30px',
-    boxShadow: 24,
-    p: 4,
-};
-
 const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) => {
 
     const dispatch = useAppDispatch();
+
     const [technology, setTechnology] = useState('');
     const [arrayTechnologies, setArrayTechnologies] = useState([{ name: '', type: '' }]);
     const [type, setType] = useState('');

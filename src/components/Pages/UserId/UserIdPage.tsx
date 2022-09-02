@@ -1,4 +1,4 @@
-import { Box, Button, Chip, CircularProgress, createTheme, Divider, List, ListItem, ListItemIcon, ListItemText, makeStyles, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
+import { Box, Button, Chip, CircularProgress, createTheme, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -33,20 +33,15 @@ const UserIdPage: React.FC = () => {
     const userId = Number(
         currentPath.substring(currentPath.lastIndexOf('/') + 1)
     );
-    const edit = useTypedSelector((state) => state.users.isLoading.edit);
     const AllCVs = useTypedSelector((state) => state.CVs.CVs);
 
     useEffect(() => {
         const getUser = (async () => {
             await dispatch({ type: usersActions.GET_USER_REQUEST, id: userId });
-            await dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
-            await dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
-            await dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
-            await dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
             await dispatch({ type: CVsActions.GET_CVS_REQUEST });
         })
         getUser()
-    }, [dispatch, userId, edit]);
+    }, [dispatch]);
 
     const currentUser: IUser | undefined = useTypedSelector((state) => state.users.user);
     const [open, setOpen] = useState(false);

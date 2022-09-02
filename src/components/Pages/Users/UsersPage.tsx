@@ -13,6 +13,7 @@ import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
 import Photo from './Items/Photo';
 import NoResult from '../../Items/Search/NoResult';
 import PreviewPageUser from '../../Items/PreviewPages/PreviewPageUser';
+import { IUser } from '../../../interfaces';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -28,23 +29,33 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const UsersPage: React.FC = () => {
 
+    const dispatch = useAppDispatch();
+    const router = useNavigate();
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [searchParam, setSearchParam] = useState<string>('');
-    const dispatch = useAppDispatch();
-    const router = useNavigate();
-    const users = useTypedSelector((state) => state.users.users);
-    const result = useTypedSelector((state) => state.users.result);
+
+    const allUsers = useTypedSelector((state) => state.users.users);
     const load = useTypedSelector((state) => state.users.isLoading.getAll);
+    const isAdded = useTypedSelector((state) => state.users.isLoading.add);
+    const del = useTypedSelector((state) => state.users.isLoading.delete);
+    const edit = useTypedSelector((state) => state.users.isLoading.edit);
     const search = useTypedSelector((state) => state.users.isLoading.search);
+
+    const [users, setUsers] = React.useState<IUser[]>([]);
+    const [searchParam, setSearchParam] = useState<string>('');
 
     useEffect(() => {
         dispatch({ type: usersActions.GET_USERS_REQUEST });
         dispatch({ type: universitiesActions.GET_UNIVERSITIES_REQUEST });
         dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
         dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
-    }, [result, dispatch]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        setUsers(allUsers)
+    }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {

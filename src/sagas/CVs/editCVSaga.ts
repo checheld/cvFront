@@ -15,7 +15,7 @@ const axiosEditCV = (payload: { id: string, CVName: string, userId: string, proj
 export default function* editCVFetch(payload: { id: string, CVName: string, userId: string, projectCVList: IProjectCV[] }, id: number) {
   try {
     const updatCVResponse: AxiosResponse<ICV> = yield call(axiosEditCV, payload, id);
-    yield put({ type: CVsActions.EDIT_CV_RESULT, response: Response });
+    yield put({ type: CVsActions.EDIT_CV_RESULT, response: updatCVResponse.data });
   }
   catch (e) {
     console.log(e)

@@ -44,6 +44,7 @@ export const usersReducer = (state = initialState, action: action): usersReduser
     case usersActions.GET_USERS_REQUEST:
       return {
         ...state,
+        isLoading: { ...state.isLoading, getAll: true },
       };
 
     case usersActions.GET_USERS_RESULT:
@@ -69,56 +70,75 @@ export const usersReducer = (state = initialState, action: action): usersReduser
 
     case usersActions.DEL_USER_REQUEST:
       return {
-        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+        ...state, isLoading: { ...state.isLoading, delete: false }, result: {
           ...state.result, delete: null
         }
       };
 
     case usersActions.DEL_USER_RESULT:
+
+      let delUser: string = action.response;
+      let AllUsers = state.users;
+      let newArray = AllUsers.filter(function (f) { return f.id !== delUser })
+
       return {
         ...state,
-        isLoading: { ...state.isLoading, delete: false },
+        isLoading: { ...state.isLoading, delete: true },
         result: {
           ...state.result
-        }
+        },
+        users: newArray
       };
 
     case usersActions.ADD_USER_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: false
         }
       };
 
     case usersActions.ADD_USER_RESULT:
+
+      let addedUser: IUser = action.response
+      let AllUs = state.users;
+      AllUs.push(addedUser);
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, add: false
+          ...state.isLoading, add: true
         },
         result: {
           ...state.result, add: action.response
-        }
+        },
+        users: AllUs
       }
 
     case usersActions.EDIT_USER_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: true
+          ...state.isLoading, edit: false
         }
       };
 
     case usersActions.EDIT_USER_RESULT:
+
+      let updateUs: IUser = action.response;
+      let newArrayWithUpdatedUs = state.users.filter(function (f) { return f.id !== updateUs.id })
+      newArrayWithUpdatedUs.push(updateUs)
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: false
+          ...state.isLoading, edit: true
         },
         result: {
           ...state.result, edit: action.response
-        }
+        },
+        users: newArrayWithUpdatedUs,
+        user: updateUs
       }
 
     case usersActions.SEARCH_USERS_REQUEST:

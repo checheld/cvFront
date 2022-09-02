@@ -15,7 +15,7 @@ const axiosEditTechnology = (payload: { name: string, type: string }, id: number
 export default function* updateTechnologyFetch(payload: { name: string, type: string }, id: number) {
   try {
     const updatTechnologyResponse: AxiosResponse<ITechnology> = yield call(axiosEditTechnology, payload, id);
-    yield put({ type: technologiesActions.EDIT_TECHNOLOGY_RESULT, response: Response });
+    yield put({ type: technologiesActions.EDIT_TECHNOLOGY_RESULT, response: updatTechnologyResponse.data });
   }
   catch (e) {
     console.log(e)

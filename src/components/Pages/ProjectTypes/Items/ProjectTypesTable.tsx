@@ -9,14 +9,7 @@ import EditModal from '../../../Items/EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import DeleteModal from '../../../Items/DeleteModal';
 
-const BasicTable: React.FC = () => {
-    const dispatch = useAppDispatch();
-    let projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
-    const result = useTypedSelector((state) => state.projectTypes.result);
-
-    useEffect(() => {
-        dispatch({ type: projectTypesActions.GET_PROJECTTYPES_REQUEST });
-    }, [result, dispatch]);
+const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
 
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
@@ -49,7 +42,7 @@ const BasicTable: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {projectTypes.map((projectType) => (
+                        {props.projectTypes.map((projectType) => (
                             <TableRow
                                 key={projectType.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

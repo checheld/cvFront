@@ -12,7 +12,7 @@ const axiosDelUser = (id: string) =>
 export default function* delUserFetch(id: string) {
   try {
     const delUserResponse: AxiosResponse<IUser> = yield call(axiosDelUser, id);
-    yield put({ type: usersActions.DEL_USER_RESULT });
+    yield put({ type: usersActions.DEL_USER_RESULT, response: delUserResponse.data });
   }
   catch (e) {
     console.log(e)

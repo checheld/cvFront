@@ -1,26 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import EditButton from '../../../Items/EditButton';
+import React, { useState } from 'react';
 import Delete from '../../../../img/Delete';
 import { companiesActions } from '../../../../actionsTypes/companiesActionTypes';
-import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import { ICompany } from '../../../../interfaces';
-import { useTypedSelector } from '../../../../redusers/useTypedSelector';
 import EditModal from '../../../Items/EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import DeleteModal from '../../../Items/DeleteModal';
 
-interface IBasicTable {
-  searchParam: string;
-}
-
-const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
-  const dispatch = useAppDispatch();
-  let companies = useTypedSelector((state) => state.companies.companies);
-  const result = useTypedSelector((state) => state.companies.result);
-
-  useEffect(() => {
-    dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
-  }, [result, dispatch]);
+const WorkExpTable: React.FC<{ companies: ICompany[] }> = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -53,7 +39,7 @@ const WorkExpTable: React.FC<IBasicTable> = ({ searchParam }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {companies.map((company) => (
+            {props.companies.map((company) => (
               <TableRow
                 key={company.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

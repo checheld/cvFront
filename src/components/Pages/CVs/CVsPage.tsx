@@ -11,25 +11,36 @@ import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
 import CVItem from './Items/CVItem';
 import PreviewPageCv from '../../Items/PreviewPages/PreviewPageCv';
 import NoResult from '../../Items/Search/NoResult';
+import { ICV } from '../../../interfaces';
 
 const CVsPage: React.FC = () => {
+
     const dispatch = useAppDispatch();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [searchParam, setSearchParam] = useState<string>('');
-    const CVs = useTypedSelector((state) => state.CVs.CVs);
-    const result = useTypedSelector((state) => state.CVs.result);
+    const AllCVs = useTypedSelector((state) => state.CVs.CVs);
     const load = useTypedSelector((state) => state.CVs.isLoading.getAll);
     const search = useTypedSelector((state) => state.CVs.isLoading.search);
+    const isAdded = useTypedSelector((state) => state.CVs.isLoading.add);
+    const del = useTypedSelector((state) => state.CVs.isLoading.delete);
+    const edit = useTypedSelector((state) => state.CVs.isLoading.edit);
 
+    const [searchParam, setSearchParam] = useState<string>('');
+    const [CVs, setCVs] = React.useState<ICV[]>([]);
+    const [resentCVs, setResentCVs] = React.useState<ICV[]>([]);
     useEffect(() => {
         dispatch({ type: CVsActions.GET_CVS_REQUEST });
         dispatch({ type: usersActions.GET_USERS_REQUEST });
         dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
-    }, [result, dispatch]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        setCVs(AllCVs)
+        setResentCVs(AllCVs.slice(0, 4))
+    }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
@@ -92,7 +103,7 @@ const CVsPage: React.FC = () => {
                                     gap: 2,
                                     padding: '0px'
                                 }}>
-                                    {CVs.slice(0, 4).map((CV) => (
+                                    {resentCVs.map((CV) => (
                                         <CVItem CV={CV} />
                                     ))}
                                 </Box>

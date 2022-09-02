@@ -22,17 +22,30 @@ const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const TechnologiesPage: React.FC = () => {
 
+    const dispatch = useAppDispatch();
+
     const [open, setOpen] = useState(false);
-    const [editableTech, setEditableTech] = useState<ITechnology>();
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    let AllTechnologies = useTypedSelector((state) => state.technologies.technologies);
+    const load = useTypedSelector((state) => state.technologies.isLoading.getAll);
+    const isAdded = useTypedSelector((state) => state.technologies.isLoading.add);
+    const del = useTypedSelector((state) => state.technologies.isLoading.delete);
+    const edit = useTypedSelector((state) => state.technologies.isLoading.edit);
+    const search = useTypedSelector((state) => state.technologies.isLoading.search);
+
+    const [technologies, setTechnologies] = useState<ITechnology[]>([]);
+    const [editableTech, setEditableTech] = useState<ITechnology>();
     const [searchParam, setSearchParam] = useState<string>('');
 
-    const dispatch = useAppDispatch();
-    let technologies = useTypedSelector((state) => state.technologies.technologies);
-    const result = useTypedSelector((state) => state.technologies.result);
-    const load = useTypedSelector((state) => state.technologies.isLoading.getAll);
-    const search = useTypedSelector((state) => state.technologies.isLoading.search);
+    useEffect(() => {
+        dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
+    }, [dispatch]);
+
+    useEffect(() => {
+        setTechnologies(AllTechnologies)
+    }, [load, isAdded, del, edit.valueOf, search]);
 
     const handleEdit = (tech: ITechnology) => {
         setEditableTech(tech);
@@ -55,10 +68,6 @@ const TechnologiesPage: React.FC = () => {
             document.removeEventListener("keydown", listener);
         };
     }, [searchParam]);
-
-    useEffect(() => {
-        dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
-    }, [result, dispatch]);
 
     let frontEndTech = technologies.filter((tech) => tech.type === 'front-end');
     let backEndTech = technologies.filter((tech) => tech.type === 'back-end');

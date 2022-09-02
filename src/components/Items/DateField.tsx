@@ -17,9 +17,9 @@ const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name 
 
     const currentDate = new Date();
     const currentDateYear = currentDate.getFullYear();
-    const currentDateMonth = currentDate.getMonth() + 1;
-    const currentDateDay = currentDate.getDate();
-    const date = currentDateMonth > 10 ? `${currentDateYear}-${currentDateMonth}-${currentDateDay}` : `${currentDateYear}-0${currentDateMonth}-${currentDateDay}`;
+    const currentDateMonth = (currentDate.getMonth() + 1) < 10 ? `0${currentDate.getMonth() + 1}` : `${currentDate.getMonth() + 1}`;
+    const currentDateDay = currentDate.getDate() < 10 ? `0${currentDate.getDate()}` : `${currentDate.getDate()}`;
+    const date = `${currentDateYear}-${currentDateMonth}-${currentDateDay}`;
 
     function MyFormHelperText() {
         const { focused } = useFormControl() || {};

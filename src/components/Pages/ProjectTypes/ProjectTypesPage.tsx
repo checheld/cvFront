@@ -8,21 +8,34 @@ import NoResult from '../../Items/Search/NoResult';
 import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
 import ProjectTypesTable from './Items/ProjectTypesTable';
 import AddModal from '../../Items/AddModal';
+import { IProjectType } from '../../../interfaces';
 
 const EducationPage: React.FC = () => {
+
+    const dispatch = useAppDispatch();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const dispatch = useAppDispatch();
-    const [searchParam, setSearchParam] = useState<string>('');
-    const projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
+
+    const AllProjectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
     const load = useTypedSelector((state) => state.projectTypes.isLoading.getAll);
-    const result = useTypedSelector((state) => state.projectTypes.result);
+    const isAdded = useTypedSelector((state) => state.projectTypes.isLoading.add);
+    const del = useTypedSelector((state) => state.projectTypes.isLoading.delete);
+    const edit = useTypedSelector((state) => state.projectTypes.isLoading.edit);
+    const search = useTypedSelector((state) => state.projectTypes.isLoading.search);
+    // const getAll = useTypedSelector((state) => state.projectTypes.isLoading.getAll);
+
+    const [searchParam, setSearchParam] = useState<string>('');
+    const [projectTypes, setProjectTypes] = useState<IProjectType[]>([]);
 
     useEffect(() => {
         dispatch({ type: projectTypesActions.GET_PROJECTTYPES_REQUEST });
-    }, [result, dispatch]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        setProjectTypes(AllProjectTypes)
+    }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
@@ -79,7 +92,7 @@ const EducationPage: React.FC = () => {
                     {projectTypes.length === 0 ? (
                         <NoResult />
                     ) : (
-                        <ProjectTypesTable />
+                        <ProjectTypesTable projectTypes={projectTypes} />
                     )}
                 </Box>
             ) : (

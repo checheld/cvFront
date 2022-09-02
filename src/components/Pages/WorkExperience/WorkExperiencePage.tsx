@@ -8,21 +8,34 @@ import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
 import AddModal from '../../Items/AddModal';
+import { ICompany } from '../../../interfaces';
 
 const WorkExperiencePage: React.FC = () => {
+
+    const dispatch = useAppDispatch();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const dispatch = useAppDispatch();
-    const [searchParam, setSearchParam] = useState<string>('');
-    const companies = useTypedSelector((state) => state.companies.companies);
+
+
+    const AllCompanies = useTypedSelector((state) => state.companies.companies);
     const load = useTypedSelector((state) => state.companies.isLoading.getAll);
-    const result = useTypedSelector((state) => state.companies.result);
+    const isAdded = useTypedSelector((state) => state.companies.isLoading.add);
+    const del = useTypedSelector((state) => state.companies.isLoading.delete);
+    const edit = useTypedSelector((state) => state.companies.isLoading.edit);
+    const search = useTypedSelector((state) => state.companies.isLoading.search);
+
+    const [searchParam, setSearchParam] = useState<string>('');
+    const [companies, setCmpanies] = useState<ICompany[]>([]);
 
     useEffect(() => {
         dispatch({ type: companiesActions.GET_COMPANIES_REQUEST });
-    }, [result, dispatch]);
+    }, [dispatch]);
+
+    useEffect(() => {
+        setCmpanies(AllCompanies)
+    }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
@@ -80,7 +93,7 @@ const WorkExperiencePage: React.FC = () => {
                     {companies.length === 0 ? (
                         <NoResult />
                     ) : (
-                        <WorkExpTable searchParam={searchParam} />
+                        <WorkExpTable companies={companies} />
                     )}
                 </Box>
             ) : (

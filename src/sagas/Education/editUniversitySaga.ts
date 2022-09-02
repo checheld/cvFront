@@ -14,7 +14,7 @@ const axiosEditUniversity = (payload: string, id: number) =>
 export default function* updateUniversityFetch(payload: string, id: number) {
   try {
     const updateUniversityResponse: AxiosResponse<IUniversity> = yield call(axiosEditUniversity, payload, id);
-    yield put({ type: universitiesActions.EDIT_UNIVERSITY_RESULT, response: Response });
+    yield put({ type: universitiesActions.EDIT_UNIVERSITY_RESULT, response: updateUniversityResponse.data });
   }
   catch (e) {
     console.log(e)

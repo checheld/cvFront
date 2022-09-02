@@ -43,6 +43,7 @@ export const companiesReducer = (state = initialState, action: action): companie
     case companiesActions.GET_COMPANIES_REQUEST:
       return {
         ...state,
+        isLoading: { ...state.isLoading, getAll: true },
       };
 
     case companiesActions.GET_COMPANIES_RESULT:
@@ -55,56 +56,74 @@ export const companiesReducer = (state = initialState, action: action): companie
 
     case companiesActions.DEL_COMPANY_REQUEST:
       return {
-        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+        ...state, isLoading: { ...state.isLoading, delete: false }, result: {
           ...state.result, delete: null
         }
       };
 
     case companiesActions.DEL_COMPANY_RESULT:
+
+      let delComp: string = action.response;
+      let AllCompanies = state.companies;
+      let newArray = AllCompanies.filter(function (f) { return f.id !== delComp })
+
       return {
         ...state,
-        isLoading: { ...state.isLoading, delete: false },
+        isLoading: { ...state.isLoading, delete: true },
         result: {
           ...state.result
-        }
+        },
+        companies: newArray
       };
 
     case companiesActions.ADD_COMPANY_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: false
         }
       };
 
     case companiesActions.ADD_COMPANY_RESULT:
+
+      let addedCompanies: ICompany[] = action.response
+      let AllComp = state.companies;
+      addedCompanies.map((comp) => AllComp.push(comp));
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, add: false
+          ...state.isLoading, add: true
         },
         result: {
           ...state.result, add: action.response
-        }
+        },
+        companies: AllComp
       }
 
     case companiesActions.EDIT_COMPANY_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: true
+          ...state.isLoading, edit: false
         }
       };
 
     case companiesActions.EDIT_COMPANY_RESULT:
+
+      let updateC: ICompany = action.response;
+      let newArrayWithUpdatedComp = state.companies.filter(function (f) { return f.id !== updateC.id })
+      newArrayWithUpdatedComp.push(updateC)
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: false
+          ...state.isLoading, edit: true
         },
         result: {
           ...state.result, edit: action.response
-        }
+        },
+        companies: newArrayWithUpdatedComp
       }
 
     case companiesActions.SEARCH_COMPANIES_REQUEST:

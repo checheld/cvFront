@@ -78,10 +78,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
         >
             <Box sx={style}>
                 <Box sx={{ m: '30px' }}>
-                    <Typography sx={{ fontSize: '20px', color: '#535E6C', fontWeight: 700, mb: '20px' }}>
+                    <Typography sx={{ fontSize: '20px', color: '#535E6C', fontWeight: 700, mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
                         Delete {type}?
                     </Typography>
-                    <Typography sx={{ fontSize: '14px', color: '#AFB5BF', fontWeight: 400, mb: '30px' }}>
+                    <Typography sx={{ fontSize: '14px', color: '#AFB5BF', fontWeight: 400, mb: '30px', fontFamily: `"Nunito", sans-serif` }}>
                         When you delete this {type}, you cannot be undone.
                     </Typography>
                     <CloseIcon

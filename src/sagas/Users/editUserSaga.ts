@@ -15,7 +15,7 @@ const axiosEditUser = (payload: { id: string, firstName: string, lastName: strin
 export default function* editUserFetch(payload: { id: string, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: string }, id: number) {
   try {
     const updatUserResponse: AxiosResponse<IUser> = yield call(axiosEditUser, payload, id);
-    yield put({ type: usersActions.EDIT_USER_RESULT, response: Response });
+    yield put({ type: usersActions.EDIT_USER_RESULT, response: updatUserResponse.data });
   }
   catch (e) {
     console.log(e)

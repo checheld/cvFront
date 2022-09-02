@@ -44,7 +44,8 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
   switch (action.type) {
     case CVsActions.GET_CVS_REQUEST:
       return {
-        ...state
+        ...state,
+        isLoading: { ...state.isLoading, getAll: true },
       };
 
     case CVsActions.GET_CVS_RESULT:
@@ -52,13 +53,13 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        //CVs: CVs
         CVs: CVs.sort((a, b) => Number(b.id) - Number(a.id))
       };
 
     case CVsActions.GET_CV_REQUEST:
       return {
-        ...state
+        ...state,
+        isLoading: { ...state.isLoading, get: true },
       };
 
     case CVsActions.GET_CV_RESULT:
@@ -70,18 +71,24 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
 
     case CVsActions.DEL_CV_REQUEST:
       return {
-        ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+        ...state, isLoading: { ...state.isLoading, delete: false }, result: {
           ...state.result, delete: null
         }
       };
 
     case CVsActions.DEL_CV_RESULT:
+
+      let delCV: string = action.response;
+      let AllCVs = state.CVs;
+      let newArray = AllCVs.filter(function (f) { return f.id !== delCV })
+
       return {
         ...state,
-        isLoading: { ...state.isLoading, delete: false },
+        isLoading: { ...state.isLoading, delete: true },
         result: {
           ...state.result
-        }
+        },
+        CVs: newArray
       };
 
     case CVsActions.DOWNLOAD_CV_REQUEST:
@@ -103,38 +110,51 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: false
         }
       };
 
     case CVsActions.ADD_CV_RESULT:
+
+      let addedCVs: ICV = action.response
+      let AllPr = state.CVs;
+      AllPr.push(addedCVs);
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, add: false
+          ...state.isLoading, add: true
         },
         result: {
           ...state.result, add: action.response
-        }
+        },
+        CVs: AllPr.sort((a, b) => Number(b.id) - Number(a.id))
       }
 
     case CVsActions.EDIT_CV_REQUEST:
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: true
+          ...state.isLoading, edit: false
         }
       };
 
     case CVsActions.EDIT_CV_RESULT:
+
+      let updateCV: ICV = action.response;
+      let newArrayWithUpdatedCV = state.CVs.filter(function (f) { return f.id !== updateCV.id })
+      newArrayWithUpdatedCV.push(updateCV)
+
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, edit: false
+          ...state.isLoading, edit: true
         },
         result: {
           ...state.result, edit: action.response
-        }
+        },
+        CVs: newArrayWithUpdatedCV.sort((a, b) => Number(b.id) - Number(a.id)),
+        CV: updateCV
       }
 
     case CVsActions.SEARCH_CVS_REQUEST:

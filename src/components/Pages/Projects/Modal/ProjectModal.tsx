@@ -146,16 +146,23 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     const [inputWidthBig, setInputWidthBig] = useState<number>();
     const [inputWidthMiddle, setInputWidthMiddle] = useState<number>();
     const [inputWidthSmall, setInputWidthSmall] = useState<number>();
+    const [wrap, setWrap] = useState<string>();
     useEffect(() => {
-        if (screenWidth <= 1024) {
+        if (screenWidth <= 1024 && screenWidth > 425) {
             setInputWidthBig(505)
             setInputWidthMiddle(300)
             setInputWidthSmall(185)
-        }
-        else {
+            setWrap('nowrap')
+        } else if (screenWidth < 426) {
+            setInputWidthBig(300)
+            setInputWidthMiddle(300)
+            setInputWidthSmall(300)
+            setWrap('wrap')
+        } else {
             setInputWidthBig(700)
             setInputWidthMiddle(450)
             setInputWidthSmall(230)
+            setWrap('nowrap')
         }
     }, [screenWidth]);
 
@@ -188,7 +195,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         }}
                         onClick={handleClose}
                     />
-                    <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex', flexWrap: wrap! }}>
                         <Box sx={{ mr: '20px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Project name
@@ -202,7 +209,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                                 inputLength={15}
                             />
                         </Box>
-                        <Box sx={{ mb: '20px' }}>
+                        <Box sx={{ mb: '25px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
@@ -228,7 +235,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             </FormControl>
                         </Box>
                     </Box>
-                    <Box sx={{ display: 'flex' }}>
+                    <Box sx={{ display: 'flex', flexWrap: wrap! }}>
                         <Box sx={{ mr: '20px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Country
@@ -256,10 +263,12 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             />
                         </Box>
                     </Box>
-                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                        Technologies
-                    </Typography>
-                    <ChipSelect tech={tech} setTech={setTech} check={check} width={inputWidthBig!} />
+                    <Box sx={{ mb: '18px' }} >
+                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                            Technologies
+                        </Typography>
+                        <ChipSelect tech={tech} setTech={setTech} check={check} width={inputWidthBig!} />
+                    </Box>
                     <Box sx={{ mr: '20px', mb: '80px' }}>
                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                             Description

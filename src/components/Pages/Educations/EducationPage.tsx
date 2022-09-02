@@ -21,7 +21,9 @@ const EducationPage: React.FC = () => {
     const Allniversities = useTypedSelector((state) => state.universities.universities);
     const load = useTypedSelector((state) => state.universities.isLoading.getAll);
     const isAdded = useTypedSelector((state) => state.universities.isLoading.add);
-    const result = useTypedSelector((state) => state.universities.result.add);
+    const del = useTypedSelector((state) => state.universities.isLoading.delete);
+    const edit = useTypedSelector((state) => state.universities.isLoading.edit);
+    const search = useTypedSelector((state) => state.universities.isLoading.search);
 
     const [searchParam, setSearchParam] = useState<string>('');
     const [universities, setUniversities] = useState<IUniversity[]>([]);
@@ -32,12 +34,7 @@ const EducationPage: React.FC = () => {
 
     useEffect(() => {
         setUniversities(Allniversities)
-    }, [load]);
-
-    useEffect(() => {
-        result && setUniversities([...universities, { id: result.id, name: result.name }]);
-        result && console.log(result)
-    }, [isAdded]);
+    }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {

@@ -12,7 +12,7 @@ interface projectTypesReduser {
         search: boolean
     }
     result: {
-        add: null | undefined | number,
+        add: null | number,
         delete: null | string,
         edit: null | undefined | number,
         search: null | undefined | number,
@@ -43,6 +43,7 @@ export const projectTypesReducer = (state = initialState, action: action): proje
         case projectTypesActions.GET_PROJECTTYPES_REQUEST:
             return {
                 ...state,
+                isLoading: { ...state.isLoading, getAll: true },
             };
 
         case projectTypesActions.GET_PROJECTTYPES_RESULT:
@@ -55,56 +56,74 @@ export const projectTypesReducer = (state = initialState, action: action): proje
 
         case projectTypesActions.DEL_PROJECTTYPE_REQUEST:
             return {
-                ...state, isLoading: { ...state.isLoading, delete: true }, result: {
+                ...state, isLoading: { ...state.isLoading, delete: false }, result: {
                     ...state.result, delete: null
                 }
             };
 
         case projectTypesActions.DEL_PROJECTTYPE_RESULT:
+
+            let delPT: string = action.response;
+            let AllProjectTypes = state.projectTypes;
+            let newArray = AllProjectTypes.filter(function (f) { return f.id !== delPT })
+
             return {
                 ...state,
-                isLoading: { ...state.isLoading, delete: false },
+                isLoading: { ...state.isLoading, delete: true },
                 result: {
                     ...state.result
-                }
+                },
+                projectTypes: newArray
             };
 
         case projectTypesActions.ADD_PROJECTTYPE_REQUEST:
             return {
                 ...state,
                 isLoading: {
-                    ...state.isLoading, get: true
+                    ...state.isLoading, add: false
                 }
             };
 
         case projectTypesActions.ADD_PROJECTTYPE_RESULT:
+
+            let addedProjectTypes: IProjectType[] = action.response
+            let AllprojectTypes = state.projectTypes;
+            addedProjectTypes.map((pt) => AllprojectTypes.push(pt));
+
             return {
                 ...state,
                 isLoading: {
-                    ...state.isLoading, add: false
+                    ...state.isLoading, add: true
                 },
                 result: {
                     ...state.result, add: action.response
-                }
+                },
+                projectTypes: AllprojectTypes
             }
 
         case projectTypesActions.EDIT_PROJECTTYPE_REQUEST:
             return {
                 ...state,
                 isLoading: {
-                    ...state.isLoading, edit: true
+                    ...state.isLoading, edit: false
                 }
             };
 
         case projectTypesActions.EDIT_PROJECTTYPE_RESULT:
+
+            let updatePT: IProjectType = action.response;
+            let newArrayWithUpdatedPT = state.projectTypes.filter(function (f) { return f.id !== updatePT.id })
+            newArrayWithUpdatedPT.push(updatePT)
+
             return {
                 ...state,
                 isLoading: {
-                    ...state.isLoading, edit: false
+                    ...state.isLoading, edit: true
                 },
                 result: {
                     ...state.result, edit: action.response
-                }
+                },
+                projectTypes: newArrayWithUpdatedPT
             }
 
         case projectTypesActions.SEARCH_PROJECTTYPES_REQUEST:

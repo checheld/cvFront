@@ -1,13 +1,13 @@
 import { Box, Button, Card, CardMedia, Chip, CircularProgress, createTheme, Divider, Link, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
-import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import ProjectModal from '../Projects/Modal/ProjectModal';
 import { IProject, IProjectPhoto, ITechnology } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
 import DeleteModal from '../../Items/DeleteModal';
+import '../../../Components.css';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -21,19 +21,18 @@ const ProjectIdPage: React.FC = () => {
 
   const location = useLocation();
   const dispatch = useDispatch();
-  const router = useNavigate();
   const currentPath = location.pathname;
   const projectId = Number(
     currentPath.substring(currentPath.lastIndexOf('/') + 1)
   );
-  const edit = useTypedSelector((state) => state.projects.isLoading.edit)
+
   useEffect(() => {
     const getProject = (async () => {
       await dispatch({ type: projectsActions.GET_PROJECT_REQUEST, id: projectId });
-      await dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
     })
     getProject()
-  }, [dispatch, projectId, edit]);
+  }, [dispatch]);
+
   const currentProject: IProject | undefined = useTypedSelector((state) => state.projects.project);
 
   const [open, setOpen] = useState(false);
@@ -70,7 +69,7 @@ const ProjectIdPage: React.FC = () => {
             <Stack spacing={2}>
               <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                 <Box sx={{ display: "flex", minWidth: '280px' }}>
-                  <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                  <Typography sx={{ transform: 'rotate(-90deg)', fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
                     PROJECT NAME
                   </Typography>
                   <Divider orientation="vertical" sx={{ height: '100%' }} />

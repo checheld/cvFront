@@ -12,28 +12,37 @@ import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
+import { IProject } from '../../../interfaces';
 
 const ProjectsPage: React.FC = () => {
 
-    let projects = useTypedSelector((state) => state.projects.projects);
     const dispatch = useAppDispatch();
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    let AllProjects = useTypedSelector((state) => state.projects.projects);
+    const load = useTypedSelector((state) => state.projects.isLoading.getAll);
+    const isAdded = useTypedSelector((state) => state.projects.isLoading.add);
+    const del = useTypedSelector((state) => state.projects.isLoading.delete);
+    const edit = useTypedSelector((state) => state.projects.isLoading.edit);
+    const search = useTypedSelector((state) => state.projects.isLoading.search);
+
     const [searchName, setSearchName] = React.useState('');
     const [searchType, setSearchType] = React.useState('');
     const [searchTech, setSearchTech] = React.useState('');
-    const load = useTypedSelector((state) => state.projects.isLoading.getAll);
-    const result = useTypedSelector((state) => state.projects.result);
+    const [projects, setProjects] = React.useState<IProject[]>([]);
 
     useEffect(() => {
+        dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
         dispatch({ type: technologiesActions.GET_TECHNOLOGIES_REQUEST });
         dispatch({ type: projectTypesActions.GET_PROJECTTYPES_REQUEST });
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch({ type: projectsActions.GET_PROJECTS_REQUEST });
-    }, [result, dispatch]);
+        setProjects(AllProjects)
+    }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {
         const listener = (event: { code: string; preventDefault: () => void; }) => {
@@ -55,30 +64,33 @@ const ProjectsPage: React.FC = () => {
     }, [searchName, searchType, searchTech]);
 
     const screenWidth = window.screen.width;
-    const [inputWidth, setInputWidth] = useState<number>();
     const [inputSearchWidth, setInputSearchWidth] = useState<number>();
     const [winWidthPadding, setWinWidthPadding] = useState<string>();
     const [winWidthType, setWinWidthType] = useState<number>();
+    const [winPaddingType, setWinPaddingType] = useState<string>();
     const [winWidthTech, setWinWidthTech] = useState<number>();
+
     useEffect(() => {
         if (screenWidth <= 1024 && screenWidth > 768) {
             setWinWidthPadding('250px')
-            setInputWidth(175)
+            setWinPaddingType('15px')
         } else if (screenWidth < 769 && screenWidth > 425) {
             setWinWidthPadding('35px')
             setWinWidthType(140)
             setWinWidthTech(140)
+            setWinPaddingType('15px')
         } else if (screenWidth < 426) {
             setWinWidthPadding('35px')
             setInputSearchWidth(200)
             setWinWidthType(140)
             setWinWidthTech(175)
+            setWinPaddingType('0px')
         } else {
-            setInputWidth(300)
             setWinWidthPadding('250px')
             setWinWidthType(160)
             setWinWidthTech(190)
             setInputSearchWidth(300)
+            setWinPaddingType('15px')
         }
     }, [screenWidth]);
 
@@ -93,7 +105,7 @@ const ProjectsPage: React.FC = () => {
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                         <Input setParam={setSearchName} placeholder={"Search project"} width={inputSearchWidth!} />
-                        <ProjectsTypeSelect setParam={setSearchType} width={winWidthType!} />
+                        <ProjectsTypeSelect setParam={setSearchType} width={winWidthType!} mr={winPaddingType!} />
                         <ProjectsTechSelect setParam={setSearchTech} width={winWidthTech!} />
                         <Box sx={{ marginLeft: 'auto' }}>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Project' />

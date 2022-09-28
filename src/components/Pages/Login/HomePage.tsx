@@ -14,7 +14,7 @@ const CustomBox = styled(Box)(() => ({
 
 const IDENTITY_CONFIG = {
     // authority: "https://localhost:5001",
-    authority: "http://identity-server-1.herokuapp.com",
+    authority: "https://identity-server-1.herokuapp.com",
     client_id: "leviossacv",
     // redirect_uri: "http://localhost:3000/signin-oidc",
     // post_logout_redirect_uri: "http://localhost:3000",
@@ -28,10 +28,8 @@ const IDENTITY_CONFIG = {
 function HomePage() {
     const [state, setState] = useState(null);
     const mgr = makeUserManager(IDENTITY_CONFIG);
-    console.log(mgr)
     useEffect(() => {
         mgr.getUser().then((user) => {
-            console.log(user)
             if (user) {
                 // fetch("http://localhost:3000/CVs", {
                 fetch("https://levicvfrontapp.herokuapp.com/CVs", {

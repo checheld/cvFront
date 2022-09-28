@@ -24,12 +24,12 @@ export default function ButtonAppBar() {
         sessionStorage.clear();
     };
 
-    let token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+    let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
     const location = useLocation();
     const currentPath = location.pathname;
 
     useEffect(() => {
-        token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+        token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
     }, [currentPath, token]);
 
     return (

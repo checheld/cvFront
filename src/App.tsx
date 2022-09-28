@@ -21,7 +21,7 @@ import LogoutPage from './components/Pages/Login/LogoutPage';
 const App: React.FC = () => {
 
   const screenWidth = window.screen.width;
-  let token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+  let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
 
   return (
     <ThemeProvider theme={theme}>

@@ -78,10 +78,10 @@ export default function PermanentDrawerLeft() {
     )
   }
 
-  let token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+  let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
 
   useEffect(() => {
-    token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+    token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
   }, [currentPath, token]);
 
   return (

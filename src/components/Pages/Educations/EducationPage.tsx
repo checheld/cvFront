@@ -4,11 +4,19 @@ import Input from '../../Items/Input';
 import CustomButton from '../../Items/CustomButton';
 import { universitiesActions } from '../../../actionsTypes/universitiesActionTypes';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
-import { Box, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
 import AddModal from '../../Items/AddModal';
 import { IUniversity } from '../../../interfaces';
+
+const CustomBox = styled(Box)(() => ({
+    paddingRight: '35px',
+    paddingLeft: '250px',
+    ['@media (max-width:768px)']: {
+        paddingLeft: '35px',
+    }
+}))
 
 const EducationPage: React.FC = () => {
 
@@ -53,39 +61,19 @@ const EducationPage: React.FC = () => {
         };
     }, [searchParam]);
 
-    const screenWidth = window.screen.width;
-    const [winWidthPadding, setWinWidthPadding] = useState<string>();
-    const [inputSearchWidth, setInputSearchWidth] = useState<number>();
-    const [widthButton, setWidthButton] = useState<string>();
-
-    useEffect(() => {
-        if (screenWidth < 769 && screenWidth > 425) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(300)
-        } else if (screenWidth < 426) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(355)
-            setWidthButton('355px')
-        } else {
-            setWidthButton('auto')
-            setInputSearchWidth(300)
-            setWinWidthPadding('250px')
-        }
-    }, [screenWidth]);
-
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
+                <CustomBox >
                     <AddModal open={open} handleClose={handleClose} action={universitiesActions.ADD_UNIVERSITY_REQUEST} addName={'University'} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Education </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({universities.length})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search university"} width={inputSearchWidth!} />
+                        <Input setParam={setSearchParam} placeholder={"Search university"} />
                         <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
-                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add University' width={widthButton} />
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add University' />
                         </Box>
                     </Box>
                     {universities.length === 0 ? (
@@ -93,7 +81,7 @@ const EducationPage: React.FC = () => {
                     ) : (
                         <EducationTable universities={universities} />
                     )}
-                </Box>
+                </CustomBox>
             ) : (
                 <PreviewPageTable />
             )}

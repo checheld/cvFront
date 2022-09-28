@@ -61,6 +61,9 @@ import addProjectTypeFetch from './ProjectTypes/addProjectTypeSaga';
 import editProjectTypeFetch from './ProjectTypes/editProjectTypeSaga';
 import searchProjectTypesFetch from './ProjectTypes/searchProjectTypeSaga';
 
+import loginFetch from './Login/loginSaga';
+import { loginActions, loginRequestAction } from '../actionsTypes/loginActionTypes';
+
 // university
 export function* getUniversities({ type }: getUniversitiesRequestAction) {
   yield call(getUniversitiesFetch);
@@ -244,6 +247,10 @@ export function* searchProjectTypes({ type, payload }: searchProjectTypesRequest
   yield call(searchProjectTypesFetch, payload);
 }
 
+// projectType
+export function* login({ type, payload }: loginRequestAction) {
+  yield call(loginFetch, payload);
+}
 
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);
@@ -298,6 +305,8 @@ export function* watcherSaga() {
   yield takeEvery(projectTypesActions.ADD_PROJECTTYPE_REQUEST, addProjectType);
   yield takeEvery(projectTypesActions.EDIT_PROJECTTYPE_REQUEST, editProjectType);
   yield takeEvery(projectTypesActions.SEARCH_PROJECTTYPES_REQUEST, searchProjectTypes);
+
+  yield takeEvery(loginActions.LOGIN_REQUEST, login);
 
 }
 export default function* rootSaga() {

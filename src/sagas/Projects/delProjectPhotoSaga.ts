@@ -3,16 +3,18 @@ import axios, { AxiosResponse } from 'axios'
 import { IProjectPhoto } from '../../interfaces/index'
 import { projectPhotosActions } from '../../actionsTypes/projectPhotosActionTypes';
 import instance from '../axiosSetting';
+import config from '../headers';
 
-const axiosDelProjectPhoto = (id: string) =>
+const axiosDelProjectPhoto = (id: string, config: any) =>
   instance.delete(
-    `/projectphoto/${id}`
+    `/projectphoto/${id}`,
+    config
   )
 
 export default function* deltProjectPhotoFetch(id: string) {
   try {
     console.log(id)
-    const delProjectPhotoResponse: AxiosResponse<IProjectPhoto> = yield call(axiosDelProjectPhoto, id);
+    const delProjectPhotoResponse: AxiosResponse<IProjectPhoto> = yield call(axiosDelProjectPhoto, id, config);
     yield put({ type: projectPhotosActions.DEL_PROJECTPHOTO_RESULT });
   }
   catch (e) {

@@ -1,9 +1,8 @@
-import { Box, Modal, Typography } from '@mui/material';
+import { Box, Modal, styled, Typography } from '@mui/material';
 import React from 'react';
 import { CVsActions } from '../../actionsTypes/CVsActionTypes';
 import { usersActions } from '../../actionsTypes/usersActionTypes';
 import { useAppDispatch } from '../../redusers/useTypedSelector';
-import CustomButton from './CustomButton';
 import { useNavigate } from 'react-router-dom';
 import { projectsActions } from '../../actionsTypes/projectsActionTypes';
 import { universitiesActions } from '../../actionsTypes/universitiesActionTypes';
@@ -11,6 +10,7 @@ import { technologiesActions } from '../../actionsTypes/technologiesActionTypes'
 import { companiesActions } from '../../actionsTypes/companiesActionTypes';
 import { projectTypesActions } from '../../actionsTypes/projectTypesActionTypes';
 import CloseIcon from "@mui/icons-material/Close";
+import CustomButtonFixed from './CustomButtonFixed';
 
 interface IProjectModal {
     open: boolean,
@@ -18,18 +18,23 @@ interface IProjectModal {
     id: string | number,
     type: string
 }
-const style = {
+const CustomBox = styled(Box)(() => ({
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    bgcolor: '#FFFFFF',
+    backgroundColor: '#FFFFFF',
     borderRadius: '30px',
-    boxShadow: 24,
-    p: 4,
+    padding: '20px',
     width: '450px',
-    height: '209px'
-};
+    height: '209px',
+    ['@media (max-width:425px)']: {
+        width: '370px'
+    },
+    ['@media (max-width:375px)']: {
+        width: '300px'
+    }
+}))
 
 const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) => {
 
@@ -76,7 +81,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box sx={style}>
+            <CustomBox>
                 <Box sx={{ m: '30px' }}>
                     <Typography sx={{ fontSize: '20px', color: '#535E6C', fontWeight: 700, mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
                         Delete {type}?
@@ -95,10 +100,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
                         onClick={handleClose}
                     />
                     <Box>
-                        <CustomButton variant="contained" onClick={deleteItem} children='Delete' />
+                        <CustomButtonFixed variant="contained" onClick={deleteItem} children='Delete' />
                     </Box>
                 </Box>
-            </Box>
+            </CustomBox>
         </Modal>
     )
 }

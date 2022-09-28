@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Menu, MenuItem } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 export default function ButtonAppBar() {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -18,9 +19,22 @@ export default function ButtonAppBar() {
     let closeMenu = () => {
         setMenuOpen(false);
     }
+
+    const handleClick = () => {
+        sessionStorage.clear();
+    };
+
+    let token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    useEffect(() => {
+        token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+    }, [currentPath, token]);
+
     return (
         <Box>
-            <AppBar position="static" sx={{ margin: 0, backgroundColor: '#303439', }}>
+            {token && <AppBar position="static" sx={{ margin: 0, backgroundColor: '#303439', }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -58,10 +72,14 @@ export default function ButtonAppBar() {
                         <a href='/ProjectType' style={{ color: '#303439' }}>
                             <MenuItem onClick={closeMenu} sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>Project type</MenuItem>
                         </a>
+                        <a href='/logout' style={{ color: '#303439' }}>
+                            <MenuItem onClick={handleClick} sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>Logout</MenuItem>
+                        </a>
                     </Menu>
                     <img width='70px' src={require('../../img/LeviCV.svg').default} alt="logo" style={{ marginLeft: 'auto', marginRight: '20px' }} />
                 </Toolbar>
             </AppBar>
+            }
         </Box>
     );
 }

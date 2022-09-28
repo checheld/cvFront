@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import Input from '../../Items/Input';
-import CustomButton from '../../Items/CustomButton';
-import { Box, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import ProjectsSearchInput from '../Projects/Items/ProjectsSearchInput';
+import CustomButtonFixed from '../../Items/CustomButtonFixed';
+import { Box, styled, Typography } from '@mui/material';
 import ProjectsTable from './Items/ProjectsTable';
 import ProjectsTypeSelect from './Items/ProjectsTypeSelect';
 import ProjectsTechSelect from './Items/ProjectsTechSelect';
@@ -13,6 +13,15 @@ import NoResult from '../../Items/Search/NoResult';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
 import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
 import { IProject } from '../../../interfaces';
+
+
+const CustomBox = styled(Box)(() => ({
+    paddingRight: '35px',
+    paddingLeft: '250px',
+    ['@media (max-width:768px)']: {
+        paddingLeft: '35px',
+    }
+}))
 
 const ProjectsPage: React.FC = () => {
 
@@ -63,52 +72,21 @@ const ProjectsPage: React.FC = () => {
         };
     }, [searchName, searchType, searchTech]);
 
-    const screenWidth = window.screen.width;
-    const [inputSearchWidth, setInputSearchWidth] = useState<number>();
-    const [winWidthPadding, setWinWidthPadding] = useState<string>();
-    const [winWidthType, setWinWidthType] = useState<number>();
-    const [winPaddingType, setWinPaddingType] = useState<string>();
-    const [winWidthTech, setWinWidthTech] = useState<number>();
-
-    useEffect(() => {
-        if (screenWidth <= 1024 && screenWidth > 768) {
-            setWinWidthPadding('250px')
-            setWinPaddingType('15px')
-        } else if (screenWidth < 769 && screenWidth > 425) {
-            setWinWidthPadding('35px')
-            setWinWidthType(140)
-            setWinWidthTech(140)
-            setWinPaddingType('15px')
-        } else if (screenWidth < 426) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(200)
-            setWinWidthType(140)
-            setWinWidthTech(175)
-            setWinPaddingType('0px')
-        } else {
-            setWinWidthPadding('250px')
-            setWinWidthType(160)
-            setWinWidthTech(190)
-            setInputSearchWidth(300)
-            setWinPaddingType('15px')
-        }
-    }, [screenWidth]);
-
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
+                <CustomBox>
                     <ProjectModal open={open} handleClose={handleClose} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Projects </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({projects.length})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <Input setParam={setSearchName} placeholder={"Search project"} width={inputSearchWidth!} />
-                        <ProjectsTypeSelect setParam={setSearchType} width={winWidthType!} mr={winPaddingType!} />
-                        <ProjectsTechSelect setParam={setSearchTech} width={winWidthTech!} />
+                        <ProjectsSearchInput setParam={setSearchName} placeholder={"Search project"} />
+                        <ProjectsTypeSelect setParam={setSearchType} />
+                        <ProjectsTechSelect setParam={setSearchTech} />
                         <Box sx={{ marginLeft: 'auto' }}>
-                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Project' />
+                            <CustomButtonFixed variant="contained" onClick={(handleOpen)} children='+ Add Project' />
                         </Box>
                     </Box>
                     {projects.length === 0 ? (
@@ -116,7 +94,7 @@ const ProjectsPage: React.FC = () => {
                     ) : (
                         <ProjectsTable projects={projects} />
                     )}
-                </Box>
+                </CustomBox>
             ) : (
                 <PreviewPageTable />
             )}

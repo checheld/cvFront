@@ -1,39 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { useTypedSelector } from '../../../../redusers/useTypedSelector';
+import styled from '@emotion/styled';
 
 interface IProjectsTechSelect {
-    setParam: (value: string) => void,
-    width: number
+    setParam: any
 }
 
-const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam, width }) => {
+const CustomSelect = styled(Select)(() => ({
+    width: '190px',
+    height: '45px',
+    marginBottom: '20px',
+    ['@media (max-width:768px)']: {
+        width: '140px',
+    },
+    ['@media (max-width:425px)']: {
+        width: '175px',
+    },
+    ['@media (max-width:375px)']: {
+        width: '125px',
+    }
+}))
+
+const CustomFormControl = styled(FormControl)(() => ({
+    width: '190px',
+    // marginLeft: '15px',
+    ['@media (max-width:768px)']: {
+        width: '140px',
+    },
+    ['@media (max-width:425px)']: {
+        width: '175px',
+        marginLeft: '0px',
+    },
+    ['@media (max-width:375px)']: {
+        width: '125px',
+        marginLeft: '0px',
+    }
+}))
+
+const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
 
     let technologies = useTypedSelector((state) => state.technologies.technologies);
-    const handleChange = (event: SelectChangeEvent) => {
-        setParam(event.target.value);
-    };
-
-    const [widthMargin, setWidthMargin] = useState<string>();
-    useEffect(() => {
-        if (width < 426) {
-            setWidthMargin('0px')
-        } else {
-            setWidthMargin('15px')
-        }
-    }, [width]);
 
     return (
         <div>
-            <FormControl sx={{ width: width, ml: widthMargin }}>
-                <Select
+            <CustomFormControl>
+                <CustomSelect
                     displayEmpty
                     defaultValue={""}
                     inputProps={{ 'aria-label': 'Without label' }}
-                    onChange={handleChange}
-                    sx={{ width: width, height: '45px', mb: '20px' }}
+                    onChange={setParam}
                 >
                     <MenuItem value="">
                         <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
@@ -41,10 +59,10 @@ const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam, width }) 
                         </span>
                     </MenuItem>
                     {
-                        technologies.map((tech) => <MenuItem value={tech.name}>{tech.name}</MenuItem>)
+                        technologies.map((tech, i) => <MenuItem value={tech.name} key={i} >{tech.name}</MenuItem>)
                     }
-                </Select>
-            </FormControl>
+                </CustomSelect>
+            </CustomFormControl>
         </div>
     );
 }

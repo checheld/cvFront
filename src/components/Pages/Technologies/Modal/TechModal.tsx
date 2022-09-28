@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CustomButton from '../../../Items/CustomButton';
+import CustomButtonFixed from '../../../Items/CustomButtonFixed';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
 import { Box, Modal, Typography } from '@mui/material';
 import ModalSelect from '../../../Items/ModalSelect';
@@ -73,17 +73,6 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
         (arrayTechnologies[0].name === '' || arrayTechnologies[0].type === '') && setIsError(true)
     }, [arrayTechnologies]);
 
-    const screenWidth = window.screen.width;
-    const [inputWidth, setInputWidth] = useState<number>();
-
-    useEffect(() => {
-        if (screenWidth <= 1024 && screenWidth > 425) {
-            setInputWidth(500)
-        } else if (screenWidth < 426) {
-            setInputWidth(300)
-        } else setInputWidth(700)
-    }, [screenWidth]);
-
     return (
         <Modal
             open={open}
@@ -123,20 +112,20 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Technology name
                             </Typography>
-                            <ModalInput placeholder="Technology name" inputLength={15} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} width={inputWidth} />
+                            <ModalInput placeholder="Technology name" inputLength={15} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} />
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
-                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} width={inputWidth} />
+                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} />
                         </Box>
                     ))}
                     {(editableTech === undefined) ? (
                         <>
                             <Box sx={{ mb: '35px', mt: '35px' }}>
-                                <CustomButton variant="outlined" children='+ Add Technology' onClick={handleAddTechnology} />
+                                <CustomButtonFixed variant="outlined" children='+ Add Technology' onClick={handleAddTechnology} />
                             </Box>
                             <Box>
-                                <CustomButton variant="contained"
+                                <CustomButtonFixed variant="contained"
                                     children='Save Technology'
                                     onClick={() => {
                                         if (isError) setCheck(true);
@@ -147,7 +136,7 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                         </>
                     ) : (
                         <Box sx={{ mb: '35px', mt: '35px' }}>
-                            <CustomButton variant="contained"
+                            <CustomButtonFixed variant="contained"
                                 children='Save Technology'
                                 onClick={() => {
                                     if (isError) setCheck(true);

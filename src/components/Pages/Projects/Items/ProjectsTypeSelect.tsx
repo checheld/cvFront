@@ -3,30 +3,42 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTypedSelector } from '../../../../redusers/useTypedSelector';
+import styled from '@emotion/styled';
 
 interface IProjectsTypeSelect {
-  setParam: (value: string) => void,
-  width: number,
-  mr: string
+  setParam: any
 }
 
-const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam, width, mr }) => {
+const CustomSelect = styled(Select)(() => ({
+  width: '160px',
+  height: '45px',
+  marginBottom: '20px',
+  marginRight: '15px',
+  ['@media (max-width:768px)']: {
+    width: '140px',
+  },
+  ['@media (max-width:425px)']: {
+    width: '140px',
+    marginRight: '0px',
+  },
+  ['@media (max-width:375px)']: {
+    width: '140px',
+    marginRight: '0px',
+  }
+}))
+
+const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
 
   let progectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setParam(event.target.value);
-  };
-
   return (
     <div>
-      <FormControl sx={{ width: width, ml: '15px', mr: mr }}>
-        <Select
+      <FormControl sx={{ ml: '15px' }}>
+        <CustomSelect
           displayEmpty
           defaultValue={""}
           inputProps={{ 'aria-label': 'Without label' }}
-          onChange={handleChange}
-          sx={{ width: width, height: '45px', mb: '20px' }}
+          onChange={setParam}
         >
           <MenuItem value="">
             <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
@@ -34,9 +46,9 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam, width, mr
             </span>
           </MenuItem>
           {
-            progectTypes.map((x) => <MenuItem value={x.id}>{x.name}</MenuItem>)
+            progectTypes.map((x, i) => <MenuItem value={x.id} key={i} >{x.name}</MenuItem>)
           }
-        </Select>
+        </CustomSelect>
       </FormControl>
     </div>
   );

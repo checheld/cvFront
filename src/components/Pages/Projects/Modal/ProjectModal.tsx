@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CustomButton from '../../../Items/CustomButton';
+import CustomButtonFixed from '../../../Items/CustomButtonFixed';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, FormControl, FormHelperText, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, Typography, useFormControl } from '@mui/material';
+import { Box, Modal, styled, Typography } from '@mui/material';
 import ChipSelect from '../../../Items/ChipSelect';
 import { projectsActions } from '../../../../actionsTypes/projectsActionTypes';
 import { IProject, IProjectPhoto, ITechnology } from '../../../../interfaces';
@@ -11,12 +11,24 @@ import { projectPhotosActions } from '../../../../actionsTypes/projectPhotosActi
 import ModalInput from '../../../Items/ModalInput';
 import CloseIcon from "@mui/icons-material/Close";
 import '../../../Components.css';
+import ModalInputName from './Items/ModalInputName';
+import ModalInputCountry from './Items/ModalInputCountry';
+import ModalInputLink from './Items/ModalInputLink';
+import ModalTypeSelect from './Items/ModalTypeSelect';
 
 interface IProjectModal {
     open: boolean,
     handleClose: () => void,
     editableProject?: IProject
 }
+
+const CustomBox = styled(Box)(() => ({
+    display: 'flex',
+    flexWrap: 'nowrap',
+    ['@media (max-width:425px)']: {
+        flexWrap: 'wrap'
+    }
+}))
 
 const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProject }) => {
 
@@ -28,8 +40,6 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState<Array<IProjectPhoto>>([]);
 
-    let projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
-
     let url = useTypedSelector((state) => state.projectPhotos.result.add);
     useEffect(() => {
         if (url !== undefined && url !== null) {
@@ -37,19 +47,6 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
             setPhoto(oldArray => [...oldArray, urlObj])
         }
     }, [url]);
-
-    function MyFormHelperText() {
-        const { focused } = useFormControl() || {};
-
-        const helperText: string = React.useMemo(() => {
-            if (!type && check) {
-                return 'Empty field';
-            }
-            return '';
-        }, [focused]);
-
-        return <FormHelperText sx={{ color: 'red' }}>{helperText}</FormHelperText>;
-    }
 
     const dispatch = useAppDispatch();
     const addProject = () => {
@@ -98,9 +95,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         } = ev;
         setProjectName(value);
     };
-    const handleChangeType = (event: SelectChangeEvent) => {
-        setType(event.target.value);
-    };
+
     const handleChangeCountry = (ev: React.ChangeEvent<HTMLInputElement>) => {
         const {
             target: { value },
@@ -138,33 +133,9 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     useEffect(() => {
         setIsError(false);
         (projectName === '' || description === '' || type === ''
-            || country === '' || link === '' || tech === []
+            || country === '' || link === ''
         ) && setIsError(true)
-    }, [projectName, description, type, country, link, tech]);
-
-    const screenWidth = window.screen.width;
-    const [inputWidthBig, setInputWidthBig] = useState<number>();
-    const [inputWidthMiddle, setInputWidthMiddle] = useState<number>();
-    const [inputWidthSmall, setInputWidthSmall] = useState<number>();
-    const [wrap, setWrap] = useState<string>();
-    useEffect(() => {
-        if (screenWidth <= 1024 && screenWidth > 425) {
-            setInputWidthBig(505)
-            setInputWidthMiddle(300)
-            setInputWidthSmall(185)
-            setWrap('nowrap')
-        } else if (screenWidth < 426) {
-            setInputWidthBig(300)
-            setInputWidthMiddle(300)
-            setInputWidthSmall(300)
-            setWrap('wrap')
-        } else {
-            setInputWidthBig(700)
-            setInputWidthMiddle(450)
-            setInputWidthSmall(230)
-            setWrap('nowrap')
-        }
-    }, [screenWidth]);
+    }, [projectName, description, type, country, link]);
 
     return (
         <Modal
@@ -195,79 +166,52 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         }}
                         onClick={handleClose}
                     />
-                    <Box sx={{ display: 'flex', flexWrap: wrap! }}>
+                    <CustomBox>
                         <Box sx={{ mr: '20px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Project name
                             </Typography>
-                            <ModalInput placeholder='Project name'
-                                item={projectName}
+                            <ModalInputName item={projectName}
                                 check={check}
-                                width={inputWidthMiddle}
                                 index={0}
                                 setItem={handleChangeName}
-                                inputLength={15}
                             />
                         </Box>
                         <Box sx={{ mb: '25px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Type
                             </Typography>
-                            <FormControl>
-                                <Select
-                                    value={type}
-                                    onChange={handleChangeType}
-                                    defaultValue={""}
-                                    error={!type && check}
-                                    sx={{ width: inputWidthSmall, height: '50px', mb: 0 }}
-                                    displayEmpty
-                                >
-                                    <MenuItem value="">
-                                        <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
-                                            Select type
-                                        </span>
-                                    </MenuItem>
-                                    {
-                                        projectTypes.map((x) => <MenuItem value={x.id}>{x.name}</MenuItem>)
-                                    }
-                                </Select>
-                                <MyFormHelperText />
-                            </FormControl>
+                            <ModalTypeSelect type={type} setType={setType} />
                         </Box>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexWrap: wrap! }}>
+                    </CustomBox>
+                    <CustomBox>
                         <Box sx={{ mr: '20px' }}>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Country
                             </Typography>
-                            <ModalInput placeholder='Country'
-                                item={country}
+                            <ModalInputCountry item={country}
                                 check={check}
-                                width={inputWidthSmall}
                                 index={0}
                                 setItem={handleChangeCountry}
-                                inputLength={15}
                             />
                         </Box>
                         <Box>
                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                 Link
                             </Typography>
-                            <ModalInput placeholder='Link'
+                            <ModalInputLink
                                 item={link}
                                 check={check}
-                                width={inputWidthMiddle}
                                 index={0}
                                 setItem={handleChangeLink}
-                                inputLength={30}
                             />
                         </Box>
-                    </Box>
+                    </CustomBox>
                     <Box sx={{ mb: '18px' }} >
                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                             Technologies
                         </Typography>
-                        <ChipSelect tech={tech} setTech={setTech} check={check} width={inputWidthBig!} />
+                        <ChipSelect tech={tech} setTech={setTech} check={check} />
                     </Box>
                     <Box sx={{ mr: '20px', mb: '80px' }}>
                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
@@ -276,7 +220,6 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         <ModalInput placeholder='Description'
                             item={description}
                             check={check}
-                            width={inputWidthBig}
                             height={100}
                             index={0}
                             setItem={handleChangeDescription}
@@ -284,12 +227,12 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         />
                     </Box>
                     <Box>
-                        <PhotoInput width={inputWidthBig!} />
+                        <PhotoInput />
                         <Photos photos={photo} removePhoto={removePhotoFromState} />
                     </Box>
                     {(editableProject === undefined) ? (
                         <Box>
-                            <CustomButton variant="contained"
+                            <CustomButtonFixed variant="contained"
                                 children='Add Project'
                                 onClick={() => {
                                     if (isError) setCheck(true);
@@ -299,7 +242,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         </Box>
                     ) : (
                         <Box>
-                            <CustomButton variant="contained"
+                            <CustomButtonFixed variant="contained"
                                 children='Save Project'
                                 onClick={() => {
                                     if (isError) setCheck(true);

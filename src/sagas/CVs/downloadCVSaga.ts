@@ -2,11 +2,13 @@ import { call } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import { downloadCVResult } from '../../actionCreators/CVActionCreator';
 import instance from '../axiosSetting';
+import config from '../headers';
 
-const axiosDownloadCV = (id: number) =>
+const axiosDownloadCV = (id: number, config: any) =>
 
   instance.get<any>(
-    `/Pdf/${id}`
+    `/Pdf/${id}`,
+    config
   )
     .then((response) => {
       const b64Data = response.data;
@@ -38,7 +40,7 @@ const axiosDownloadCV = (id: number) =>
 
 export default function* downloadCVFetch(id: number) {
   try {
-    const downloadCVResponse: AxiosResponse<File> = yield call(axiosDownloadCV, id);
+    const downloadCVResponse: AxiosResponse<File> = yield call(axiosDownloadCV, id, config);
   }
   catch (e) {
     console.log(e)

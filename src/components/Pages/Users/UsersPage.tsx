@@ -25,6 +25,14 @@ const Item = styled(Paper)(({ theme }) => ({
     ['@media (min-width:780px)']: { width: '304px' },
 }));
 
+const CustomBox = styled(Box)(() => ({
+    paddingRight: '35px',
+    paddingLeft: '250px',
+    ['@media (max-width:768px)']: {
+        paddingLeft: '35px',
+    }
+}))
+
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const UsersPage: React.FC = () => {
@@ -74,40 +82,19 @@ const UsersPage: React.FC = () => {
         };
     }, [searchParam]);
 
-    const screenWidth = window.screen.width;
-    const [winWidthPadding, setWinWidthPadding] = useState<string>();
-    const [inputSearchWidth, setInputSearchWidth] = useState<number>();
-    const [widthButton, setWidthButton] = useState<string>();
-
-    useEffect(() => {
-        if (screenWidth < 769 && screenWidth > 425) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(300)
-        } else if (screenWidth < 426) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(355)
-            setWidthButton('355px')
-        }
-        else {
-            setWidthButton('auto')
-            setWinWidthPadding('250px')
-            setInputSearchWidth(300)
-        }
-    }, [screenWidth]);
-
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
+                <CustomBox>
                     <UserModal open={open} handleClose={handleClose} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Users </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({users.length})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search user"} width={inputSearchWidth!} />
+                        <Input setParam={setSearchParam} placeholder={"Search user"} />
                         <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
-                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add User' width={widthButton} />
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add User' />
                         </Box>
                     </Box>
                     {users.length === 0 ? (
@@ -123,8 +110,8 @@ const UsersPage: React.FC = () => {
                             padding: '0px'
                         }}>
                             <ThemeProvider theme={lightTheme}>
-                                {users.map((user) => (
-                                    <Item elevation={4} onClick={() => router(`/users/${user.id}`)}>
+                                {users.map((user, i) => (
+                                    <Item elevation={4} key={i} onClick={() => router(`/users/${user.id}`)}>
                                         <Box sx={{ m: 0, p: 0, justifyContent: 'center', display: 'flex', mb: '20px' }}>
                                             {(user.photoParams !== null) ? (
                                                 <Photo params={{
@@ -178,7 +165,7 @@ const UsersPage: React.FC = () => {
                             </ThemeProvider>
                         </Box>
                     )}
-                </Box>
+                </CustomBox>
             ) : (
                 <PreviewPageUser />
             )}

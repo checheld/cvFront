@@ -4,19 +4,30 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
 import Search from '../../img/Search';
 import InputAdornment from '@mui/material/InputAdornment';
+import styled from '@emotion/styled';
 
 interface ISearchAttributes {
   setParam: (value: string) => void,
   placeholder: string,
-  width: number
 }
 
-const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder, width }) => {
+const CustomInput = styled(OutlinedInput)(() => ({
+  height: '45px',
+  width: '300px',
+  ['@media (max-width:768px)']: {
+    width: '300px',
+  },
+  ['@media (max-width:425px)']: {
+    width: '355px',
+  },
+  ['@media (max-width:375px)']: {
+    width: '304px',
+  }
+}))
+
+const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder }) => {
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    // if (ev.currentTarget.value.includes(" ")) {
-    //   ev.currentTarget.value = ev.currentTarget.value.replace(/\s/g, "");
-    // }
     const {
       target: { value },
     } = ev;
@@ -27,8 +38,7 @@ const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder, wi
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl>
-        <OutlinedInput sx={{ width: { width }, height: '45px' }}
-          placeholder={placeholder}
+        <CustomInput placeholder={placeholder}
           inputProps={{ maxLength: 15 }}
           id="input-with-icon-adornment"
           onChange={handleChange}

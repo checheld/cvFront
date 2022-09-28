@@ -1,6 +1,6 @@
 import { Box, Modal, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import CustomButton from '../Items/CustomButton';
+import CustomButtonFixed from '../Items/CustomButtonFixed';
 import ModalInput from '../Items/ModalInput';
 import { useAppDispatch } from '../../redusers/useTypedSelector';
 import CloseIcon from "@mui/icons-material/Close";
@@ -48,17 +48,6 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
         !arrayItems[0] && setIsError(true);
     }, [arrayItems]);
 
-    const screenWidth = window.screen.width;
-    const [inputWidth, setInputWidth] = useState<number>();
-
-    useEffect(() => {
-        if (screenWidth <= 1024 && screenWidth > 425) {
-            setInputWidth(500)
-        } else if (screenWidth < 426) {
-            setInputWidth(300)
-        } else setInputWidth(700)
-    }, [screenWidth]);
-
     return (
         <Modal
             open={open}
@@ -92,14 +81,14 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
                                     <DelInput index={index} removeItem={removeItem} />
                                 </Box>
                             )}
-                            <ModalInput placeholder={`${addName} name`} item={item} inputLength={15} setItem={handleChangeItems(index)} index={index} check={check} width={inputWidth} />
+                            <ModalInput placeholder={`${addName} name`} item={item} inputLength={15} setItem={handleChangeItems(index)} index={index} check={check} />
                         </Box>
                     ))}
                     <Box sx={{ mb: '35px' }}>
-                        <CustomButton variant="outlined" children={`+ Add ${addName}`} onClick={handleAddItem} />
+                        <CustomButtonFixed variant="outlined" children={`+ Add ${addName}`} onClick={handleAddItem} />
                     </Box>
                     <Box>
-                        <CustomButton variant="contained"
+                        <CustomButtonFixed variant="contained"
                             children={`Save ${addName}`}
                             onClick={() => {
                                 if (isError) setCheck(true);

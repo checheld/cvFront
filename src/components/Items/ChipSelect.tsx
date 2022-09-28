@@ -1,22 +1,34 @@
 import * as React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { useTypedSelector } from '../../redusers/useTypedSelector';
 import { ITechnology } from '../../interfaces';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText, styled } from '@mui/material';
 
 interface IChipSelect {
   tech: ITechnology[],
   setTech: (tech: ITechnology[]) => void,
   check?: boolean,
-  width: number
 }
+
+const CustomSelect = styled(Select)(() => ({
+  width: '700px',
+  height: '50px',
+  marginBottom: '0px',
+  ['@media (max-width:1024px)']: {
+    width: '500px',
+  },
+  ['@media (max-width:425px)']: {
+    width: '300px',
+  },
+  ['@media (max-width:375px)']: {
+    width: '250px',
+  }
+}))
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -38,7 +50,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check, width }) => {
+const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check }) => {
   const technologies = useTypedSelector((state) => state.technologies.technologies);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
@@ -64,7 +76,7 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check, width }) => {
     }
   }, []);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (event: any) => {
     const {
       target: { value },
     } = event;
@@ -81,16 +93,14 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check, width }) => {
 
   return (
     <FormControl sx={{ width: 300, mb: 1.3 }}>
-      <Select
+      <CustomSelect
         multiple
         displayEmpty
         value={personName}
-        sx={{ width: width, height: '50px', mb: 0 }}
         onChange={handleChange}
-        // input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
         error={check && !tech[0]}
         //@ts-ignore
-        renderValue={(selected) => {
+        renderValue={(selected: any) => {
           if (!selected.length) {
             return (
               <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
@@ -99,7 +109,7 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check, width }) => {
             );
           } else {
             return <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
+              {selected.map((value: any) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
@@ -116,7 +126,7 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check, width }) => {
             {technology.name}
           </MenuItem>
         ))}
-      </Select>
+      </CustomSelect>
       <MyFormHelperText />
     </FormControl>
   );

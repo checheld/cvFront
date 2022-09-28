@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CustomButton from '../../../Items/CustomButton';
+import CustomButtonFixed from '../../../Items/CustomButtonFixed';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
-import { Box, Modal, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, Modal, SelectChangeEvent, styled, Typography } from '@mui/material';
 import { ICV, IProjectCV } from '../../../../interfaces';
 import DelInput from '../../../../img/DelInput';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
@@ -10,23 +10,21 @@ import ModalFormControl from '../../../Items/ModalFormControl';
 import DateField from '../../../Items/DateField';
 import CloseIcon from "@mui/icons-material/Close";
 import '../../../Components.css';
+import ModalInputPosition from '../../Users/Modal/Items/ModalInputPosition';
+import ModalFormControlSmall from '../../../Items/ModalFormControlSmall';
 
 interface ICVModal {
     open: boolean,
     handleClose: () => void,
     editableCV?: ICV
 }
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    zIndex: 10,
-    bgcolor: '#FFFFFF',
-    borderRadius: '30px',
-    boxShadow: 24,
-    p: 4,
-};
+
+const CustomBoxDate = styled(Box)(() => ({
+    display: 'flex',
+    ['@media (max-width:375px)']: {
+        flexWrap: 'wrap',
+    }
+}))
 
 const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     const dispatch = useAppDispatch();
@@ -108,23 +106,6 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
         ) && setIsError(true)
     }, [CVName, userId, arrayProjectCV]);
 
-    const screenWidth = window.screen.width;
-    const [inputWidthBig, setInputWidthBig] = useState<number>();
-    const [inputWidthSmall, setInputWidthSmall] = useState<number>();
-    const [inputWidthProject, setInputWidthProject] = useState<number>();
-    useEffect(() => {
-        if (screenWidth <= 1024) {
-            setInputWidthBig(505)
-            setInputWidthSmall(216)
-            setInputWidthProject(505)
-        }
-        else {
-            setInputWidthBig(700)
-            setInputWidthSmall(195)
-            setInputWidthProject(195)
-        }
-    }, [screenWidth]);
-
     return (
         <Modal
             open={open}
@@ -163,7 +144,6 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                 item={CVName}
                                 check={check}
                                 index={0}
-                                width={inputWidthBig}
                                 height={50}
                                 setItem={handleChangeCVName}
                                 inputLength={25}
@@ -179,7 +159,6 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                 type={userId}
                                 setType={handleChangeUser}
                                 check={check} index={0}
-                                width={inputWidthBig} height={50}
                             />
                         </Box>
                         {arrayProjectCV.length && arrayProjectCV.map((projectCV, index) => (
@@ -194,39 +173,32 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                             Project
                                         </Typography>
-                                        <ModalFormControl elements={projects}
+                                        <ModalFormControlSmall elements={projects}
                                             selectName={'projectId'}
                                             placeholder={'project'}
                                             type={projectCV.projectId}
                                             setType={handleChangeProject(index)}
                                             check={check} index={index}
-                                            width={inputWidthProject} height={50}
                                         />
                                     </Box>
-                                    <div style={{ display: 'flex' }} >
+                                    <div className='projectContainer' >
                                         <Box sx={{ mr: '20px' }}>
                                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                                 Position
                                             </Typography>
-                                            <ModalInput placeholder='Position'
-                                                selectName={'position'}
-                                                item={projectCV.position}
-                                                check={check}
-                                                index={index}
-                                                width={inputWidthSmall}
-                                                height={50}
+                                            <ModalInputPosition item={projectCV.position}
+                                                check={check} index={index}
                                                 setItem={handleChangeProjectCV(index)}
-                                                inputLength={15}
                                             />
                                         </Box>
                                         <Box sx={{ mr: '20px' }}>
                                             <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
                                                 Start date - End date
                                             </Typography>
-                                            <Box sx={{ display: 'flex' }}>
+                                            <CustomBoxDate>
                                                 <DateField item={projectCV.startDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
                                                 <DateField item={projectCV.endDate} setItem={handleChangeProjectCV(index)} check={check} index={index} label={"End date"} name={'endDate'} />
-                                            </Box>
+                                            </CustomBoxDate>
                                         </Box>
                                     </div>
                                 </div>
@@ -239,7 +211,6 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         item={projectCV.description}
                                         check={check}
                                         index={index}
-                                        width={inputWidthBig}
                                         height={100}
                                         setItem={handleChangeProjectCV(index)}
                                         inputLength={100}
@@ -248,7 +219,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                             </Box>
                         ))}
                         <Box sx={{ mb: '35px' }}>
-                            <CustomButton variant="outlined"
+                            <CustomButtonFixed variant="outlined"
                                 children='+ Add Project'
                                 onClick={handleAddProjectCV}
                             />
@@ -256,7 +227,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                     </Box>
                     {(editableCV === undefined) ? (
                         <Box sx={{ mt: '15px' }}>
-                            <CustomButton variant="contained"
+                            <CustomButtonFixed variant="contained"
                                 children='Add User'
                                 onClick={() => {
                                     if (isError) setCheck(true);
@@ -266,7 +237,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                         </Box>
                     ) : (
                         <Box sx={{ mt: '15px' }}>
-                            <CustomButton variant="contained"
+                            <CustomButtonFixed variant="contained"
                                 children='Save User'
                                 onClick={() => {
                                     if (isError) setCheck(true);

@@ -1,6 +1,6 @@
 import { Box, Modal, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import CustomButton from '../Items/CustomButton';
+import CustomButtonFixed from '../Items/CustomButtonFixed';
 import ModalInput from '../Items/ModalInput';
 import { useAppDispatch } from '../../redusers/useTypedSelector';
 import CloseIcon from "@mui/icons-material/Close";
@@ -33,17 +33,6 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
     setchangedItem(name)
   }, [name])
 
-  const screenWidth = window.screen.width;
-  const [inputWidth, setInputWidth] = useState<number>();
-
-  useEffect(() => {
-    if (screenWidth <= 1024 && screenWidth > 425) {
-      setInputWidth(500)
-    } else if (screenWidth < 426) {
-      setInputWidth(300)
-    } else setInputWidth(700)
-  }, [screenWidth]);
-
   return (
     <Modal
       open={open}
@@ -70,9 +59,9 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
             }}
             onClick={handleClose}
           />
-          <ModalInput placeholder="Item" inputLength={15} item={changedItem} setItem={handleChange} width={inputWidth} />
+          <ModalInput placeholder="Item" inputLength={15} item={changedItem} setItem={handleChange} />
           <Box>
-            <CustomButton variant="contained" children={`Save ${editName}`} onClick={updateItem} />
+            <CustomButtonFixed variant="contained" children={`Save ${editName}`} onClick={updateItem} />
           </Box>
         </Box>
       </div>

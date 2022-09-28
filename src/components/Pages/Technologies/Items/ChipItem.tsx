@@ -26,7 +26,7 @@ const ChipItem: React.FC<IChip> = ({ techCollection, handleEdit }) => {
                 flexDirection: 'row',
                 flexWrap: 'wrap'
             }}>
-                {techCollection.map((tech) => (
+                {techCollection.map((tech, i) => (
                     <Chip label={tech.name}
                         onDelete={() => handleOpenDelModal(tech.id)}
                         onClick={() => handleEdit(tech)}
@@ -43,7 +43,8 @@ const ChipItem: React.FC<IChip> = ({ techCollection, handleEdit }) => {
                             marginRight: '10px',
                             marginBottom: '10px',
                             padding: '0px'
-                        }} />
+                        }}
+                        key={i} />
                 ))}
             </Stack>
         </>

@@ -1,5 +1,5 @@
 import { ICompany } from "../interfaces/index";
- 
+
 export enum companiesActions {
     GET_COMPANIES_REQUEST = 'GET_COMPANIES_REQUEST',
     GET_COMPANIES_RESULT = 'GET_COMPANIES_RESULT',

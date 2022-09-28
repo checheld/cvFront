@@ -3,13 +3,14 @@ import axios, { AxiosResponse } from 'axios';
 import { getCompaniesResult } from '../../actionCreators/companyActionCreator';
 import { ICompany } from '../../interfaces/index';
 import instance from '../axiosSetting';
+import config from '../headers';
 
-const axiosGetCompanies = () => instance.get<ICompany[]>(
-  "/companies")
+const axiosGetCompanies = (config: any) => instance.get<ICompany[]>(
+  "/companies", config)
 
 export default function* getCompaniesFetch() {
   try {
-    const getCompaniesResponse: AxiosResponse<ICompany[]> = yield call(axiosGetCompanies);
+    const getCompaniesResponse: AxiosResponse<ICompany[]> = yield call(axiosGetCompanies, config);
     if (getCompaniesResponse.status === 200) {
       const response = getCompaniesResponse.data;
       yield put(getCompaniesResult(response));

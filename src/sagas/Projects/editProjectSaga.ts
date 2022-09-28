@@ -3,19 +3,21 @@ import axios, { AxiosResponse } from 'axios'
 import { IProject, IProjectPhoto, ITechnology } from '../../interfaces/index'
 import { projectsActions } from '../../actionsTypes/projectsActionTypes';
 import instance from '../axiosSetting';
+import config from '../headers';
 
-const axiosEditProject = (payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number) =>
+const axiosEditProject = (payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number, config: any) =>
 
   instance.put(
     `/projects/${id}`,
-    payload
+    payload,
+    config
   )
 
 
 export default function* editProjectFetch(payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number) {
   try {
     console.log(payload)
-    const updatProjectResponse: AxiosResponse<IProject> = yield call(axiosEditProject, payload, id);
+    const updatProjectResponse: AxiosResponse<IProject> = yield call(axiosEditProject, payload, id, config);
     yield put({ type: projectsActions.EDIT_PROJECT_RESULT, response: updatProjectResponse.data });
   }
   catch (e) {

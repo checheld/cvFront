@@ -2,7 +2,7 @@ import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText, styled } from '@mui/material';
 
 interface ISelect {
   type: string,
@@ -12,6 +12,22 @@ interface ISelect {
   width?: number,
   height?: number
 }
+
+const CustomSelect = styled(Select)(() => ({
+  width: '700px',
+  height: 'auto',
+  marginBottom: '0px',
+  fontFamily: '"Nunito", sans-serif',
+  ['@media (max-width:1024px)']: {
+    width: '500px',
+  },
+  ['@media (max-width:425px)']: {
+    width: '300px',
+  },
+  ['@media (max-width:375px)']: {
+    width: '250px',
+  }
+}))
 
 const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, height }) => {
   // const handleChange = (event: SelectChangeEvent) => {
@@ -35,13 +51,12 @@ const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, he
   return (
     <div>
       <FormControl>
-        <Select
+        <CustomSelect
           value={type}
           onChange={setType}
           error={!type && check && index === 0}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
-          sx={{ width: { width }, height: { height }, mb: 0, fontFamily: '"Nunito", sans-serif' }}
         >
           <MenuItem value="">
             <span style={{ color: `#a7aaac`, fontSize: `14px`, fontFamily: '"Nunito", sans-serif' }}>
@@ -49,9 +64,9 @@ const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, he
             </span>
           </MenuItem>
           {
-            items.map((x) => <MenuItem value={x.toLowerCase()}>{x}</MenuItem>)
+            items.map((x, key: number) => <MenuItem value={x.toLowerCase()} key={key} >{x}</MenuItem>)
           }
-        </Select>
+        </CustomSelect>
         <MyFormHelperText />
       </FormControl>
     </div>

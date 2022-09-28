@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Typography from '@mui/material/Typography';
-import { Box, Button, Chip, createTheme, Paper, Stack, styled, ThemeProvider } from '@mui/material';
+import { Box, Button, createTheme, Paper, Stack, styled, ThemeProvider } from '@mui/material';
 import { ICV } from '../../../../interfaces';
 import CVModal from '../Modal/CVModal';
 import Delete from '../../../../img/Delete';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
-import Edit from '../../../../img/Edit';
 import Download from '../../../../img/Download';
 import DeleteModal from '../../../Items/DeleteModal';
 import moment from 'moment';
@@ -19,7 +18,19 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: '20px',
     height: '255px',
     width: '260px',
-    mr: '6px'
+    mr: '6px',
+    ['@media (max-width:375px)']: {
+        width: '205px'
+    }
+}));
+
+const CustomStack = styled(Stack)(() => ({
+    marginRight: '30px',
+    width: '250px',
+    bottom: '20px',
+    ['@media (max-width:375px)']: {
+        width: '195px'
+    }
 }));
 
 const lightTheme = createTheme({
@@ -74,7 +85,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
                         <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#AFB5BF', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>{joinedProjectsNames}</Typography>
                     </Box>
-                    <Stack direction="row" sx={{ mr: '30px', width: '250px', bottom: 20 }} key={CV.id}>
+                    <CustomStack direction="row" key={CV.id}>
                         <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>
                             <Download />
                         </Button>
@@ -84,7 +95,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                         <Box sx={{ ml: 'auto' }}>
                             <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px', fontFamily: `"Nunito", sans-serif` }}>{time}</Typography>
                         </Box>
-                    </Stack>
+                    </CustomStack>
                 </Item>
             </ThemeProvider>
         </Box>

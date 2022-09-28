@@ -38,8 +38,8 @@ const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {props.projects.map((project: IProject) => (
-                  <TableItem project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} />
+                {props.projects.map((project: IProject, i) => (
+                  <TableItem project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} key={i} />
                 ))}
               </TableBody>
             </Table>
@@ -55,8 +55,9 @@ const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
           gap: 2,
           padding: '0px'
         }}>
-          {props.projects.map((project: IProject) => (
-            <ProjectsCard project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} />
+          <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project"} />
+          {props.projects.map((project: IProject, i) => (
+            <ProjectsCard project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} key={i} />
           ))}
         </Box>
       )}

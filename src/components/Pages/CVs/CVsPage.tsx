@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { Box } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import CustomButton from '../../Items/CustomButton';
 import Input from '../../Items/Input';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
@@ -12,6 +12,14 @@ import CVItem from './Items/CVItem';
 import PreviewPageCv from '../../Items/PreviewPages/PreviewPageCv';
 import NoResult from '../../Items/Search/NoResult';
 import { ICV } from '../../../interfaces';
+
+const CustomBox = styled(Box)(() => ({
+    paddingRight: '35px',
+    paddingLeft: '250px',
+    ['@media (max-width:768px)']: {
+        paddingLeft: '35px',
+    }
+}))
 
 const CVsPage: React.FC = () => {
 
@@ -59,29 +67,17 @@ const CVsPage: React.FC = () => {
         };
     }, [searchParam]);
 
-    const screenWidth = window.screen.width;
-    const [winWidthPadding, setWinWidthPadding] = useState<string>();
-
-    useEffect(() => {
-        if (screenWidth < 769) {
-            setWinWidthPadding('35px')
-        }
-        else {
-            setWinWidthPadding('250px')
-        }
-    }, [screenWidth]);
-
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
+                <CustomBox>
                     <CVModal open={open} handleClose={handleClose} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>CVs </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({CVs.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search CV"} width={300} />
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <Input setParam={setSearchParam} placeholder={"Search CV"} />
                         <Box sx={{ marginLeft: 'auto' }}>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add CV' />
                         </Box>
@@ -103,8 +99,8 @@ const CVsPage: React.FC = () => {
                                     gap: 2,
                                     padding: '0px'
                                 }}>
-                                    {resentCVs.map((CV) => (
-                                        <CVItem CV={CV} />
+                                    {resentCVs.map((CV, i) => (
+                                        <CVItem CV={CV} key={i} />
                                     ))}
                                 </Box>
                             </Box>
@@ -121,14 +117,14 @@ const CVsPage: React.FC = () => {
                                     gap: 2,
                                     padding: '0px'
                                 }}>
-                                    {CVs.map((CV) => (
-                                        <CVItem CV={CV} />
+                                    {CVs.map((CV, i) => (
+                                        <CVItem CV={CV} key={i} />
                                     ))}
                                 </Box>
                             </Box>
                         </>
                     )}
-                </Box>
+                </CustomBox>
             ) : (
                 <PreviewPageCv />
             )}

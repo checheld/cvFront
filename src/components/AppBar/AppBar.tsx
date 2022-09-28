@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
@@ -57,9 +57,14 @@ export default function PermanentDrawerLeft() {
     />
   );
 
-  const CustomLink = (name: string, link: string, code: string, icon: (x: string, y: string) => JSX.Element) => {
+  const handleClick = () => {
+    sessionStorage.clear();
+  };
+
+  const CustomLink = (name: string, link: string, code: string, key: number, icon: (x: string, y: string) => JSX.Element) => {
     return (
       <ListItem button
+        key={key}
         selected={selectedIndex === code}
         onClick={(event) => handleListItemClick(event, code)}>
         <Link to={link} className='link'>
@@ -73,9 +78,15 @@ export default function PermanentDrawerLeft() {
     )
   }
 
+  let token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+
+  useEffect(() => {
+    token = sessionStorage.getItem('oidc.user:http://identity-server-1.herokuapp.com:leviossacv');
+  }, [currentPath, token]);
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <Drawer
+      {token && <Drawer
         sx={{
           width: 240,
           flexShrink: 0,
@@ -95,15 +106,20 @@ export default function PermanentDrawerLeft() {
         <div className='sectionName'>MAIN</div>
         <List>
           {
-            mainLinks.map((x, i) => CustomLink(x.name, x.link, x.code, x.icon))
+            mainLinks.map((x, i) => CustomLink(x.name, x.link, x.code, i, x.icon))
           }
           <Divider variant="inset" sx={{ mt: '24.5px' }} />
           <div className='sectionName'>OTHER</div>
           {
-            otherLinks.map((x, i) => CustomLink(x.name, x.link, x.code, x.icon))
+            otherLinks.map((x, i) => CustomLink(x.name, x.link, x.code, i, x.icon))
           }
+          <ListItem button sx={{ mt: '110px' }} >
+            <Link to='/logout' className='link' onClick={handleClick}>
+              <ListItemText primary='log out' />
+            </Link>
+          </ListItem>
         </List>
-      </Drawer>
+      </Drawer>}
     </Box>
   );
 }

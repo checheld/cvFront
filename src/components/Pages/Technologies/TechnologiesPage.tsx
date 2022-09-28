@@ -15,8 +15,20 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     color: theme.palette.text.secondary,
     borderRadius: '10px',
-    padding: '25px'
+    padding: '25px',
+    width: '260px',
+    ['@media (max-width:425px)']: {
+        width: '355px',
+    }
 }));
+
+const CustomBox = styled(Box)(() => ({
+    paddingRight: '35px',
+    paddingLeft: '250px',
+    ['@media (max-width:768px)']: {
+        paddingLeft: '35px',
+    }
+}))
 
 const lightTheme = createTheme({ palette: { mode: 'light' } });
 
@@ -77,42 +89,19 @@ const TechnologiesPage: React.FC = () => {
     let softSkillsTech = technologies.filter((tech) => tech.type === 'soft skills');
     let allLength = frontEndTech.length + backEndTech.length + databasesTech.length + hostingTech.length + otherTech.length + softSkillsTech.length;
 
-    const screenWidth = window.screen.width;
-    const [winWidthPadding, setWinWidthPadding] = useState<string>();
-    const [inputSearchWidth, setInputSearchWidth] = useState<number>();
-    const [widthButton, setWidthButton] = useState<string>();
-    const [widthPaper, setWidthPaper] = useState<number>();
-
-    useEffect(() => {
-        if (screenWidth < 769 && screenWidth > 425) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(300)
-        } else if (screenWidth < 426) {
-            setWinWidthPadding('35px')
-            setInputSearchWidth(355)
-            setWidthButton('355px')
-            setWidthPaper(355)
-        } else {
-            setWidthButton('auto')
-            setInputSearchWidth(300)
-            setWinWidthPadding('250px')
-            setWidthPaper(260)
-        }
-    }, [screenWidth]);
-
     return (
         <>
             {!load ? (
-                <Box sx={{ pl: winWidthPadding, pr: '35px' }}>
+                <CustomBox>
                     <TechModal open={open} handleClose={handleClose} editableTech={editableTech} />
                     <Box sx={{ m: 0, display: 'flex' }}>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies </Typography>
                         <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}> ({allLength})</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <Input setParam={setSearchParam} placeholder={"Search technology"} width={inputSearchWidth!} />
+                        <Input setParam={setSearchParam} placeholder={"Search technology"} />
                         <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
-                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' width={widthButton} />
+                            <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' />
                         </Box>
                     </Box>
                     {technologies.length === 0 ? (
@@ -131,23 +120,23 @@ const TechnologiesPage: React.FC = () => {
                                         flexWrap: 'wrap'
                                     }}
                                 >
-                                    <Item elevation={4} sx={{ width: widthPaper }}>
+                                    <Item elevation={4}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Front-end</Typography>
                                         <ChipItem techCollection={frontEndTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: widthPaper }}>
+                                    <Item elevation={4}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Back-end</Typography>
                                         <ChipItem techCollection={backEndTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: widthPaper }}>
+                                    <Item elevation={4}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Databases</Typography>
                                         <ChipItem techCollection={databasesTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: widthPaper }}>
+                                    <Item elevation={4}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Hosting</Typography>
                                         <ChipItem techCollection={hostingTech} handleEdit={handleEdit} />
                                     </Item>
-                                    <Item elevation={4} sx={{ width: widthPaper }}>
+                                    <Item elevation={4}>
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Other</Typography>
                                         <ChipItem techCollection={otherTech} handleEdit={handleEdit} />
                                     </Item>
@@ -171,7 +160,7 @@ const TechnologiesPage: React.FC = () => {
                             </ThemeProvider>
                         </Box>
                     )}
-                </Box>
+                </CustomBox>
             ) : (
                 <PreviewPageTable />
             )}

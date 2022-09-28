@@ -2,12 +2,9 @@ import { Typography } from "@mui/material";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { projectPhotosActions } from "../../../../actionsTypes/projectPhotosActionTypes";
+import '../../../Components.css';
 
-interface IPhotoInput {
-  width: number
-}
-
-const PhotoInput: React.FC<IPhotoInput> = ({ width }) => {
+const PhotoInput: React.FC = () => {
   const dispatch = useDispatch();
   const styleInput = {
     display: `none`,
@@ -24,17 +21,7 @@ const PhotoInput: React.FC<IPhotoInput> = ({ width }) => {
 
   return (
     <>
-      <label style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        cursor: 'pointer',
-        width: width,
-        height: '100%',
-        border: '1px dashed #9EA9BA',
-        background: '#FBFBFB',
-        marginBottom: '35px'
-      }}>
+      <label className="photoInput">
         <Typography
           variant="subtitle1"
           style={{

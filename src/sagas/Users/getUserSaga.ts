@@ -3,16 +3,18 @@ import axios, { AxiosResponse } from 'axios'
 import { getUserResult } from '../../actionCreators/userActionCreator';
 import { IUser } from '../../interfaces/index'
 import instance from '../axiosSetting';
+import config from '../headers';
 
-const axiosGetUser = (id: string) =>
+const axiosGetUser = (id: string, config: any) =>
 
   instance.get<IUser>(
     `/users/${id}`,
+    config
   );
 
 export default function* getUserFetch(id: string) {
   try {
-    const getUserResponse: AxiosResponse<IUser> = yield call(axiosGetUser, id);
+    const getUserResponse: AxiosResponse<IUser> = yield call(axiosGetUser, id, config);
     if (getUserResponse.status === 200) {
       const response = getUserResponse.data;
       yield put(getUserResult(response));

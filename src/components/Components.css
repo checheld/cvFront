@@ -57,6 +57,30 @@
     padding: 20px;
 }
 
+.photoInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 700px;
+    height: 100%;
+    border: 1px dashed #9EA9BA;
+    background: #FBFBFB;
+    margin-bottom: 35px
+}
+
+/*CV page*/
+
+.projectContainer {
+    display: flex;
+}
+
+/*Logout page*/
+
+.logoutButtonContainer {
+    margin-left: 80px
+}
+
 @media (max-width: 1024px) {
 
     /* AppBar */
@@ -132,6 +156,17 @@
         padding: 0;
     }
 
+    .photoInput {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 500px;
+        height: 100%;
+        border: 1px dashed #9EA9BA;
+        background: #FBFBFB;
+        margin-bottom: 35px
+    }
 }
 
 @media (max-width: 425px) {
@@ -157,5 +192,114 @@
         box-shadow: none;
         width: 400px;
         padding: 0;
+    }
+
+    .modalContainerUser {
+        position: absolute;
+        top: 160%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 400px;
+        padding: 0;
+    }
+
+    .modalContainerCV {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 400px;
+        padding: 0;
+    }
+
+    .photoInput {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 300px;
+        height: 100%;
+        border: 1px dashed #9EA9BA;
+        background: #FBFBFB;
+        margin-bottom: 35px
+    }
+
+    /*CV page*/
+
+    .projectContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /*Logout page*/
+
+    .logoutButtonContainer {
+        margin-left: 0px
+    }
+}
+
+@media (max-width: 375px) {
+    .modalContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 350px;
+        padding: 0;
+    }
+
+    .photoInput {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        width: 250px;
+        height: 100%;
+        border: 1px dashed #9EA9BA;
+        background: #FBFBFB;
+        margin-bottom: 35px
+    }
+
+    .modalContainerUser {
+        position: absolute;
+        top: 160%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 350px;
+        padding: 0;
+    }
+
+    .modalContainerCV {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background-color: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: none;
+        width: 350px;
+        padding: 0;
+    }
+
+    /*Logout page*/
+
+    .logoutButtonContainer {
+        margin-left: 0px
     }
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { makeUserManager } from 'react-oidc';
 import CustomButton from '../../Items/CustomButton';
 import '../../Components.css';
+import jwt from 'jwt-decode';
 
 const CustomBox = styled(Box)(() => ({
     position: 'absolute',
@@ -31,16 +32,20 @@ function HomePage() {
     useEffect(() => {
         mgr.getUser().then((user) => {
             if (user) {
-                // fetch("http://localhost:3000/CVs", {
-                fetch("https://levicvfrontapp.herokuapp.com/CVs", {
+                var jwtDecode = jwt(user.access_token);
+                // @ts-ignore
+                if (jwtDecode.role === "Admin" || jwtDecode.role === "Manager") {
+                    // fetch("http://localhost:3000/CVs", {
+                    fetch("https://levicvfrontapp.herokuapp.com/CVs", {
 
-                    headers: {
-                        Authorization: "Bearer " + user.access_token,
-                    },
-                })
-                    .then((resp) => resp.json())
-                    // @ts-ignore
-                    .then((data) => setState({ user, data }));
+                        headers: {
+                            Authorization: "Bearer " + user.access_token,
+                        },
+                    })
+                        .then((resp) => resp.json())
+                        // @ts-ignore
+                        .then((data) => setState({ user, data }));
+                }
             }
         });
     }, []);

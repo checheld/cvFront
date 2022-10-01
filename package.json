@@ -36,9 +36,7 @@
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
-    "jest-watch-typeahead": "^1.0.0",
     "jwt-decode": "^3.1.2",
     "mini-css-extract-plugin": "^2.4.5",
     "moment": "^2.29.4",
@@ -104,7 +102,10 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
     "@types/react-avatar-editor": "^12.0.0",
-    "@types/react-dom": "^18.0.6"
+    "@types/react-dom": "^18.0.6",
+    "jest": "^27.5.1",
+    "jest-watch-typeahead": "^0.6.5",
+    "ts-jest": "^29.0.3"
   },
   "jest": {
     "roots": [

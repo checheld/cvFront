@@ -55,7 +55,7 @@ export default function ButtonAppBar() {
                             <MenuItem onClick={closeMenu} sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>CVs</MenuItem>
                         </a>
                         <a href='/Users' style={{ color: '#303439' }}>
-                            <MenuItem onClick={closeMenu} sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>Users</MenuItem>
+                            <MenuItem onClick={closeMenu} data-testid='appBarMenuUsers' sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>Users</MenuItem>
                         </a>
                         <a href='/Projects' style={{ color: '#303439' }}>
                             <MenuItem onClick={closeMenu} sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>Projects</MenuItem>

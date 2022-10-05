@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import shadows, { Shadows } from '@mui/material/styles/shadows';
+//import shadows, { Shadows } from '@mui/material/styles/shadows';
 export const defaultTheme = createTheme({
   typography: {
     fontFamily: `"Nunito", sans-serif`,
@@ -33,7 +33,7 @@ export const defaultTheme = createTheme({
     borderRadius: 10
   },
   spacing: 5,
-  shadows: shadows.map(() => 'none') as Shadows,
+  //shadows: shadows.map(() => 'none') as Shadows,
 })
 export const theme = createTheme(defaultTheme, {
   components: {

@@ -62,16 +62,6 @@ function HomePage() {
             }}>
                 Welcome to Levi<span style={{ color: '#5893F9' }}>CV</span>!
             </Typography>
-            <Typography sx={{
-                fontWeight: 800,
-                fontSize: '24px',
-                lineHeight: '33px',
-                color: '#535E6C',
-                mt: '35px', mb: '30px',
-                textAlign: 'center'
-            }}>
-                Login, pls
-            </Typography>
             <div className='logoutButtonContainer'>
                 <CustomButton variant="contained" onClick={() => mgr.signinRedirect()} children='Login' />
             </div>

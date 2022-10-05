@@ -11,7 +11,7 @@ interface Iprops extends ButtonProps {
 
 const StyledButton = styled(Button)(() => ({
     height: '45px',
-    textTransform: 'capitalize',
+    // textTransform: 'capitalize',
     borderRadius: '5px',
     minWidth: '163px',
     width: 'auto',

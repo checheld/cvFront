@@ -33,7 +33,7 @@ function LogoutPage() {
                 You left Levi<span style={{ color: '#5893F9' }}>CV</span> page
             </Typography>
             <div className='logoutButtonContainer'>
-                <CustomButton variant="contained" onClick={handleClick} children='Return to the site' />
+                <CustomButton variant="contained" onClick={handleClick} children='Return to site' />
             </div>
             <div style={{ width: `230px`, height: `230px`, marginTop: '50px', marginLeft: '50px' }}>
                 <img

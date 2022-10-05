@@ -14,6 +14,7 @@ import Education from '../../img/Education';
 import Technologies from '../../img/Technologies';
 import WorkExp from '../../img/WorkExp'
 import ProjectType from '../../img/ProjectType';
+import Logout from '../../img/Logout';
 import '../Components.css';
 
 const mainLinks = [
@@ -115,7 +116,10 @@ export default function PermanentDrawerLeft() {
           }
           <ListItem button sx={{ mt: '110px' }} >
             <Link to='/logout' className='link' onClick={handleClick}>
-              <ListItemText primary='log out' />
+              <ListItemIcon sx={{ paddingRight: '12.25px', width: '13,5px' }}>
+                <Logout />
+              </ListItemIcon>
+              <ListItemText primary='Logout' />
             </Link>
           </ListItem>
         </List>

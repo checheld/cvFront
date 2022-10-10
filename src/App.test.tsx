@@ -268,7 +268,6 @@ describe('router tests', () => {
         }
     }
 
-
     const mockStore = configureStore()
     let store
 

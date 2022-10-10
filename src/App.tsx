@@ -32,7 +32,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    setInterval(() => tokenCleaner(), 140000);
+    setInterval(() => tokenCleaner(), 1999000);
   }, [token]);
 
   return (

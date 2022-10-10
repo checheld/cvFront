@@ -14,28 +14,36 @@ const CustomBox = styled(Box)(() => ({
 }))
 
 const IDENTITY_CONFIG = {
-    // authority: "https://localhost:5001",
+    //authority: "https://localhost:5001",
     authority: "https://identity-server-1.herokuapp.com",
     client_id: "leviossacv",
     // redirect_uri: "http://localhost:3000/signin-oidc",
+    // silent_redirect_uri: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/silent_renew.html`,
     // post_logout_redirect_uri: "http://localhost:3000",
     redirect_uri: "https://levicvfrontapp.herokuapp.com/signin-oidc",
     post_logout_redirect_uri: "https://levicvfrontapp.herokuapp.com",
+    silent_redirect_uri: "https://levicvfrontapp.herokuapp.com/silent_renew",
     response_type: "code",
     scope: "scope2",
-    client_secret: "99HlRwEKPV4a2+3v5oohMg=="
+    client_secret: "99HlRwEKPV4a2+3v5oohMg==",
+    automaticSilentRenew: true,
+    filterProtocolClaims: true,
+    loadUserInfo: true
 };
 
 function HomePage() {
     const [state, setState] = useState(null);
+
     const mgr = makeUserManager(IDENTITY_CONFIG);
     useEffect(() => {
         mgr.getUser().then((user) => {
             if (user) {
                 var jwtDecode = jwt(user.access_token);
+
                 // @ts-ignore
                 if (jwtDecode.role === "Admin" || jwtDecode.role === "Manager") {
-                    // fetch("http://localhost:3000/CVs", {
+
+                    //fetch("http://localhost:3000/CVs", {
                     fetch("https://levicvfrontapp.herokuapp.com/CVs", {
 
                         headers: {

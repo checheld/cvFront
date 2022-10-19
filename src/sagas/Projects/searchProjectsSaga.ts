@@ -9,7 +9,8 @@ const axiosSearchProjects = (payload: { name: string, type: string, technologyNa
 
   instance.post(
     `/projects/search`,
-    payload
+    payload,
+    config
   )
 
 

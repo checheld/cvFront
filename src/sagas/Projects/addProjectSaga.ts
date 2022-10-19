@@ -5,7 +5,7 @@ import { projectsActions } from '../../actionsTypes/projectsActionTypes';
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosAddProject = (data: Array<IProject>, config: any) =>
+const axiosAddProject = (data: IProject, config: any) =>
 
   instance.post<Array<IProject>>(
     `/projects/add`,
@@ -14,7 +14,7 @@ const axiosAddProject = (data: Array<IProject>, config: any) =>
   );
 
 
-export default function* addProjectFetch(data: Array<IProject>) {
+export default function* addProjectFetch(data: IProject) {
   try {
     const addProjectsResponse: AxiosResponse<Array<IProject>> = yield axiosAddProject(data, config);
     yield put({ type: projectsActions.ADD_PROJECT_RESULT, response: addProjectsResponse.data });

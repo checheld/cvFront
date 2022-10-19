@@ -31,6 +31,10 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
 
   let progectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
 
+  const handleChange = (event: any) => {
+    setParam(event.target.value);
+  };
+
   return (
     <div>
       <FormControl sx={{ ml: '15px' }}>
@@ -38,7 +42,8 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
           displayEmpty
           defaultValue={""}
           inputProps={{ 'aria-label': 'Without label' }}
-          onChange={setParam}
+          onChange={handleChange}
+          id='ProjectsTypeSelect'
         >
           <MenuItem value="">
             <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
@@ -46,7 +51,7 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
             </span>
           </MenuItem>
           {
-            progectTypes.map((x, i) => <MenuItem value={x.id} key={i} >{x.name}</MenuItem>)
+            progectTypes.map((x, i) => <MenuItem value={x.id} key={i} data-cy={`${x.name}`}>{x.name}</MenuItem>)
           }
         </CustomSelect>
       </FormControl>

@@ -19,6 +19,7 @@ const StyledButton = styled(Button)(() => ({
 
 const CustomButtonFixed: React.FC<Iprops> = ({ variant, children, onClick }) => {
     return <StyledButton variant={variant}
+        data-cy={`${children}`}
         onClick={onClick}>
         {children}
     </StyledButton>

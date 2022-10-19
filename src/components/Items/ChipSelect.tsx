@@ -96,6 +96,7 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check }) => {
       <CustomSelect
         multiple
         displayEmpty
+        id='techSelect'
         value={personName}
         onChange={handleChange}
         error={check && !tech[0]}
@@ -121,6 +122,7 @@ const ChipSelect: React.FC<IChipSelect> = ({ tech, setTech, check }) => {
           <MenuItem
             key={technology.name}
             value={technology.name}
+            data-cy={`${technology.name}`}
             style={getStyles(technology.name, personName, theme)}
           >
             {technology.name}

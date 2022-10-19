@@ -57,7 +57,7 @@ const TechnologiesPage: React.FC = () => {
 
     useEffect(() => {
         setTechnologies(AllTechnologies)
-    }, [load, isAdded, del, edit.valueOf, search]);
+    }, [load, isAdded, del, edit, search]);
 
     const handleEdit = (tech: ITechnology) => {
         setEditableTech(tech);

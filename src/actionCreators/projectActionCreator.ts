@@ -1,4 +1,4 @@
-import { 
+import {
     getProjectsResultAction,
     getProjectsRequestAction,
     projectsActions,
@@ -16,57 +16,57 @@ import {
 import { IProject, IProjectPhoto, ITechnology } from "../interfaces/index";
 
 
-export const getProjectsRequest = () : getProjectsRequestAction => {
-    return{
-        type:  projectsActions.GET_PROJECTS_REQUEST
+export const getProjectsRequest = (): getProjectsRequestAction => {
+    return {
+        type: projectsActions.GET_PROJECTS_REQUEST
     }
 }
-export const getProjectsResult = (projects:IProject[]) : getProjectsResultAction => {
-    return{
+export const getProjectsResult = (projects: IProject[]): getProjectsResultAction => {
+    return {
         type: projectsActions.GET_PROJECTS_RESULT,
         payload: projects
     }
 }
-export const getProjectRequest = (id: string) : getProjectRequestAction => {
-    return{
-        type:  projectsActions.GET_PROJECT_REQUEST,
+export const getProjectRequest = (id: string): getProjectRequestAction => {
+    return {
+        type: projectsActions.GET_PROJECT_REQUEST,
         id: id
     }
 }
-export const getProjectResult = (project:IProject) : getProjectResultAction => {
-    return{
+export const getProjectResult = (project: IProject): getProjectResultAction => {
+    return {
         type: projectsActions.GET_PROJECT_RESULT,
         payload: project
     }
 }
 export const delProjectRequest = (payload: string): delProjectRequestAction => {
-    return{
+    return {
         type: projectsActions.DEL_PROJECT_REQUEST,
         payload: payload
     }
 }
 
 export const delProjectResult = (): delProjectResultAction => {
-    return{
+    return {
         type: projectsActions.DEL_PROJECT_RESULT
     }
 }
 
-export const addProjectRequest = (payload: Array<IProject>): addProjectRequestAction => {
-    return{
+export const addProjectRequest = (payload: IProject): addProjectRequestAction => {
+    return {
         type: projectsActions.ADD_PROJECT_REQUEST,
         payload: payload
     }
 }
 
 export const addProjectResult = (): addProjectResultAction => {
-    return{
+    return {
         type: projectsActions.ADD_PROJECT_RESULT
     }
 }
 
-export const editProjectRequest = (payload: {name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number): editProjectRequestAction => {
-    return{
+export const editProjectRequest = (payload: { name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number): editProjectRequestAction => {
+    return {
         type: projectsActions.EDIT_PROJECT_REQUEST,
         payload: payload,
         id: id
@@ -74,20 +74,20 @@ export const editProjectRequest = (payload: {name: string, description: string, 
 }
 
 export const editProjectResult = (): editProjectResultAction => {
-    return{
+    return {
         type: projectsActions.EDIT_PROJECT_RESULT,
     }
 }
 
-export const searchProjectsRequest = (payload: {name: string, type: string, technologyName: string}): searchProjectsRequestAction => {
-    return{
+export const searchProjectsRequest = (payload: { name: string, type: string, technologyName: string }): searchProjectsRequestAction => {
+    return {
         type: projectsActions.SEARCH_PROJECTS_REQUEST,
         payload: payload
     }
 }
 
-export const searchProjectsResult = (searchProjects:IProject[]) : searchProjectsResultAction => {
-    return{
+export const searchProjectsResult = (searchProjects: IProject[]): searchProjectsResultAction => {
+    return {
         type: projectsActions.SEARCH_PROJECTS_RESULT,
         payload: searchProjects
     }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTypedSelector } from '../../../../../redusers/useTypedSelector';
 import { FormHelperText, styled } from '@mui/material';
 
@@ -30,6 +30,10 @@ const ModalTypeSelect: React.FC<IChipSelect> = ({ type, setType, check }) => {
 
     const projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
 
+    const handleChange = (event: any) => {
+        setType(event.target.value);
+    };
+
     function MyFormHelperText() {
         const { focused } = useFormControl() || {};
 
@@ -46,7 +50,8 @@ const ModalTypeSelect: React.FC<IChipSelect> = ({ type, setType, check }) => {
     return (<FormControl>
         <CustomSelect
             value={type}
-            onChange={setType}
+            onChange={handleChange}
+            id='typeSelect'
             defaultValue={""}
             error={!type && check}
             displayEmpty
@@ -57,7 +62,7 @@ const ModalTypeSelect: React.FC<IChipSelect> = ({ type, setType, check }) => {
                 </span>
             </MenuItem>
             {
-                projectTypes.map((x, i) => <MenuItem value={x.id} key={i} >{x.name}</MenuItem>)
+                projectTypes.map((x, key: number) => <MenuItem value={x.id} key={key} data-cy={`${x.name}`}>{x.name}</MenuItem>)
             }
         </CustomSelect>
         <MyFormHelperText />

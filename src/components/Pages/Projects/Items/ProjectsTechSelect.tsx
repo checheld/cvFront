@@ -44,6 +44,10 @@ const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
 
     let technologies = useTypedSelector((state) => state.technologies.technologies);
 
+    const handleChange = (event: any) => {
+        setParam(event.target.value);
+    };
+
     return (
         <div>
             <CustomFormControl>
@@ -51,7 +55,8 @@ const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
                     displayEmpty
                     defaultValue={""}
                     inputProps={{ 'aria-label': 'Without label' }}
-                    onChange={setParam}
+                    onChange={handleChange}
+                    id='ProjectsTechSelect'
                 >
                     <MenuItem value="">
                         <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
@@ -59,7 +64,7 @@ const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
                         </span>
                     </MenuItem>
                     {
-                        technologies.map((tech, i) => <MenuItem value={tech.name} key={i} >{tech.name}</MenuItem>)
+                        technologies.map((tech, i) => <MenuItem value={tech.name} key={i} data-cy={`${tech.name}`}>{tech.name}</MenuItem>)
                     }
                 </CustomSelect>
             </CustomFormControl>

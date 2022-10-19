@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { FormHelperText, styled } from '@mui/material';
 
 interface ISelect {
@@ -29,7 +29,7 @@ const CustomSelect = styled(Select)(() => ({
   }
 }))
 
-const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, height }) => {
+const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index }) => {
   // const handleChange = (event: SelectChangeEvent) => {
   //   setType(items[event.target.value]);
   // };
@@ -54,6 +54,7 @@ const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, he
         <CustomSelect
           value={type}
           onChange={setType}
+          id={`select${index}`}
           error={!type && check && index === 0}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
@@ -64,7 +65,7 @@ const ModalSelect: React.FC<ISelect> = ({ type, setType, check, index, width, he
             </span>
           </MenuItem>
           {
-            items.map((x, key: number) => <MenuItem value={x.toLowerCase()} key={key} >{x}</MenuItem>)
+            items.map((x, key: number) => <MenuItem value={x.toLowerCase()} key={key} data-cy={`${x}`}>{x}</MenuItem>)
           }
         </CustomSelect>
         <MyFormHelperText />

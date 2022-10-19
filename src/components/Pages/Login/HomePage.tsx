@@ -50,7 +50,7 @@ function HomePage() {
                             Authorization: "Bearer " + user.access_token,
                         },
                     })
-                        .then((resp) => resp.json())
+                        //.then((resp) => resp.json())
                         // @ts-ignore
                         .then((data) => setState({ user, data }));
                 }

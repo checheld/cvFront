@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { Box, createTheme, Divider, Paper, styled, ThemeProvider } from '@mui/material';
+import { Box, createTheme, Divider, styled, ThemeProvider } from '@mui/material';
 import Input from '../../Items/Input';
 import CustomButton from '../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
 import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
-import ChipItem from './Items/ChipItem'
 import TechModal from './Modal/TechModal';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
 import { ITechnology } from '../../../interfaces';
-
-const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    color: theme.palette.text.secondary,
-    borderRadius: '10px',
-    padding: '25px',
-    width: '260px',
-    ['@media (max-width:425px)']: {
-        width: '355px',
-    }
-}));
+import TechContainer from './Items/TechContainer';
+import '../../Components.css';
 
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
@@ -89,18 +79,26 @@ const TechnologiesPage: React.FC = () => {
     let softSkillsTech = technologies.filter((tech) => tech.type === 'soft skills');
     let allLength = frontEndTech.length + backEndTech.length + databasesTech.length + hostingTech.length + otherTech.length + softSkillsTech.length;
 
+    const containers = [
+        { name: 'Front-end', techCollection: frontEndTech },
+        { name: 'Back-end', techCollection: backEndTech },
+        { name: 'Databases', techCollection: databasesTech },
+        { name: 'Hosting', techCollection: hostingTech },
+        { name: 'Other', techCollection: otherTech }
+    ]
+
     return (
         <>
             {!load ? (
                 <CustomBox>
                     <TechModal open={open} handleClose={handleClose} editableTech={editableTech} />
-                    <Box sx={{ m: 0, display: 'flex' }}>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Technologies </Typography>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}> ({allLength})</Typography>
+                    <Box className='pageTitleContainer'>
+                        <Typography className='pageTitle pageName'>Technologies </Typography>
+                        <Typography className='pageTitle pageNameCount'> ({allLength})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <Box className='searchContainer'>
                         <Input setParam={setSearchParam} placeholder={"Search technology"} />
-                        <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
+                        <Box className='addButtonContainer'>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Technology' />
                         </Box>
                     </Box>
@@ -109,53 +107,14 @@ const TechnologiesPage: React.FC = () => {
                     ) : (
                         <Box>
                             <ThemeProvider theme={lightTheme}>
-                                <Box
-                                    sx={{
-                                        p: 2,
-                                        bgcolor: '#FBFBFB',
-                                        display: 'flex',
-                                        gridTemplateColumns: { md: '1fr 1fr' },
-                                        gap: 2,
-                                        padding: '0px',
-                                        flexWrap: 'wrap'
-                                    }}
-                                >
-                                    <Item elevation={4}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Front-end</Typography>
-                                        <ChipItem techCollection={frontEndTech} handleEdit={handleEdit} />
-                                    </Item>
-                                    <Item elevation={4}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Back-end</Typography>
-                                        <ChipItem techCollection={backEndTech} handleEdit={handleEdit} />
-                                    </Item>
-                                    <Item elevation={4}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Databases</Typography>
-                                        <ChipItem techCollection={databasesTech} handleEdit={handleEdit} />
-                                    </Item>
-                                    <Item elevation={4}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Hosting</Typography>
-                                        <ChipItem techCollection={hostingTech} handleEdit={handleEdit} />
-                                    </Item>
-                                    <Item elevation={4}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Other</Typography>
-                                        <ChipItem techCollection={otherTech} handleEdit={handleEdit} />
-                                    </Item>
+                                <Box className='techContainer techContainerMain'>
+                                    {
+                                        containers.map((x, i) => <TechContainer techCollection={x.techCollection} handleEdit={handleEdit} name={x.name} width={'260px'} />)
+                                    }
                                 </Box>
                                 <Divider variant="inset" sx={{ mt: '35px', ml: '0px', mr: '15px', mb: '35px' }} />
-                                <Box
-                                    sx={{
-                                        p: 2,
-                                        bgcolor: '#FBFBFB',
-                                        display: 'flex',
-                                        gridTemplateColumns: { md: '1fr 1fr' },
-                                        gap: 2,
-                                        padding: '0px'
-                                    }}
-                                >
-                                    <Item elevation={4} sx={{ width: '600px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#535E6C', mb: '15px' }}>Soft skills</Typography>
-                                        <ChipItem techCollection={softSkillsTech} handleEdit={handleEdit} />
-                                    </Item>
+                                <Box className='techContainer'>
+                                    <TechContainer techCollection={softSkillsTech} handleEdit={handleEdit} name='Soft skills' width={'640px'} />
                                 </Box>
                             </ThemeProvider>
                         </Box>

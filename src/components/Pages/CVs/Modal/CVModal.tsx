@@ -9,15 +9,16 @@ import ModalInput from '../../../Items/ModalInput';
 import ModalFormControl from '../../../Items/ModalFormControl';
 import DateField from '../../../Items/DateField';
 import CloseIcon from "@mui/icons-material/Close";
-import '../../../Components.css';
 import ModalInputPosition from '../../Users/Modal/Items/ModalInputPosition';
 import ModalFormControlSmall from '../../../Items/ModalFormControlSmall';
+import '../../../Components.css';
 
 interface ICVModal {
     open: boolean,
     handleClose: () => void,
     editableCV?: ICV
 }
+
 
 const CustomBoxDate = styled(Box)(() => ({
     display: 'flex',
@@ -110,34 +111,25 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            style={{ overflow: 'scroll' }}
         >
-            <div className='modalContainerCV'>
-                <Box sx={{ m: '50px' }}>
+            <div className='modal'>
+                <Box sx={{ m: '10px' }}>
                     {(editableCV === undefined) ? (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Add CV
                         </Typography>
                     ) : (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Edit CV
                         </Typography>
                     )}
                     <CloseIcon
-                        style={{
-                            width: `30px`,
-                            position: `absolute`,
-                            top: 30,
-                            right: 30,
-                            color: '#535E6C'
-                        }}
+                        className='closeIcon'
                         onClick={handleClose}
                     />
-                    <Box>
+                    <Box className='scrollContainer'>
                         <Box sx={{ mr: '20px', mb: '25px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                            <Typography className='inputTitle'>
                                 CV name
                             </Typography>
                             <ModalInput placeholder='CV name'
@@ -150,7 +142,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                             />
                         </Box>
                         <Box sx={{ mr: '20px', mb: '15px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                            <Typography className='inputTitle'>
                                 User
                             </Typography>
                             <ModalFormControl elements={users}
@@ -164,13 +156,13 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                         {arrayProjectCV.length && arrayProjectCV.map((projectCV, index) => (
                             <Box sx={{ m: 0, p: 0 }} key={index}>
                                 {index > 0 && (
-                                    <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
+                                    <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
                                         <DelInput index={index} removeItem={removeProjectCV} />
                                     </Box>
                                 )}
                                 <div className='modalInternalContainer'>
                                     <Box sx={{ mr: '20px' }}>
-                                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                        <Typography className='inputTitle'>
                                             Project
                                         </Typography>
                                         <ModalFormControlSmall elements={projects}
@@ -183,7 +175,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                     </Box>
                                     <div className='projectContainer' >
                                         <Box sx={{ mr: '20px' }}>
-                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                            <Typography className='inputTitle'>
                                                 Position
                                             </Typography>
                                             <ModalInputPosition item={projectCV.position}
@@ -192,7 +184,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                             />
                                         </Box>
                                         <Box sx={{ mr: '20px' }}>
-                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                            <Typography className='inputTitle'>
                                                 Start date - End date
                                             </Typography>
                                             <CustomBoxDate>
@@ -203,7 +195,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                     </div>
                                 </div>
                                 <Box sx={{ mr: '20px' }}>
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
+                                    <Typography className='inputTitle'>
                                         Description
                                     </Typography>
                                     <ModalInput placeholder='Description'
@@ -213,7 +205,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         index={index}
                                         height={100}
                                         setItem={handleChangeProjectCV(index)}
-                                        inputLength={100}
+                                        inputLength={500}
                                     />
                                 </Box>
                             </Box>
@@ -226,9 +218,9 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                         </Box>
                     </Box>
                     {(editableCV === undefined) ? (
-                        <Box sx={{ mt: '15px' }}>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
-                                children='Add User'
+                                children='Add CV'
                                 onClick={() => {
                                     if (isError) setCheck(true);
                                     else (addCV())
@@ -236,9 +228,9 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                             />
                         </Box>
                     ) : (
-                        <Box sx={{ mt: '15px' }}>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
-                                children='Save User'
+                                children='Save CV'
                                 onClick={() => {
                                     if (isError) setCheck(true);
                                     else (editCV())

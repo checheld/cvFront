@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import WorkExpTable from './Items/WorkExpTable';
-import Input from '../../Items/Input';
-import CustomButton from '../../Items/CustomButton';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
 import { Box, styled, Typography } from '@mui/material';
 import { companiesActions } from '../../../actionsTypes/companiesActionTypes';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
+import WorkExpTable from './Items/WorkExpTable';
+import Input from '../../Items/Input';
+import CustomButton from '../../Items/CustomButton';
 import AddModal from '../../Items/AddModal';
 import { ICompany } from '../../../interfaces';
+import '../../Components.css';
 
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
@@ -66,13 +67,13 @@ const WorkExperiencePage: React.FC = () => {
             {!load ? (
                 <CustomBox>
                     <AddModal open={open} handleClose={handleClose} action={companiesActions.ADD_COMPANY_REQUEST} addName={'Company'} />
-                    <Box sx={{ m: 0, display: 'flex' }}>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Work experience </Typography>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({companies.length})</Typography>
+                    <Box className='pageTitleContainer'>
+                        <Typography className='pageTitle pageName'>Work experience </Typography>
+                        <Typography className='pageTitle pageName'>({companies.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <Box className='searchContainer'>
                         <Input setParam={setSearchParam} placeholder={"Search company"} />
-                        <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
+                        <Box className='addButtonContainer'>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add Company' />
                         </Box>
                     </Box>
@@ -89,3 +90,4 @@ const WorkExperiencePage: React.FC = () => {
     )
 }
 export default WorkExperiencePage
+

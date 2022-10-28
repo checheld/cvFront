@@ -28,10 +28,10 @@ interface IUserModal {
 const CustomDivider = styled(Divider)(() => ({
     border: '1px solid #E3E3EA',
     marginBottom: '40px',
-    width: '700px',
+    width: '698px',
     marginLeft: '0px',
     ['@media (max-width:1024px)']: {
-        width: '505px'
+        width: '495px'
     },
     ['@media (max-width:425px)']: {
         width: '300px'
@@ -261,11 +261,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            style={{ overflow: 'scroll' }}
         >
-            <div className='modalContainerUser'>
+            <div className='modal'>
                 <PhotoModal
                     handleClosePhoto={handleClosePhoto}
                     handleOpenPhotoModal={handleOpenPhotoModal}
@@ -274,208 +271,204 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                     params={params}
                     setParams={setParams}
                 />
-                <Box sx={{ m: '50px' }}>
+                <Box sx={{ m: '10px' }}>
                     {(editableUser === undefined) ? (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Add Users
                         </Typography>
                     ) : (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Edit Users
                         </Typography>
                     )}
                     <CloseIcon
-                        style={{
-                            width: `30px`,
-                            position: `absolute`,
-                            top: 30,
-                            right: 30,
-                            color: '#535E6C'
-                        }}
+                        className='closeIcon'
                         onClick={handleClose}
                     />
-                    <Box>
-                        <CustomBox>
-                            <Box sx={{ mr: '35px', ml: 0, mt: 0, mb: '20px', p: 0 }}>
-                                <Box sx={{ ml: '15px', mb: '20px' }}>
-                                    <Photo params={params} photo={photo} />
-                                </Box>
-                                <CustomButtonFixed variant="outlined"
-                                    children={`+ ${editableUser ? "Edit " : "Add "}photo`}
-                                    onClick={handleOpenPhoto}
-                                />
-                            </Box>
-                            <Box sx={{ m: 0, p: 0 }}>
-                                <Box sx={{ mr: '20px', mb: '25px' }}>
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                        First name
-                                    </Typography>
-                                    <ModalInputName placeholder='First name'
-                                        item={firstName}
-                                        check={check}
-                                        index={0}
-                                        setItem={handleChangeFirstName}
-                                    />
-                                </Box>
-                                <Box sx={{ mr: '20px', mb: '25px' }}>
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                        Last name
-                                    </Typography>
-                                    <ModalInputName placeholder='Last name'
-                                        item={lastName}
-                                        check={check}
-                                        index={0}
-                                        setItem={handleChangeLastName}
-                                    />
-                                </Box>
-                            </Box>
-                        </CustomBox>
-                        <Box sx={{ mr: '20px', mb: '40px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Description
-                            </Typography>
-                            <ModalInput placeholder='Description'
-                                item={description}
-                                check={check}
-                                index={0}
-                                height={100}
-                                setItem={handleChangeDescription}
-                                inputLength={100}
-                            />
-                        </Box>
-                        <CustomDivider variant="inset" />
+                    <Box className='scrollContainer' sx={{ pb: '20px' }}>
                         <Box>
-                            <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
-                                EDUCATION
-                            </Typography>
-                            {arrayEducation.length && arrayEducation.map((education, index) => (
-                                <Box sx={{ m: 0, p: 0 }} key={index}>
-                                    {index > 0 && (
-                                        <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
-                                            <DelInput index={index} removeItem={removeEducation} />
-                                        </Box>
-                                    )}
-                                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                        University
-                                    </Typography>
-                                    <ModalFormControl elements={universities}
-                                        selectName={'universityId'}
-                                        placeholder={'university'}
-                                        type={education.universityId}
-                                        setType={handleChangeUniversity(index)}
-                                        check={check} index={index}
+                            <CustomBox>
+                                <Box sx={{ mr: '35px', ml: 0, mt: 0, mb: '20px', p: 0 }}>
+                                    <Box sx={{ ml: '15px', mb: '20px' }}>
+                                        <Photo params={params} photo={photo} />
+                                    </Box>
+                                    <CustomButtonFixed variant="outlined"
+                                        children={`+ ${editableUser ? "Edit " : "Add "}photo`}
+                                        onClick={handleOpenPhoto}
                                     />
-                                    <CustomBox>
-                                        <Box sx={{ mr: '20px' }}>
-                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                                Speciality
-                                            </Typography>
-                                            <ModalInputSpeciality item={education.speciality}
-                                                check={check}
-                                                index={index}
-                                                setItem={handleChangeEducation(index)}
-                                            />
-                                        </Box>
-                                        <Box sx={{ mr: '20px' }}>
-                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                                Start date - End date
-                                            </Typography>
-                                            <CustomBoxDate>
-                                                <DateField item={education.startDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
-                                                <DateField item={education.endDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"End date"} name={'endDate'} />
-                                            </CustomBoxDate>
-                                        </Box>
-                                    </CustomBox>
                                 </Box>
-                            ))}
-                            <Box sx={{ mb: '35px' }}>
-                                <CustomButtonFixed variant="outlined"
-                                    children='+ Add Education'
-                                    onClick={handleAddEducation}
-                                />
-                            </Box>
-                        </Box>
-                        <CustomDivider variant="inset" />
-                        <Box>
-                            <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
-                                WORK EXPERIENCE
-                            </Typography>
-                            {arrayWorkExperience.length && arrayWorkExperience.map((workExperience, index) => (
-                                <Box sx={{ m: 0, p: 0 }} key={index}>
-                                    {index > 0 && (
-                                        <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
-                                            <DelInput index={index} removeItem={removeWorkExperience} />
-                                        </Box>
-                                    )}
-                                    <div className='modalInternalContainer'>
-                                        <Box sx={{ mr: '20px' }}>
-                                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                                Company name
-                                            </Typography>
-                                            <ModalFormControlSmall elements={companies}
-                                                selectName={'companyId'}
-                                                placeholder={'company'}
-                                                type={workExperience.companyId}
-                                                setType={handleChangeCompany(index)}
-                                                check={check} index={index}
-                                            />
-                                        </Box>
-                                        <CustomBox>
-                                            <Box sx={{ mr: '20px' }}>
-                                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                                    Position
-                                                </Typography>
-                                                <ModalInputPosition item={workExperience.position}
-                                                    check={check}
-                                                    index={index}
-                                                    setItem={handleChangeWorkExperience(index)}
-                                                />
-                                            </Box>
-                                            <Box sx={{ mr: '20px' }}>
-                                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                                    Start date - End date
-                                                </Typography>
-                                                <CustomBoxDate>
-                                                    <DateField item={workExperience.startDate} setItem={handleChangeWorkExperience(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
-                                                    <DateField item={workExperience.endDate} setItem={handleChangeWorkExperience(index)} check={check} index={index} label={"End date"} name={'endDate'} />
-                                                </CustomBoxDate>
-                                            </Box>
-                                        </CustomBox>
-                                    </div>
-                                    <Box sx={{ mr: '20px' }}>
-                                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                            Description
+                                <Box sx={{ m: 0, p: 0 }}>
+                                    <Box sx={{ mr: '20px', mb: '25px' }}>
+                                        <Typography className='inputTitle'>
+                                            First name
                                         </Typography>
-                                        <ModalInput placeholder='Description'
-                                            selectName={'description'}
+                                        <ModalInputName placeholder='First name'
+                                            item={firstName}
                                             check={check}
-                                            index={index}
-                                            height={100}
-                                            item={workExperience.description}
-                                            setItem={handleChangeWorkExperience(index)}
-                                            inputLength={100}
+                                            index={0}
+                                            setItem={handleChangeFirstName}
+                                        />
+                                    </Box>
+                                    <Box sx={{ mr: '20px', mb: '25px' }}>
+                                        <Typography className='inputTitle'>
+                                            Last name
+                                        </Typography>
+                                        <ModalInputName placeholder='Last name'
+                                            item={lastName}
+                                            check={check}
+                                            index={0}
+                                            setItem={handleChangeLastName}
                                         />
                                     </Box>
                                 </Box>
-                            ))}
-                            <Box sx={{ mb: '35px' }}>
-                                <CustomButtonFixed variant="outlined"
-                                    children='+ Add Work Experience'
-                                    onClick={handleAddWorkExperience}
+                            </CustomBox>
+                            <Box sx={{ mr: '20px', mb: '40px' }}>
+                                <Typography className='inputTitle'>
+                                    Description
+                                </Typography>
+                                <ModalInput placeholder='Description'
+                                    item={description}
+                                    check={check}
+                                    index={0}
+                                    height={100}
+                                    setItem={handleChangeDescription}
+                                    inputLength={500}
                                 />
                             </Box>
+                            <CustomDivider variant="inset" />
+                            <Box>
+                                <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
+                                    EDUCATION
+                                </Typography>
+                                {arrayEducation.length && arrayEducation.map((education, index) => (
+                                    <Box sx={{ m: 0, p: 0 }} key={index}>
+                                        {index > 0 && (
+                                            <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                                <DelInput index={index} removeItem={removeEducation} />
+                                            </Box>
+                                        )}
+                                        <Typography className='inputTitle'>
+                                            University
+                                        </Typography>
+                                        <ModalFormControl elements={universities}
+                                            selectName={'universityId'}
+                                            placeholder={'university'}
+                                            type={education.universityId}
+                                            setType={handleChangeUniversity(index)}
+                                            check={check} index={index}
+                                        />
+                                        <CustomBox>
+                                            <Box sx={{ mr: '20px' }}>
+                                                <Typography className='inputTitle'>
+                                                    Speciality
+                                                </Typography>
+                                                <ModalInputSpeciality item={education.speciality}
+                                                    check={check}
+                                                    index={index}
+                                                    setItem={handleChangeEducation(index)}
+                                                />
+                                            </Box>
+                                            <Box sx={{ mr: '20px' }}>
+                                                <Typography className='inputTitle'>
+                                                    Start date - End date
+                                                </Typography>
+                                                <CustomBoxDate>
+                                                    <DateField item={education.startDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
+                                                    <DateField item={education.endDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"End date"} name={'endDate'} />
+                                                </CustomBoxDate>
+                                            </Box>
+                                        </CustomBox>
+                                    </Box>
+                                ))}
+                                <Box sx={{ mb: '35px' }}>
+                                    <CustomButtonFixed variant="outlined"
+                                        children='+ Add Education'
+                                        onClick={handleAddEducation}
+                                    />
+                                </Box>
+                            </Box>
+                            <CustomDivider variant="inset" />
+                            <Box>
+                                <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
+                                    WORK EXPERIENCE
+                                </Typography>
+                                {arrayWorkExperience.length && arrayWorkExperience.map((workExperience, index) => (
+                                    <Box sx={{ m: 0, p: 0 }} key={index}>
+                                        {index > 0 && (
+                                            <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                                <DelInput index={index} removeItem={removeWorkExperience} />
+                                            </Box>
+                                        )}
+                                        <div className='modalInternalContainer'>
+                                            <Box sx={{ mr: '20px' }}>
+                                                <Typography className='inputTitle'>
+                                                    Company name
+                                                </Typography>
+                                                <ModalFormControlSmall elements={companies}
+                                                    selectName={'companyId'}
+                                                    placeholder={'company'}
+                                                    type={workExperience.companyId}
+                                                    setType={handleChangeCompany(index)}
+                                                    check={check} index={index}
+                                                />
+                                            </Box>
+                                            <CustomBox>
+                                                <Box sx={{ mr: '20px' }}>
+                                                    <Typography className='inputTitle'>
+                                                        Position
+                                                    </Typography>
+                                                    <ModalInputPosition item={workExperience.position}
+                                                        check={check}
+                                                        index={index}
+                                                        setItem={handleChangeWorkExperience(index)}
+                                                    />
+                                                </Box>
+                                                <Box sx={{ mr: '20px' }}>
+                                                    <Typography className='inputTitle'>
+                                                        Start date - End date
+                                                    </Typography>
+                                                    <CustomBoxDate>
+                                                        <DateField item={workExperience.startDate} setItem={handleChangeWorkExperience(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
+                                                        <DateField item={workExperience.endDate} setItem={handleChangeWorkExperience(index)} check={check} index={index} label={"End date"} name={'endDate'} />
+                                                    </CustomBoxDate>
+                                                </Box>
+                                            </CustomBox>
+                                        </div>
+                                        <Box sx={{ mr: '20px' }}>
+                                            <Typography className='inputTitle'>
+                                                Description
+                                            </Typography>
+                                            <ModalInput placeholder='Description'
+                                                selectName={'description'}
+                                                check={check}
+                                                index={index}
+                                                height={100}
+                                                item={workExperience.description}
+                                                setItem={handleChangeWorkExperience(index)}
+                                                inputLength={500}
+                                            />
+                                        </Box>
+                                    </Box>
+                                ))}
+                                <Box sx={{ mb: '35px' }}>
+                                    <CustomButtonFixed variant="outlined"
+                                        children='+ Add Work Experience'
+                                        onClick={handleAddWorkExperience}
+                                    />
+                                </Box>
+                            </Box>
                         </Box>
+                        <CustomDivider variant="inset" />
+                        <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
+                            TECHNOLOGIES
+                        </Typography>
+                        <Typography className='inputTitle'>
+                            Skills
+                        </Typography>
+                        <ChipSelect tech={tech} setTech={setTech} check={check} />
                     </Box>
-                    <CustomDivider variant="inset" />
-                    <Typography sx={{ fontSize: '16px', color: '#535E6C', fontWeight: 600, mb: '15px' }}>
-                        TECHNOLOGIES
-                    </Typography>
-                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                        Skills
-                    </Typography>
-                    <ChipSelect tech={tech} setTech={setTech} check={check} />
                     {(editableUser === undefined) ? (
-                        <Box sx={{ mt: '15px' }}>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
                                 children='Add User'
                                 onClick={() => {
@@ -485,7 +478,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                             />
                         </Box>
                     ) : (
-                        <Box sx={{ mt: '15px' }}>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
                                 children='Save User'
                                 onClick={() => {

@@ -141,97 +141,89 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            style={{ overflow: 'scroll' }}
         >
-            <div className='modalContainerProject'>
-                <Box sx={{ m: '50px' }}>
+            <div className='modal'>
+                <Box sx={{ m: '10px' }}>
                     {(editableProject === undefined) ? (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Add Project
                         </Typography>
                     ) : (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Edit Project
                         </Typography>
                     )}
                     <CloseIcon
-                        style={{
-                            width: `30px`,
-                            position: `absolute`,
-                            top: 30,
-                            right: 30,
-                            color: '#535E6C'
-                        }}
+                        className='closeIcon'
                         onClick={handleClose}
                     />
-                    <CustomBox>
-                        <Box sx={{ mr: '20px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Project name
+                    <Box className='scrollContainer'>
+                        <CustomBox>
+                            <Box sx={{ mr: '20px' }}>
+                                <Typography className='inputTitle'>
+                                    Project name
+                                </Typography>
+                                <ModalInputName item={projectName}
+                                    check={check}
+                                    index={0}
+                                    setItem={handleChangeName}
+                                />
+                            </Box>
+                            <Box sx={{ mb: '25px' }}>
+                                <Typography className='inputTitle'>
+                                    Type
+                                </Typography>
+                                <ModalTypeSelect type={type} setType={setType} />
+                            </Box>
+                        </CustomBox>
+                        <CustomBox>
+                            <Box sx={{ mr: '20px' }}>
+                                <Typography className='inputTitle'>
+                                    Country
+                                </Typography>
+                                <ModalInputCountry item={country}
+                                    check={check}
+                                    index={0}
+                                    setItem={handleChangeCountry}
+                                />
+                            </Box>
+                            <Box>
+                                <Typography className='inputTitle'>
+                                    Link
+                                </Typography>
+                                <ModalInputLink
+                                    item={link}
+                                    index={0}
+                                    setItem={handleChangeLink}
+                                />
+                            </Box>
+                        </CustomBox>
+                        <Box sx={{ mb: '18px' }} >
+                            <Typography className='inputTitle'>
+                                Technologies
                             </Typography>
-                            <ModalInputName item={projectName}
-                                check={check}
-                                index={0}
-                                setItem={handleChangeName}
-                            />
+                            <ChipSelect tech={tech} setTech={setTech} check={check} />
                         </Box>
-                        <Box sx={{ mb: '25px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Type
+                        <Box sx={{ mr: '20px', mb: '80px' }}>
+                            <Typography className='inputTitle'>
+                                Description
                             </Typography>
-                            <ModalTypeSelect type={type} setType={setType} />
-                        </Box>
-                    </CustomBox>
-                    <CustomBox>
-                        <Box sx={{ mr: '20px' }}>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Country
-                            </Typography>
-                            <ModalInputCountry item={country}
+                            <ModalInput placeholder='Description'
+                                item={description}
                                 check={check}
+                                height={100}
                                 index={0}
-                                setItem={handleChangeCountry}
+                                setItem={handleChangeDescription}
+                                inputLength={500}
                             />
                         </Box>
                         <Box>
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Link
-                            </Typography>
-                            <ModalInputLink
-                                item={link}
-                                check={check}
-                                index={0}
-                                setItem={handleChangeLink}
-                            />
+                            <PhotoInput />
+                            <Photos photos={photo} removePhoto={removePhotoFromState} />
                         </Box>
-                    </CustomBox>
-                    <Box sx={{ mb: '18px' }} >
-                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                            Technologies
-                        </Typography>
-                        <ChipSelect tech={tech} setTech={setTech} check={check} />
-                    </Box>
-                    <Box sx={{ mr: '20px', mb: '80px' }}>
-                        <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                            Description
-                        </Typography>
-                        <ModalInput placeholder='Description'
-                            item={description}
-                            check={check}
-                            height={100}
-                            index={0}
-                            setItem={handleChangeDescription}
-                            inputLength={100}
-                        />
-                    </Box>
-                    <Box>
-                        <PhotoInput />
-                        <Photos photos={photo} removePhoto={removePhotoFromState} />
                     </Box>
                     {(editableProject === undefined) ? (
-                        <Box>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
                                 children='Add Project'
                                 onClick={() => {
@@ -241,7 +233,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                             />
                         </Box>
                     ) : (
-                        <Box>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
                                 children='Save Project'
                                 onClick={() => {

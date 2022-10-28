@@ -1,15 +1,14 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import { Box, Button, createTheme, Paper, Stack, styled, ThemeProvider } from '@mui/material';
-import { ICV } from '../../../../interfaces';
-import CVModal from '../Modal/CVModal';
-import Delete from '../../../../img/Delete';
+import moment from 'moment';
+import { Box, Button, createTheme, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
 import { useAppDispatch } from '../../../../redusers/useTypedSelector';
-import Download from '../../../../img/Download';
+import CVModal from '../Modal/CVModal';
 import DeleteModal from '../../../Items/DeleteModal';
-import moment from 'moment';
+import Download from '../../../../img/Download';
 import PdfIcon from '../../../../img/PdfIcon';
+import Delete from '../../../../img/Delete';
+import { ICV } from '../../../../interfaces';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -18,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: '20px',
     height: '255px',
     width: '260px',
+    cursor: 'pointer',
     mr: '6px',
     ['@media (max-width:375px)']: {
         width: '205px'
@@ -81,9 +81,9 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                 <Item elevation={4} key={CV.id}>
                     <Box sx={{ m: 0, p: 0 }} onClick={handleOpen}>
                         <PdfIcon />
-                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '19.1px', color: '#535E6C', mb: '20px', mt: '30px', fontFamily: `"Nunito", sans-serif` }}>{CV.cvName}</Typography>
-                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#535E6C', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>{CV.user!.firstName} {CV.user!.lastName}</Typography>
-                        <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', color: '#AFB5BF', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>{joinedProjectsNames}</Typography>
+                        <Typography className='cvCardText cvCardTitle'>{CV.cvName}</Typography>
+                        <Typography className='cvCardText cvCardName'>{CV.user!.firstName} {CV.user!.lastName}</Typography>
+                        <Typography className='cvCardText cvCardProject'>{joinedProjectsNames}</Typography>
                     </Box>
                     <CustomStack direction="row" key={CV.id}>
                         <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>
@@ -93,7 +93,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                             <Delete />
                         </Button>
                         <Box sx={{ ml: 'auto' }}>
-                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '19px', color: '#D0D4DA', pt: '5px', fontFamily: `"Nunito", sans-serif` }}>{time}</Typography>
+                            <Typography className='cvCardText cvCardTime'>{time}</Typography>
                         </Box>
                     </CustomStack>
                 </Item>

@@ -40,10 +40,10 @@ const ProjectsTypeSelect: React.FC<IProjectsTypeSelect> = ({ setParam }) => {
       <FormControl sx={{ ml: '15px' }}>
         <CustomSelect
           displayEmpty
-          defaultValue={""}
           inputProps={{ 'aria-label': 'Without label' }}
           onChange={handleChange}
           id='ProjectsTypeSelect'
+          defaultValue={''}
         >
           <MenuItem value="">
             <span style={{ color: `#a7aaac`, fontSize: `14px` }}>

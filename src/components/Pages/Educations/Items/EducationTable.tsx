@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Delete from '../../../../img/Delete';
-import { universitiesActions } from '../../../../actionsTypes/universitiesActionTypes';
-import { IUniversity } from '../../../../interfaces';
-import EditModal from '../../../Items/EditModal';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { universitiesActions } from '../../../../actionsTypes/universitiesActionTypes';
+import Delete from '../../../../img/Delete';
+import EditModal from '../../../Items/EditModal';
 import DeleteModal from '../../../Items/DeleteModal';
+import { IUniversity } from '../../../../interfaces';
+import '../../../Components.css';
 
 const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
 
@@ -30,7 +31,7 @@ const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
       <EditModal open={open} handleClose={handleClose} item={university} action={universitiesActions.EDIT_UNIVERSITY_REQUEST} editName={'University'} />
       <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"university"} />
       <TableContainer component={Paper}>
-        <Table sx={{ border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
+        <Table className='table'>
           <TableHead>
             <TableRow>
               <TableCell variant='head' sx={{ width: '20px' }}>ID</TableCell>
@@ -47,7 +48,7 @@ const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
                 <TableCell variant='footer' align="left">{university.id}</TableCell>
                 <TableCell component="th"
                   scope="row"
-                  sx={{ color: '#5893F9' }}
+                  className='clicableTableItem'
                   onClick={() => modalOpen(university)}>
                   {university.name}
                 </TableCell>

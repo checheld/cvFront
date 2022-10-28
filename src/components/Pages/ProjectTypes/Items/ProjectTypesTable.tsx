@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import EditButton from '../../../Items/EditButton';
-import Delete from '../../../../img/Delete';
-import { projectTypesActions } from '../../../../actionsTypes/projectTypesActionTypes';
-import { useAppDispatch } from '../../../../redusers/useTypedSelector';
-import { IProjectType } from '../../../../interfaces';
-import { useTypedSelector } from '../../../../redusers/useTypedSelector';
-import EditModal from '../../../Items/EditModal';
+import React, { useState } from 'react';
 import { Box, Button, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { projectTypesActions } from '../../../../actionsTypes/projectTypesActionTypes';
+import EditModal from '../../../Items/EditModal';
 import DeleteModal from '../../../Items/DeleteModal';
+import Delete from '../../../../img/Delete';
+import { IProjectType } from '../../../../interfaces';
+import '../../../Components.css';
 
 const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
 
@@ -33,7 +31,7 @@ const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
             <EditModal open={open} handleClose={handleClose} item={projectType} action={projectTypesActions.EDIT_PROJECTTYPE_REQUEST} editName={'Project type'} />
             <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project type"} />
             <TableContainer component={Paper}>
-                <Table sx={{ border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
+                <Table className='table'>
                     <TableHead>
                         <TableRow>
                             <TableCell variant='head' sx={{ width: '20px' }}>ID</TableCell>
@@ -50,7 +48,7 @@ const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
                                 <TableCell variant='footer' align="left">{projectType.id}</TableCell>
                                 <TableCell component="th"
                                     scope="row"
-                                    sx={{ color: '#5893F9' }}
+                                    className='clicableTableItem'
                                     onClick={() => modalOpen(projectType)}>
                                     {projectType.name}
                                 </TableCell>

@@ -48,7 +48,6 @@ const ModalFormControlSmall: React.FC<ISelect> = ({ elements, type, setType, che
         <FormControl sx={{ mb: '20px' }}>
             <CustomSelect
                 name={selectName}
-                defaultValue={""}
                 value={type}
                 error={type === '' && check && index === 0}
                 onChange={setType}

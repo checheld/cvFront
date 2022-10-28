@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Delete from '../../../../img/Delete';
-import { Box, Button, Chip, Stack, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { IProject, IProjectType, ITechnology } from '../../../../interfaces';
-import { useTypedSelector } from '../../../../redusers/useTypedSelector';
+import { Box, Button, Chip, Stack, TableCell, TableRow } from '@mui/material';
+import Delete from '../../../../img/Delete';
+import { IProject, ITechnology } from '../../../../interfaces';
+import '../../../Components.css';
 
 interface ITableItem {
     project: IProject
     setOpenDelModal: any,
     setdelId: any,
-    setEditableProject: any,
-    handleOpen: any
 }
 
-const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, setEditableProject, handleOpen }) => {
+const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId }) => {
 
     const router = useNavigate();
+    const screenWidth = window.screen.width;
+
+    const [showTech, setShowTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
+    const [amountHideTech, setAmountHideTech] = useState<number>();
 
     const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
         setdelId(event.currentTarget.id);
@@ -23,20 +25,15 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
     }
 
     useEffect(() => {
-        setAmountHideTech(project.technologyList.length - showTech.length)
-    }, [project]);
-
-    let techTableCellRef = useRef();
-
-    const [showTech, setShowTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
-    const [amountHideTech, setAmountHideTech] = useState(0);
-
-    const screenWidth = window.screen.width;
-
-    useEffect(() => {
         if (screenWidth <= 1024) setShowTech([project.technologyList[0]])
         else setShowTech([project.technologyList[0], project.technologyList[1], project.technologyList[2]])
-    }, [screenWidth]);
+    }, []);
+
+    useEffect(() => {
+        setAmountHideTech(project.technologyList.length - showTech.length)
+    }, [showTech]);
+
+    let techTableCellRef = useRef();
 
     return (
         <TableRow
@@ -47,7 +44,7 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
             <TableCell component="th"
                 scope="row"
                 onClick={() => router(`/projects/${project.id}`)}
-                sx={{ color: '#5893F9', width: '30%' }}
+                className='clicableTableItem projectTableClassName'
             >
                 {project.name}
             </TableCell>
@@ -55,26 +52,39 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId, s
             <TableCell component="th" scope="row" sx={{ width: '10%' }}>
                 {project.projectType!.name}
             </TableCell>
-            <TableCell component="th" scope="row" sx={{ display: 'flex' }} ref={techTableCellRef}>
-                {project.technologyList.length > 3 ? (
-                    <Box sx={{ m: 0, p: 0, overflow: 'hidden', display: 'flex', flexWrap: 'nowrap' }}>
+            {showTech.length === 3 ? (
+                <TableCell component="th" scope="row" sx={{ display: 'flex' }} ref={techTableCellRef}>
+                    {project.technologyList.length > 3 ? (
+                        <Box className='chipContainer projectTableChipContainer'>
+                            {
+                                showTech.map((tech: ITechnology, index) => (
+                                    <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
+                                ))
+                            }
+                            <Chip className='projectChip projectTableChip' label={`+${amountHideTech}`} />
+                        </Box>
+                    ) : (
+                        <Box className='chipContainer projectTableChipContainer'>
+                            {
+                                project.technologyList.map((tech: ITechnology, index) => (
+                                    <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
+                                ))
+                            }
+                        </Box>
+                    )}
+                </TableCell>
+            ) : (
+                <TableCell component="th" scope="row" sx={{ display: 'flex' }} ref={techTableCellRef}>
+                    <Box className='chipContainer projectTableChipContainer'>
                         {
                             showTech.map((tech: ITechnology, index) => (
-                                <Chip label={tech.name} sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '14px', fontWeight: 600, pr: '15px', pl: '15px' }} id={`chipId${index}`} key={index} />
+                                <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
                             ))
                         }
-                        <Chip sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '14px', fontWeight: 600 }} label={`+${amountHideTech}`} />
+                        <Chip className='projectChip projectTableChip' label={`+${amountHideTech}`} />
                     </Box>
-                ) : (
-                    <Box sx={{ m: 0, p: 0, overflow: 'hidden', display: 'flex', flexWrap: 'nowrap' }}>
-                        {
-                            project.technologyList.map((tech: ITechnology, index) => (
-                                <Chip label={tech.name} sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '14px', fontWeight: 600, pr: '15px', pl: '15px' }} id={`chipId${index}`} key={index} />
-                            ))
-                        }
-                    </Box>
-                )}
-            </TableCell>
+                </TableCell>
+            )}
             <TableCell component="th" scope="row" sx={{ width: '15%' }}>
                 {project.country}
             </TableCell>

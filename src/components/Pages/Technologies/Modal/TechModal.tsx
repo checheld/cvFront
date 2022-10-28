@@ -77,65 +77,60 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            style={{ overflow: 'scroll' }}
         >
-            <div className='modalContainer'>
-                <Box sx={{ m: '50px' }}>
+            <div className='modal'>
+                <Box sx={{ m: '10px' }}>
                     {(editableTech === undefined) ? (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Add Technology
                         </Typography>
                     ) : (
-                        <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+                        <Typography className='mainModalName'>
                             Edit Technology
                         </Typography>
                     )}
                     <CloseIcon
-                        style={{
-                            width: `30px`,
-                            position: `absolute`,
-                            top: 30,
-                            right: 30,
-                            color: '#535E6C'
-                        }}
+                        className='closeIcon'
                         onClick={handleClose}
                     />
-                    {arrayTechnologies.length && arrayTechnologies.map((tech, index) => (
-                        <Box key={index}>
-                            {index > 0 && (
-                                <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
-                                    <DelInput index={index} removeItem={removeTechnology} />
+                    <Box className='scrollContainer'>
+                        <Box sx={{ mb: '35px' }}>
+                            {arrayTechnologies.length && arrayTechnologies.map((tech, index) => (
+                                <Box key={index}>
+                                    {index > 0 && (
+                                        <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                            <DelInput index={index} removeItem={removeTechnology} />
+                                        </Box>
+                                    )}
+                                    <Typography className='inputTitle'>
+                                        Technology name
+                                    </Typography>
+                                    <ModalInput placeholder="Technology name" inputLength={15} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} />
+                                    <Typography className='inputTitle'>
+                                        Type
+                                    </Typography>
+                                    <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} />
                                 </Box>
-                            )}
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Technology name
-                            </Typography>
-                            <ModalInput placeholder="Technology name" inputLength={15} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} />
-                            <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                                Type
-                            </Typography>
-                            <ModalSelect type={tech.type} setType={handleChangeType(index)} check={check} index={index} />
+                            ))}
                         </Box>
-                    ))}
-                    {(editableTech === undefined) ? (
-                        <>
-                            <Box sx={{ mb: '35px', mt: '35px' }}>
+                        {(editableTech === undefined) && (
+                            <Box sx={{ mb: '35px' }}>
                                 <CustomButtonFixed variant="outlined" children='+ Add Technology' onClick={handleAddTechnology} />
                             </Box>
-                            <Box>
-                                <CustomButtonFixed variant="contained"
-                                    children='Save Technology'
-                                    onClick={() => {
-                                        if (isError) setCheck(true);
-                                        else (addTechnology())
-                                    }}
-                                />
-                            </Box>
-                        </>
+                        )}
+                    </Box>
+                    {(editableTech === undefined) ? (
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
+                            <CustomButtonFixed variant="contained"
+                                children='Save Technology'
+                                onClick={() => {
+                                    if (isError) setCheck(true);
+                                    else (addTechnology())
+                                }}
+                            />
+                        </Box>
                     ) : (
-                        <Box sx={{ mb: '35px', mt: '35px' }}>
+                        <Box sx={{ m: '30px 0 20px 40px' }}>
                             <CustomButtonFixed variant="contained"
                                 children='Save Technology'
                                 onClick={() => {

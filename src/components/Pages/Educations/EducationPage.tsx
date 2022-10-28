@@ -9,6 +9,7 @@ import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
 import AddModal from '../../Items/AddModal';
 import { IUniversity } from '../../../interfaces';
+import '../../Components.css';
 
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
@@ -66,13 +67,13 @@ const EducationPage: React.FC = () => {
             {!load ? (
                 <CustomBox >
                     <AddModal open={open} handleClose={handleClose} action={universitiesActions.ADD_UNIVERSITY_REQUEST} addName={'University'} />
-                    <Box sx={{ m: 0, display: 'flex' }}>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Education </Typography>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({universities.length})</Typography>
+                    <Box className='pageTitleContainer'>
+                        <Typography className='pageTitle pageName'>Education </Typography>
+                        <Typography className='pageTitle pageNameCount'>({universities.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <Box className='searchContainer'>
                         <Input setParam={setSearchParam} placeholder={"Search university"} />
-                        <Box sx={{ marginLeft: 'auto', mb: '20px' }}>
+                        <Box className='addButtonContainer'>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add University' />
                         </Box>
                     </Box>

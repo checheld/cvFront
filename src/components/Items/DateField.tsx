@@ -42,7 +42,6 @@ const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name 
                 id="date"
                 label={label}
                 type="date"
-                defaultValue="2022-05-26"
                 InputProps={{ inputProps: { min: "1950-01-01", max: `${date}` } }}
                 sx={{ width: '130px', mr: '10px', fontSize: '14px !important', mb: 0 }}
                 InputLabelProps={{

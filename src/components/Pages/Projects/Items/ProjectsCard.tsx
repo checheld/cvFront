@@ -1,15 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Chip, createTheme, Divider, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import { IProject } from '../../../../interfaces';
 import Delete from '../../../../img/Delete';
-import { useNavigate } from 'react-router-dom';
+import '../../../Components.css';
 
 interface IProjectsTable {
     project: IProject
     setOpenDelModal: any,
     setdelId: any,
-    setEditableProject: any,
-    handleOpen: any
 }
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -46,7 +45,7 @@ const lightTheme = createTheme({
     }
 });
 
-const ProjectsCard: React.FC<IProjectsTable> = ({ project, setOpenDelModal, setdelId, setEditableProject, handleOpen }) => {
+const ProjectsCard: React.FC<IProjectsTable> = ({ project, setOpenDelModal, setdelId }) => {
 
     const router = useNavigate();
 
@@ -61,31 +60,31 @@ const ProjectsCard: React.FC<IProjectsTable> = ({ project, setOpenDelModal, setd
                 <Item elevation={4} key={project.id}>
                     <Box sx={{ m: 0 }} onClick={() => router(`/projects/${project.id}`)}>
                         <Box sx={{ display: 'flex', mb: '20px' }}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19.1px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>ID</Typography>
-                            <Typography sx={{ ml: 'auto', mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', fontFamily: `"Nunito", sans-serif` }}>{project.id}</Typography>
+                            <Typography className='projectCardTitle'>ID</Typography>
+                            <Typography className='projectCardDescription'>{project.id}</Typography>
                         </Box>
                         <CustomDivider variant="inset" />
                         <Box sx={{ display: 'flex', mb: '20px' }}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19.1px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>PROJECT NAME</Typography>
-                            <Typography sx={{ ml: 'auto', mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', fontFamily: `"Nunito", sans-serif` }}>{project.name}</Typography>
+                            <Typography className="projectCardTitle">PROJECT NAME</Typography>
+                            <Typography className='projectCardDescription'>{project.name}</Typography>
                         </Box>
                         <CustomDivider variant="inset" />
                         <Box sx={{ display: 'flex', mb: '20px' }}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19.1px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>TYPE</Typography>
-                            <Typography sx={{ ml: 'auto', mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', fontFamily: `"Nunito", sans-serif` }}>{project.projectType!.name}</Typography>
+                            <Typography className="projectCardTitle">TYPE</Typography>
+                            <Typography className='projectCardDescription'>{project.projectType!.name}</Typography>
                         </Box>
                         <CustomDivider variant="inset" />
                         <Box sx={{ display: 'flex', mb: '20px' }}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19.1px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>TECHNOLOGIES</Typography>
-                            <Box sx={{ ml: 'auto', p: 0, overflow: 'hidden', display: 'flex', flexWrap: 'nowrap' }}>
-                                <Chip label={project.technologyList[0].name} sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '12px', fontFamily: `"Nunito", sans-serif` }} id={project.technologyList[0].id} />
-                                <Chip sx={{ mr: '10px', bgcolor: '#F0F2F5', color: '#9EA9BA', fontSize: '12px', fontWeight: 400, fontFamily: `"Nunito", sans-serif` }} label={`+${project.technologyList.length - 1}`} />
+                            <Typography className="projectCardTitle">TECHNOLOGIES</Typography>
+                            <Box className='chipContainer projectCardChipContainer'>
+                                <Chip className='projectChip projectCardChip' label={project.technologyList[0].name} id={project.technologyList[0].id} />
+                                <Chip className='projectChip projectCardChip' label={`+${project.technologyList.length - 1}`} />
                             </Box>
                         </Box>
                         <CustomDivider variant="inset" />
                         <Box sx={{ display: 'flex', mb: '20px' }}>
-                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19.1px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>COUNTRY</Typography>
-                            <Typography sx={{ ml: 'auto', mr: '10px', fontWeight: 400, fontSize: '14px', lineHeight: '19.1px', fontFamily: `"Nunito", sans-serif` }}>{project.country}</Typography>
+                            <Typography className="projectCardTitle">COUNTRY</Typography>
+                            <Typography className='projectCardDescription'>{project.country}</Typography>
                         </Box>
                         <CustomDivider variant="inset" />
                     </Box>

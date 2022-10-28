@@ -12,7 +12,7 @@ import { projectTypesActions } from '../../actionsTypes/projectTypesActionTypes'
 import CloseIcon from "@mui/icons-material/Close";
 import CustomButtonFixed from './CustomButtonFixed';
 
-interface IProjectModal {
+interface IDeleteModal {
     open: boolean,
     handleClose: () => void,
     id: string | number,
@@ -36,7 +36,7 @@ const CustomBox = styled(Box)(() => ({
     }
 }))
 
-const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) => {
+const DeleteModal: React.FC<IDeleteModal> = ({ open, handleClose, id, type }) => {
 
     const dispatch = useAppDispatch();
     const router = useNavigate();
@@ -78,8 +78,6 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
         >
             <CustomBox>
                 <Box sx={{ m: '30px' }}>
@@ -90,13 +88,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
                         When you delete this {type}, you cannot be undone.
                     </Typography>
                     <CloseIcon
-                        style={{
-                            width: `30px`,
-                            position: `absolute`,
-                            top: 30,
-                            right: 30,
-                            color: '#535E6C'
-                        }}
+                        className='closeIcon'
                         onClick={handleClose}
                     />
                     <Box>
@@ -107,4 +99,4 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, id, type }) 
         </Modal>
     )
 }
-export default ProjectModal
+export default DeleteModal

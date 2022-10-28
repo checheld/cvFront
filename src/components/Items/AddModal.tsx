@@ -52,42 +52,35 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
         <Modal
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            style={{ overflow: 'scroll' }}
         >
-            <div className='modalContainer'>
-                <Box sx={{ m: '50px' }}>
-                    <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+            <div className='modal'>
+                <Box sx={{ m: '10px' }}>
+                    <Typography className='mainModalName'>
                         Add {addName}
                     </Typography>
-                    <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-                        {addName}
-                    </Typography>
-                    <CloseIcon
-                        style={{
-                            width: `30px`,
-                            position: `absolute`,
-                            top: 30,
-                            right: 30,
-                            color: '#535E6C'
-                        }}
-                        onClick={handleClose}
-                    />
-                    {arrayItems.length && arrayItems.map((item, index) => (
-                        <Box key={index}>
-                            {index > 0 && (
-                                <Box sx={{ position: `relative`, left: `-35px`, top: `40px` }}>
-                                    <DelInput index={index} removeItem={removeItem} />
-                                </Box>
-                            )}
-                            <ModalInput placeholder={`${addName} name`} item={item} inputLength={15} setItem={handleChangeItems(index)} index={index} check={check} />
+                    <Box className='scrollContainer'>
+                        <Typography className='inputTitle'>
+                            {addName}
+                        </Typography>
+                        <CloseIcon
+                            className='closeIcon'
+                            onClick={handleClose}
+                        />
+                        {arrayItems.length && arrayItems.map((item, index) => (
+                            <Box key={index}>
+                                {index > 0 && (
+                                    <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                        <DelInput index={index} removeItem={removeItem} />
+                                    </Box>
+                                )}
+                                <ModalInput placeholder={`${addName} name`} item={item} inputLength={15} setItem={handleChangeItems(index)} index={index} check={check} />
+                            </Box>
+                        ))}
+                        <Box sx={{ mb: '20px' }}>
+                            <CustomButtonFixed variant="outlined" children={`+ Add ${addName}`} onClick={handleAddItem} />
                         </Box>
-                    ))}
-                    <Box sx={{ mb: '35px' }}>
-                        <CustomButtonFixed variant="outlined" children={`+ Add ${addName}`} onClick={handleAddItem} />
                     </Box>
-                    <Box>
+                    <Box sx={{ m: '30px 0 20px 40px' }}>
                         <CustomButtonFixed variant="contained"
                             children={`Save ${addName}`}
                             onClick={() => {

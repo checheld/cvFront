@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
-import { Box, styled } from '@mui/material';
-import CustomButton from '../../Items/CustomButton';
-import Input from '../../Items/Input';
+import { Box, Typography, styled } from '@mui/material';
 import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
-import CVModal from './Modal/CVModal';
 import { CVsActions } from '../../../actionsTypes/CVsActionTypes';
 import { usersActions } from '../../../actionsTypes/usersActionTypes';
 import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
+import CustomButton from '../../Items/CustomButton';
+import Input from '../../Items/Input';
+import CVModal from './Modal/CVModal';
 import CVItem from './Items/CVItem';
 import PreviewPageCv from '../../Items/PreviewPages/PreviewPageCv';
 import NoResult from '../../Items/Search/NoResult';
 import { ICV } from '../../../interfaces';
+import '../../Components.css';
 
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
@@ -72,13 +72,13 @@ const CVsPage: React.FC = () => {
             {!load ? (
                 <CustomBox>
                     <CVModal open={open} handleClose={handleClose} />
-                    <Box sx={{ m: 0, display: 'flex' }}>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>CVs </Typography>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({CVs.length})</Typography>
+                    <Box className='pageTitleContainer'>
+                        <Typography className='pageTitle pageName'>CVs </Typography>
+                        <Typography className='pageTitle pageNameCount'>({CVs.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <Box className='searchContainer'>
                         <Input setParam={setSearchParam} placeholder={"Search CV"} />
-                        <Box sx={{ marginLeft: 'auto' }}>
+                        <Box className='addButtonContainer'>
                             <CustomButton variant="contained" onClick={(handleOpen)} children='+ Add CV' />
                         </Box>
                     </Box>
@@ -87,36 +87,20 @@ const CVsPage: React.FC = () => {
                     ) : (
                         <>
                             <Box>
-                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '20px', mt: '10px' }}>
+                                <Typography className='cvList resentCvList'>
                                     Recent CVs
                                 </Typography>
-                                <Box sx={{
-                                    p: 2,
-                                    bgcolor: '#FBFBFB',
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    gridTemplateColumns: { md: '1fr 1fr' },
-                                    gap: 2,
-                                    padding: '0px'
-                                }}>
+                                <Box className='techContainer techContainerMain'>
                                     {resentCVs.map((CV, i) => (
                                         <CVItem CV={CV} key={i} />
                                     ))}
                                 </Box>
                             </Box>
                             <Box>
-                                <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '20px', mt: '35px' }}>
+                                <Typography className='cvList allCvList'>
                                     All CVs
                                 </Typography>
-                                <Box sx={{
-                                    p: 2,
-                                    bgcolor: '#FBFBFB',
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    gridTemplateColumns: { md: '1fr 1fr' },
-                                    gap: 2,
-                                    padding: '0px'
-                                }}>
+                                <Box className='techContainer techContainerMain'>
                                     {CVs.map((CV, i) => (
                                         <CVItem CV={CV} key={i} />
                                     ))}

@@ -48,4 +48,19 @@
     align-items: center;
     width: 800px;
     margin: 150px auto auto auto;
+    text-align: center;
+  }
+
+  @media (max-width: 1024px) {
+    .noResult {
+      width: 350px;
+      margin: 100px auto auto auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .noResult {
+      width: 200px;
+      margin: 100px auto auto auto;
+    }
   }

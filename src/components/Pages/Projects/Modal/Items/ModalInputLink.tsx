@@ -1,15 +1,13 @@
 import React, { ChangeEventHandler } from 'react';
-import FormControl, { useFormControl } from '@mui/material/FormControl';
+import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
-import FormHelperText from '@mui/material/FormHelperText';
 import styled from '@emotion/styled';
 
 interface Iprops {
     item?: string,
     setItem?: ChangeEventHandler<HTMLInputElement>,
     index?: number,
-    check?: boolean,
     selectName?: string,
 }
 
@@ -29,20 +27,7 @@ const CustomInput = styled(OutlinedInput)(() => ({
     }
 }))
 
-const ModalInputLink: React.FC<Iprops> = ({ item, setItem, index, check, selectName }) => {
-
-    function MyFormHelperText() {
-        const { focused } = useFormControl() || {};
-
-        const helperText: string = React.useMemo(() => {
-            if (!item && check && index === 0) {
-                return 'Empty field';
-            }
-            return '';
-        }, [focused]);
-
-        return <FormHelperText sx={{ color: 'red' }}>{helperText}</FormHelperText>;
-    }
+const ModalInputLink: React.FC<Iprops> = ({ item, setItem, index, selectName }) => {
 
     return (
         <Box component="form" noValidate autoComplete="off" sx={{ mb: '25px' }}>
@@ -53,10 +38,8 @@ const ModalInputLink: React.FC<Iprops> = ({ item, setItem, index, check, selectN
                     id="input"
                     tabIndex={index}
                     value={item}
-                    error={!item && check && index === 0}
                     onChange={setItem}
                 />
-                <MyFormHelperText />
             </FormControl>
         </Box>
     );

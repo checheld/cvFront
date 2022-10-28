@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
+import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import LogoutModal from '../Items/LogoutModal';
 import CVs from '../../img/CVs';
 import Users from '../../img/Users';
 import Projects from '../../img/Projects';
@@ -39,6 +34,9 @@ export default function PermanentDrawerLeft() {
     currentPath.substring(currentPath.lastIndexOf('/'))
   );
 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+
   React.useEffect(() => {
     allLinks.map((x) => x.link === (currentPathLink) && setSelectedIndex(x.code))
   }, [selectedIndex]);
@@ -57,10 +55,6 @@ export default function PermanentDrawerLeft() {
       flexItem
     />
   );
-
-  const handleClick = () => {
-    sessionStorage.clear();
-  };
 
   const CustomLink = (name: string, link: string, code: string, key: number, icon: (x: string, y: string) => JSX.Element) => {
     return (
@@ -89,6 +83,7 @@ export default function PermanentDrawerLeft() {
 
   return (
     <Box sx={{ display: 'flex' }}>
+      <LogoutModal open={open} handleClose={handleClose} />
       {token && <Drawer
         sx={{
           width: 240,
@@ -116,13 +111,13 @@ export default function PermanentDrawerLeft() {
           {
             otherLinks.map((x, i) => CustomLink(x.name, x.link, x.code, i, x.icon))
           }
-          <ListItem button sx={{ mt: '110px' }} >
-            <Link to='/logout' className='link' onClick={handleClick}>
+          <ListItem button className='navbarItem' >
+            <Box className='link' onClick={() => setOpen(true)}>
               <ListItemIcon sx={{ paddingRight: '12.25px', width: '13,5px' }}>
                 <Logout />
               </ListItemIcon>
               <ListItemText primary='Logout' />
-            </Link>
+            </Box>
           </ListItem>
         </List>
       </Drawer>}

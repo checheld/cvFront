@@ -53,10 +53,10 @@ const ProjectsTechSelect: React.FC<IProjectsTechSelect> = ({ setParam }) => {
             <CustomFormControl>
                 <CustomSelect
                     displayEmpty
-                    defaultValue={""}
                     inputProps={{ 'aria-label': 'Without label' }}
                     onChange={handleChange}
                     id='ProjectsTechSelect'
+                    defaultValue={''}
                 >
                     <MenuItem value="">
                         <span style={{ color: `#a7aaac`, fontSize: `14px` }}>

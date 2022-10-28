@@ -75,6 +75,8 @@ const ModalInput: React.FC<Iprops> = ({ placeholder, item, setItem, index, check
             value={item}
             error={!item && check && index === 0}
             onChange={setItem}
+            multiline
+            rows={4}
           />
         ) : (
           <CustomInput placeholder={placeholder}

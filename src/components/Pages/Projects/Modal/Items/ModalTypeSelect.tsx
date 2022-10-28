@@ -52,7 +52,6 @@ const ModalTypeSelect: React.FC<IChipSelect> = ({ type, setType, check }) => {
             value={type}
             onChange={handleChange}
             id='typeSelect'
-            defaultValue={""}
             error={!type && check}
             displayEmpty
         >

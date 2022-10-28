@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
+import { Box, styled, Typography } from '@mui/material';
+import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
+import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
+import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
+import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
 import ProjectsSearchInput from '../Projects/Items/ProjectsSearchInput';
 import CustomButtonFixed from '../../Items/CustomButtonFixed';
-import { Box, styled, Typography } from '@mui/material';
 import ProjectsTable from './Items/ProjectsTable';
 import ProjectsTypeSelect from './Items/ProjectsTypeSelect';
 import ProjectsTechSelect from './Items/ProjectsTechSelect';
-import { useAppDispatch, useTypedSelector } from '../../../redusers/useTypedSelector';
 import ProjectModal from './Modal/ProjectModal';
-import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
 import PreviewPageTable from '../../Items/PreviewPages/PreviewPageTable';
 import NoResult from '../../Items/Search/NoResult';
-import { technologiesActions } from '../../../actionsTypes/technologiesActionTypes';
-import { projectTypesActions } from '../../../actionsTypes/projectTypesActionTypes';
 import { IProject } from '../../../interfaces';
-
+import '../../Components.css';
 
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
@@ -77,15 +77,15 @@ const ProjectsPage: React.FC = () => {
             {!load ? (
                 <CustomBox>
                     <ProjectModal open={open} handleClose={handleClose} />
-                    <Box sx={{ m: 0, display: 'flex' }}>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#535E6C', mt: '35px', mb: '30px' }}>Projects </Typography>
-                        <Typography sx={{ fontWeight: 800, fontSize: '24px', lineHeight: '33px', color: '#D0D4DA', mt: '35px', mb: '30px', ml: '5px' }}>({projects.length})</Typography>
+                    <Box className='pageTitleContainer'>
+                        <Typography className='pageTitle pageName'>Projects </Typography>
+                        <Typography className='pageTitle pageNameCount'>({projects.length})</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <Box className='searchContainer'>
                         <ProjectsSearchInput setParam={setSearchName} placeholder={"Search project"} />
                         <ProjectsTypeSelect setParam={setSearchType} />
                         <ProjectsTechSelect setParam={setSearchTech} />
-                        <Box sx={{ marginLeft: 'auto' }}>
+                        <Box className='addButtonContainer'>
                             <CustomButtonFixed variant="contained" onClick={(handleOpen)} children='+ Add Project' />
                         </Box>
                     </Box>

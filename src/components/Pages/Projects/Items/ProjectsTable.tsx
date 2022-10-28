@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import ProjectModal from '../Modal/ProjectModal';
 import { IProject } from '../../../../interfaces';
 import DeleteModal from '../../../Items/DeleteModal';
 import TableItem from './TableItem';
 import ProjectsCard from './ProjectsCard';
+import '../../../Components.css';
 
 const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
 
-  const [open, setOpen] = useState(false);
-  const [editableProject, setEditableProject] = useState<IProject>();
   const [openDelModal, setOpenDelModal] = useState(false);
   const [delId, setdelId] = useState("");
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const handleCloseDelModal = () => setOpenDelModal(false);
 
   const screenWidth = window.screen.width;
@@ -23,10 +19,9 @@ const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
     <>
       {(screenWidth > 425) ? (
         <Box>
-          <ProjectModal open={open} handleClose={handleClose} editableProject={editableProject} />
           <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project"} />
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650, border: '1px solid #E3E3EA', borderRadius: '10px' }} aria-label="simple table">
+            <Table className='table'>
               <TableHead>
                 <TableRow>
                   <TableCell variant='head'>ID</TableCell>
@@ -39,25 +34,16 @@ const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
               </TableHead>
               <TableBody>
                 {props.projects.map((project: IProject, i) => (
-                  <TableItem project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} key={i} />
+                  <TableItem project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} key={i} />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Box>
       ) : (
-        <Box sx={{
-          p: 2,
-          bgcolor: '#FBFBFB',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gridTemplateColumns: { md: '1fr 1fr' },
-          gap: 2,
-          padding: '0px'
-        }}>
-          <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project"} />
+        <Box className='techContainer techContainerMain'>
           {props.projects.map((project: IProject, i) => (
-            <ProjectsCard project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} setEditableProject={setEditableProject} handleOpen={handleOpen} key={i} />
+            <ProjectsCard project={project} setOpenDelModal={setOpenDelModal} setdelId={setdelId} key={i} />
           ))}
         </Box>
       )}

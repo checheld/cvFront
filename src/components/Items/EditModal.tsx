@@ -37,30 +37,23 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
     <Modal
       open={open}
       onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      style={{ overflow: 'scroll' }}
     >
-      <div className='modalContainer'>
-        <Box sx={{ m: '50px' }}>
-          <Typography sx={{ fontSize: '24px', color: '#535E6C', fontWeight: 800, mb: '40px' }}>
+      <div className='modal'>
+        <Box sx={{ m: '10px' }}>
+          <Typography className='mainModalName'>
             Edit {editName}
           </Typography>
-          <Typography sx={{ fontSize: '16px', color: '#9EA9BA', fontWeight: 600, mb: '15px' }}>
-            {editName}
-          </Typography>
-          <CloseIcon
-            style={{
-              width: `30px`,
-              position: `absolute`,
-              top: 30,
-              right: 30,
-              color: '#535E6C'
-            }}
-            onClick={handleClose}
-          />
-          <ModalInput placeholder="Item" inputLength={15} item={changedItem} setItem={handleChange} />
-          <Box>
+          <Box className='scrollContainer'>
+            <Typography className='inputTitle'>
+              {editName}
+            </Typography>
+            <CloseIcon
+              className='closeIcon'
+              onClick={handleClose}
+            />
+            <ModalInput placeholder="Item" inputLength={15} item={changedItem} setItem={handleChange} />
+          </Box>
+          <Box sx={{ m: '30px 0 20px 40px' }}>
             <CustomButtonFixed variant="contained" children={`Save ${editName}`} onClick={updateItem} />
           </Box>
         </Box>

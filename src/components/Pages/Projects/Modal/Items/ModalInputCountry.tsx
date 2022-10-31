@@ -25,7 +25,7 @@ const CustomInput = styled(OutlinedInput)(() => ({
         width: '300px',
     },
     ['@media (max-width:375px)']: {
-        width: '300px',
+        width: '250px',
     }
 }))
 

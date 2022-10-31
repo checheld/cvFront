@@ -161,7 +161,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                     </Box>
                                 )}
                                 <div className='modalInternalContainer'>
-                                    <Box sx={{ mr: '20px' }}>
+                                    <Box sx={{ mr: '16px' }}>
                                         <Typography className='inputTitle'>
                                             Project
                                         </Typography>
@@ -174,7 +174,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                         />
                                     </Box>
                                     <div className='projectContainer' >
-                                        <Box sx={{ mr: '20px' }}>
+                                        <Box sx={{ mr: '16px' }}>
                                             <Typography className='inputTitle'>
                                                 Position
                                             </Typography>

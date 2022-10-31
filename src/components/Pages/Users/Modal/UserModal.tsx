@@ -358,7 +358,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                             check={check} index={index}
                                         />
                                         <CustomBox>
-                                            <Box sx={{ mr: '20px' }}>
+                                            <Box sx={{ mr: '16px' }}>
                                                 <Typography className='inputTitle'>
                                                     Speciality
                                                 </Typography>
@@ -368,7 +368,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     setItem={handleChangeEducation(index)}
                                                 />
                                             </Box>
-                                            <Box sx={{ mr: '20px' }}>
+                                            <Box sx={{ mr: '16px' }}>
                                                 <Typography className='inputTitle'>
                                                     Start date - End date
                                                 </Typography>

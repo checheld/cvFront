@@ -343,13 +343,13 @@
     /* Modal */
 
     .modal {
-        max-height: 850px;
+        max-height: 700px;
         width: 600px;
         padding: 0 10px 0 10px;
     }
 
     .scrollContainer {
-        max-height: 600px;
+        max-height: 450px;
     }
 
     .modalInternalContainer {
@@ -364,7 +364,6 @@
 @media (max-width: 425px) {
 
     .modal {
-        /* max-height: 850px; */
         width: 400px;
         padding: 0;
     }
@@ -390,7 +389,6 @@
 @media (max-width: 375px) {
 
     .modal {
-        /* max-height: 850px; */
         width: 350px;
         padding: 0;
     }

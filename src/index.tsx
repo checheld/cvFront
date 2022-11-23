@@ -7,15 +7,15 @@ import store from './store/ConfigureStore';
 import { createUserManager, OidcProvider } from 'redux-oidc';
 
 const config = {
-  //authority: "https://localhost:5001",
-  authority: "https://identity-server-1.herokuapp.com",
+  authority: "https://localhost:5001",
+  //authority: "https://identity-server-1.herokuapp.com",
   client_id: "leviossacv",
-  // redirect_uri: "http://localhost:3000/signin-oidc",
-  // silent_redirect_uri: "http://localhost:3000/silent_renew",
-  // post_logout_redirect_uri: "http://localhost:3000",
-  redirect_uri: "https://levicvfrontapp.herokuapp.com/signin-oidc",
-  silent_redirect_uri: "https://levicvfrontapp.herokuapp.com/silent_renew",
-  post_logout_redirect_uri: "https://levicvfrontapp.herokuapp.com",
+  redirect_uri: "http://localhost:3000/signin-oidc",
+  silent_redirect_uri: "http://localhost:3000/silent_renew",
+  post_logout_redirect_uri: "http://localhost:3000",
+  // redirect_uri: "https://levicvfrontapp.herokuapp.com/signin-oidc",
+  // silent_redirect_uri: "https://levicvfrontapp.herokuapp.com/silent_renew",
+  // post_logout_redirect_uri: "https://levicvfrontapp.herokuapp.com",
   response_type: "code",
   scope: "scope2",
   client_secret: "99HlRwEKPV4a2+3v5oohMg==",

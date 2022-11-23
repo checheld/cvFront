@@ -1,7 +1,7 @@
 
 function getSessionRoomId() {
-    let jsonData = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv')
-    //let jsonData = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv')
+    //let jsonData = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv')
+    let jsonData = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv')
     return jsonData !== null ? JSON.parse(jsonData) : null
 }
 

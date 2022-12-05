@@ -82,6 +82,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const [openPhoto, setOpenPhoto] = useState(false);
     const [params, setParams] = useState(initialParams);
     const [photo, setPhoto] = useState<string | null>(url);
+
     const handleOpenPhoto = () => setOpenPhoto(true);
     const handleClosePhoto = () => {
         if (params !== initialParams) {
@@ -174,11 +175,12 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     };
     useEffect(() => {
         if (editableUser !== undefined) {
+            
             setFirstName(editableUser.firstName);
             setLastName(editableUser.lastName);
             setDescription(editableUser.description);
-            setArrayEducation(editableUser.educationList);
-            setArrayWorkExperience(editableUser.workExperienceList);
+            editableUser.educationList.length && setArrayEducation(editableUser.educationList);
+            editableUser.workExperienceList.length && setArrayWorkExperience(editableUser.workExperienceList);
             setTech(editableUser.technologyList);
             setPhoto(editableUser.photoUrl);
             if (editableUser.photoParams !== null) {
@@ -343,7 +345,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                 {arrayEducation.length && arrayEducation.map((education, index) => (
                                     <Box sx={{ m: 0, p: 0 }} key={index}>
                                         {index > 0 && (
-                                            <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                            <Box sx={{ position: 'relative', left: '-35px', top: '30px' }}>
                                                 <DelInput index={index} removeItem={removeEducation} />
                                             </Box>
                                         )}
@@ -395,7 +397,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                 {arrayWorkExperience.length && arrayWorkExperience.map((workExperience, index) => (
                                     <Box sx={{ m: 0, p: 0 }} key={index}>
                                         {index > 0 && (
-                                            <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                            <Box sx={{ position: 'relative', left: '-35px', top: '30px' }}>
                                                 <DelInput index={index} removeItem={removeWorkExperience} />
                                             </Box>
                                         )}

@@ -52,7 +52,8 @@ const ILogoutModal: React.FC<ILogoutModal> = ({ open, handleClose }) => {
                             position: 'absolute',
                             top: '25px',
                             right: '25px',
-                            color: '#535E6C'
+                            color: '#535E6C',
+                            cursor: 'spointer'
                         }}
                         onClick={handleClose}
                     />

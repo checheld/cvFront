@@ -51,7 +51,14 @@ export const projectTypesReducer = (state = initialState, action: action): proje
             return {
                 ...state,
                 isLoading: { ...state.isLoading, getAll: false },
-                projectTypes: projectTypes.sort((a, b) => Number(a.name) - Number(b.name))
+                projectTypes: projectTypes.sort(function (a, b) {
+                    var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+                    if (nameA < nameB)
+                      return -1
+                    if (nameA > nameB)
+                      return 1
+                    return 0
+                  })
             };
 
         case projectTypesActions.DEL_PROJECTTYPE_REQUEST:
@@ -133,11 +140,18 @@ export const projectTypesReducer = (state = initialState, action: action): proje
             };
 
         case projectTypesActions.SEARCH_PROJECTTYPES_RESULT:
-            let uni: IProjectType[] = action.response
+            let pr: IProjectType[] = action.response
             return {
                 ...state,
                 isLoading: { ...state.isLoading, search: true },
-                projectTypes: uni.sort((a, b) => Number(a.name) - Number(b.name))
+                projectTypes: pr.sort(function (a, b) {
+                    var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+                    if (nameA < nameB)
+                      return -1
+                    if (nameA > nameB)
+                      return 1
+                    return 0
+                  })
             };
 
         default:

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
-import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import LogoutModal from '../Items/LogoutModal';
 import CVs from '../../img/CVs';
 import Users from '../../img/Users';
@@ -99,10 +99,20 @@ export default function PermanentDrawerLeft() {
         variant="permanent"
         anchor="left"
       >
-        <img width='80px' src={require('../../img/LeviCV.svg').default} alt="logo" style={{ marginBottom: '35px', paddingLeft: '30px', }} />
+        {/* <img width='80px' src={require('../../img/LeviCV.svg').default} alt="logo" style={{ marginBottom: '35px', paddingLeft: '30px', }} /> */}
+        <Typography sx={{
+                fontWeight: 800,
+                fontSize: '24px',
+                lineHeight: '33px',
+                color: 'rgba(255, 255, 255, 0.9)',
+                mt: '0px', mb: '35px', pl: '30px',
+                letterSpacing: '1px'
+            }}>
+              <span style={{ color: '#5893F9' }}>CV</span>gen
+        </Typography>
         <Divider variant="inset" />
         <div className='sectionName'>MAIN</div>
-        <List>
+        <List sx={{position: 'relative', height: 'inherit'}}>
           {
             mainLinks.map((x, i) => CustomLink(x.name, x.link, x.code, i, x.icon))
           }

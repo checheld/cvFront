@@ -16,24 +16,12 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
     const router = useNavigate();
     const screenWidth = window.screen.width;
 
-    const [showTech, setShowTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
-    const [amountHideTech, setAmountHideTech] = useState<number>();
+    const [showTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
 
     const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
         setdelId(event.currentTarget.id);
         setOpenDelModal(true);
     }
-
-    useEffect(() => {
-        if (screenWidth <= 1024) setShowTech([project.technologyList[0]])
-        else setShowTech([project.technologyList[0], project.technologyList[1], project.technologyList[2]])
-    }, []);
-
-    useEffect(() => {
-        setAmountHideTech(project.technologyList.length - showTech.length)
-    }, [showTech]);
-
-    let techTableCellRef = useRef();
 
     return (
         <TableRow
@@ -49,11 +37,12 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
                 {project.name}
             </TableCell>
 
-            <TableCell component="th" scope="row" sx={{ width: '10%' }}>
+            <TableCell component="th" scope="row">
                 {project.projectType!.name}
-            </TableCell>
-            {showTech.length === 3 ? (
-                <TableCell component="th" scope="row" sx={{ display: 'flex' }} ref={techTableCellRef}>
+            </TableCell>  
+
+            {screenWidth > 1024 ? (
+                <TableCell component="th" scope="row" sx={{ display: 'flex' }}>
                     {project.technologyList.length > 3 ? (
                         <Box className='chipContainer projectTableChipContainer'>
                             {
@@ -61,12 +50,12 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
                                     <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
                                 ))
                             }
-                            <Chip className='projectChip projectTableChip' label={`+${amountHideTech}`} />
+                            <Chip className='projectChip projectTableChip' label={`+${project.technologyList.length - 3}`} />
                         </Box>
                     ) : (
                         <Box className='chipContainer projectTableChipContainer'>
                             {
-                                project.technologyList.map((tech: ITechnology, index) => (
+                                project.technologyList.length !== 0 && project.technologyList.map((tech: ITechnology, index) => (
                                     <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
                                 ))
                             }
@@ -74,16 +63,16 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
                     )}
                 </TableCell>
             ) : (
-                <TableCell component="th" scope="row" sx={{ display: 'flex' }} ref={techTableCellRef}>
-                    <Box className='chipContainer projectTableChipContainer'>
-                        {
-                            showTech.map((tech: ITechnology, index) => (
-                                <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
-                            ))
-                        }
-                        <Chip className='projectChip projectTableChip' label={`+${amountHideTech}`} />
-                    </Box>
-                </TableCell>
+                    <TableCell component="th" scope="row" sx={{ display: 'flex' }}>
+                        <Box className='chipContainer projectTableChipContainer'>
+                            {project.technologyList.length !== 0 && (
+                                <>
+                                    <Chip label={showTech[0].name} className='projectChip projectTableChip' />
+                                    <Chip className='projectChip projectTableChip' label={`+${project.technologyList.length - 1}`} />
+                                </>
+                            )}
+                        </Box>
+                    </TableCell>
             )}
             <TableCell component="th" scope="row" sx={{ width: '15%' }}>
                 {project.country}

@@ -93,19 +93,19 @@ const TechModal: React.FC<ITechModal> = ({ open, handleClose, editableTech }) =>
                         className='closeIcon'
                         onClick={handleClose}
                     />
-                    <Box className='scrollContainer'>
+                    <Box className='scrollContainer' sx={{pr: '40px'}}>
                         <Box sx={{ mb: '35px' }}>
                             {arrayTechnologies.length && arrayTechnologies.map((tech, index) => (
                                 <Box key={index}>
                                     {index > 0 && (
-                                        <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                        <Box sx={{ position: 'relative', left: '-35px', top: '30px' }}>
                                             <DelInput index={index} removeItem={removeTechnology} />
                                         </Box>
                                     )}
                                     <Typography className='inputTitle'>
                                         Technology name
                                     </Typography>
-                                    <ModalInput placeholder="Technology name" inputLength={15} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} />
+                                    <ModalInput placeholder="Technology name" inputLength={55} item={tech.name} setItem={handleChangeTechnologies(index)} index={index} check={check} />
                                     <Typography className='inputTitle'>
                                         Type
                                     </Typography>

@@ -48,7 +48,7 @@ const ModalInputPosition: React.FC<Iprops> = ({ item, setItem, index, check }) =
             <FormControl sx={{ mb: '0px' }}>
                 <CustomInput placeholder='Position'
                     name='position'
-                    inputProps={{ maxLength: 15 }}
+                    inputProps={{ maxLength: 55 }}
                     id="input"
                     tabIndex={index}
                     value={item}

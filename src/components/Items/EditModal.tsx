@@ -43,7 +43,7 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
           <Typography className='mainModalName'>
             Edit {editName}
           </Typography>
-          <Box className='scrollContainer'>
+          <Box className='scrollContainer' sx={{pr: '40px'}}>
             <Typography className='inputTitle'>
               {editName}
             </Typography>
@@ -51,7 +51,7 @@ const EditModal: React.FC<IEditModal> = ({ open, handleClose, item, action, edit
               className='closeIcon'
               onClick={handleClose}
             />
-            <ModalInput placeholder="Item" inputLength={15} item={changedItem} setItem={handleChange} />
+            <ModalInput placeholder="Item" inputLength={55} item={changedItem} setItem={handleChange} />
           </Box>
           <Box sx={{ m: '30px 0 20px 40px' }}>
             <CustomButtonFixed variant="contained" children={`Save ${editName}`} onClick={updateItem} />

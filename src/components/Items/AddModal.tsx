@@ -58,7 +58,7 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
                     <Typography className='mainModalName'>
                         Add {addName}
                     </Typography>
-                    <Box className='scrollContainer'>
+                    <Box className='scrollContainer' sx={{pr: '40px'}}>
                         <Typography className='inputTitle'>
                             {addName}
                         </Typography>
@@ -69,11 +69,11 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
                         {arrayItems.length && arrayItems.map((item, index) => (
                             <Box key={index}>
                                 {index > 0 && (
-                                    <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                    <Box sx={{ position: 'relative', left: '-35px', top: '42px' }}>
                                         <DelInput index={index} removeItem={removeItem} />
                                     </Box>
                                 )}
-                                <ModalInput placeholder={`${addName} name`} item={item} inputLength={15} setItem={handleChangeItems(index)} index={index} check={check} />
+                                <ModalInput placeholder={`${addName} name`} item={item} inputLength={55} setItem={handleChangeItems(index)} index={index} check={check} />
                             </Box>
                         ))}
                         <Box sx={{ mb: '20px' }}>

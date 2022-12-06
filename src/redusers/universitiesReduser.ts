@@ -48,10 +48,18 @@ export const universitiesReducer = (state = initialState, action: action): unive
 
     case universitiesActions.GET_UNIVERSITIES_RESULT:
       let universities: IUniversity[] = action.payload
+
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        universities: universities.sort((a, b) => Number(a.name) - Number(b.name))
+        universities: universities.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     case universitiesActions.DEL_UNIVERSITY_REQUEST:
@@ -137,7 +145,14 @@ export const universitiesReducer = (state = initialState, action: action): unive
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
-        universities: uni.sort((a, b) => Number(a.name) - Number(b.name))
+        universities: uni.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     default:

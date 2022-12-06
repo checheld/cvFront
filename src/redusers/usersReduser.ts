@@ -52,7 +52,14 @@ export const usersReducer = (state = initialState, action: action): usersReduser
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        users: users.sort((a, b) => Number(a.firstName) - Number(b.firstName))
+        users: users.sort(function (a, b) {
+          var nameA = a.firstName.toLowerCase(), nameB = b.firstName.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     case usersActions.GET_USER_REQUEST:
@@ -152,7 +159,14 @@ export const usersReducer = (state = initialState, action: action): usersReduser
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
-        users: foundUsers.sort((a, b) => Number(a.firstName) - Number(b.firstName))
+        users: foundUsers.sort(function (a, b) {
+          var nameA = a.firstName.toLowerCase(), nameB = b.firstName.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     default:

@@ -51,7 +51,14 @@ export const companiesReducer = (state = initialState, action: action): companie
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        companies: companies.sort((a, b) => Number(a.name) - Number(b.name))
+        companies: companies.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     case companiesActions.DEL_COMPANY_REQUEST:
@@ -133,11 +140,18 @@ export const companiesReducer = (state = initialState, action: action): companie
       };
 
     case companiesActions.SEARCH_COMPANIES_RESULT:
-      let uni: ICompany[] = action.response
+      let comp: ICompany[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
-        companies: uni.sort((a, b) => Number(a.name) - Number(b.name))
+        companies: comp.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     default:

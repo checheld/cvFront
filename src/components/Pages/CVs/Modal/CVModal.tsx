@@ -138,7 +138,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                                 index={0}
                                 height={50}
                                 setItem={handleChangeCVName}
-                                inputLength={25}
+                                inputLength={55}
                             />
                         </Box>
                         <Box sx={{ mr: '20px', mb: '15px' }}>
@@ -156,7 +156,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
                         {arrayProjectCV.length && arrayProjectCV.map((projectCV, index) => (
                             <Box sx={{ m: 0, p: 0 }} key={index}>
                                 {index > 0 && (
-                                    <Box sx={{ position: `relative`, left: `-35px`, top: `30px` }}>
+                                    <Box sx={{ position:'relative', left: '-35px', top: '30px'}}>
                                         <DelInput index={index} removeItem={removeProjectCV} />
                                     </Box>
                                 )}

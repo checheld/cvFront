@@ -51,7 +51,14 @@ export const technologiesReducer = (state = initialState, action: action): techn
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        technologies: technologies.sort((a, b) => Number(a.name) - Number(b.name))
+        technologies: technologies.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     case technologiesActions.DEL_TECHNOLOGY_REQUEST:
@@ -133,11 +140,18 @@ export const technologiesReducer = (state = initialState, action: action): techn
       };
 
     case technologiesActions.SEARCH_TECHNOLOGIES_RESULT:
-      let uni: ITechnology[] = action.response
+      let t: ITechnology[] = action.response
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
-        technologies: uni.sort((a, b) => Number(a.name) - Number(b.name))
+        technologies: t.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     default:

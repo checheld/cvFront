@@ -108,6 +108,7 @@ const PhotoModal: React.FC<IPhotoUser> = ({
                                             position: `absolute`,
                                             top: 10,
                                             right: 10,
+                                            cursor: 'pointer'
 
                                         }}
                                         onClick={handleOpenPhotoModal}

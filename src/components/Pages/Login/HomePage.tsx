@@ -15,7 +15,7 @@ const CustomBox = styled(Box)(() => ({
 
 const IDENTITY_CONFIG = {
     //authority: "https://localhost:5001",
-    authority: "https://identity-server-1.herokuapp.com",
+     authority: "https://identity-server-1.herokuapp.com",
     client_id: "leviossacv",
     // redirect_uri: "http://localhost:3000/signin-oidc",
     // silent_redirect_uri: `${window.location.protocol}//${window.location.hostname}:${window.location.port}/silent_renew.html`,

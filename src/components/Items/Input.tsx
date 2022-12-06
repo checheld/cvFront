@@ -39,7 +39,7 @@ const UseFormControl: React.FC<ISearchAttributes> = ({ setParam, placeholder }) 
     <Box component="form" noValidate autoComplete="off">
       <FormControl>
         <CustomInput placeholder={placeholder}
-          inputProps={{ maxLength: 15 }}
+          inputProps={{ maxLength: 55 }}
           id="input-with-icon-adornment"
           onChange={handleChange}
           startAdornment={

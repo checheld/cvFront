@@ -47,7 +47,14 @@ export const projectsReducer = (state = initialState, action: action): projectsR
       return {
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
-        projects: projects.sort((a, b) => Number(a.name) - Number(b.name))
+        projects: projects.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
     case projectsActions.GET_PROJECT_REQUEST:
       return {
@@ -154,7 +161,14 @@ export const projectsReducer = (state = initialState, action: action): projectsR
       return {
         ...state,
         isLoading: { ...state.isLoading, search: true },
-        projects: proj.sort((a, b) => Number(a.name) - Number(b.name))
+        projects: proj.sort(function (a, b) {
+          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
+        })
       };
 
     default:

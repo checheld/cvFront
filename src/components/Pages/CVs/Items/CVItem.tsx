@@ -19,7 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
     width: '260px',
     cursor: 'pointer',
     mr: '6px',
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '205px'
     }
 }));
@@ -28,7 +28,7 @@ const CustomStack = styled(Stack)(() => ({
     marginRight: '30px',
     width: '250px',
     bottom: '20px',
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '195px'
     }
 }));

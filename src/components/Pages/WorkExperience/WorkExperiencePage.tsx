@@ -14,6 +14,7 @@ import '../../Components.css';
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
     paddingLeft: '250px',
+    marginBottom: '30px',
     ['@media (max-width:768px)']: {
         paddingLeft: '35px',
     }
@@ -69,7 +70,7 @@ const WorkExperiencePage: React.FC = () => {
                     <AddModal open={open} handleClose={handleClose} action={companiesActions.ADD_COMPANY_REQUEST} addName={'Company'} />
                     <Box className='pageTitleContainer'>
                         <Typography className='pageTitle pageName'>Work experience </Typography>
-                        <Typography className='pageTitle pageName'>({companies.length})</Typography>
+                        <Typography className='pageTitle pageNameCount'>({companies.length})</Typography>
                     </Box>
                     <Box className='searchContainer'>
                         <Input setParam={setSearchParam} placeholder={"Search company"} />

@@ -175,7 +175,7 @@ const ProjectIdPage: React.FC = () => {
                   )}
                   {
                     currentProject.technologyList.map((tech: ITechnology, key: number) => (
-                      <Chip label={tech.name} key={key} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, color: '#9EA9BA', backgroundColor: '#F0F2F5' }} />
+                      <Chip label={tech.name} key={key} sx={{ mr: '10px', mb: '10px',fontFamily: `"Nunito", sans-serif`, color: '#9EA9BA', backgroundColor: '#F0F2F5' }} />
                     ))
                   }
                 </Box>

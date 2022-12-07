@@ -19,7 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
     height: '340px',
     width: '315px',
     mr: '6px',
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '265px'
     }
 }));
@@ -29,7 +29,7 @@ const CustomDivider = styled(Divider)(() => ({
     marginBottom: '20px',
     width: 310,
     marginLeft: 0,
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '265px'
     }
 }))
@@ -78,7 +78,7 @@ const ProjectsCard: React.FC<IProjectsTable> = ({ project, setOpenDelModal, setd
                             <Typography className="projectCardTitle">TECHNOLOGIES</Typography>
                             <Box className='chipContainer projectCardChipContainer'>
                                 <Chip className='projectChip projectCardChip' label={project.technologyList[0].name} id={project.technologyList[0].id} />
-                                <Chip className='projectChip projectCardChip' label={`+${project.technologyList.length - 1}`} />
+                                {project.technologyList.length > 1 && <Chip className='projectChip projectCardChip' label={`+${project.technologyList.length - 1}`} />}
                             </Box>
                         </Box>
                         <CustomDivider variant="inset" />

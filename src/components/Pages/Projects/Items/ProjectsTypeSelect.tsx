@@ -14,14 +14,14 @@ const CustomSelect = styled(Select)(() => ({
   height: '45px',
   marginBottom: '20px',
   marginRight: '15px',
-  ['@media (max-width:768px)']: {
+  ['@media (max-width:769px)']: {
     width: '140px',
   },
-  ['@media (max-width:425px)']: {
+  ['@media (max-width:426px)']: {
     width: '140px',
     marginRight: '0px',
   },
-  ['@media (max-width:375px)']: {
+  ['@media (max-width:376px)']: {
     width: '140px',
     marginRight: '0px',
   }

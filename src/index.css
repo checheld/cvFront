@@ -51,14 +51,14 @@
     text-align: center;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1025px) {
     .noResult {
       width: 350px;
       margin: 100px auto auto auto;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 769px) {
     .noResult {
       width: 200px;
       margin: 100px auto auto auto;

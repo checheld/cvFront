@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import LogoutModal from '../Items/LogoutModal';
 
@@ -28,14 +28,14 @@ export default function ButtonAppBar() {
         sessionStorage.clear();
     };
 
-    let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-    //let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+    //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+    let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
     const location = useLocation();
     const currentPath = location.pathname;
 
     useEffect(() => {
-        token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-        //token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+        //token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+        token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
     }, [currentPath, token]);
 
     return (
@@ -83,7 +83,17 @@ export default function ButtonAppBar() {
                             <MenuItem onClick={() => setOpen(true)} sx={{ bgcolor: '#ECF2FC', fontWeight: '600' }}>Logout</MenuItem>
                         </div>
                     </Menu>
-                    <img width='70px' src={require('../../img/LeviCV.svg').default} alt="logo" style={{ marginLeft: 'auto', marginRight: '20px' }} />
+                    {/* <img width='70px' src={require('../../img/LeviCV.svg').default} alt="logo" style={{ marginLeft: 'auto', marginRight: '20px' }} /> */}
+                    <Typography sx={{
+                            fontWeight: 800,
+                            fontSize: '24px',
+                            lineHeight: '33px',
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            m: 'auto 20px auto auto',
+                            letterSpacing: '1px'
+                        }}>
+                        <span style={{ color: '#5893F9' }}>CV</span>gen
+                    </Typography>
                 </Toolbar>
             </AppBar>
             }

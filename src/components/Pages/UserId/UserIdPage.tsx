@@ -20,12 +20,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const CustomBox = styled(Box)(() => ({
-    marginTop: '35px',
-    marginBottom: '35px',
-    marginLeft: '40px',
-    marginRight: '50px',
+    margin: '0 50px 35px 40px',
     width: '300px',
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '215px'
     }
 }))
@@ -92,7 +89,7 @@ const UserIdPage: React.FC = () => {
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 {screenWidth > 426 && (
                                     <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '35px 40px 0 auto', fontFamily: `"Nunito", sans-serif` }}>
                                             PROFILE
                                         </Typography>
                                         <Divider orientation="vertical" sx={{ height: '100%' }} />
@@ -111,17 +108,17 @@ const UserIdPage: React.FC = () => {
                                             )}
                                         </Box>
                                         <Box>
-                                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>
+                                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', m: '35px 0 15px 40px', fontFamily: `"Nunito", sans-serif` }}>
                                                 {currentUser.firstName} {currentUser.lastName}
                                             </Typography>
-                                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px', fontFamily: `"Nunito", sans-serif` }}>
+                                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', m: '0 40px 37px 40px', fontFamily: `"Nunito", sans-serif` }}>
                                                 {currentUser.description}
                                             </Typography>
                                         </Box>
                                     </Box>
                                 ) : (
                                     <>
-                                        <Box sx={{ ml: '15px', mb: '20px', mt: '20px' }}>
+                                        <Box sx={{ m: '20px 0 20px 15px' }}>
                                             {(currentUser.photoParams !== null) ? (
                                                 <Photo params={{ scale: currentUser.photoParams.scale, position: { x: currentUser.photoParams.positionX, y: currentUser.photoParams.positionY } }} photo={currentUser.photoUrl} />
                                             ) : (
@@ -129,10 +126,10 @@ const UserIdPage: React.FC = () => {
                                             )}
                                         </Box>
                                         <Box>
-                                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '15px', fontFamily: `"Nunito", sans-serif` }}>
+                                            <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', m: '35px 0 15px 40px', fontFamily: `"Nunito", sans-serif` }}>
                                                 {currentUser.firstName} {currentUser.lastName}
                                             </Typography>
-                                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', mb: '37px', ml: '40px', mr: '40px', fontFamily: `"Nunito", sans-serif` }}>
+                                            <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '22px', color: '#AFB5BF', m: '0 40px 37px 40px', fontFamily: `"Nunito", sans-serif` }}>
                                                 {currentUser.description}
                                             </Typography>
                                         </Box>
@@ -142,22 +139,22 @@ const UserIdPage: React.FC = () => {
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 {screenWidth > 426 && (
                                     <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '35px 40px 35px auto', fontFamily: `"Nunito", sans-serif` }}>
                                             EDUCATION
                                         </Typography>
                                         <Divider orientation="vertical" sx={{ height: '100%' }} />
                                     </Box>
                                 )}
-                                <Box sx={{ m: 0 }}>
+                                <Box sx={{ m: 0, pt: '35px' }}>
                                     {screenWidth < 426 && (
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', ml: '35px', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '0 0 35px 35px', fontFamily: `"Nunito", sans-serif` }}>
                                             EDUCATION
                                         </Typography>
                                     )}
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                         {
                                             currentUser.educationList.map((education: IEducation, key: number) => (
-                                                <Box sx={{ mt: '35px', mb: '35px', ml: '40px', mr: '100px' }} key={key}>
+                                                <Box sx={{ m: '0 100px 35px 40px' }} key={key}>
                                                     <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
                                                         {education.speciality}
                                                     </Typography>
@@ -176,15 +173,15 @@ const UserIdPage: React.FC = () => {
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 {screenWidth > 426 && (
                                     <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '35px 40px 35px auto', fontFamily: `"Nunito", sans-serif` }}>
                                             WORK EXPERIENCE
                                         </Typography>
                                         <Divider orientation="vertical" sx={{ height: '100%' }} />
                                     </Box>
                                 )}
-                                <Box sx={{ m: 0 }}>
+                                <Box sx={{ m: 0, pt: '35px' }}>
                                     {screenWidth < 426 && (
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', ml: '35px', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '0 0 35px 35px', fontFamily: `"Nunito", sans-serif` }}>
                                             WORK EXPERIENCE
                                         </Typography>
                                     )}
@@ -210,7 +207,7 @@ const UserIdPage: React.FC = () => {
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 {screenWidth > 426 && (
                                     <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '35px 40px 35px auto', fontFamily: `"Nunito", sans-serif` }}>
                                             TECHNOLOGIES
                                         </Typography>
                                         <Divider orientation="vertical" sx={{ height: '100%' }} />
@@ -291,13 +288,13 @@ const UserIdPage: React.FC = () => {
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 {screenWidth > 426 && (
                                     <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '35px 40px 0 auto', fontFamily: `"Nunito", sans-serif` }}>
                                             SOFT SKILLS
                                         </Typography>
                                         <Divider orientation="vertical" sx={{ height: '100%' }} />
                                     </Box>
                                 )}
-                                <Box sx={{ mt: '35px', ml: '40px', mb: '35px' }}>
+                                <Box sx={{ m: '35px 0 35px 40px' }}>
                                     {screenWidth < 426 && (
                                         <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>
                                             SOFT SKILLS
@@ -320,7 +317,7 @@ const UserIdPage: React.FC = () => {
                             <Item elevation={4} sx={{ display: 'flex', p: 0 }}>
                                 {screenWidth > 426 && (
                                     <Box sx={{ display: "flex", minWidth: '280px' }}>
-                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', mt: '35px', mb: '35px', mr: '40px', ml: 'auto', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', m: '35px 40px 35px auto', fontFamily: `"Nunito", sans-serif` }}>
                                             CV
                                         </Typography>
                                         <Divider orientation="vertical" sx={{ height: '100%' }} />
@@ -328,11 +325,11 @@ const UserIdPage: React.FC = () => {
                                 )}
                                 <Box sx={{ m: 0 }}>
                                     {screenWidth < 426 && (
-                                        <Typography sx={{ mt: '35px', ml: '40px', mb: '35px', fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>
+                                        <Typography sx={{ m: '35px 0 35px 40px', fontWeight: 600, fontSize: '16px', lineHeight: '22px', color: '#989CA8', fontFamily: `"Nunito", sans-serif` }}>
                                             CV
                                         </Typography>
                                     )}
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', mt: '30px', mb: '15px', mr: '30px', ml: '30px' }}>
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', m: '30px 30px 15px 30px' }}>
                                         {AllCVs.filter((CV) => CV.userId === currentUser!.id).map((CV: ICV, key: number) => (
                                             <Box sx={{ mt: 0, mb: '15px', mr: 2, ml: 0 }} key={key}>
                                                 <CVItem CV={CV} />

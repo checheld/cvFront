@@ -30,30 +30,30 @@ const CustomDivider = styled(Divider)(() => ({
     marginBottom: '40px',
     width: '698px',
     marginLeft: '0px',
-    ['@media (max-width:1024px)']: {
+    ['@media (max-width:1025px)']: {
         width: '495px'
     },
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         width: '300px'
     },
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '250px'
     }
 }))
 
 const CustomBox = styled(Box)(() => ({
     display: 'flex',
-    ['@media (max-width:1024px)']: {
+    ['@media (max-width:1025px)']: {
         flexWrap: 'nowrap',
     },
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         flexWrap: 'wrap',
     }
 }))
 
 const CustomBoxDate = styled(Box)(() => ({
     display: 'flex',
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         flexWrap: 'wrap',
     }
 }))

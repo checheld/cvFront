@@ -15,10 +15,10 @@ const StyledButton = styled(Button)(() => ({
     borderRadius: '5px',
     minWidth: '163px',
     width: 'auto',
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         width: '355px',
     },
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '304px',
     }
 }))

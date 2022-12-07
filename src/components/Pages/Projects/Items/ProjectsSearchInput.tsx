@@ -14,16 +14,16 @@ interface ISearchAttributes {
 const CustomInput = styled(OutlinedInput)(() => ({
     height: '45px',
     width: '300px',
-    ['@media (max-width:1024px)']: {
+    ['@media (max-width:1025px)']: {
         width: '160px',
     },
-    ['@media (max-width:768px)']: {
+    ['@media (max-width:769px)']: {
         width: '210px',
     },
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         width: '200px',
     },
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '150px',
     }
 }))

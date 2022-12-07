@@ -15,10 +15,10 @@ const CustomBox = styled(Box)(() => ({
     backgroundColor: '#FFFFFF',
     borderRadius: '20px',
     width: '450px',
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         width: '370px'
     },
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '300px'
     }
 }))

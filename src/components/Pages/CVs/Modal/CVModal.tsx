@@ -22,7 +22,7 @@ interface ICVModal {
 
 const CustomBoxDate = styled(Box)(() => ({
     display: 'flex',
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         flexWrap: 'wrap',
     }
 }))

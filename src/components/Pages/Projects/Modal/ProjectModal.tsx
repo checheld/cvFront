@@ -25,7 +25,7 @@ interface IProjectModal {
 const CustomBox = styled(Box)(() => ({
     display: 'flex',
     flexWrap: 'nowrap',
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         flexWrap: 'wrap'
     }
 }))

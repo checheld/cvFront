@@ -17,9 +17,9 @@ const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
 
   return (
     <>
+      <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project"} />
       {(screenWidth > 425) ? (
         <Box>
-          <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"project"} />
           <TableContainer component={Paper}>
             <Table className='table'>
               <TableHead>

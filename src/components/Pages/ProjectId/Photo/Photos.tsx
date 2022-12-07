@@ -16,6 +16,7 @@ const Photos: React.FC<{
       }}>
       {photos.map((photo, index) => (
         <Photo
+          key={index}
           photo={photo}
           removePhoto={() => removePhoto(index)}
         />

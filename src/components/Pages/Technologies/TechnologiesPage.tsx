@@ -109,7 +109,7 @@ const TechnologiesPage: React.FC = () => {
                             <ThemeProvider theme={lightTheme}>
                                 <Box className='techContainer techContainerMain'>
                                     {
-                                        containers.map((x, i) => <TechContainer techCollection={x.techCollection} handleEdit={handleEdit} name={x.name} width={'260px'} />)
+                                        containers.map((x, i) => <TechContainer key={i} techCollection={x.techCollection} handleEdit={handleEdit} name={x.name} width={'260px'} />)
                                     }
                                 </Box>
                                 <Divider variant="inset" sx={{ mt: '35px', ml: '0px', mr: '15px', mb: '35px' }} />

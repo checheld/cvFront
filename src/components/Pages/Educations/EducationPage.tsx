@@ -14,6 +14,7 @@ import '../../Components.css';
 const CustomBox = styled(Box)(() => ({
     paddingRight: '35px',
     paddingLeft: '250px',
+    marginBottom: '30px',
     ['@media (max-width:768px)']: {
         paddingLeft: '35px',
     }

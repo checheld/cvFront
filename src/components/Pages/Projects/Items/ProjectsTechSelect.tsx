@@ -13,13 +13,13 @@ const CustomSelect = styled(Select)(() => ({
     width: '190px',
     height: '45px',
     marginBottom: '20px',
-    ['@media (max-width:768px)']: {
+    ['@media (max-width:769px)']: {
         width: '140px',
     },
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         width: '175px',
     },
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '125px',
     }
 }))
@@ -27,14 +27,14 @@ const CustomSelect = styled(Select)(() => ({
 const CustomFormControl = styled(FormControl)(() => ({
     width: '190px',
     // marginLeft: '15px',
-    ['@media (max-width:768px)']: {
+    ['@media (max-width:769px)']: {
         width: '140px',
     },
-    ['@media (max-width:425px)']: {
+    ['@media (max-width:426px)']: {
         width: '175px',
         marginLeft: '0px',
     },
-    ['@media (max-width:375px)']: {
+    ['@media (max-width:376px)']: {
         width: '125px',
         marginLeft: '0px',
     }

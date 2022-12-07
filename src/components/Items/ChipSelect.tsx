@@ -19,13 +19,13 @@ const CustomSelect = styled(Select)(() => ({
   width: '700px',
   height: '50px',
   marginBottom: '0px',
-  ['@media (max-width:1024px)']: {
+  ['@media (max-width:1025px)']: {
     width: '500px',
   },
-  ['@media (max-width:425px)']: {
+  ['@media (max-width:426px)']: {
     width: '300px',
   },
-  ['@media (max-width:375px)']: {
+  ['@media (max-width:376px)']: {
     width: '250px',
   }
 }))

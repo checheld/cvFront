@@ -199,6 +199,7 @@
 
 .techContainer {
     padding: 0 !important;
+    margin-bottom: 30px !important;
     background-color: #FBFBFB;
     display: flex;
     grid-template-columns: 1fr 1fr;
@@ -330,7 +331,7 @@
     color: #535E6C !important;
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 1921px) {
 
     /* AppBar */
 
@@ -355,7 +356,7 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1025px) {
 
     /* AppBar */
 
@@ -385,7 +386,7 @@
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
 
     .modal {
         width: 400px;
@@ -410,11 +411,15 @@
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 376px) {
 
     .modal {
         width: 350px;
         padding: 0;
+    }
+
+    .scrollContainer {
+        padding: 35px 0 0 10px;
     }
 
     .photoInput {

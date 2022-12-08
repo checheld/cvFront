@@ -17,7 +17,7 @@ interface IChipSelect {
 
 const CustomSelect = styled(Select)(() => ({
   width: '700px',
-  height: '50px',
+  height: 'auto',
   marginBottom: '0px',
   ['@media (max-width:1025px)']: {
     width: '500px',

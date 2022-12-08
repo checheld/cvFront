@@ -14,7 +14,7 @@ const Photo: React.FC<{
       gridTemplateColumns: '1fr 5fr',
       gap: '5px 15px',
       justifyContent: 'center',
-      width: '10%',
+      width: '70px',
       border: '1px solid #E3E3EA',
       borderRadius: '5px',
       backgroundColor: '#fff',

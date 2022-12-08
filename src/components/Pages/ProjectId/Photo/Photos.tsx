@@ -10,7 +10,6 @@ const Photos: React.FC<{
       <div style={{
           display: 'flex',
           flexWrap: 'wrap',
-          width: '700px',
           gap: '20px',
           marginBottom: '20px'
       }}>

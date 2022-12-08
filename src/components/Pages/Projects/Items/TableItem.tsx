@@ -22,7 +22,7 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
         setdelId(event.currentTarget.id);
         setOpenDelModal(true);
     }
-
+    
     return (
         <TableRow
             key={project.id}
@@ -41,7 +41,7 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
                 {project.projectType!.name}
             </TableCell>  
 
-            {screenWidth > 1024 ? (
+            {screenWidth > 1025 ? (
                 <TableCell component="th" scope="row" sx={{ display: 'flex' }}>
                     {project.technologyList.length > 3 ? (
                         <Box className='chipContainer projectTableChipContainer'>
@@ -64,11 +64,11 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
                 </TableCell>
             ) : (
                     <TableCell component="th" scope="row" sx={{ display: 'flex' }}>
-                        <Box className='chipContainer projectTableChipContainer'>
+                        <Box className='chipContainer chipContainerWrap projectTableChipContainer'>
                             {project.technologyList.length !== 0 && (
                                 <>
-                                    <Chip label={showTech[0].name} className='projectChip projectTableChip' />
-                                    <Chip className='projectChip projectTableChip' label={`+${project.technologyList.length - 1}`} />
+                                    <Chip label={showTech[0].name} className='projectChip projectTableChip' sx={{mb: '5px'}} />
+                                    {project.technologyList.length > 1 && <Chip className='projectChip projectTableChip' label={`+${project.technologyList.length - 1}`} />}
                                 </>
                             )}
                         </Box>

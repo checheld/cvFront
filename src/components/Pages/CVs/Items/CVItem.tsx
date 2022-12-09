@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
-import { Box, Button, createTheme, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, createTheme, Paper, Stack, styled, ThemeProvider, Typography } from '@mui/material';
 import { CVsActions } from '../../../../actionsTypes/CVsActionTypes';
-import { useAppDispatch } from '../../../../redusers/useTypedSelector';
+import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
 import CVModal from '../Modal/CVModal';
 import DeleteModal from '../../../Items/DeleteModal';
 import Download from '../../../../img/Download';
@@ -52,7 +52,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
     const dispatch = useAppDispatch();
 
     const time = moment(CV.createdAt).local().startOf('seconds').fromNow();
-
+    const load = useTypedSelector((state) => state.CVs.isLoading.download);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -64,21 +64,34 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
     }
     const handleCloseDelModal = () => setOpenDelModal(false);
     const [delId, setdelId] = React.useState("");
+    const [downloadId, setDownloadId] = React.useState("");
+    const [bgColor, setBgColor] = React.useState("none");
 
     const downloadCV = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setDownloadId(event.currentTarget.id)
         dispatch({ type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id });
     }
+
+    useEffect(() => {
+        load ? ((downloadId == CV.id) && setBgColor('rgba(116, 167, 255, 0.2)')) : setBgColor('none');
+        !load && setDownloadId('');
+      }, [load]);
 
     let projectsNames: string[] = [];
     CV.projectCVList.map((projectCV) => projectsNames.push(projectCV.project!.name))
     const joinedProjectsNames = projectsNames.join(', ');
 
     return (
-        <Box sx={{ p: '0px', m: '0px', position: 'relative' }}>
+        <Box sx={{ p: '0px', m: '0px', position: 'relative'}}>
+            {load && (downloadId == CV.id) &&
+                <Box sx={{position: 'absolute', top: '40%', left: '45%'}}>
+                    <CircularProgress />
+                </Box>
+            }
             <CVModal open={open} handleClose={handleClose} editableCV={CV} />
             <DeleteModal open={openDelModal} handleClose={handleCloseDelModal} id={delId} type={"CV"} />
             <ThemeProvider theme={lightTheme}>
-                <Item elevation={4} key={CV.id}>
+                <Item elevation={4} key={CV.id} sx={{ backgroundColor: bgColor }}>
                     <Box sx={{ m: 0, p: 0 }} onClick={handleOpen}>
                         <PdfIcon />
                         <Typography className='cvCardText cvCardTitle'>{CV.cvName}</Typography>

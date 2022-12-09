@@ -11,7 +11,8 @@ interface CVsReduser {
     edit: boolean,
     get: boolean,
     getAll: boolean,
-    search: boolean
+    search: boolean,
+    download: boolean
   }
   result: {
     add: null | undefined | number,
@@ -29,7 +30,8 @@ export const initialState: CVsReduser = {
     add: false,
     delete: false,
     edit: false,
-    search: false
+    search: false,
+    download: false
   },
   result: {
     add: null,
@@ -93,13 +95,14 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
 
     case CVsActions.DOWNLOAD_CV_REQUEST:
       return {
-        ...state
+        ...state,
+        isLoading: { ...state.isLoading, download: true }
       };
 
     case CVsActions.DOWNLOAD_CV_RESULT:
       return {
         ...state,
-        isLoading: { ...state.isLoading },
+        isLoading: { ...state.isLoading, download: false },
         // pdf: action.payload
       };
 

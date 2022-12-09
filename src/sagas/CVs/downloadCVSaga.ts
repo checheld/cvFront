@@ -1,8 +1,9 @@
-import { call } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import { AxiosResponse } from 'axios'
 import { downloadCVResult } from '../../actionCreators/CVActionCreator';
 import instance from '../axiosSetting';
 import config from '../headers';
+import { CVsActions } from '../../actionsTypes/CVsActionTypes';
 
 const axiosDownloadCV = (id: number, config: any) =>
 
@@ -33,14 +34,15 @@ const axiosDownloadCV = (id: number, config: any) =>
       //const url = window.URL.createObjectURL(new Blob([response.data], {type:"application/pdf"}));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'file.pdf');
+      link.setAttribute('download', `Pdf${id}.pdf`);
       document.body.appendChild(link);
       link.click();
     })
 
 export default function* downloadCVFetch(id: number) {
   try {
-    const downloadCVResponse: AxiosResponse<File> = yield call(axiosDownloadCV, id, config);
+    yield call(axiosDownloadCV, id, config);
+    yield put({ type: CVsActions.DOWNLOAD_CV_RESULT });
   }
   catch (e) {
     console.log(e)

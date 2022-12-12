@@ -1,11 +1,16 @@
 import * as React from "react";
+import { useTypedSelector } from "../../../../redusers/useTypedSelector";
 import { IProjectPhoto } from "../../../../interfaces/index";
+import LoadingPhoto from "./LoadingPhoto";
 import Photo from "./Photo";
 
 const Photos: React.FC<{
   photos: IProjectPhoto[];
   removePhoto: (index: number) => void;
 }> = ({ photos, removePhoto }) => {
+
+  const load = useTypedSelector((state) => state.projectPhotos.isLoading.add);
+
   return (
       <div style={{
           display: 'flex',
@@ -20,6 +25,7 @@ const Photos: React.FC<{
           removePhoto={() => removePhoto(index)}
         />
       ))}
+      {load && <LoadingPhoto />}
     </div>
   );
 };

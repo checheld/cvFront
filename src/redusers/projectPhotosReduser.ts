@@ -42,7 +42,7 @@ export const projectPhotosReduser = (state = initialState, action: action): proj
       return {
         ...state,
         isLoading: {
-          ...state.isLoading, get: true
+          ...state.isLoading, add: true
         }
       };
 

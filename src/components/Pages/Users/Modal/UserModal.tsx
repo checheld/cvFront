@@ -375,8 +375,22 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     Start date - End date
                                                 </Typography>
                                                 <CustomBoxDate>
-                                                    <DateField item={education.startDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"Start date"} name={'startDate'} />
-                                                    <DateField item={education.endDate} setItem={handleChangeEducation(index)} check={check} index={index} label={"End date"} name={'endDate'} />
+                                                    <DateField item={education.startDate}
+                                                        setItem={handleChangeEducation(index)}
+                                                        maxDate={education.endDate}
+                                                        label={"Start date"}
+                                                        name={'startDate'}
+                                                        check={check}
+                                                        index={index}
+                                                    />
+                                                    <DateField item={education.endDate}
+                                                        setItem={handleChangeEducation(index)}
+                                                        minDate={education.startDate}
+                                                        label={"End date"}
+                                                        name={'endDate'}
+                                                        check={check}
+                                                        index={index}
+                                                    />
                                                 </CustomBoxDate>
                                             </Box>
                                         </CustomBox>

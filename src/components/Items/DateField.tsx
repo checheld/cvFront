@@ -11,9 +11,11 @@ interface Iprops {
     check?: boolean,
     label?: string,
     name?: string,
+    minDate?: string,
+    maxDate?: string
 }
 
-const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name }) => {
+const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name, minDate, maxDate }) => {
 
     const currentDate = new Date();
     const currentDateYear = currentDate.getFullYear();
@@ -34,6 +36,14 @@ const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name 
         return <FormHelperText style={{ color: 'red', marginLeft: '12px' }}>{helperText}</FormHelperText>;
     }
 
+    const [min, setMin] = React.useState<string>('1950-01-01');
+    const [max, setMax] = React.useState<string>(date);
+
+    useEffect(() => {
+        minDate && setMin(minDate);
+        maxDate && setMax(maxDate);
+      }, [minDate, maxDate]);
+
     return (
         <Box sx={{ m: 0 }}>
             <TextField
@@ -42,7 +52,7 @@ const DateField: React.FC<Iprops> = ({ item, setItem, index, check, label, name 
                 id="date"
                 label={label}
                 type="date"
-                InputProps={{ inputProps: { min: "1950-01-01", max: `${date}` } }}
+                InputProps={{ inputProps: { min: min, max: max } }}
                 sx={{ width: '130px', mr: '10px', fontSize: '14px !important', mb: 0 }}
                 InputLabelProps={{
                     shrink: true,

@@ -23,12 +23,12 @@ import SilentRenewComponent from './components/Pages/Login/SilentRenewComponnent
 const App: React.FC = () => {
 
   const screenWidth = window.screen.width;
-  //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-  let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+  let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+  //let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
 
   const tokenCleaner = () => {
-    window.sessionStorage.removeItem('oidc.user:https://localhost:5001:leviossacv');
-    //window.sessionStorage.removeItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+    //window.sessionStorage.removeItem('oidc.user:https://localhost:5001:leviossacv');
+    window.sessionStorage.removeItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
   }
 
   useEffect(() => {

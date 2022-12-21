@@ -9,11 +9,13 @@ const NoResult: React.FC = () => {
   let text: string[] = [];
   const variant: number = React.useMemo(() => getRandomInt(5), []);
   if (variant === 0) {
-    text[0] = `Sorry, there are no results for this search`;
+    // text[0] = `Sorry, there are no results for this search`;
+    text[0] = `Sorry, there are no results`;
     text[1] = "We couldn't find something here";
   } else {
     text[0] = `Meow Meow!`;
-    text[1] = `Please try another phrase`;
+    // text[1] = `Please try another phrase`;
+    text[1] = "We couldn't find something here";
   }
 
   return (

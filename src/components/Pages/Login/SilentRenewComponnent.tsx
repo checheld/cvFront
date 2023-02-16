@@ -1,10 +1,10 @@
 import React from "react";
-import { processSilentRenew } from "redux-oidc";
+// import { processSilentRenew } from "redux-oidc";
 
 function SilentRenewComponent() {
-    processSilentRenew();
-    return (
-        <div>SilentRenewComponent</div>
-    );
+    // processSilentRenew();
+    // return (
+    //     <div>SilentRenewComponent</div>
+    // );
 };
 export default SilentRenewComponent;

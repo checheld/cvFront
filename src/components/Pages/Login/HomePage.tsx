@@ -34,29 +34,29 @@ const IDENTITY_CONFIG = {
 function HomePage() {
     const [state, setState] = useState(null);
 
-    const mgr = makeUserManager(IDENTITY_CONFIG);
-    useEffect(() => {
-        mgr.getUser().then((user) => {
-            if (user) {
-                var jwtDecode = jwt(user.access_token);
+    // const mgr = makeUserManager(IDENTITY_CONFIG);
+    // useEffect(() => {
+    //     mgr.getUser().then((user) => {
+    //         if (user) {
+    //             var jwtDecode = jwt(user.access_token);
 
-                // @ts-ignore
-                if (jwtDecode.role === "Admin" || jwtDecode.role === "Manager") {
+    //             // @ts-ignore
+    //             if (jwtDecode.role === "Admin" || jwtDecode.role === "Manager") {
 
-                    fetch("http://localhost:3000/CVs", {
-                    //fetch("https://levicvfrontapp.herokuapp.com/CVs", {
+    //                 fetch("http://localhost:3000/CVs", {
+    //                 //fetch("https://levicvfrontapp.herokuapp.com/CVs", {
 
-                        headers: {
-                            Authorization: "Bearer " + user.access_token,
-                        },
-                    })
-                        //.then((resp) => resp.json())
-                        // @ts-ignore
-                        .then((data) => setState({ user, data }));
-                }
-            }
-        });
-    }, []);
+    //                     headers: {
+    //                         Authorization: "Bearer " + user.access_token,
+    //                     },
+    //                 })
+    //                     //.then((resp) => resp.json())
+    //                     // @ts-ignore
+    //                     .then((data) => setState({ user, data }));
+    //             }
+    //         }
+    //     });
+    // }, []);
 
     return (
         <CustomBox>
@@ -70,9 +70,9 @@ function HomePage() {
             }}>
                 Welcome to Levi<span style={{ color: '#5893F9' }}>CV</span>!
             </Typography>
-            <div className='logoutButtonContainer'>
+            {/* <div className='logoutButtonContainer'>
                 <CustomButton variant="contained" onClick={() => mgr.signinRedirect()} children='Login' />
-            </div>
+            </div> */}
             <div style={{ width: `230px`, height: `230px`, marginTop: '50px', marginLeft: '10px' }}>
                 <img
                     style={{ width: `100%`, height: `100%` }}

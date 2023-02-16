@@ -36,7 +36,6 @@ export const getCVRequest = (id: string) : getCVRequestAction => {
     }
 }
 export const getCVResult = (CV:ICV) : getCVResultAction => {
-    console.log(CV)
     return{
         type: CVsActions.GET_CV_RESULT,
         payload: CV

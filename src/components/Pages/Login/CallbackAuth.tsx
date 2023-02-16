@@ -3,14 +3,14 @@ import { makeUserManager } from 'react-oidc';
 import NoResult from '../../Items/Search/NoResult';
 
 function Callback() {
-    useEffect(() => {
-        var mgr = makeUserManager({
-            response_mode: "query",
-        });
+    // useEffect(() => {
+    //     var mgr = makeUserManager({
+    //         response_mode: "query",
+    //     });
 
-        mgr.signinRedirectCallback().then(() => (window.location.href = "/"));
-    }, []);
+    //     mgr.signinRedirectCallback().then(() => (window.location.href = "/"));
+    // }, []);
 
-    return <NoResult />;
+    // return <NoResult />;
 }
 export default Callback

@@ -248,9 +248,9 @@ export function* searchProjectTypes({ type, payload }: searchProjectTypesRequest
 }
 
 // projectType
-export function* login({ type, payload }: loginRequestAction) {
-  yield call(loginFetch, payload);
-}
+// export function* login({ type, payload }: loginRequestAction) {
+//   yield call(loginFetch, payload);
+// }
 
 export function* watcherSaga() {
   yield takeEvery(universitiesActions.GET_UNIVERSITIES_REQUEST, getUniversities);

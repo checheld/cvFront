@@ -23,17 +23,17 @@ import SilentRenewComponent from './components/Pages/Login/SilentRenewComponnent
 const App: React.FC = () => {
 
   const screenWidth = window.screen.width;
-  //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-  let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+  // //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+  // let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
 
-  const tokenCleaner = () => {
-    window.sessionStorage.removeItem('oidc.user:https://localhost:5001:leviossacv');
-    //window.sessionStorage.removeItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-  }
+  // const tokenCleaner = () => {
+  //   window.sessionStorage.removeItem('oidc.user:https://localhost:5001:leviossacv');
+  //   //window.sessionStorage.removeItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+  // }
 
-  useEffect(() => {
-    setInterval(() => tokenCleaner(), 1999000);
-  }, [token]);
+  // useEffect(() => {
+  //   setInterval(() => tokenCleaner(), 1999000);
+  // }, [token]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +44,7 @@ const App: React.FC = () => {
           <TopAppBar />
         )}
         <Routes>
-          <Route path="/CVs" element={token ? <CVsPage /> : <HomePage />} />
+          {/* <Route path="/CVs" element={token ? <CVsPage /> : <HomePage />} />
           <Route path="/Users" element={token ? <Users /> : <HomePage />} />
           <Route path="/Projects" element={token ? <Projects /> : <HomePage />} />
           <Route path="/Education" element={token ? <Education /> : <HomePage />} />
@@ -57,7 +57,17 @@ const App: React.FC = () => {
           <Route path="/logout" element={<LogoutPage />} />
           <Route path="/signin-oidc" element={<Callback />} />
           <Route path="/" element={token ? <CVsPage /> : <HomePage />} />
-          <Route path="/silent_renew" element={<SilentRenewComponent />} />
+          <Route path="/silent_renew" element={<SilentRenewComponent />} /> */}
+          <Route path="/CVs" element={<CVsPage />} />
+          <Route path="/Users" element={<Users />} />
+          <Route path="/Projects" element={<Projects />} />
+          <Route path="/Education" element={<Education />} />
+          <Route path="/Technologies" element={<Technologies />} />
+          <Route path="/WorkExperience" element={<WorkExperience />} />
+          <Route path="/ProjectType" element={<ProjectTypesPage />} />
+          <Route path="/projects/:id" element={<ProjectIdPage />} />
+          <Route path="/users/:id" element={<UserIdPage />} />
+          <Route path="/" element={<CVsPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

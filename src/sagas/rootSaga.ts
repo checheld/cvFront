@@ -306,7 +306,7 @@ export function* watcherSaga() {
   yield takeEvery(projectTypesActions.EDIT_PROJECTTYPE_REQUEST, editProjectType);
   yield takeEvery(projectTypesActions.SEARCH_PROJECTTYPES_REQUEST, searchProjectTypes);
 
-  yield takeEvery(loginActions.LOGIN_REQUEST, login);
+  // yield takeEvery(loginActions.LOGIN_REQUEST, login);
 
 }
 export default function* rootSaga() {

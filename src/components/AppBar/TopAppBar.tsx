@@ -24,24 +24,25 @@ export default function ButtonAppBar() {
         setMenuOpen(false);
     }
 
-    const handleClick = () => {
-        sessionStorage.clear();
-    };
+    // const handleClick = () => {
+    //     sessionStorage.clear();
+    // };
 
-    //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-    let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
-    const location = useLocation();
-    const currentPath = location.pathname;
+    // //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+    // let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+    // const location = useLocation();
+    // const currentPath = location.pathname;
 
-    useEffect(() => {
-        //token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-        token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
-    }, [currentPath, token]);
+    // useEffect(() => {
+    //     //token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+    //     token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+    // }, [currentPath, token]);
 
     return (
         <Box>
             <LogoutModal open={open} handleClose={handleClose} />
-            {token && <AppBar position="static" sx={{ margin: 0, backgroundColor: '#303439', }}>
+            {/* {token && <AppBar position="static" sx={{ margin: 0, backgroundColor: '#303439', }}> */}
+            <AppBar position="static" sx={{ margin: 0, backgroundColor: '#303439', }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -96,7 +97,6 @@ export default function ButtonAppBar() {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            }
         </Box>
     );
 }

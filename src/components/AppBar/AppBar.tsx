@@ -73,18 +73,19 @@ export default function PermanentDrawerLeft() {
     )
   }
 
-  //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-  let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+  // //let token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+  // let token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
 
-  useEffect(() => {
-    //token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
-    token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
-  }, [currentPath, token]);
+  // useEffect(() => {
+  //   //token = sessionStorage.getItem('oidc.user:https://identity-server-1.herokuapp.com:leviossacv');
+  //   token = sessionStorage.getItem('oidc.user:https://localhost:5001:leviossacv');
+  // }, [currentPath, token]);
 
   return (
     <Box sx={{ display: 'flex' }}>
       <LogoutModal open={open} handleClose={handleClose} />
-      {token && <Drawer
+      {/* {token && <Drawer */}
+      <Drawer
         sx={{
           width: 240,
           flexShrink: 0,
@@ -130,7 +131,7 @@ export default function PermanentDrawerLeft() {
             </Box>
           </ListItem>
         </List>
-      </Drawer>}
+      </Drawer>
     </Box>
   );
 }

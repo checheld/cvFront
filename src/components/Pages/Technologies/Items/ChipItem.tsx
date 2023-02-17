@@ -11,12 +11,12 @@ interface IChip {
 const ChipItem: React.FC<IChip> = ({ techCollection, handleEdit }) => {
 
     const [openDelModal, setOpenDelModal] = React.useState(false);
-    const handleOpenDelModal = (id: string) => {
+    const handleOpenDelModal = (id: number) => {
         setdelId(id);
         setOpenDelModal(true);
     }
     const handleCloseDelModal = () => setOpenDelModal(false);
-    const [delId, setdelId] = React.useState("");
+    const [delId, setdelId] = React.useState(0);
 
     return (
         <>
@@ -30,7 +30,7 @@ const ChipItem: React.FC<IChip> = ({ techCollection, handleEdit }) => {
                     <Chip label={tech.name}
                         onDelete={() => handleOpenDelModal(tech.id)}
                         onClick={() => handleEdit(tech)}
-                        id={tech.id}
+                        id={String(tech.id)}
                         style={{
                             fontSize: '14px',
                             fontWeight: 600,

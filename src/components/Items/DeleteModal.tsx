@@ -15,7 +15,7 @@ import CustomButtonFixed from './CustomButtonFixed';
 interface IDeleteModal {
     open: boolean,
     handleClose: () => void,
-    id: string | number,
+    id: number,
     type: string
 }
 const CustomBox = styled(Box)(() => ({

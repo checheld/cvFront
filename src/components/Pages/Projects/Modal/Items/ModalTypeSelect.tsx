@@ -6,7 +6,7 @@ import { useTypedSelector } from '../../../../../redusers/useTypedSelector';
 import { FormHelperText, styled } from '@mui/material';
 
 interface IChipSelect {
-    type: string,
+    type: number,
     setType: any,
     check?: boolean,
 }

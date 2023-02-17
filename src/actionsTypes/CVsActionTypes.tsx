@@ -33,12 +33,12 @@ export interface getCVResultAction {
 
 export interface getCVRequestAction {
     type: string,
-    id: string
+    id: number
 }
 
 export interface delCVRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delCVResultAction {
@@ -65,7 +65,7 @@ export interface addCVResultAction {
 
 export interface editCVRequestAction {
     type: string,
-    payload: { id: string, CVName: string, userId: string, projectCVList: IProjectCV[]},
+    payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[]},
     id: number
 }
 

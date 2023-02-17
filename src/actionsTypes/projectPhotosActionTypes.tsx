@@ -18,7 +18,7 @@ export interface addProjectPhotoResultAction {
 
 export interface delProjectPhotoRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delProjectPhotoResultAction {

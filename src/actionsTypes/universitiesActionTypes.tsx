@@ -24,7 +24,7 @@ export interface getUniversitiesRequestAction {
 
 export interface delUniversityRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delUniversityResultAction {

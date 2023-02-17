@@ -5,13 +5,13 @@ import { universitiesActions } from '../../actionsTypes/universitiesActionTypes'
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosDelUniversity = (id: string, config: any) =>
+const axiosDelUniversity = (id: number, config: any) =>
   instance.delete(
     `/universities/${id}`,
     config
   )
 
-export default function* deltUniversityFetch(id: string) {
+export default function* deltUniversityFetch(id: number) {
   try {
     const delUniversityResponse: AxiosResponse<IUniversity> = yield call(axiosDelUniversity, id, config);
     yield put({ type: universitiesActions.DEL_UNIVERSITY_RESULT, response: delUniversityResponse.data });

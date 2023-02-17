@@ -9,7 +9,7 @@ import '../../../Components.css';
 const ProjectsTable: React.FC<{ projects: IProject[] }> = (props) => {
 
   const [openDelModal, setOpenDelModal] = useState(false);
-  const [delId, setdelId] = useState("");
+  const [delId, setdelId] = useState(0);
 
   const handleCloseDelModal = () => setOpenDelModal(false);
 

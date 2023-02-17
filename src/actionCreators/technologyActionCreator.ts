@@ -25,10 +25,10 @@ export const getTechnologiesResult = (technologies:ITechnology[]) : getTechnolog
         payload: technologies
     }
 }
-export const delTechnologyRequest = (payload: string): delTechnologyRequestAction => {
+export const delTechnologyRequest = (id: number): delTechnologyRequestAction => {
     return{
         type: technologiesActions.DEL_TECHNOLOGY_REQUEST,
-        payload: payload
+        id: id
     }
 }
 

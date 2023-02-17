@@ -5,7 +5,7 @@ import { CVsActions } from '../../actionsTypes/CVsActionTypes';
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosEditCV = (payload: { id: string, CVName: string, userId: string, projectCVList: IProjectCV[] }, id: number, config: any) =>
+const axiosEditCV = (payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[] }, id: number, config: any) =>
 
   instance.put(
     `/CVs/${id}`,
@@ -13,7 +13,7 @@ const axiosEditCV = (payload: { id: string, CVName: string, userId: string, proj
     config
   )
 
-export default function* editCVFetch(payload: { id: string, CVName: string, userId: string, projectCVList: IProjectCV[] }, id: number) {
+export default function* editCVFetch(payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[] }, id: number) {
   try {
     const updatCVResponse: AxiosResponse<ICV> = yield call(axiosEditCV, payload, id, config);
     yield put({ type: CVsActions.EDIT_CV_RESULT, response: updatCVResponse.data });

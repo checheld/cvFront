@@ -5,14 +5,14 @@ import { IUser } from '../../interfaces/index'
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosGetUser = (id: string, config: any) =>
+const axiosGetUser = (id: number, config: any) =>
 
   instance.get<IUser>(
     `/users/${id}`,
     config
   );
 
-export default function* getUserFetch(id: string) {
+export default function* getUserFetch(id: number) {
   try {
     const getUserResponse: AxiosResponse<IUser> = yield call(axiosGetUser, id, config);
     if (getUserResponse.status === 200) {

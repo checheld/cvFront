@@ -11,7 +11,7 @@ const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
 
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
-    const [projectType, setProjectType] = useState({ name: '', id: '' })
+    const [projectType, setProjectType] = useState({ name: '', id: 0 })
 
     const modalOpen = (projectType: IProjectType) => {
         setOpen(true);
@@ -20,11 +20,11 @@ const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
 
     const [openDelModal, setOpenDelModal] = React.useState(false);
     const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setdelId(event.currentTarget.id);
+        setdelId(Number(event.currentTarget.id));
         setOpenDelModal(true);
     }
     const handleCloseDelModal = () => setOpenDelModal(false);
-    const [delId, setdelId] = React.useState("");
+    const [delId, setdelId] = React.useState(0);
 
     return (
         <Box>
@@ -54,7 +54,7 @@ const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
                                 </TableCell>
                                 <TableCell align="right" key={projectType.id}>
                                     <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={projectType.id}>
-                                        <Button variant='text' onClick={handleOpenDelModal} id={projectType.id} >
+                                        <Button variant='text' onClick={handleOpenDelModal} id={String(projectType.id)} >
                                             <Delete />
                                         </Button>
                                     </Stack>

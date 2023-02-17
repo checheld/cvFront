@@ -70,7 +70,7 @@ export const projectTypesReducer = (state = initialState, action: action): proje
 
         case projectTypesActions.DEL_PROJECTTYPE_RESULT:
 
-            let delPT: string = action.response;
+            let delPT: number = action.response;
             let AllProjectTypes = state.projectTypes;
             let newArray = AllProjectTypes.filter(function (f) { return f.id != delPT })
             return {

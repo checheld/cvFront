@@ -80,7 +80,7 @@ export const CVsReducer = (state = initialState, action: action): CVsReduser => 
 
     case CVsActions.DEL_CV_RESULT:
 
-      let delCV: string = action.response;
+      let delCV: number = action.response;
       let AllCVs = state.CVs;
       let newArray = AllCVs.filter(function (f) { return f.id != delCV })
 

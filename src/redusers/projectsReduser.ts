@@ -79,7 +79,7 @@ export const projectsReducer = (state = initialState, action: action): projectsR
 
     case projectsActions.DEL_PROJECT_RESULT:
 
-      let delproj: string = action.response;
+      let delproj: number = action.response;
       let AllProjects = state.projects;
       let newArray = AllProjects.filter(function (f) { return f.id != delproj })
 

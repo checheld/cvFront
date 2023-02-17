@@ -11,7 +11,7 @@ const WorkExpTable: React.FC<{ companies: ICompany[] }> = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [company, setCompany] = useState({ id: '', name: '' })
+  const [company, setCompany] = useState({ id: 0, name: '' })
 
   const modalOpen = (company: ICompany) => {
     setOpen(true);
@@ -20,11 +20,11 @@ const WorkExpTable: React.FC<{ companies: ICompany[] }> = (props) => {
 
   const [openDelModal, setOpenDelModal] = useState(false);
   const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setdelId(event.currentTarget.id);
+    setdelId(Number(event.currentTarget.id));
     setOpenDelModal(true);
   }
   const handleCloseDelModal = () => setOpenDelModal(false);
-  const [delId, setdelId] = useState("");
+  const [delId, setdelId] = useState(0);
 
   return (
     <Box>
@@ -54,7 +54,7 @@ const WorkExpTable: React.FC<{ companies: ICompany[] }> = (props) => {
                 </TableCell>
                 <TableCell align="right" key={company.id}>
                   <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={company.id}>
-                    <Button variant='text' onClick={handleOpenDelModal} id={company.id}>
+                    <Button variant='text' onClick={handleOpenDelModal} id={String(company.id)}>
                       <Delete />
                     </Button>
                   </Stack>

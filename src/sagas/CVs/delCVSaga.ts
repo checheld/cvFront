@@ -5,15 +5,15 @@ import { CVsActions } from '../../actionsTypes/CVsActionTypes';
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosDelCV = (payload: string, config: any) =>
+const axiosDelCV = (id: number, config: any) =>
   instance.delete(
-    `/CVs/${payload}`,
+    `/CVs/${id}`,
     config
   )
 
-export default function* delCVFetch(payload: string) {
+export default function* delCVFetch(id: number) {
   try {
-    const delCVResponse: AxiosResponse<ICV> = yield call(axiosDelCV, payload, config);
+    const delCVResponse: AxiosResponse<ICV> = yield call(axiosDelCV, id, config);
     yield put({ type: CVsActions.DEL_CV_RESULT, response: delCVResponse.data });
   }
   catch (e) {

@@ -5,13 +5,13 @@ import { companiesActions } from '../../actionsTypes/companiesActionTypes';
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosDelCompany = (id: string, config: any) =>
+const axiosDelCompany = (id: number, config: any) =>
   instance.delete(
     `/companies/${id}`,
     config)
 
 
-export default function* deltCompanyFetch(id: string) {
+export default function* deltCompanyFetch(id: number) {
   try {
     const delCompanyResponse: AxiosResponse<ICompany> = yield call(axiosDelCompany, id, config);
     yield put({ type: companiesActions.DEL_COMPANY_RESULT, response: delCompanyResponse.data });

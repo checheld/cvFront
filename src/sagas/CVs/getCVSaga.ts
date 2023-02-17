@@ -5,12 +5,12 @@ import { ICV } from '../../interfaces/index'
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosGetCV = (id: string, config: any) =>
+const axiosGetCV = (id: number, config: any) =>
   instance.get<ICV>(
     `/cvs/${id}`,
     config)
 
-export default function* getCVFetch(id: string) {
+export default function* getCVFetch(id: number) {
   try {
     const getCVResponse: AxiosResponse<ICV> = yield call(axiosGetCV, id, config);
     if (getCVResponse.status === 200) {

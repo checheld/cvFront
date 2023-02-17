@@ -37,7 +37,7 @@ export const addPhotoParamsResult = (payload: string): addPhotoParamsResultActio
     }
 }
 
-export const editPhotoParamsRequest = (payload: any, id: string): editPhotoParamsRequestAction => {
+export const editPhotoParamsRequest = (payload: any, id: number): editPhotoParamsRequestAction => {
     return {
         type: userPhotosActions.EDIT_PHOTOPARAMS_REQUEST,
         payload: payload,

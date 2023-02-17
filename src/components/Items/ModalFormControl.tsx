@@ -5,7 +5,7 @@ import Select from '@mui/material/Select';
 import { FormHelperText, styled } from '@mui/material';
 
 interface ISelect {
-    type: string,
+    type: number,
     setType: any,
     check: boolean,
     index: number,
@@ -49,7 +49,7 @@ const ModalFormControl: React.FC<ISelect> = ({ elements, selectName, type, setTy
             <CustomSelect
                 name={selectName}
                 value={type}
-                error={type === '' && check && index === 0}
+                error={type === 0 && check && index === 0}
                 onChange={setType}
                 displayEmpty
             >

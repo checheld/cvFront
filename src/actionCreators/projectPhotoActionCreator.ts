@@ -20,10 +20,10 @@ export const addProjectPhotoResult = (payload: string): addProjectPhotoResultAct
     }
 }
 
-export const delProjectPhotoRequest = (payload: string): delProjectPhotoRequestAction => {
+export const delProjectPhotoRequest = (id: number): delProjectPhotoRequestAction => {
     return{
         type: projectPhotosActions.DEL_PROJECTPHOTO_REQUEST,
-        payload: payload
+        id: id
     }
 }
 

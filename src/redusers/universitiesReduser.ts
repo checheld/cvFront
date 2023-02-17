@@ -71,7 +71,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
 
     case universitiesActions.DEL_UNIVERSITY_RESULT:
 
-      let delUni: string = action.response;
+      let delUni: number = action.response;
       let AllUniversities = state.universities;
       let newArray = AllUniversities.filter(function (f) { return f.id != delUni })
 

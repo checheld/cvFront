@@ -26,10 +26,10 @@ export const getCompaniesResult = (companies: ICompany[]): getCompaniesResultAct
     }
 }
 
-export const delCompanyRequest = (payload: string): delCompanyRequestAction => {
+export const delCompanyRequest = (id: number): delCompanyRequestAction => {
     return {
         type: companiesActions.DEL_COMPANY_REQUEST,
-        payload: payload
+        id: id
     }
 }
 

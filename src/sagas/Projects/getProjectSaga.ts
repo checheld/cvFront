@@ -5,14 +5,14 @@ import { IProject } from '../../interfaces/index'
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosGetProject = (id: string, config: any) =>
+const axiosGetProject = (id: number, config: any) =>
 
   instance.get<IProject>(
     `/projects/project/${id}`,
     config
   );
 
-export default function* getProjectFetch(id: string) {
+export default function* getProjectFetch(id: number) {
   try {
     const getProjectResponse: AxiosResponse<IProject> = yield call(axiosGetProject, id, config);
     if (getProjectResponse.status === 200) {

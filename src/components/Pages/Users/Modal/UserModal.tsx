@@ -74,9 +74,9 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
-    const [education, setEducation] = useState({ universityId: '', speciality: '', startDate: '', endDate: '' });
+    const [education, setEducation] = useState({ universityId: 0, speciality: '', startDate: '', endDate: '' });
     const [arrayEducation, setArrayEducation] = useState<IEducation[]>([education]);
-    const [workExperience, setWorkExperience] = useState({ companyId: '', position: '', startDate: '', endDate: '', description: '' });
+    const [workExperience, setWorkExperience] = useState({ companyId: 0, position: '', startDate: '', endDate: '', description: '' });
     const [arrayWorkExperience, setArrayWorkExperience] = useState<IWorkExperience[]>([workExperience]);
     const [tech, setTech] = useState<ITechnology[]>([]);
     const [openPhoto, setOpenPhoto] = useState(false);
@@ -125,25 +125,25 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     useEffect(() => {
         setIsError(false);
-        (firstName === '' || lastName === '' || description === '' || arrayEducation[0].universityId === ''
+        (firstName === '' || lastName === '' || description === '' || arrayEducation[0].universityId === 0
             || arrayEducation[0].speciality === '' || arrayEducation[0].startDate === '' || arrayEducation[0].endDate === ''
-            || arrayWorkExperience[0].companyId === '' || arrayWorkExperience[0].position === '' || arrayWorkExperience[0].description === ''
+            || arrayWorkExperience[0].companyId === 0 || arrayWorkExperience[0].position === '' || arrayWorkExperience[0].description === ''
             || arrayWorkExperience[0].startDate === '' || arrayWorkExperience[0].endDate === ''
         ) && setIsError(true)
     }, [firstName, lastName, description, tech, arrayEducation, arrayWorkExperience]);
 
     const dispatch = useAppDispatch();
     const addUser = () => {
-        const clearArrayEducation = arrayEducation.filter(el => el.universityId !== "" && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
-        const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== "" && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+        const clearArrayEducation = arrayEducation.filter(el => el.universityId !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
+        const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
         const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': url, 'photoParamsId': params.id };
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
         setLastName('');
         setDescription('');
-        setEducation({ universityId: '', speciality: '', startDate: '', endDate: '' });
+        setEducation({ universityId: 0, speciality: '', startDate: '', endDate: '' });
         setArrayEducation([]);
-        setWorkExperience({ companyId: '', position: '', startDate: '', endDate: '', description: '' });
+        setWorkExperience({ companyId: 0, position: '', startDate: '', endDate: '', description: '' });
         setArrayWorkExperience([]);
         setTech([]);
         setPhoto(null);
@@ -153,8 +153,8 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     const editUser = () => {
         if (editableUser !== undefined) {
-            const clearArrayEducation = arrayEducation.filter(el => el.universityId !== "" && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
-            const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== "" && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+            const clearArrayEducation = arrayEducation.filter(el => el.universityId !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
+            const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
             const paramsId = (editableUser.photoParamsId !== null) ? editableUser.photoParamsId : params.id;
 
             const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
@@ -163,9 +163,9 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             setFirstName('');
             setLastName('');
             setDescription('');
-            setEducation({ universityId: '', speciality: '', startDate: '', endDate: '' });
+            setEducation({ universityId: 0, speciality: '', startDate: '', endDate: '' });
             setArrayEducation([]);
-            setWorkExperience({ companyId: '', position: '', startDate: '', endDate: '', description: '' });
+            setWorkExperience({ companyId: 0, position: '', startDate: '', endDate: '', description: '' });
             setArrayWorkExperience([]);
             setTech([]);
             setPhoto(null);

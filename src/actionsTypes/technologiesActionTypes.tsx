@@ -24,7 +24,7 @@ export interface getTechnologiesRequestAction {
 
 export interface delTechnologyRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delTechnologyResultAction {

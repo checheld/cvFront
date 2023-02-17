@@ -79,7 +79,7 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
             </TableCell>
             <TableCell align="right" key={project.id} sx={{ mr: 'auto', width: 0 }}>
                 <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={project.id}>
-                    <Button variant='text' onClick={handleOpenDelModal} id={project.id} >
+                    <Button variant='text' onClick={handleOpenDelModal} id={String(project.id)} >
                         <Delete />
                     </Button>
                 </Stack>

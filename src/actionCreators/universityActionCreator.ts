@@ -26,10 +26,10 @@ export const getUniversitiesResult = (universities:IUniversity[]) : getUniversit
     }
 }
 
-export const delUniversityRequest = (payload: string): delUniversityRequestAction => {
+export const delUniversityRequest = (id: number): delUniversityRequestAction => {
     return{
         type: universitiesActions.DEL_UNIVERSITY_REQUEST,
-        payload: payload
+        id: id
     }
 }
 

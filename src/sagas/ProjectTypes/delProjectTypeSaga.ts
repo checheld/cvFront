@@ -5,14 +5,14 @@ import { projectTypesActions } from '../../actionsTypes/projectTypesActionTypes'
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosDelProjectType = (id: string, config: any) =>
+const axiosDelProjectType = (id: number, config: any) =>
     instance.delete(
         `/projectTypes/${id}`,
         config
     )
 
 
-export default function* deltProjectTypeFetch(id: string) {
+export default function* deltProjectTypeFetch(id: number) {
     try {
         const delProjectTypeResponse: AxiosResponse<IProjectType> = yield call(axiosDelProjectType, id, config);
         yield put({ type: projectTypesActions.DEL_PROJECTTYPE_RESULT, response: delProjectTypeResponse.data });

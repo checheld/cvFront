@@ -29,11 +29,11 @@ export interface getProjectResultAction {
 }
 export interface getProjectRequestAction {
     type: string,
-    id: string
+    id: number
 }
 export interface delProjectRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delProjectResultAction {

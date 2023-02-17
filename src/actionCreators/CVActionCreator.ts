@@ -29,7 +29,7 @@ export const getCVsResult = (CVs:ICV[]) : getCVsResultAction => {
         payload: CVs
     }
 }
-export const getCVRequest = (id: string) : getCVRequestAction => {
+export const getCVRequest = (id: number) : getCVRequestAction => {
     return{
         type:  CVsActions.GET_CV_REQUEST,
         id: id
@@ -41,10 +41,10 @@ export const getCVResult = (CV:ICV) : getCVResultAction => {
         payload: CV
     }
 }
-export const delCVRequest = (payload: string): delCVRequestAction => {
+export const delCVRequest = (id: number): delCVRequestAction => {
     return{
         type: CVsActions.DEL_CV_REQUEST,
-        payload: payload
+        id: id
     }
 }
 
@@ -80,7 +80,7 @@ export const addCVResult = (): addCVResultAction => {
     }
 }
 
-export const editCVRequest = (payload: { id: string, CVName: string, userId: string, projectCVList: IProjectCV[]}, id: number): editCVRequestAction => {
+export const editCVRequest = (payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[]}, id: number): editCVRequestAction => {
     return{
         type: CVsActions.EDIT_CV_REQUEST,
         payload: payload,

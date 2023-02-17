@@ -24,7 +24,7 @@ export interface getCompaniesRequestAction {
 
 export interface delCompanyRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delCompanyResultAction {

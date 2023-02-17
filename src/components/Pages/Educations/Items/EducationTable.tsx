@@ -11,7 +11,7 @@ const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [university, setUniversity] = useState({ name: '', id: '' })
+  const [university, setUniversity] = useState({ name: '', id: 0 })
 
   const modalOpen = (university: IUniversity) => {
     setOpen(true);
@@ -20,11 +20,11 @@ const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
 
   const [openDelModal, setOpenDelModal] = React.useState(false);
   const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setdelId(event.currentTarget.id);
+    setdelId(Number(event.currentTarget.id));
     setOpenDelModal(true);
   }
   const handleCloseDelModal = () => setOpenDelModal(false);
-  const [delId, setdelId] = React.useState("");
+  const [delId, setdelId] = React.useState(0);
 
   return (
     <Box>
@@ -54,7 +54,7 @@ const BasicTable: React.FC<{ universities: IUniversity[] }> = (props) => {
                 </TableCell>
                 <TableCell align="right" key={university.id}>
                   <Stack spacing='15px' direction="row" sx={{ mr: '30px' }} key={university.id}>
-                    <Button variant='text' onClick={handleOpenDelModal} id={university.id} >
+                    <Button variant='text' onClick={handleOpenDelModal} id={String(university.id)} >
                       <Delete />
                     </Button>
                   </Stack>

@@ -40,7 +40,7 @@ export interface addPhotoParamsResultAction {
 export interface editPhotoParamsRequestAction {
     type: string,
     payload: any,
-    id: string
+    id: number
 }
 
 export interface editPhotoParamsResultAction {

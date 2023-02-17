@@ -33,8 +33,8 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     let projects = useTypedSelector((state) => state.projects.projects);
 
     const [CVName, setCVName] = useState('');
-    const [userId, setUser] = useState('');
-    const [projectCV, setProjectCV] = useState<IProjectCV>({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
+    const [userId, setUser] = useState(0);
+    const [projectCV, setProjectCV] = useState<IProjectCV>({ projectId: 0, position: '', description: '', startDate: '', endDate: '' });
     const [arrayProjectCV, setArrayProjectCV] = useState<IProjectCV[]>([projectCV]);
 
     const handleChangeCVName = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
         setCVName(value);
     };
     const handleChangeUser = (event: SelectChangeEvent) => {
-        setUser(event.target.value);
+        setUser(Number(event.target.value));
     };
     const handleChangeProject = (index: number) => (event: SelectChangeEvent) => {
         const currentProjectCV = arrayProjectCV[index];
@@ -66,23 +66,23 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     };
 
     const addCV = () => {
-        const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== "" && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
+        const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== 0 && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
         const objCV = { 'cvName': CVName, 'userId': userId, 'projectCVList': clearArrayProjectCV };
         dispatch({ type: CVsActions.ADD_CV_REQUEST, payload: objCV });
         setCVName('');
-        setUser('');
-        setProjectCV({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
+        setUser(0);
+        setProjectCV({ projectId: 0, position: '', description: '', startDate: '', endDate: '' });
         setArrayProjectCV([]);
         handleClose();
     }
     const editCV = () => {
         if (editableCV !== undefined) {
-            const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== "" && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
+            const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== 0 && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
             const objCV = { 'cvName': CVName, 'userId': userId, 'createdAt': editableCV.createdAt, projectCVList: clearArrayProjectCV };
             dispatch({ type: CVsActions.EDIT_CV_REQUEST, id: editableCV.id, payload: objCV });
             setCVName('');
-            setUser('');
-            setProjectCV({ projectId: '', position: '', description: '', startDate: '', endDate: '' });
+            setUser(0);
+            setProjectCV({ projectId: 0, position: '', description: '', startDate: '', endDate: '' });
             setArrayProjectCV([]);
             handleClose();
         }
@@ -101,7 +101,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
 
     useEffect(() => {
         setIsError(false);
-        (CVName === '' || userId === '' || arrayProjectCV[0].projectId === ''
+        (CVName === '' || userId === 0 || arrayProjectCV[0].projectId === 0
             || arrayProjectCV[0].position === '' || arrayProjectCV[0].startDate === ''
             || arrayProjectCV[0].endDate === '' || arrayProjectCV[0].description === ''
         ) && setIsError(true)

@@ -59,22 +59,22 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
 
     const [openDelModal, setOpenDelModal] = React.useState(false);
     const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setdelId(event.currentTarget.id);
+        setdelId(Number(event.currentTarget.id));
         setOpenDelModal(true);
     }
     const handleCloseDelModal = () => setOpenDelModal(false);
-    const [delId, setdelId] = React.useState("");
-    const [downloadId, setDownloadId] = React.useState("");
+    const [delId, setdelId] = React.useState(0);
+    const [downloadId, setDownloadId] = React.useState<number>(0);
     const [bgColor, setBgColor] = React.useState("none");
 
     const downloadCV = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setDownloadId(event.currentTarget.id)
+        setDownloadId(Number(event.currentTarget.id))
         dispatch({ type: CVsActions.DOWNLOAD_CV_REQUEST, payload: event.currentTarget.id });
     }
 
     useEffect(() => {
         load ? ((downloadId == CV.id) && setBgColor('rgba(116, 167, 255, 0.2)')) : setBgColor('none');
-        !load && setDownloadId('');
+        !load && setDownloadId(0);
       }, [load]);
 
     let projectsNames: string[] = [];
@@ -99,10 +99,10 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
                         <Typography className='cvCardText cvCardProject'>{joinedProjectsNames}</Typography>
                     </Box>
                     <CustomStack direction="row" key={CV.id}>
-                        <Button variant='text' onClick={downloadCV} id={CV.id} sx={{ minWidth: '30px', mr: '15px' }}>
+                        <Button variant='text' onClick={downloadCV} id={String(CV.id)} sx={{ minWidth: '30px', mr: '15px' }}>
                             <Download />
                         </Button>
-                        <Button variant='text' onClick={handleOpenDelModal} id={CV.id} sx={{ minWidth: '30px' }}>
+                        <Button variant='text' onClick={handleOpenDelModal} id={String(CV.id)} sx={{ minWidth: '30px' }}>
                             <Delete />
                         </Button>
                         <Box sx={{ ml: 'auto' }}>

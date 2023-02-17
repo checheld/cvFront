@@ -24,7 +24,7 @@ export interface getProjectTypesRequestAction {
 
 export interface delProjectTypeRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delProjectTypeResultAction {

@@ -31,12 +31,12 @@ export interface getUserResultAction {
 
 export interface getUserRequestAction {
     type: string,
-    id: string
+    id: number
 }
 
 export interface delUserRequestAction {
     type: string,
-    payload: string
+    id: number
 }
 
 export interface delUserResultAction {
@@ -54,7 +54,7 @@ export interface addUserResultAction {
 
 export interface editUserRequestAction {
     type: string,
-    payload: { id: string, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: string },
+    payload: { id: number, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: number },
     id: number
 }
 

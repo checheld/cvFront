@@ -9,7 +9,7 @@ import configureStore from 'redux-mock-store'
 describe('editModal tests', () => {
 
     const onChange = jest.fn();
-    const item = { name: 'testName', id: 'testId' }
+    const item = { name: 'testName', id: 1 }
     const initialState = { output: 10 }
     const mockStore = configureStore()
     let store

@@ -1,25 +1,25 @@
 export interface IUniversity {
-    id: string,
+    id: number,
     name: string,
 }
 
 export interface ICompany {
-    id: string,
+    id: number,
     name: string,
 }
 
 
 export interface ITechnology {
-    id: string,
+    id: number,
     name: string,
     type: string,
 }
 
 export interface IProject {
-    id: string,
+    id: number,
     name: string,
     description: string,
-    projectTypeId: string,
+    projectTypeId: number,
     projectType?: IProjectType,
     country: string,
     link: string,
@@ -28,18 +28,18 @@ export interface IProject {
 }
 
 export interface IProjectPhoto {
-    id?: string,
-    projectId?: string,
+    id?: number,
+    projectId?: number,
     project?: IProject,
     url: string
 }
 
 export interface IUser {
-    id: string,
+    id: number,
     firstName: string,
     lastName: string,
     description: string,
-    photoParamsId?: string,
+    photoParamsId?: number,
     photoParams?: any,
     educationList: IEducation[],
     workExperienceList: IWorkExperience[],
@@ -48,29 +48,29 @@ export interface IUser {
 }
 
 export interface IEducation {
-    id?: string,
-    universityId: string,
+    id?: number,
+    universityId: number,
     university?: IUniversity,
     speciality: string,
     startDate: string,
     endDate: string,
-    userId?: string,
+    userId?: number,
 }
 
 export interface IWorkExperience {
-    id?: string,
-    companyId: string,
+    id?: number,
+    companyId: number,
     company?: ICompany,
     position: string,
     startDate: string,
     endDate: string,
     description: string,
-    userId?: string,
+    userId?: number,
 }
 
 export interface IProjectCV {
-    id?: string,
-    projectId: string,
+    id?: number,
+    projectId: number,
     project?: IProject,
     position: string,
     startDate: string,
@@ -79,15 +79,15 @@ export interface IProjectCV {
 }
 
 export interface IProjectType {
-    id: string,
+    id: number,
     name: string,
 }
 
 export interface ICV {
-    id: string,
+    id: number,
     cvName: string,
     user?: IUser,
-    userId: string,
+    userId: number,
     createdAt: string,
     projectCVList: IProjectCV[]
 }

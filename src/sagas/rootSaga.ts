@@ -69,8 +69,8 @@ export function* getUniversities({ type }: getUniversitiesRequestAction) {
   yield call(getUniversitiesFetch);
 }
 
-export function* delUniversity({ type, payload }: delUniversityRequestAction) {
-  yield call(deltUniversityFetch, payload);
+export function* delUniversity({ type, id }: delUniversityRequestAction) {
+  yield call(deltUniversityFetch, id);
 }
 
 export function* addUniversity({ type, payload }: addUniversityRequestAction) {
@@ -90,8 +90,8 @@ export function* getCompanies({ type }: getCompaniesRequestAction) {
   yield call(getCompaniesFetch);
 }
 
-export function* delCompany({ type, payload }: delCompanyRequestAction) {
-  yield call(delCompanyFetch, payload);
+export function* delCompany({ type, id }: delCompanyRequestAction) {
+  yield call(delCompanyFetch, id);
 }
 
 export function* addCompany({ type, payload }: addCompanyRequestAction) {
@@ -111,8 +111,8 @@ export function* getTechnologies({ type }: getTechnologiesRequestAction) {
   yield call(getTechnologiesFetch);
 }
 
-export function* delTechnology({ type, payload }: delTechnologyRequestAction) {
-  yield call(delTechnologyFetch, payload);
+export function* delTechnology({ type, id }: delTechnologyRequestAction) {
+  yield call(delTechnologyFetch, id);
 }
 
 export function* addTechnology({ type, payload }: addTechnologyRequestAction) {
@@ -136,8 +136,8 @@ export function* getProject({ type, id }: getProjectRequestAction) {
   yield call(getProjectFetch, id);
 }
 
-export function* delProject({ type, payload }: delProjectRequestAction) {
-  yield call(delProjectFetch, payload);
+export function* delProject({ type, id }: delProjectRequestAction) {
+  yield call(delProjectFetch, id);
 }
 
 export function* addProject({ type, payload }: addProjectRequestAction) {
@@ -156,8 +156,8 @@ export function* addProjectPhoto({ type, payload }: addProjectPhotoRequestAction
   yield call(addProjectPhotoFetch, payload);
 }
 
-export function* delProjectPhoto({ type, payload }: delProjectPhotoRequestAction) {
-  yield call(delProjectPhotoFetch, payload);
+export function* delProjectPhoto({ type, id }: delProjectPhotoRequestAction) {
+  yield call(delProjectPhotoFetch, id);
 }
 
 // user
@@ -169,8 +169,8 @@ export function* getUser({ type, id }: getUserRequestAction) {
   yield call(getUserFetch, id);
 }
 
-export function* delUser({ type, payload }: delUserRequestAction) {
-  yield call(delUserFetch, payload);
+export function* delUser({ type, id }: delUserRequestAction) {
+  yield call(delUserFetch, id);
 }
 
 export function* addUser({ type, payload }: addUserRequestAction) {
@@ -206,8 +206,8 @@ export function* getCV({ type, id }: getCVRequestAction) {
   yield call(getCVFetch, id);
 }
 
-export function* delCV({ type, payload }: delCVRequestAction) {
-  yield call(delCVFetch, payload);
+export function* delCV({ type, id }: delCVRequestAction) {
+  yield call(delCVFetch, id);
 }
 
 export function* addCV({ type, payload }: addCVRequestAction) {
@@ -231,8 +231,8 @@ export function* getProjectTypes({ type }: getProjectTypesRequestAction) {
   yield call(getProjectTypesFetch);
 }
 
-export function* delProjectType({ type, payload }: delProjectTypeRequestAction) {
-  yield call(deltProjectTypeFetch, payload);
+export function* delProjectType({ type, id }: delProjectTypeRequestAction) {
+  yield call(deltProjectTypeFetch, id);
 }
 
 export function* addProjectType({ type, payload }: addProjectTypeRequestAction) {

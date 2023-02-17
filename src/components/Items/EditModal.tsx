@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 interface IEditModal {
   open: boolean,
   handleClose: () => void,
-  item: { name: string, id: string },
+  item: { name: string, id: number },
   action: string,
   editName: string
 }

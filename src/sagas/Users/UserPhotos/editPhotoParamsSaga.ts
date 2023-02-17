@@ -4,7 +4,7 @@ import { userPhotosActions } from '../../../actionsTypes/userPhotosActionTypes';
 import instance from '../../axiosSetting';
 import config from '../../headers';
 
-const axiosEditPhotoParams = (payload: any, id: string, config: any) =>
+const axiosEditPhotoParams = (payload: any, id: number, config: any) =>
 
     instance.put(
         `/profilephoto/params/${id}`,
@@ -12,7 +12,7 @@ const axiosEditPhotoParams = (payload: any, id: string, config: any) =>
         config
     )
 
-export default function* editPhotoParamsFetch(payload: any, id: string) {
+export default function* editPhotoParamsFetch(payload: any, id: number) {
     try {
         const updatPhotoParamsResponse: AxiosResponse<any> = yield call(axiosEditPhotoParams, payload, id, config);
         yield put({ type: userPhotosActions.EDIT_PHOTOPARAMS_RESULT, response: updatPhotoParamsResponse.data });

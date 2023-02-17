@@ -70,7 +70,7 @@ export const technologiesReducer = (state = initialState, action: action): techn
 
     case technologiesActions.DEL_TECHNOLOGY_RESULT:
 
-      let delTech: string = action.response;
+      let delTech: number = action.response;
       let AllTechnologies = state.technologies;
       let newArray = AllTechnologies.filter(function (f) { return f.id != delTech })
 

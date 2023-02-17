@@ -26,10 +26,10 @@ export const getProjectTypesResult = (projectTypes: IProjectType[]): getProjectT
     }
 }
 
-export const delProjectTypeRequest = (payload: string): delProjectTypeRequestAction => {
+export const delProjectTypeRequest = (id: number): delProjectTypeRequestAction => {
     return {
         type: projectTypesActions.DEL_PROJECTTYPE_REQUEST,
-        payload: payload
+        id: id
     }
 }
 

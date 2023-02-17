@@ -5,13 +5,13 @@ import { projectPhotosActions } from '../../actionsTypes/projectPhotosActionType
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosDelProjectPhoto = (id: string, config: any) =>
+const axiosDelProjectPhoto = (id: number, config: any) =>
   instance.delete(
     `/projectphoto/${id}`,
     config
   )
 
-export default function* deltProjectPhotoFetch(id: string) {
+export default function* deltProjectPhotoFetch(id: number) {
   try {
     console.log(id)
     const delProjectPhotoResponse: AxiosResponse<IProjectPhoto> = yield call(axiosDelProjectPhoto, id, config);

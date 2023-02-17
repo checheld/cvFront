@@ -27,7 +27,7 @@ export const getUsersResult = (users: IUser[]): getUsersResultAction => {
         payload: users
     }
 }
-export const getUserRequest = (id: string): getUserRequestAction => {
+export const getUserRequest = (id: number): getUserRequestAction => {
     return {
         type: usersActions.GET_USER_REQUEST,
         id: id
@@ -39,10 +39,10 @@ export const getUserResult = (user: IUser): getUserResultAction => {
         payload: user
     }
 }
-export const delUserRequest = (payload: string): delUserRequestAction => {
+export const delUserRequest = (id: number): delUserRequestAction => {
     return {
         type: usersActions.DEL_USER_REQUEST,
-        payload: payload
+        id: id
     }
 }
 
@@ -65,7 +65,7 @@ export const addUserResult = (): addUserResultAction => {
     }
 }
 
-export const editUserRequest = (payload: { id: string, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: string }, id: number): editUserRequestAction => {
+export const editUserRequest = (payload: { id: number, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: number }, id: number): editUserRequestAction => {
     return {
         type: usersActions.EDIT_USER_REQUEST,
         payload: payload,

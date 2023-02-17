@@ -27,7 +27,7 @@ export const getProjectsResult = (projects: IProject[]): getProjectsResultAction
         payload: projects
     }
 }
-export const getProjectRequest = (id: string): getProjectRequestAction => {
+export const getProjectRequest = (id: number): getProjectRequestAction => {
     return {
         type: projectsActions.GET_PROJECT_REQUEST,
         id: id
@@ -39,10 +39,10 @@ export const getProjectResult = (project: IProject): getProjectResultAction => {
         payload: project
     }
 }
-export const delProjectRequest = (payload: string): delProjectRequestAction => {
+export const delProjectRequest = (id: number): delProjectRequestAction => {
     return {
         type: projectsActions.DEL_PROJECT_REQUEST,
-        payload: payload
+        id: id
     }
 }
 

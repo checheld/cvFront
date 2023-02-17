@@ -15,7 +15,7 @@ const axiosDelProjectType = (id: string, config: any) =>
 export default function* deltProjectTypeFetch(id: string) {
     try {
         const delProjectTypeResponse: AxiosResponse<IProjectType> = yield call(axiosDelProjectType, id, config);
-        yield put({ type: projectTypesActions.DEL_PROJECTTYPE_RESULT, response: delProjectTypeResponse });
+        yield put({ type: projectTypesActions.DEL_PROJECTTYPE_RESULT, response: delProjectTypeResponse.data });
     }
     catch (e) {
         console.log(e)

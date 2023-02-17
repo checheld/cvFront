@@ -14,7 +14,7 @@ const axiosDelTechnology = (id: string, config: any) =>
 export default function* deltTechnologyFetch(id: string) {
   try {
     const delTechnologyResponse: AxiosResponse<ITechnology> = yield call(axiosDelTechnology, id, config);
-    yield put({ type: technologiesActions.DEL_TECHNOLOGY_RESULT, response: delTechnologyResponse });
+    yield put({ type: technologiesActions.DEL_TECHNOLOGY_RESULT, response: delTechnologyResponse.data });
   }
   catch (e) {
     console.log(e)

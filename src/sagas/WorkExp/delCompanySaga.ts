@@ -14,7 +14,7 @@ const axiosDelCompany = (id: string, config: any) =>
 export default function* deltCompanyFetch(id: string) {
   try {
     const delCompanyResponse: AxiosResponse<ICompany> = yield call(axiosDelCompany, id, config);
-    yield put({ type: companiesActions.DEL_COMPANY_RESULT, response: delCompanyResponse });
+    yield put({ type: companiesActions.DEL_COMPANY_RESULT, response: delCompanyResponse.data });
   }
   catch (e) {
     console.log(e)

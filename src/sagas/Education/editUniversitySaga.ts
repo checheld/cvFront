@@ -8,7 +8,7 @@ import config from '../headers';
 const axiosEditUniversity = (payload: string, id: number, config: any) =>
   instance.put(
     `/universities/${id}`,
-    { Name: payload }
+    { 'name': payload }
   )
 
 

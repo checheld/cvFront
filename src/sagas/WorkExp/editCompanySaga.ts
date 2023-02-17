@@ -9,7 +9,7 @@ const axiosEditCompany = (payload: string, id: number, config: any) =>
 
   instance.put(
     `/companies/${id}`,
-    { Name: payload },
+    { 'name': payload },
     config
   )
 

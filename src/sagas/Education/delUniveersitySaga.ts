@@ -14,7 +14,7 @@ const axiosDelUniversity = (id: string, config: any) =>
 export default function* deltUniversityFetch(id: string) {
   try {
     const delUniversityResponse: AxiosResponse<IUniversity> = yield call(axiosDelUniversity, id, config);
-    yield put({ type: universitiesActions.DEL_UNIVERSITY_RESULT, response: delUniversityResponse.data });
+    yield put({ type: universitiesActions.DEL_UNIVERSITY_RESULT, response: delUniversityResponse });
   }
   catch (e) {
     console.log(e)

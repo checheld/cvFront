@@ -8,7 +8,7 @@ import config from '../headers';
 const axiosEditProjectType = (payload: string, id: number, config: any) =>
     instance.put(
         `/projectTypes/${id}`,
-        { Name: payload },
+        { 'name': payload },
         config
     )
 

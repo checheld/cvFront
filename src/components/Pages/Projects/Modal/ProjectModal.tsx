@@ -50,7 +50,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
 
     const dispatch = useAppDispatch();
     const addProject = () => {
-        const objProject = { 'Name': projectName, 'description': description, 'ProjectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+        const objProject = { 'name': projectName, 'description': description, 'projectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
         dispatch({ type: projectsActions.ADD_PROJECT_REQUEST, payload: objProject });
         setProjectName('');
         setType('');
@@ -63,7 +63,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     }
     const editProject = () => {
         if (editableProject !== undefined) {
-            const objProject = { 'Name': projectName, 'description': description, 'ProjectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+            const objProject = { 'name': projectName, 'description': description, 'projectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
 
             dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, payload: objProject });
             setProjectName('');

@@ -33,7 +33,7 @@ const AddModal: React.FC<IAddModal> = ({ open, handleClose, action, addName }) =
 
     const addItem = () => {
         const clearArrayItems = arrayItems.filter(el => el != "")
-        const objArr = clearArrayItems.map(e => ({ 'Name': e }));
+        const objArr = clearArrayItems.map(e => ({ 'name': e }));
         dispatch({ type: action, payload: objArr });
         setArrayItems(['']);
         handleClose();

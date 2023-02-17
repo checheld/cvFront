@@ -67,7 +67,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
 
     const addCV = () => {
         const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== "" && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
-        const objCV = { 'CVName': CVName, 'userId': userId, 'projectCVList': clearArrayProjectCV };
+        const objCV = { 'cvName': CVName, 'userId': userId, 'projectCVList': clearArrayProjectCV };
         dispatch({ type: CVsActions.ADD_CV_REQUEST, payload: objCV });
         setCVName('');
         setUser('');
@@ -78,7 +78,7 @@ const CVModal: React.FC<ICVModal> = ({ open, handleClose, editableCV }) => {
     const editCV = () => {
         if (editableCV !== undefined) {
             const clearArrayProjectCV = arrayProjectCV.filter(el => el.projectId !== "" && el.position !== "" && el.description !== "" && el.startDate !== "" && el.endDate !== "")
-            const objCV = { 'CVName': CVName, 'userId': userId, 'createdAt': editableCV.createdAt, projectCVList: clearArrayProjectCV };
+            const objCV = { 'cvName': CVName, 'userId': userId, 'createdAt': editableCV.createdAt, projectCVList: clearArrayProjectCV };
             dispatch({ type: CVsActions.EDIT_CV_REQUEST, id: editableCV.id, payload: objCV });
             setCVName('');
             setUser('');

@@ -86,7 +86,7 @@ export const usersReducer = (state = initialState, action: action): usersReduser
 
       let delUser: string = action.response;
       let AllUsers = state.users;
-      let newArray = AllUsers.filter(function (f) { return f.id !== delUser })
+      let newArray = AllUsers.filter(function (f) { return f.id != delUser })
 
       return {
         ...state,

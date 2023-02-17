@@ -81,7 +81,7 @@ export const projectsReducer = (state = initialState, action: action): projectsR
 
       let delproj: string = action.response;
       let AllProjects = state.projects;
-      let newArray = AllProjects.filter(function (f) { return f.id !== delproj })
+      let newArray = AllProjects.filter(function (f) { return f.id != delproj })
 
       return {
         ...state,

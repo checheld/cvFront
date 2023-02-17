@@ -72,7 +72,7 @@ export const technologiesReducer = (state = initialState, action: action): techn
 
       let delTech: string = action.response;
       let AllTechnologies = state.technologies;
-      let newArray = AllTechnologies.filter(function (f) { return f.id !== delTech })
+      let newArray = AllTechnologies.filter(function (f) { return f.id != delTech })
 
       return {
         ...state,

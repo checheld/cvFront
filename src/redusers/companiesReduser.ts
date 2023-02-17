@@ -72,7 +72,7 @@ export const companiesReducer = (state = initialState, action: action): companie
 
       let delComp: string = action.response;
       let AllCompanies = state.companies;
-      let newArray = AllCompanies.filter(function (f) { return f.id !== delComp })
+      let newArray = AllCompanies.filter(function (f) { return f.id != delComp })
 
       return {
         ...state,

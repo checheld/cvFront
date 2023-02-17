@@ -72,8 +72,7 @@ export const projectTypesReducer = (state = initialState, action: action): proje
 
             let delPT: string = action.response;
             let AllProjectTypes = state.projectTypes;
-            let newArray = AllProjectTypes.filter(function (f) { return f.id !== delPT })
-
+            let newArray = AllProjectTypes.filter(function (f) { return f.id != delPT })
             return {
                 ...state,
                 isLoading: { ...state.isLoading, delete: true },

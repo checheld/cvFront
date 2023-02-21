@@ -52,7 +52,7 @@ export const projectTypesReducer = (state = initialState, action: action): proje
                 ...state,
                 isLoading: { ...state.isLoading, getAll: false },
                 projectTypes: projectTypes.sort(function (a, b) {
-                    var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+                    var nameA = a.name!.toLowerCase(), nameB = b.name!.toLowerCase()
                     if (nameA < nameB)
                       return -1
                     if (nameA > nameB)
@@ -144,7 +144,7 @@ export const projectTypesReducer = (state = initialState, action: action): proje
                 ...state,
                 isLoading: { ...state.isLoading, search: true },
                 projectTypes: pr.sort(function (a, b) {
-                    var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+                    var nameA = a.name!.toLowerCase(), nameB = b.name!.toLowerCase()
                     if (nameA < nameB)
                       return -1
                     if (nameA > nameB)

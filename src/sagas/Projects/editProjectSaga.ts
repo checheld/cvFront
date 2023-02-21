@@ -5,18 +5,18 @@ import { projectsActions } from '../../actionsTypes/projectsActionTypes';
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosEditProject = (payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number, config: any) =>
+const axiosEditProject = (project: { id: number, name: string, type: string, description: string, country: string, link: string, technologies: ITechnology[], photoList: IProjectPhoto[] }, id: number, config: any) =>
 
   instance.put(
     `/projects/${id}`,
-    payload,
+    project,
     config
   )
 
 
-export default function* editProjectFetch(payload: { name: string, type: string, description: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number) {
+export default function* editProjectFetch(project: { id: number, name: string, type: string, description: string, country: string, link: string, technologies: ITechnology[], photoList: IProjectPhoto[] }, id: number) {
   try {
-    const updatProjectResponse: AxiosResponse<IProject> = yield call(axiosEditProject, payload, id, config);
+    const updatProjectResponse: AxiosResponse<IProject> = yield call(axiosEditProject, project, id, config);
     yield put({ type: projectsActions.EDIT_PROJECT_RESULT, response: updatProjectResponse.data });
   }
   catch (e) {

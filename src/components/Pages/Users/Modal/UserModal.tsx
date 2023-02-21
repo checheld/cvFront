@@ -136,7 +136,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const addUser = () => {
         const clearArrayEducation = arrayEducation.filter(el => el.universityId !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
         const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
-        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': url, 'photoParamsId': params.id };
+        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech, 'photoUrl': url, 'photoParamsId': params.id };
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
         setLastName('');
@@ -157,7 +157,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
             const paramsId = (editableUser.photoParamsId !== null) ? editableUser.photoParamsId : params.id;
 
-            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educationList': clearArrayEducation, 'workExperienceList': clearArrayWorkExperience, 'technologyList': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
+            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
 
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
@@ -179,21 +179,21 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             setFirstName(editableUser.firstName);
             setLastName(editableUser.lastName);
             setDescription(editableUser.description);
-            editableUser.educationList.length && setArrayEducation(editableUser.educationList);
-            editableUser.workExperienceList.length && setArrayWorkExperience(editableUser.workExperienceList);
-            setTech(editableUser.technologyList);
+            editableUser.educations.length && setArrayEducation(editableUser.educations);
+            editableUser.workExperiences.length && setArrayWorkExperience(editableUser.workExperiences);
+            setTech(editableUser.technologies);
             setPhoto(editableUser.photoUrl);
-            if (editableUser.photoParams !== null) {
-                let newParams: IPhotoParams = {
-                    id: editableUser.photoParams.id,
-                    scale: editableUser.photoParams.scale,
-                    position: {
-                        x: editableUser.photoParams.positionX,
-                        y: editableUser.photoParams.positionY,
-                    }
-                };
-                setParams(newParams)
-            }
+            // if (editableUser.photoParams !== null) {
+            //     let newParams: IPhotoParams = {
+            //         id: editableUser.photoParams.id,
+            //         scale: editableUser.photoParams.scale,
+            //         position: {
+            //             x: editableUser.photoParams.positionX,
+            //             y: editableUser.photoParams.positionY,
+            //         }
+            //     };
+            //     setParams(newParams)
+            // }
             handleClose();
         }
     }, [editableUser]);

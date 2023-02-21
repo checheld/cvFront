@@ -8,7 +8,7 @@ import config from '../headers';
 const axiosGetProject = (id: number, config: any) =>
 
   instance.get<IProject>(
-    `/projects/project/${id}`,
+    `/projects/${id}`,
     config
   );
 

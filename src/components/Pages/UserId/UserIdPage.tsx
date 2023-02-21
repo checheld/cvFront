@@ -101,11 +101,11 @@ const UserIdPage: React.FC = () => {
                                             PROFILE
                                         </Typography>
                                         <Box sx={{ ml: '35px', mt: '20px' }}>
-                                            {(currentUser.photoParams !== null) ? (
+                                            {/* {(currentUser.photoParams !== null) ? (
                                                 <Photo params={{ scale: currentUser.photoParams.scale, position: { x: currentUser.photoParams.positionX, y: currentUser.photoParams.positionY } }} photo={currentUser.photoUrl} />
-                                            ) : (
+                                            ) : ( */}
                                                 <Photo />
-                                            )}
+                                            {/* )} */}
                                         </Box>
                                         <Box>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', m: '35px 0 15px 40px', fontFamily: `"Nunito", sans-serif` }}>
@@ -119,11 +119,11 @@ const UserIdPage: React.FC = () => {
                                 ) : (
                                     <>
                                         <Box sx={{ m: '20px 0 20px 15px' }}>
-                                            {(currentUser.photoParams !== null) ? (
+                                            {/* {(currentUser.photoParams !== null) ? (
                                                 <Photo params={{ scale: currentUser.photoParams.scale, position: { x: currentUser.photoParams.positionX, y: currentUser.photoParams.positionY } }} photo={currentUser.photoUrl} />
-                                            ) : (
+                                            ) : ( */}
                                                 <Photo />
-                                            )}
+                                            {/* )} */}
                                         </Box>
                                         <Box>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', m: '35px 0 15px 40px', fontFamily: `"Nunito", sans-serif` }}>
@@ -153,7 +153,7 @@ const UserIdPage: React.FC = () => {
                                     )}
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                         {
-                                            currentUser.educationList.map((education: IEducation, key: number) => (
+                                            currentUser.educations.map((education: IEducation, key: number) => (
                                                 <Box sx={{ m: '0 100px 35px 40px' }} key={key}>
                                                     <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
                                                         {education.speciality}
@@ -187,7 +187,7 @@ const UserIdPage: React.FC = () => {
                                     )}
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                         {
-                                            currentUser.workExperienceList.map((workExperience: IWorkExperience, key: number) => (
+                                            currentUser.workExperiences.map((workExperience: IWorkExperience, key: number) => (
                                                 <CustomBox key={key}>
                                                     <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '19px', color: '#535E6C', mb: '20px', fontFamily: `"Nunito", sans-serif` }}>
                                                         {workExperience.startDate.substr(0, 4)} - {workExperience.endDate.substr(0, 4)} | {workExperience.company!.name}
@@ -226,7 +226,7 @@ const UserIdPage: React.FC = () => {
                                             </Typography>
                                             <Box>
                                                 {
-                                                    currentUser.technologyList.filter((tech) => tech.type === 'front-end').map((tech: ITechnology, key: number) => (
+                                                    currentUser.technologies.filter((tech) => tech.type === 'front-end').map((tech: ITechnology, key: number) => (
                                                         <Chip label={tech.name} key={key} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, bgcolor: '#F0F2F5', color: '#9EA9BA', pr: '15px', pl: '15px', mb: '5px' }} />
                                                     ))
                                                 }
@@ -238,7 +238,7 @@ const UserIdPage: React.FC = () => {
                                             </Typography>
                                             <Box>
                                                 {
-                                                    currentUser.technologyList.filter((tech) => tech.type === 'databases').map((tech: ITechnology, key: number) => (
+                                                    currentUser.technologies.filter((tech) => tech.type === 'databases').map((tech: ITechnology, key: number) => (
                                                         <Chip label={tech.name} key={key} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, bgcolor: '#F0F2F5', color: '#9EA9BA', pr: '15px', pl: '15px', mb: '5px' }} />
                                                     ))
                                                 }
@@ -252,7 +252,7 @@ const UserIdPage: React.FC = () => {
                                             </Typography>
                                             <Box>
                                                 {
-                                                    currentUser.technologyList.filter((tech) => tech.type === 'back-end').map((tech: ITechnology, key: number) => (
+                                                    currentUser.technologies.filter((tech) => tech.type === 'back-end').map((tech: ITechnology, key: number) => (
                                                         <Chip label={tech.name} key={key} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, bgcolor: '#F0F2F5', color: '#9EA9BA', pr: '15px', pl: '15px', mb: '5px' }} />
                                                     ))
                                                 }
@@ -264,7 +264,7 @@ const UserIdPage: React.FC = () => {
                                             </Typography>
                                             <Box>
                                                 {
-                                                    currentUser.technologyList.filter((tech) => tech.type === 'hosting').map((tech: ITechnology, key: number) => (
+                                                    currentUser.technologies.filter((tech) => tech.type === 'hosting').map((tech: ITechnology, key: number) => (
                                                         <Chip label={tech.name} key={key} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, bgcolor: '#F0F2F5', color: '#9EA9BA', pr: '15px', pl: '15px', mb: '5px' }} />
                                                     ))
                                                 }
@@ -277,7 +277,7 @@ const UserIdPage: React.FC = () => {
                                         </Typography>
                                         <Box>
                                             {
-                                                currentUser.technologyList.filter((tech) => tech.type === 'other').map((tech: ITechnology, key: number) => (
+                                                currentUser.technologies.filter((tech) => tech.type === 'other').map((tech: ITechnology, key: number) => (
                                                     <Chip label={tech.name} key={key} sx={{ mr: '10px', fontFamily: `"Nunito", sans-serif`, bgcolor: '#F0F2F5', color: '#9EA9BA', pr: '15px', pl: '15px', mb: '5px' }} />
                                                 ))
                                             }
@@ -302,7 +302,7 @@ const UserIdPage: React.FC = () => {
                                     )}
                                     <List>
                                         {
-                                            currentUser.technologyList.filter((tech) => tech.type === 'soft skills').map((tech: ITechnology, key: number) => (
+                                            currentUser.technologies.filter((tech) => tech.type === 'soft skills').map((tech: ITechnology, key: number) => (
                                                 <ListItem sx={{ pl: 0 }} key={key}>
                                                     <ListItemIcon sx={{ minWidth: '20px' }} >
                                                         <Dot />

@@ -5,7 +5,7 @@ import { usersActions } from '../../actionsTypes/usersActionTypes';
 import instance from '../axiosSetting';
 import config from '../headers';
 
-const axiosEditUser = (payload: { id: number, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: number }, id: number, config: any) =>
+const axiosEditUser = (payload: { id: number, firstName: string, lastName: string, description: string, educations: IEducation[], workExperiences: IWorkExperience[], technologies: ITechnology[], photoUrl?: string, photoParamsId?: number }, id: number, config: any) =>
 
   instance.put(
     `/users/${id}`,
@@ -14,7 +14,7 @@ const axiosEditUser = (payload: { id: number, firstName: string, lastName: strin
   )
 
 
-export default function* editUserFetch(payload: { id: number, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: number }, id: number) {
+export default function* editUserFetch(payload: { id: number, firstName: string, lastName: string, description: string, educations: IEducation[], workExperiences: IWorkExperience[], technologies: ITechnology[], photoUrl?: string, photoParamsId?: number }, id: number) {
   try {
     const updatUserResponse: AxiosResponse<IUser> = yield call(axiosEditUser, payload, id, config);
     yield put({ type: usersActions.EDIT_USER_RESULT, response: updatUserResponse.data });

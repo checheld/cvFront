@@ -1,9 +1,10 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl, { useFormControl } from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { useTypedSelector } from '../../../../../redusers/useTypedSelector';
 import { FormHelperText, styled } from '@mui/material';
+import { useEffect } from 'react';
 
 interface IChipSelect {
     type: number,
@@ -31,7 +32,7 @@ const ModalTypeSelect: React.FC<IChipSelect> = ({ type, setType, check }) => {
     const projectTypes = useTypedSelector((state) => state.projectTypes.projectTypes);
 
     const handleChange = (event: any) => {
-        setType(event.target.value);
+        setType({'id': Number(event.target.value)});
     };
 
     function MyFormHelperText() {
@@ -55,7 +56,7 @@ const ModalTypeSelect: React.FC<IChipSelect> = ({ type, setType, check }) => {
             error={!type && check}
             displayEmpty
         >
-            <MenuItem value="">
+            <MenuItem value="0">
                 <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
                     Select type
                 </span>

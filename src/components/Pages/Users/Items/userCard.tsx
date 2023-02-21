@@ -28,15 +28,15 @@ const UserCard: React.FC<Iprops> = ({ user, handleOpen }) => {
     return (
         <Item elevation={4} onClick={() => router(`/users/${user.id}`)}>
             <Box className='photoContainer'>
-                {(user.photoParams !== null) ? (
+                {/* {(user.photoParams !== null) ? (
                     <Photo params={{
                         scale: user.photoParams.scale,
                         position: { x: user.photoParams.positionX, y: user.photoParams.positionY }
                     }}
                         photo={user.photoUrl} />
-                ) : (
+                ) : ( */}
                     <Photo />
-                )}
+                {/* )} */}
             </Box>
             <Typography className='userCardTitle'>
                 {user.firstName} {user.lastName}

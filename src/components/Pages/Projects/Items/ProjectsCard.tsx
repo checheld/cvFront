@@ -77,8 +77,8 @@ const ProjectsCard: React.FC<IProjectsTable> = ({ project, setOpenDelModal, setd
                         <Box sx={{ display: 'flex', mb: '20px' }}>
                             <Typography className="projectCardTitle">TECHNOLOGIES</Typography>
                             <Box className='chipContainer projectCardChipContainer'>
-                                <Chip className='projectChip projectCardChip' label={project.technologyList[0].name} id={String(project.technologyList[0].id)} />
-                                {project.technologyList.length > 1 && <Chip className='projectChip projectCardChip' label={`+${project.technologyList.length - 1}`} />}
+                                <Chip className='projectChip projectCardChip' label={project.technologies[0].name} id={String(project.technologies[0].id)} />
+                                {project.technologies.length > 1 && <Chip className='projectChip projectCardChip' label={`+${project.technologies.length - 1}`} />}
                             </Box>
                         </Box>
                         <CustomDivider variant="inset" />

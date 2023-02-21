@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { projectsActions } from '../../../actionsTypes/projectsActionTypes';
 import ProjectModal from '../Projects/Modal/ProjectModal';
-import { IProject, IProjectPhoto, ITechnology } from '../../../interfaces';
+import { IProject, IProjectPhoto, IProjectType, ITechnology } from '../../../interfaces';
 import { useTypedSelector } from '../../../redusers/useTypedSelector';
 import DeleteModal from '../../Items/DeleteModal';
 import '../../Components.css';
@@ -131,7 +131,7 @@ const ProjectIdPage: React.FC = () => {
                     </Typography>
                   )}
                   <Typography sx={{ fontWeight: 400, fontSize: '14px', lineHeight: '23px', color: '#535E6C', mt: '35px', ml: '40px', mb: '35px', fontFamily: `"Nunito", sans-serif` }}>
-                    {currentProject.projectType!.name}
+                    {currentProject.projectType!.name }
                   </Typography>
                 </Box>
               </Item>
@@ -174,7 +174,7 @@ const ProjectIdPage: React.FC = () => {
                     </Typography>
                   )}
                   {
-                    currentProject.technologyList.map((tech: ITechnology, key: number) => (
+                    currentProject.technologies.map((tech: ITechnology, key: number) => (
                       <Chip label={tech.name} key={key} sx={{ mr: '10px', mb: '10px',fontFamily: `"Nunito", sans-serif`, color: '#9EA9BA', backgroundColor: '#F0F2F5' }} />
                     ))
                   }
@@ -196,7 +196,7 @@ const ProjectIdPage: React.FC = () => {
                     </Typography>
                   )}
                   <Box sx={{ mt: '35px', ml: '40px', mb: '35px', display: 'flex', flexWrap: 'wrap' }}>
-                    {
+                    {/* {
                       currentProject.photoList.map((photo: IProjectPhoto, key: number) => (
                         <Card sx={{ maxWidth: 335, mr: '10px', mb: '5px' }} key={key} >
                           <CardMedia
@@ -207,7 +207,7 @@ const ProjectIdPage: React.FC = () => {
                           />
                         </Card>
                       ))
-                    }
+                    } */}
                   </Box>
                 </Box>
               </Item>

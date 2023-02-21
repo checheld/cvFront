@@ -33,7 +33,7 @@ const CustomBox = styled(Box)(() => ({
 const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProject }) => {
 
     const [projectName, setProjectName] = useState('');
-    const [type, setType] = useState(0);
+    const [type, setType] = useState({'id': 0});
     const [country, setCountry] = useState('');
     const [link, setLink] = useState('');
     const [tech, setTech] = useState<Array<ITechnology>>([]);
@@ -50,10 +50,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
 
     const dispatch = useAppDispatch();
     const addProject = () => {
-        const objProject = { 'name': projectName, 'description': description, 'projectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+        const objProject = { 'name': projectName, 'description': description, 'projectType': type, 'country': country, 'link': link, 'technologies': tech, 'photoList': photo };
         dispatch({ type: projectsActions.ADD_PROJECT_REQUEST, payload: objProject });
         setProjectName('');
-        setType(0);
+        setType({'id': 0});
         setCountry('');
         setLink('');
         setTech([]);
@@ -63,11 +63,11 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     }
     const editProject = () => {
         if (editableProject !== undefined) {
-            const objProject = { 'name': projectName, 'description': description, 'projectTypeId': type, 'country': country, 'link': link, 'technologyList': tech, 'photoList': photo };
+            const objProject = { id: editableProject.id, 'name': projectName, 'description': description, 'projectType': type, 'country': country, 'link': link, 'technologies': tech, 'photoList': photo };
 
-            dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, payload: objProject });
+            dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, project: objProject });
             setProjectName('');
-            setType(0);
+            setType({'id': 0});
             setCountry('');
             setLink('');
             setTech([]);
@@ -79,10 +79,10 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     useEffect(() => {
         if (editableProject !== undefined) {
             setProjectName(editableProject.name);
-            setType(editableProject.projectTypeId);
+            setType(editableProject.projectType);
             setCountry(editableProject.country);
             setLink(editableProject.link);
-            setTech(editableProject.technologyList);
+            setTech(editableProject.technologies);
             setPhoto(editableProject.photoList);
             setDescription(editableProject.description);
             handleClose();
@@ -132,7 +132,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
 
     useEffect(() => {
         setIsError(false);
-        (projectName === '' || description === '' || type === 0
+        (projectName === '' || description === '' || type.id ===  0
             || country === '' || link === ''
         ) && setIsError(true)
     }, [projectName, description, type, country, link]);
@@ -173,7 +173,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                                 <Typography className='inputTitle'>
                                     Type
                                 </Typography>
-                                <ModalTypeSelect type={type} setType={setType} />
+                                <ModalTypeSelect type={type.id} setType={setType} />
                             </Box>
                         </CustomBox>
                         <CustomBox>
@@ -219,7 +219,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         </Box>
                         <Box>
                             <PhotoInput />
-                            <Photos photos={photo} removePhoto={removePhotoFromState} />
+                            {/* <Photos photos={photo} removePhoto={removePhotoFromState} /> */}
                         </Box>
                     </Box>
                     {(editableProject === undefined) ? (

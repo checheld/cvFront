@@ -20,9 +20,9 @@ describe('router tests', () => {
                     photoUrl: "https://res.cloudinary.com/dxyd7xncg/image/upload/v1660832520/jlvoo95hr0ui4lxgberg.jpg",
                     photoParamsId: 15,
                     photoParams: null,
-                    educationList: [],
-                    workExperienceList: [],
-                    technologyList: [],
+                    educations: [],
+                    workExperiences: [],
+                    technologies: [],
                     id: 7,
                     createdAt: "0001-01-01T00:00:00"
                 },
@@ -32,12 +32,11 @@ describe('router tests', () => {
                         project: {
                             name: "Affilify",
                             description: "The learning platform with the opportunity to keep the progress for Experts, Students, Affiliate and Admin.",
-                            projectTypeId: 8,
-                            projectType: null,
+                            projectType: {'id': 1},
                             country: "Austria",
                             link: "https://africansafarigroup.it",
                             photoList: [],
-                            technologyList: [],
+                            technologies: [],
                             cvProjectCVList: [],
                             id: 51,
                             createdAt: "0001-01-01T00:00:00"
@@ -85,7 +84,7 @@ describe('router tests', () => {
                         "id": 15,
                         "createdAt": "0001-01-01T00:00:00"
                     },
-                    "educationList": [
+                    "educations": [
                         {
                             "universityId": 1,
                             "university": null,
@@ -98,7 +97,7 @@ describe('router tests', () => {
                             "createdAt": "2022-08-18T14:23:38.545026Z"
                         }
                     ],
-                    "workExperienceList": [
+                    "workExperiences": [
                         {
                             "companyId": 5,
                             "company": null,
@@ -112,7 +111,7 @@ describe('router tests', () => {
                             "createdAt": "2022-08-18T14:23:38.817141Z"
                         }
                     ],
-                    "technologyList": [
+                    "technologies": [
                         {
                             "name": "Bootstrap",
                             "type": "front-end",
@@ -195,7 +194,6 @@ describe('router tests', () => {
                     "id": 51,
                     "name": "Affilify",
                     "description": "The learning platform with the opportunity to keep the progress for Experts, Students, Affiliate and Admin.",
-                    "projectTypeId": 8,
                     "projectType": {
                         "name": "CRM",
                         "projectProjectTypeList": [],
@@ -220,7 +218,7 @@ describe('router tests', () => {
                             "createdAt": "2022-08-26T08:38:20.199798Z"
                         }
                     ],
-                    "technologyList": [
+                    "technologies": [
                         {
                             "name": "Bootstrap",
                             "type": "front-end",

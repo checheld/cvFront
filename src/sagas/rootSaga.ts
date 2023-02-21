@@ -144,8 +144,8 @@ export function* addProject({ type, payload }: addProjectRequestAction) {
   yield call(addProjectFetch, payload);
 }
 
-export function* editProject({ type, payload, id }: editProjectRequestAction) {
-  yield call(editProjectFetch, payload, id);
+export function* editProject({ type, project, id }: editProjectRequestAction) {
+  yield call(editProjectFetch, project, id);
 }
 
 export function* searchProjects({ type, payload }: searchProjectsRequestAction) {

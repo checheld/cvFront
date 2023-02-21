@@ -19,11 +19,10 @@ export interface IProject {
     id: number,
     name: string,
     description: string,
-    projectTypeId: number,
-    projectType?: IProjectType,
+    projectType: IProjectType,
     country: string,
     link: string,
-    technologyList: ITechnology[],
+    technologies: ITechnology[],
     photoList: IProjectPhoto[]
 }
 
@@ -41,9 +40,9 @@ export interface IUser {
     description: string,
     photoParamsId?: number,
     photoParams?: any,
-    educationList: IEducation[],
-    workExperienceList: IWorkExperience[],
-    technologyList: ITechnology[],
+    educations: IEducation[],
+    workExperiences: IWorkExperience[],
+    technologies: ITechnology[],
     photoUrl: string | null
 }
 

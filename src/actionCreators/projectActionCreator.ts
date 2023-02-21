@@ -65,10 +65,10 @@ export const addProjectResult = (): addProjectResultAction => {
     }
 }
 
-export const editProjectRequest = (payload: { name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] }, id: number): editProjectRequestAction => {
+export const editProjectRequest = (project: { id: number, name: string, description: string, type: string, country: string, link: string, technologies: ITechnology[], photoList: IProjectPhoto[] }, id: number): editProjectRequestAction => {
     return {
         type: projectsActions.EDIT_PROJECT_REQUEST,
-        payload: payload,
+        project: project,
         id: id
     }
 }

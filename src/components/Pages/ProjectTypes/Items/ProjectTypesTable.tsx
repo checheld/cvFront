@@ -11,7 +11,7 @@ const BasicTable: React.FC<{ projectTypes: IProjectType[] }> = (props) => {
 
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
-    const [projectType, setProjectType] = useState({ name: '', id: 0 })
+    const [projectType, setProjectType] = useState<IProjectType>({ name: '', id: 0 })
 
     const modalOpen = (projectType: IProjectType) => {
         setOpen(true);

@@ -14,6 +14,7 @@ const axiosGetProjects = (config: any) =>
 export default function* getProjectsFetch() {
   try {
     const getProjectsResponse: AxiosResponse<IProject[]> = yield call(axiosGetProjects, config);
+ 
     if (getProjectsResponse.status === 200) {
       const response = getProjectsResponse.data;
       yield put(getProjectsResult(response));

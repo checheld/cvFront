@@ -16,13 +16,13 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
     const router = useNavigate();
     const screenWidth = window.screen.width;
 
-    const [showTech] = useState<ITechnology[]>([project.technologyList[0], project.technologyList[1], project.technologyList[2]]);
+    const [showTech] = useState<ITechnology[]>([project.technologies[0], project.technologies[1], project.technologies[2]]);
 
     const handleOpenDelModal = (event: React.MouseEvent<HTMLButtonElement>) => {
         setdelId(event.currentTarget.id);
         setOpenDelModal(true);
     }
-    
+
     return (
         <TableRow
             key={project.id}
@@ -43,19 +43,19 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
 
             {screenWidth > 1025 ? (
                 <TableCell component="th" scope="row" sx={{ display: 'flex' }}>
-                    {project.technologyList.length > 3 ? (
+                    {project.technologies.length > 3 ? (
                         <Box className='chipContainer projectTableChipContainer'>
                             {
                                 showTech.map((tech: ITechnology, index) => (
                                     <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
                                 ))
                             }
-                            <Chip className='projectChip projectTableChip' label={`+${project.technologyList.length - 3}`} />
+                            <Chip className='projectChip projectTableChip' label={`+${project.technologies.length - 3}`} />
                         </Box>
                     ) : (
                         <Box className='chipContainer projectTableChipContainer'>
                             {
-                                project.technologyList.length !== 0 && project.technologyList.map((tech: ITechnology, index) => (
+                                project.technologies.length !== 0 && project.technologies.map((tech: ITechnology, index) => (
                                     <Chip label={tech.name} className='projectChip projectTableChip' id={`chipId${index}`} key={index} />
                                 ))
                             }
@@ -65,10 +65,10 @@ const TableItem: React.FC<ITableItem> = ({ project, setOpenDelModal, setdelId })
             ) : (
                     <TableCell component="th" scope="row" sx={{ display: 'flex' }}>
                         <Box className='chipContainer chipContainerWrap projectTableChipContainer'>
-                            {project.technologyList.length !== 0 && (
+                            {project.technologies.length !== 0 && (
                                 <>
                                     <Chip label={showTech[0].name} className='projectChip projectTableChip' sx={{mb: '5px'}} />
-                                    {project.technologyList.length > 1 && <Chip className='projectChip projectTableChip' label={`+${project.technologyList.length - 1}`} />}
+                                    {project.technologies.length > 1 && <Chip className='projectChip projectTableChip' label={`+${project.technologies.length - 1}`} />}
                                 </>
                             )}
                         </Box>

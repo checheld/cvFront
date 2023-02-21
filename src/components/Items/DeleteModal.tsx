@@ -43,33 +43,33 @@ const DeleteModal: React.FC<IDeleteModal> = ({ open, handleClose, id, type }) =>
 
     const deleteItem = () => {
         if (type === "CV") {
-            dispatch({ type: CVsActions.DEL_CV_REQUEST, payload: id });
+            dispatch({ type: CVsActions.DEL_CV_REQUEST, id: id });
             handleClose();
         }
         else if (type === "user") {
-            dispatch({ type: usersActions.DEL_USER_REQUEST, payload: id });
+            dispatch({ type: usersActions.DEL_USER_REQUEST, id: id });
             router(`/users`)
             handleClose();
         }
         else if (type === "project") {
-            dispatch({ type: projectsActions.DEL_PROJECT_REQUEST, payload: id });
+            dispatch({ type: projectsActions.DEL_PROJECT_REQUEST, id: id });
             router(`/projects`)
             handleClose();
         }
         else if (type === "university") {
-            dispatch({ type: universitiesActions.DEL_UNIVERSITY_REQUEST, payload: id });
+            dispatch({ type: universitiesActions.DEL_UNIVERSITY_REQUEST, id: id });
             handleClose();
         }
         else if (type === "technology") {
-            dispatch({ type: technologiesActions.DEL_TECHNOLOGY_REQUEST, payload: id });
+            dispatch({ type: technologiesActions.DEL_TECHNOLOGY_REQUEST, id: id });
             handleClose();
         }
         else if (type === "company") {
-            dispatch({ type: companiesActions.DEL_COMPANY_REQUEST, payload: id });
+            dispatch({ type: companiesActions.DEL_COMPANY_REQUEST, id: id });
             handleClose();
         }
         else if (type === "project type") {
-            dispatch({ type: projectTypesActions.DEL_PROJECTTYPE_REQUEST, payload: id });
+            dispatch({ type: projectTypesActions.DEL_PROJECTTYPE_REQUEST, id: id });
             handleClose();
         }
     }

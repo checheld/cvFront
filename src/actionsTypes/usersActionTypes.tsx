@@ -54,7 +54,7 @@ export interface addUserResultAction {
 
 export interface editUserRequestAction {
     type: string,
-    payload: { id: number, firstName: string, lastName: string, description: string, educationList: IEducation[], workExperienceList: IWorkExperience[], technologyList: ITechnology[], photoUrl?: string, photoParamsId?: number },
+    payload: { id: number, firstName: string, lastName: string, description: string, educations: IEducation[], workExperiences: IWorkExperience[], technologies: ITechnology[], photoUrl?: string, photoParamsId?: number },
     id: number
 }
 

@@ -51,7 +51,7 @@ export interface addProjectResultAction {
 
 export interface editProjectRequestAction {
     type: string,
-    payload: { name: string, description: string, type: string, country: string, link: string, technologyList: ITechnology[], photoList: IProjectPhoto[] },
+    project: { id: number, name: string, description: string, type: string, country: string, link: string, technologies: ITechnology[], photoList: IProjectPhoto[] },
     id: number
 }
 

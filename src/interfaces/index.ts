@@ -67,12 +67,12 @@ export interface IWorkExperience {
 
 export interface IProjectCV {
     id?: number,
-    projectId: number,
-    project?: IProject,
+    project: IProject,
     position: string,
     startDate: string,
     endDate: string,
-    description: string
+    description: string,
+    cv?: ICV
 }
 
 export interface IProjectType {
@@ -83,10 +83,9 @@ export interface IProjectType {
 export interface ICV {
     id: number,
     cvName: string,
-    user?: IUser,
-    userId: number,
+    user: IUser,
     createdAt: string,
-    projectCVList: IProjectCV[]
+    projectcvs: IProjectCV[]
 }
 
 export interface IPhotoParams {

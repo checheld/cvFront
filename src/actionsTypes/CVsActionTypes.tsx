@@ -65,7 +65,7 @@ export interface addCVResultAction {
 
 export interface editCVRequestAction {
     type: string,
-    payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[]},
+    payload: { id: number, CVName: string, user: IUser, projectcvs: IProjectCV[]},
     id: number
 }
 

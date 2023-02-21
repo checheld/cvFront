@@ -330,7 +330,7 @@ const UserIdPage: React.FC = () => {
                                         </Typography>
                                     )}
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', m: '30px 30px 15px 30px' }}>
-                                        {AllCVs.filter((CV) => CV.userId === currentUser!.id).map((CV: ICV, key: number) => (
+                                        {AllCVs.filter((CV) => CV.user.id === currentUser!.id).map((CV: ICV, key: number) => (
                                             <Box sx={{ mt: 0, mb: '15px', mr: 2, ml: 0 }} key={key}>
                                                 <CVItem CV={CV} />
                                             </Box>

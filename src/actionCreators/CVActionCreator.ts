@@ -15,7 +15,7 @@ import {
     searchCVsRequestAction,
     searchCVsResultAction
 } from '../actionsTypes/CVsActionTypes';
-import { IProjectCV, ICV } from "../interfaces/index";
+import { IProjectCV, ICV, IUser } from "../interfaces/index";
 
 
 export const getCVsRequest = () : getCVsRequestAction => {
@@ -80,7 +80,7 @@ export const addCVResult = (): addCVResultAction => {
     }
 }
 
-export const editCVRequest = (payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[]}, id: number): editCVRequestAction => {
+export const editCVRequest = (payload: { id: number, CVName: string, user: IUser, projectcvs: IProjectCV[]}, id: number): editCVRequestAction => {
     return{
         type: CVsActions.EDIT_CV_REQUEST,
         payload: payload,

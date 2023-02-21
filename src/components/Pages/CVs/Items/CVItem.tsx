@@ -78,7 +78,7 @@ const CVsItem: React.FC<ICVsItem> = ({ CV }) => {
       }, [load]);
 
     let projectsNames: string[] = [];
-    CV.projectCVList.map((projectCV) => projectsNames.push(projectCV.project!.name))
+    CV.projectcvs.map((projectCV) => projectsNames.push(projectCV.project!.name))
     const joinedProjectsNames = projectsNames.join(', ');
 
     return (

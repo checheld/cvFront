@@ -74,10 +74,10 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
-    const [education, setEducation] = useState({ universityId: 0, speciality: '', startDate: '', endDate: '' });
-    const [arrayEducation, setArrayEducation] = useState<IEducation[]>([education]);
-    const [workExperience, setWorkExperience] = useState({ companyId: 0, position: '', startDate: '', endDate: '', description: '' });
-    const [arrayWorkExperience, setArrayWorkExperience] = useState<IWorkExperience[]>([workExperience]);
+    const [education, setEducation] = useState({ university: {'id': 0}, speciality: '', startDate: '', endDate: '' });
+    const [arrayEducation, setArrayEducation] = useState([education]);
+    const [workExperience, setWorkExperience] = useState({ company: {'id': 0}, position: '', startDate: '', endDate: '', description: '' });
+    const [arrayWorkExperience, setArrayWorkExperience] = useState([workExperience]);
     const [tech, setTech] = useState<ITechnology[]>([]);
     const [openPhoto, setOpenPhoto] = useState(false);
     const [params, setParams] = useState(initialParams);
@@ -125,25 +125,27 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     useEffect(() => {
         setIsError(false);
-        (firstName === '' || lastName === '' || description === '' || arrayEducation[0].universityId === 0
+        (firstName === '' || lastName === '' || description === '' || arrayEducation[0].university.id === 0
             || arrayEducation[0].speciality === '' || arrayEducation[0].startDate === '' || arrayEducation[0].endDate === ''
-            || arrayWorkExperience[0].companyId === 0 || arrayWorkExperience[0].position === '' || arrayWorkExperience[0].description === ''
+            || arrayWorkExperience[0].company.id === 0 || arrayWorkExperience[0].position === '' || arrayWorkExperience[0].description === ''
             || arrayWorkExperience[0].startDate === '' || arrayWorkExperience[0].endDate === ''
         ) && setIsError(true)
     }, [firstName, lastName, description, tech, arrayEducation, arrayWorkExperience]);
 
     const dispatch = useAppDispatch();
     const addUser = () => {
-        const clearArrayEducation = arrayEducation.filter(el => el.universityId !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
-        const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
-        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech, 'photoUrl': url, 'photoParamsId': params.id };
+        const clearArrayEducation = arrayEducation.filter(el => el.university.id !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
+        const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.company.id !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+        // const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech, 'photoUrl': url, 'photoParamsId': params.id };
+        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech };
+
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
         setLastName('');
         setDescription('');
-        setEducation({ universityId: 0, speciality: '', startDate: '', endDate: '' });
+        setEducation({ university: {'id': 0}, speciality: '', startDate: '', endDate: '' });
         setArrayEducation([]);
-        setWorkExperience({ companyId: 0, position: '', startDate: '', endDate: '', description: '' });
+        setWorkExperience({ company: {'id': 0}, position: '', startDate: '', endDate: '', description: '' });
         setArrayWorkExperience([]);
         setTech([]);
         setPhoto(null);
@@ -153,19 +155,22 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     const editUser = () => {
         if (editableUser !== undefined) {
-            const clearArrayEducation = arrayEducation.filter(el => el.universityId !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
-            const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.companyId !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+            const clearArrayEducation = arrayEducation.filter(el => el.university.id !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
+            const educationWithUserId = clearArrayEducation.map(ed => ({...ed, 'user': {'id': editableUser.id}}))
+            const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.company.id !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
+            const workExpWithUserId = clearArrayWorkExperience.map(we => ({...we, 'user': {'id': editableUser.id}}))
             const paramsId = (editableUser.photoParamsId !== null) ? editableUser.photoParamsId : params.id;
 
-            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
+            // const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': educationWithUserId, 'workExperiences': workExpWithUserId, 'technologies': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
+            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': educationWithUserId, 'workExperiences': workExpWithUserId, 'technologies': tech };
 
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
             setLastName('');
             setDescription('');
-            setEducation({ universityId: 0, speciality: '', startDate: '', endDate: '' });
+            setEducation({ university: {'id': 0}, speciality: '', startDate: '', endDate: '' });
             setArrayEducation([]);
-            setWorkExperience({ companyId: 0, position: '', startDate: '', endDate: '', description: '' });
+            setWorkExperience({ company: {'id': 0}, position: '', startDate: '', endDate: '', description: '' });
             setArrayWorkExperience([]);
             setTech([]);
             setPhoto(null);
@@ -225,7 +230,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const handleChangeUniversity = (index: number) => (event: SelectChangeEvent) => {
         const currentEducation = arrayEducation[index];
         const editedArr = [...arrayEducation];
-        editedArr[index as number] = { ...currentEducation, [event.target.name]: event.target.value };
+        editedArr[index as number] = { ...currentEducation, [event.target.name]: {id: Number(event.target.value)} };
         setArrayEducation(editedArr);
     };
     const handleChangeEducation = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -243,7 +248,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const handleChangeCompany = (index: number) => (event: SelectChangeEvent) => {
         const currentWorkExp = arrayWorkExperience[index];
         const editedArr = [...arrayWorkExperience];
-        editedArr[index as number] = { ...currentWorkExp, [event.target.name]: event.target.value };
+        editedArr[index as number] = { ...currentWorkExp, [event.target.name]: {id: Number(event.target.value)} };
         setArrayWorkExperience(editedArr);
     };
     const handleChangeWorkExperience = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -353,9 +358,9 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                             University
                                         </Typography>
                                         <ModalFormControl elements={universities}
-                                            selectName={'universityId'}
+                                            selectName={'university'}
                                             placeholder={'university'}
-                                            type={education.universityId}
+                                            type={education.university.id}
                                             setType={handleChangeUniversity(index)}
                                             check={check} index={index}
                                         />
@@ -421,9 +426,9 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
                                                     Company name
                                                 </Typography>
                                                 <ModalFormControlSmall elements={companies}
-                                                    selectName={'companyId'}
+                                                    selectName={'company'}
                                                     placeholder={'company'}
-                                                    type={workExperience.companyId}
+                                                    type={workExperience.company.id}
                                                     setType={handleChangeCompany(index)}
                                                     check={check} index={index}
                                                 />

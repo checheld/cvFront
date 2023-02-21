@@ -53,7 +53,7 @@ const ModalFormControlSmall: React.FC<ISelect> = ({ elements, type, setType, che
                 onChange={setType}
                 displayEmpty
             >
-                <MenuItem value="">
+                <MenuItem value="0">
                     <span style={{ color: `#a7aaac`, fontSize: `14px` }}>
                         Select {placeholder}
                     </span>

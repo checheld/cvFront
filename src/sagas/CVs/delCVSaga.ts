@@ -7,7 +7,7 @@ import config from '../headers';
 
 const axiosDelCV = (id: number, config: any) =>
   instance.delete(
-    `/CVs/${id}`,
+    `/cvs/${id}`,
     config
   )
 

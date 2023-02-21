@@ -11,7 +11,7 @@ const WorkExpTable: React.FC<{ companies: ICompany[] }> = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [company, setCompany] = useState({ id: 0, name: '' })
+  const [company, setCompany] = useState<ICompany>({ id: 0, name: '' })
 
   const modalOpen = (company: ICompany) => {
     setOpen(true);

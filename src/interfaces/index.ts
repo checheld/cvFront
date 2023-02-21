@@ -48,23 +48,21 @@ export interface IUser {
 
 export interface IEducation {
     id?: number,
-    universityId: number,
-    university?: IUniversity,
+    university: IUniversity,
     speciality: string,
     startDate: string,
     endDate: string,
-    userId?: number,
+    user: IUser,
 }
 
 export interface IWorkExperience {
     id?: number,
-    companyId: number,
-    company?: ICompany,
+    company: ICompany,
     position: string,
     startDate: string,
     endDate: string,
     description: string,
-    userId?: number,
+    user: IUser,
 }
 
 export interface IProjectCV {

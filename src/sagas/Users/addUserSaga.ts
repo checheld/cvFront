@@ -7,7 +7,7 @@ import config from '../headers';
 const axiosAddUser = (data: IUser, config: any) =>
 
   instance.post<IUser>(
-    `/user/add`,
+    `/users/add`,
     data,
     config
   );

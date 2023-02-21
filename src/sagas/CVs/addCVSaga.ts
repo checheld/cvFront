@@ -8,7 +8,7 @@ import config from '../headers';
 const axiosAddCV = (data: ICV, config: any) =>
 
   instance.post<ICV>(
-    `/CV/add`,
+    `/cvs/add`,
     data,
     config
   );

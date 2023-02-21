@@ -8,7 +8,7 @@ import config from '../headers';
 const axiosEditCV = (payload: { id: number, CVName: string, userId: number, projectCVList: IProjectCV[] }, id: number, config: any) =>
 
   instance.put(
-    `/CVs/${id}`,
+    `/cvs/${id}`,
     payload,
     config
   )

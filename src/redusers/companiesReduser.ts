@@ -52,7 +52,7 @@ export const companiesReducer = (state = initialState, action: action): companie
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
         companies: companies.sort(function (a, b) {
-          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          var nameA = a.name!.toLowerCase(), nameB = b.name!.toLowerCase()
           if (nameA < nameB)
             return -1
           if (nameA > nameB)
@@ -145,7 +145,7 @@ export const companiesReducer = (state = initialState, action: action): companie
         ...state,
         isLoading: { ...state.isLoading, search: true },
         companies: comp.sort(function (a, b) {
-          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          var nameA = a.name!.toLowerCase(), nameB = b.name!.toLowerCase()
           if (nameA < nameB)
             return -1
           if (nameA > nameB)

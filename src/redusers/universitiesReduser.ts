@@ -53,7 +53,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         ...state,
         isLoading: { ...state.isLoading, getAll: false },
         universities: universities.sort(function (a, b) {
-          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          var nameA = a.name!.toLowerCase(), nameB = b.name!.toLowerCase()
           if (nameA < nameB)
             return -1
           if (nameA > nameB)
@@ -146,7 +146,7 @@ export const universitiesReducer = (state = initialState, action: action): unive
         ...state,
         isLoading: { ...state.isLoading, search: true },
         universities: uni.sort(function (a, b) {
-          var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          var nameA = a.name!.toLowerCase(), nameB = b.name!.toLowerCase()
           if (nameA < nameB)
             return -1
           if (nameA > nameB)

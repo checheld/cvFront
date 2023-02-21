@@ -7,7 +7,7 @@ import config from '../headers';
 
 const axiosGetCVs = (config: any) =>
   instance.get<ICV[]>(
-    "/CVs",
+    "/cvs",
     config
   )
 

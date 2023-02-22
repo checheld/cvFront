@@ -63,7 +63,8 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
     }
     const editProject = () => {
         if (editableProject !== undefined) {
-            const objProject = { id: editableProject.id, 'name': projectName, 'description': description, 'projectType': type, 'country': country, 'link': link, 'technologies': tech, 'photoList': photo };
+            const photoWithProjId = photo.map(p => ({...p, 'project': {'id': editableProject.id}}))
+            const objProject = { id: editableProject.id, 'name': projectName, 'description': description, 'projectType': type, 'country': country, 'link': link, 'technologies': tech, 'photoList': photoWithProjId };
 
             dispatch({ type: projectsActions.EDIT_PROJECT_REQUEST, id: editableProject.id, project: objProject });
             setProjectName('');
@@ -219,7 +220,7 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
                         </Box>
                         <Box>
                             <PhotoInput />
-                            {/* <Photos photos={photo} removePhoto={removePhotoFromState} /> */}
+                            <Photos photos={photo} removePhoto={removePhotoFromState} />
                         </Box>
                     </Box>
                     {(editableProject === undefined) ? (

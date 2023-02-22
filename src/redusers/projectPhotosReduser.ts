@@ -53,7 +53,7 @@ export const projectPhotosReduser = (state = initialState, action: action): proj
           ...state.isLoading, add: false
         },
         result: {
-          ...state.result, add: action.response
+          ...state.result, add: action.response.secure_url
         }
       }
 

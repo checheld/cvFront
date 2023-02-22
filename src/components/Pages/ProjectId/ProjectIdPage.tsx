@@ -196,7 +196,7 @@ const ProjectIdPage: React.FC = () => {
                     </Typography>
                   )}
                   <Box sx={{ mt: '35px', ml: '40px', mb: '35px', display: 'flex', flexWrap: 'wrap' }}>
-                    {/* {
+                    {
                       currentProject.photoList.map((photo: IProjectPhoto, key: number) => (
                         <Card sx={{ maxWidth: 335, mr: '10px', mb: '5px' }} key={key} >
                           <CardMedia
@@ -207,7 +207,7 @@ const ProjectIdPage: React.FC = () => {
                           />
                         </Card>
                       ))
-                    } */}
+                    }
                   </Box>
                 </Box>
               </Item>

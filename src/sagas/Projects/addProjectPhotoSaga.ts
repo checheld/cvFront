@@ -6,11 +6,11 @@ import config from '../headers';
 
 const axiosAddProjectPhoto = (payload: File, config: any) => {
   const data = new FormData();
-  data.append('image', payload);
+  data.append('file', payload);
+  data.append('upload_preset', 'oc9csbzy');
   return instance.post<File>(
-    `/projectphoto/add`,
-    data,
-    config
+    'https://api.cloudinary.com/v1_1/dxyd7xncg/image/upload',
+    data
   );
 }
 

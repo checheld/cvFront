@@ -28,7 +28,6 @@ export interface IProject {
 
 export interface IProjectPhoto {
     id?: number,
-    projectId?: number,
     project?: IProject,
     url: string
 }

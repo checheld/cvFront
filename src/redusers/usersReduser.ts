@@ -110,7 +110,6 @@ export const usersReducer = (state = initialState, action: action): usersReduser
       let addedUser: IUser = action.response
       let AllUs = state.users;
       AllUs.push(addedUser);
-
       return {
         ...state,
         isLoading: {

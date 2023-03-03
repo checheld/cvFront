@@ -50,7 +50,7 @@ const UsersPage: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        setUsers(allUsers)
+            setUsers(allUsers)
     }, [load, isAdded, del, edit, search]);
 
     useEffect(() => {

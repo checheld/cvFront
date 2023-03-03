@@ -101,11 +101,11 @@ const UserIdPage: React.FC = () => {
                                             PROFILE
                                         </Typography>
                                         <Box sx={{ ml: '35px', mt: '20px' }}>
-                                            {/* {(currentUser.photoParams !== null) ? (
-                                                <Photo params={{ scale: currentUser.photoParams.scale, position: { x: currentUser.photoParams.positionX, y: currentUser.photoParams.positionY } }} photo={currentUser.photoUrl} />
-                                            ) : ( */}
+                                            {(currentUser.photoParams) ? (
+                                                <Photo params={{ scale: Number(currentUser.photoParams.scale), position: { x: Number(currentUser.photoParams.position.x), y: Number(currentUser.photoParams.position.y) } }} photo={currentUser.photoUrl} />
+                                            ) : (
                                                 <Photo />
-                                            {/* )} */}
+                                            )}
                                         </Box>
                                         <Box>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', m: '35px 0 15px 40px', fontFamily: `"Nunito", sans-serif` }}>
@@ -119,11 +119,11 @@ const UserIdPage: React.FC = () => {
                                 ) : (
                                     <>
                                         <Box sx={{ m: '20px 0 20px 15px' }}>
-                                            {/* {(currentUser.photoParams !== null) ? (
-                                                <Photo params={{ scale: currentUser.photoParams.scale, position: { x: currentUser.photoParams.positionX, y: currentUser.photoParams.positionY } }} photo={currentUser.photoUrl} />
-                                            ) : ( */}
+                                            {(currentUser.photoParams) ? (
+                                                <Photo params={{ scale: Number(currentUser.photoParams.scale), position: { x: Number(currentUser.photoParams.position.x), y: Number(currentUser.photoParams.position.y) } }} photo={currentUser.photoUrl} />
+                                            ) : (
                                                 <Photo />
-                                            {/* )} */}
+                                            )}
                                         </Box>
                                         <Box>
                                             <Typography sx={{ fontWeight: 600, fontSize: '14px', lineHeight: '23px', color: '#535E6C', m: '35px 0 15px 40px', fontFamily: `"Nunito", sans-serif` }}>

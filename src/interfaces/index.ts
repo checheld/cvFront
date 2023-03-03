@@ -37,8 +37,7 @@ export interface IUser {
     firstName: string,
     lastName: string,
     description: string,
-    photoParamsId?: number,
-    photoParams?: any,
+    photoParams?: IPhotoParams,
     educations: IEducation[],
     workExperiences: IWorkExperience[],
     technologies: ITechnology[],
@@ -89,11 +88,15 @@ export interface ICV {
 
 export interface IPhotoParams {
     id?: number,
-    scale: number;
-    position: {
-        x: number;
-        y: number;
-    };
+    user?: IUser,
+    scale: number,
+    position: IPosition
+}
+
+export interface IPosition {
+    id?: number,
+    x: number,
+    y: number
 }
 
 export interface ILogin {

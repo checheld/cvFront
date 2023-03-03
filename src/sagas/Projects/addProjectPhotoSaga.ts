@@ -7,9 +7,9 @@ import config from '../headers';
 const axiosAddProjectPhoto = (payload: File, config: any) => {
   const data = new FormData();
   data.append('file', payload);
-  data.append('upload_preset', 'oc9csbzy');
+  data.append('upload_preset', `${process.env.REACT_APP_PRESET_NAME}`);
   return instance.post<File>(
-    'https://api.cloudinary.com/v1_1/dxyd7xncg/image/upload',
+    `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
     data
   );
 }

@@ -65,7 +65,7 @@ export const addUserResult = (): addUserResultAction => {
     }
 }
 
-export const editUserRequest = (payload: { id: number, firstName: string, lastName: string, description: string, educations: IEducation[], workExperiences: IWorkExperience[], technologies: ITechnology[], photoUrl?: string, photoParamsId?: number }, id: number): editUserRequestAction => {
+export const editUserRequest = (payload: { id: number, firstName: string, lastName: string, description: string, educations: IEducation[], workExperiences: IWorkExperience[], technologies: ITechnology[], photoUrl?: string, photoParams?: any }, id: number): editUserRequestAction => {
     return {
         type: usersActions.EDIT_USER_REQUEST,
         payload: payload,

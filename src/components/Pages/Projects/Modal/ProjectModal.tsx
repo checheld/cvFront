@@ -121,11 +121,6 @@ const ProjectModal: React.FC<IProjectModal> = ({ open, handleClose, editableProj
 
     const removePhotoFromState = (index: number): void => {
         photo && setPhoto([...photo.slice(0, index), ...photo.slice(index + 1)]);
-
-        dispatch({
-            type: projectPhotosActions.DEL_PROJECTPHOTO_REQUEST,
-            payload: photo[index].id
-        });
     };
 
     const [check, setCheck] = useState(false);

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import CustomButtonFixed from '../../../Items/CustomButtonFixed';
 import { useAppDispatch, useTypedSelector } from '../../../../redusers/useTypedSelector';
 import { Box, Divider, Modal, SelectChangeEvent, styled, Typography } from '@mui/material';
-import { IEducation, IPhotoParams, ITechnology, IUser, IWorkExperience } from '../../../../interfaces';
+import { IPhotoParams, ITechnology, IUser } from '../../../../interfaces';
 import ChipSelect from '../../../Items/ChipSelect';
 import DelInput from '../../../../img/DelInput';
 import { usersActions } from '../../../../actionsTypes/usersActionTypes';
-import { userPhotosActions } from '../../../../actionsTypes/userPhotosActionTypes';
 import Photo from '../Items/Photo';
 import PhotoModal from './PhotoModal';
 import ModalInput from '../../../Items/ModalInput';
@@ -70,13 +69,12 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     let universities = useTypedSelector((state) => state.universities.universities);
     let companies = useTypedSelector((state) => state.companies.companies);
     let url = useTypedSelector((state) => state.userPhotos.result.add);
-    let photoParams = useTypedSelector((state) => state.userPhotos.result.addParams);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [description, setDescription] = useState('');
-    const [education, setEducation] = useState({ university: {'id': 0}, speciality: '', startDate: '', endDate: '' });
+    const [firstName, setFirstName] = useState('users');
+    const [lastName, setLastName] = useState('users');
+    const [description, setDescription] = useState('users');
+    const [education, setEducation] = useState({ university: {'id': 0}, speciality: 'users', startDate: '2021-01-02', endDate: '2021-01-03' });
     const [arrayEducation, setArrayEducation] = useState([education]);
-    const [workExperience, setWorkExperience] = useState({ company: {'id': 0}, position: '', startDate: '', endDate: '', description: '' });
+    const [workExperience, setWorkExperience] = useState({ company: {'id': 0}, position: 'users', startDate: '2021-01-02', endDate: '2021-01-03', description: 'users' });
     const [arrayWorkExperience, setArrayWorkExperience] = useState([workExperience]);
     const [tech, setTech] = useState<ITechnology[]>([]);
     const [openPhoto, setOpenPhoto] = useState(false);
@@ -85,13 +83,6 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
 
     const handleOpenPhoto = () => setOpenPhoto(true);
     const handleClosePhoto = () => {
-        if (params !== initialParams) {
-            if (editableUser === undefined || editableUser.photoParamsId === null) {
-                dispatch({ type: userPhotosActions.ADD_PHOTOPARAMS_REQUEST, payload: { 'scale': params.scale.toFixed(10), 'positionX': params.position.x.toFixed(10), 'positionY': params.position.y.toFixed(10) } });
-            } else {
-                dispatch({ type: userPhotosActions.EDIT_PHOTOPARAMS_REQUEST, id: editableUser.photoParamsId, payload: { 'scale': params.scale, 'positionX': params.position.x.toFixed(10), 'positionY': params.position.y.toFixed(10) } });
-            }
-        }
         setOpenPhoto(false);
     };
 
@@ -105,20 +96,6 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             setPhoto(url)
         }
     }, [url]);
-
-    useEffect(() => {
-        if (photoParams !== undefined && photoParams !== null) {
-            let newParams = {
-                id: photoParams.id,
-                scale: photoParams.scale,
-                position: {
-                    x: photoParams.positionX,
-                    y: photoParams.positionY,
-                }
-            };
-            setParams(newParams)
-        } else { setParams(initialParams) }
-    }, [photoParams]);
 
     const [check, setCheck] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -136,8 +113,16 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
     const addUser = () => {
         const clearArrayEducation = arrayEducation.filter(el => el.university.id !== 0 && el.speciality !== "" && el.startDate !== "" && el.endDate !== "")
         const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.company.id !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
-        // const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech, 'photoUrl': url, 'photoParamsId': params.id };
-        const objUser = { 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': clearArrayEducation, 'workExperiences': clearArrayWorkExperience, 'technologies': tech };
+        const objUser = {
+            'firstName': firstName,
+            'lastName': lastName,
+            'description': description,
+            'educations': clearArrayEducation,
+            'workExperiences': clearArrayWorkExperience,
+            'technologies': tech,
+            'photoUrl': url,
+            'photoParams': params
+        };
 
         dispatch({ type: usersActions.ADD_USER_REQUEST, payload: objUser });
         setFirstName('');
@@ -159,10 +144,18 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             const educationWithUserId = clearArrayEducation.map(ed => ({...ed, 'user': {'id': editableUser.id}}))
             const clearArrayWorkExperience = arrayWorkExperience.filter(el => el.company.id !== 0 && el.position !== "" && el.startDate !== "" && el.endDate !== "" && el.description !== "")
             const workExpWithUserId = clearArrayWorkExperience.map(we => ({...we, 'user': {'id': editableUser.id}}))
-            const paramsId = (editableUser.photoParamsId !== null) ? editableUser.photoParamsId : params.id;
 
-            // const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': educationWithUserId, 'workExperiences': workExpWithUserId, 'technologies': tech, 'photoUrl': photo, 'photoParamsId': paramsId };
-            const objUser = { 'id': editableUser.id, 'firstName': firstName, 'lastName': lastName, 'description': description, 'educations': educationWithUserId, 'workExperiences': workExpWithUserId, 'technologies': tech };
+            const objUser = {
+                'id': editableUser.id,
+                'firstName': firstName,
+                'lastName': lastName,
+                'description': description,
+                'educations': educationWithUserId,
+                'workExperiences': workExpWithUserId,
+                'technologies': tech, 
+                'photoUrl': photo,
+                'photoParams': params
+            };
 
             dispatch({ type: usersActions.EDIT_USER_REQUEST, id: editableUser.id, payload: objUser });
             setFirstName('');
@@ -188,17 +181,7 @@ const UserModal: React.FC<IUserModal> = ({ open, handleClose, editableUser }) =>
             editableUser.workExperiences.length && setArrayWorkExperience(editableUser.workExperiences);
             setTech(editableUser.technologies);
             setPhoto(editableUser.photoUrl);
-            // if (editableUser.photoParams !== null) {
-            //     let newParams: IPhotoParams = {
-            //         id: editableUser.photoParams.id,
-            //         scale: editableUser.photoParams.scale,
-            //         position: {
-            //             x: editableUser.photoParams.positionX,
-            //             y: editableUser.photoParams.positionY,
-            //         }
-            //     };
-            //     setParams(newParams)
-            // }
+            editableUser.photoParams && setParams(editableUser.photoParams)
             handleClose();
         }
     }, [editableUser]);

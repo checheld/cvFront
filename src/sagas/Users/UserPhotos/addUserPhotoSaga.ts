@@ -6,11 +6,11 @@ import config from '../../headers';
 
 const axiosAddUserPhoto = (payload: File, config: any) => {
   const data = new FormData();
-  data.append('image', payload);
+  data.append('file', payload);
+  data.append('upload_preset', `${process.env.REACT_APP_PRESET_NAME}`);
   return instance.post<File>(
-    `/profilephoto/add`,
-    data,
-    config
+    `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+    data
   );
 }
 

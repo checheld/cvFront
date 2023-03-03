@@ -57,22 +57,6 @@ export const projectPhotosReduser = (state = initialState, action: action): proj
         }
       }
 
-      case projectPhotosActions.DEL_PROJECTPHOTO_REQUEST:
-        return {
-          ...state, isLoading: { ...state.isLoading, delete: true }, result: {
-            ...state.result, delete: null
-          }
-        };
-  
-      case projectPhotosActions.DEL_PROJECTPHOTO_RESULT:
-        return {
-          ...state,
-          isLoading: { ...state.isLoading, delete: false },
-          result: {
-            ...state.result
-          }
-        };
-
     default:
       return state
   };

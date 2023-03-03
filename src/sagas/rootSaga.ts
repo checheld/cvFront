@@ -45,14 +45,11 @@ import searchCVsFetch from './CVs/searchCVsSaga';
 import getCVFetch from './CVs/getCVSaga';
 import downloadCVFetch from './CVs/downloadCVSaga';
 
-import { addUserPhotoRequestAction, addPhotoParamsRequestAction, editPhotoParamsRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
+import { addUserPhotoRequestAction, userPhotosActions } from '../actionsTypes/userPhotosActionTypes';
 import addUserPhotoFetch from './Users/UserPhotos/addUserPhotoSaga';
-import addPhotoParamsFetch from './Users/UserPhotos/addPhotoParamsSaga';
-import editPhotoParamsFetch from './Users/UserPhotos/editPhotoParamsSaga';
 
-import { addProjectPhotoRequestAction, delProjectPhotoRequestAction, projectPhotosActions } from '../actionsTypes/projectPhotosActionTypes';
+import { addProjectPhotoRequestAction, projectPhotosActions } from '../actionsTypes/projectPhotosActionTypes';
 import addProjectPhotoFetch from './Projects/addProjectPhotoSaga';
-import delProjectPhotoFetch from './Projects/delProjectPhotoSaga';
 
 import getProjectTypesFetch from './ProjectTypes/projectTypesSaga';
 import deltProjectTypeFetch from './ProjectTypes/delProjectTypeSaga';
@@ -156,10 +153,6 @@ export function* addProjectPhoto({ type, payload }: addProjectPhotoRequestAction
   yield call(addProjectPhotoFetch, payload);
 }
 
-export function* delProjectPhoto({ type, id }: delProjectPhotoRequestAction) {
-  yield call(delProjectPhotoFetch, id);
-}
-
 // user
 export function* getUsers({ type }: getUsersRequestAction) {
   yield call(getUsersFetch);
@@ -187,14 +180,6 @@ export function* searchUsers({ type, payload }: searchUsersRequestAction) {
 
 export function* addUserPhoto({ type, payload }: addUserPhotoRequestAction) {
   yield call(addUserPhotoFetch, payload);
-}
-
-export function* addPhotoParams({ type, payload }: addPhotoParamsRequestAction) {
-  yield call(addPhotoParamsFetch, payload);
-}
-
-export function* editPhotoParams({ type, payload, id }: editPhotoParamsRequestAction) {
-  yield call(editPhotoParamsFetch, payload, id);
 }
 
 // CV
@@ -293,10 +278,7 @@ export function* watcherSaga() {
   yield takeEvery(CVsActions.SEARCH_CVS_REQUEST, searchCVs);
 
   yield takeEvery(projectPhotosActions.ADD_PROJECTPHOTO_REQUEST, addProjectPhoto);
-  yield takeEvery(projectPhotosActions.DEL_PROJECTPHOTO_REQUEST, delProjectPhoto);
   yield takeEvery(userPhotosActions.ADD_USERPHOTO_REQUEST, addUserPhoto);
-  yield takeEvery(userPhotosActions.ADD_PHOTOPARAMS_REQUEST, addPhotoParams);
-  yield takeEvery(userPhotosActions.EDIT_PHOTOPARAMS_REQUEST, editPhotoParams);
 
   yield takeEvery(CVsActions.DOWNLOAD_CV_REQUEST, downloadCV);
 

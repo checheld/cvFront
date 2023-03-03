@@ -54,45 +54,7 @@ export const userPhotosReduser = (state = initialState, action: action): userPho
           ...state.isLoading, add: false
         },
         result: {
-          ...state.result, add: action.response
-        }
-      }
-
-    case userPhotosActions.ADD_PHOTOPARAMS_REQUEST:
-      return {
-        ...state,
-        isLoading: {
-          ...state.isLoading, get: true
-        }
-      };
-
-    case userPhotosActions.ADD_PHOTOPARAMS_RESULT:
-      return {
-        ...state,
-        isLoading: {
-          ...state.isLoading, add: false
-        },
-        result: {
-          ...state.result, addParams: action.response
-        }
-      }
-
-    case userPhotosActions.EDIT_PHOTOPARAMS_REQUEST:
-      return {
-        ...state,
-        isLoading: {
-          ...state.isLoading, get: true
-        }
-      };
-
-    case userPhotosActions.EDIT_PHOTOPARAMS_RESULT:
-      return {
-        ...state,
-        isLoading: {
-          ...state.isLoading, add: false
-        },
-        result: {
-          ...state.result, addParams: action.response
+          ...state.result, add: action.response.secure_url
         }
       }
 

@@ -1,5 +1,5 @@
 import { Backdrop, Box, Button, CircularProgress, Modal, Slider } from "@mui/material";
-import React, { useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import AvatarEditor from "react-avatar-editor";
 import { IPhotoParams } from "../../../../interfaces";
@@ -29,7 +29,7 @@ const style = {
     width: `410px`
 };
 
-const PhotoModal: React.FC<IPhotoUser> = ({
+const PhotoModal: FC<IPhotoUser> = ({
     handleClosePhoto,
     handleOpenPhotoModal,
     openPhoto,
@@ -38,13 +38,18 @@ const PhotoModal: React.FC<IPhotoUser> = ({
     setParams
 }) => {
     const dispatch = useAppDispatch();
-    const [scale, setScale] = React.useState(params.scale);
-    const [position, setPosition] = React.useState(params.position);
+    const [scale, setScale] = useState(params.scale);
+    const [position, setPosition] = useState(params.position);
     const handleChangeScale = (event: Event, newScale: number | number[]) => {
         setScale(newScale as number);
     };
+
+    const handleChangePosition = (e: any): void => {
+        params.position.id ? setPosition({...e, id: params.position.id}) : setPosition(e)
+    };
+
     useEffect(() => {
-        setParams({ scale: scale, position: position });
+        params.id ? setParams({ id: params.id, scale: scale, position: position }) : setParams({ scale: scale, position: position })
     }, [scale, position]);
 
     const uploadImage = (photos: FileList) => {
@@ -96,7 +101,7 @@ const PhotoModal: React.FC<IPhotoUser> = ({
                                         color={[240, 242, 245, 1]}
                                         scale={scale}
                                         position={position}
-                                        onPositionChange={(e: any) => setPosition(e)}
+                                        onPositionChange={handleChangePosition}
                                         borderRadius={49}
                                         //@ts-ignore
                                         disableHiDPIScaling

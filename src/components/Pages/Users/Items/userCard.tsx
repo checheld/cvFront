@@ -1,8 +1,8 @@
-import React, { ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Paper, styled, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Paper, styled, Typography } from '@mui/material';
 import Photo from '../Items/Photo';
-import { IUser } from '../../../../interfaces';
+import { IPhotoParams, IPosition, IUser } from '../../../../interfaces';
 import '../../../Components.css';
 
 interface Iprops {
@@ -24,19 +24,20 @@ const Item = styled(Paper)(({ theme }) => ({
 const UserCard: React.FC<Iprops> = ({ user, handleOpen }) => {
 
     const router = useNavigate();
-
+   
     return (
         <Item elevation={4} onClick={() => router(`/users/${user.id}`)}>
             <Box className='photoContainer'>
-                {/* {(user.photoParams !== null) ? (
+                {(user.photoParams) ? (       
                     <Photo params={{
-                        scale: user.photoParams.scale,
-                        position: { x: user.photoParams.positionX, y: user.photoParams.positionY }
+                        scale: Number(user.photoParams.scale),
+                        position: { x: Number(user.photoParams.position.x), y: Number(user.photoParams.position.y) }
                     }}
-                        photo={user.photoUrl} />
-                ) : ( */}
+                        photo={user.photoUrl} 
+                    />
+                ) : (
                     <Photo />
-                {/* )} */}
+                )}
             </Box>
             <Typography className='userCardTitle'>
                 {user.firstName} {user.lastName}
